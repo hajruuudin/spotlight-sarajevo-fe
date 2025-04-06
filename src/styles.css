@@ -1,1 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+
+.kumbh-sans-regular {
+    font-family: "Kumbh Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "YOPQ" 300;
+}
+
+.kumbh-sans-bold {
+    font-family: "Kumbh Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    letter-spacing: 1px;
+    font-variation-settings:
+      "YOPQ" 300;
+}
+
+.kumbh-sans-label {
+    font-family: "Kumbh Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+      "YOPQ" 300;
+}
+
+
+@theme {
+    /*COLORS*/
+  --text: #ffffff;
+  --background: #051f1a;
+  --navbar: #103930;
+  --primary: #11aeb6;
+  --secondary: #ffffff;
+  --accent: #94ffc8;
+}
