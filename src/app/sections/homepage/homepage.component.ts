@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { HeadingComponent } from "../../components/heading/heading.component";
+import { HttpClient } from '@angular/common/http';
+import { TagServiceService } from '../../controller/services/tag-service.service';
 
 @Component({
   selector: 'app-homepage',
@@ -8,5 +10,9 @@ import { HeadingComponent } from "../../components/heading/heading.component";
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
+  constructor(private tagService : TagServiceService) {}
 
+  fetchData(){
+    this.tagService.fetchData()
+  }
 }
