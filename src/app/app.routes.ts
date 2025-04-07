@@ -12,11 +12,26 @@ import { DataComponent } from './sections/data/data.component';
 import { AddSpotComponent } from './sections/add-spot/add-spot.component';
 import { AddEventComponent } from './sections/add-event/add-event.component';
 import { RequestsComponent } from './sections/requests/requests.component';
+import { LoginComponent } from './sections/login/login.component';
+import { RegisterComponent } from './sections/register/register.component';
 
 export const routes: Routes = [
     {
         path: 'auth',
-        component: AuthComponent
+        component: AuthComponent,
+        children: [
+            {
+                path: '', redirectTo: 'login', pathMatch: 'full'
+            },
+            {
+                path: 'login',
+                component: LoginComponent
+            },
+            {
+                path: 'register',
+                component: RegisterComponent
+            }
+        ]
     },
     {
         path: '',

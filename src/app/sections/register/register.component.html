@@ -1,0 +1,77 @@
+<section class="auth-container w-full bg-(--navbar) rounded-3xl flex flex-col justify-center items-center ">
+    <!-- <img src="/assets/images/LOGO_TEXT_HORIZONTAL.png" alt="SpotlightSarajevoLogo" class="h-auto w-4/5"> -->
+
+    <h1 class="text-5xl kumbh-sans-label mb-2">Welcome to SpotlightSarajevo</h1>
+    <h2>In order to experience the project to its fullest, please sign up!</h2>
+
+    <div class="w-1/4 h-0.5 rounded-2xl mt-3 mb-1 opacity-50 bg-white"></div>
+
+    <form [formGroup]="registerCredentialsForm" class="w-full flex flex-col items-center">
+        <div class="w-3/4 flex flex-row">
+            <input 
+            class="w-3/4 h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 mr-1" 
+            type="text" 
+            name="username" 
+            id="username"
+            placeholder="Username"
+            formControlName="username">
+
+            <input 
+            class="w-3/4 h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 ml-1" 
+            type="text" 
+            name="username" 
+            id="username"
+            placeholder="Username"
+            formControlName="username">
+        </div>
+
+        <div class="w-3/4 flex flex-row">
+            <input 
+            class="w-full h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 mr-1" 
+            type="text" 
+            name="username" 
+            id="username"
+            placeholder="Username"
+            formControlName="username">
+
+            <input 
+            class="w-full h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 ml-1" 
+            type="text" 
+            name="username" 
+            id="username"
+            placeholder="Username"
+            formControlName="username">
+        </div>
+
+        <div class="w-3/4 flex flex-row">
+            <input 
+            class="w-full h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 mr-1" 
+            type="text" 
+            name="username" 
+            id="username"
+            placeholder="Username"
+            formControlName="username">
+
+            <input 
+            class="w-full h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 ml-1" 
+            type="text" 
+            name="username" 
+            id="username"
+            placeholder="Username"
+            formControlName="username">
+        </div>
+       
+        
+        <button class="w-3/4 h-12 rounded-xl mt-1 bg-white text-cyan-800 text-2xl font-semibold transition-all duration-75">Contine</button>
+        
+        <div class="w-1/4 h-0.5 rounded-2xl mt-3 mb-1 opacity-50 bg-white"></div>
+
+        <h2>Sign in using your google account:</h2>
+        <button  (click)="this.signInWithGoogleCustom()" class="w-3/4 h-12 rounded-xl mt-1 bg-white text-cyan-800 text-2xl font-semibold transition-all duration-75 flex flex-row justify-center items-center">
+            <img src="/assets/images/GOOGLE.png" alt="Google" class="w-6 h-6">oogle credentials</button>
+            
+
+    </form>
+
+    <h2 class="text-xl mt-6">Already have an account? <strong>Login!</strong></h2>
+</section>

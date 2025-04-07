@@ -1,13 +1,14 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterOutlet],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css'
 })
-export class AuthComponent implements OnInit{
+export class AuthComponent {
   parallaxBg: ElementRef | null = null;
   parallaxFg: ElementRef | null = null;
 
@@ -46,19 +47,11 @@ export class AuthComponent implements OnInit{
     }
   };
 
-  loginForm! : FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private renderer: Renderer2, 
     private el: ElementRef
   ) {}
-
-  ngOnInit(): void {
-    this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
-    });
-  }
 
 }
