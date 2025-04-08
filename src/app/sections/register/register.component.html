@@ -1,77 +1,96 @@
-<section class="auth-container w-full bg-(--navbar) rounded-3xl flex flex-col justify-center items-center ">
-    <!-- <img src="/assets/images/LOGO_TEXT_HORIZONTAL.png" alt="SpotlightSarajevoLogo" class="h-auto w-4/5"> -->
+<section class="auth-container w-full p-10 rounded-3xl flex flex-col justify-center items-center ">
 
-    <h1 class="text-5xl kumbh-sans-label mb-2">Welcome to SpotlightSarajevo</h1>
-    <h2>In order to experience the project to its fullest, please sign up!</h2>
+    <div *ngIf="this.credentialsSection" class="flex flex-col justify-center items-center">
+        <h1 class="text-4xl kumbh-sans-label mb-2 mt-4 text-center">Welcome to SpotlightSarajevo</h1>
+        <h2 class="text-center">In order to experience the project to its fullest,<br/> please sign up!</h2>
 
-    <div class="w-1/4 h-0.5 rounded-2xl mt-3 mb-1 opacity-50 bg-white"></div>
+        <form [formGroup]="registerCredentialsForm" class="w-full flex flex-col items-center">
+            <div class="w-3/4 flex flex-row">
+                <input 
+                class="w-3/4 h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 mr-1" 
+                type="text" 
+                name="username" 
+                id="username"
+                placeholder="First Name"
+                formControlName="username">
 
-    <form [formGroup]="registerCredentialsForm" class="w-full flex flex-col items-center">
-        <div class="w-3/4 flex flex-row">
-            <input 
-            class="w-3/4 h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 mr-1" 
-            type="text" 
-            name="username" 
-            id="username"
-            placeholder="Username"
-            formControlName="username">
+                <input 
+                class="w-3/4 h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 ml-1" 
+                type="text" 
+                name="username" 
+                id="username"
+                placeholder="Last Name"
+                formControlName="username">
+            </div>
 
-            <input 
-            class="w-3/4 h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 ml-1" 
-            type="text" 
-            name="username" 
-            id="username"
-            placeholder="Username"
-            formControlName="username">
-        </div>
+            <div class="w-3/4 flex flex-row">
+                <input 
+                class="w-full h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 mr-1" 
+                type="text" 
+                name="username" 
+                id="username"
+                placeholder="Username"
+                formControlName="username">
 
-        <div class="w-3/4 flex flex-row">
-            <input 
-            class="w-full h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 mr-1" 
-            type="text" 
-            name="username" 
-            id="username"
-            placeholder="Username"
-            formControlName="username">
+                <input 
+                class="w-full h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 ml-1" 
+                type="text" 
+                name="username" 
+                id="username"
+                placeholder="Email"
+                formControlName="username">
+            </div>
 
-            <input 
-            class="w-full h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 ml-1" 
-            type="text" 
-            name="username" 
-            id="username"
-            placeholder="Username"
-            formControlName="username">
-        </div>
+            <div class="w-3/4 flex flex-row">
+                <input 
+                class="w-full h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 mr-1" 
+                type="text" 
+                name="username" 
+                id="username"
+                placeholder="Password"
+                formControlName="username">
 
-        <div class="w-3/4 flex flex-row">
-            <input 
-            class="w-full h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 mr-1" 
-            type="text" 
-            name="username" 
-            id="username"
-            placeholder="Username"
-            formControlName="username">
-
-            <input 
-            class="w-full h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 ml-1" 
-            type="text" 
-            name="username" 
-            id="username"
-            placeholder="Username"
-            formControlName="username">
-        </div>
-       
+                <input 
+                class="w-full h-12 border-2 rounded-xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2 mb-2 ml-1" 
+                type="text" 
+                name="username" 
+                id="username"
+                placeholder="Repeat Password"
+                formControlName="username">
+            </div>
         
-        <button class="w-3/4 h-12 rounded-xl mt-1 bg-white text-cyan-800 text-2xl font-semibold transition-all duration-75">Contine</button>
-        
-        <div class="w-1/4 h-0.5 rounded-2xl mt-3 mb-1 opacity-50 bg-white"></div>
-
-        <h2>Sign in using your google account:</h2>
-        <button  (click)="this.signInWithGoogleCustom()" class="w-3/4 h-12 rounded-xl mt-1 bg-white text-cyan-800 text-2xl font-semibold transition-all duration-75 flex flex-row justify-center items-center">
-            <img src="/assets/images/GOOGLE.png" alt="Google" class="w-6 h-6">oogle credentials</button>
+            <button class="w-3/4 h-12 rounded-xl mt-1 bg-(--background) text-white text-2xl font-semibold transition-all duration-75">Contine</button>
             
+            <div class="w-1/4 h-0.5 rounded-2xl mt-3 mb-1 opacity-50 bg-white"></div>
 
-    </form>
+            <h2>Sign in using your google account:</h2>
+            <button  (click)="this.signInWithGoogleCustom()" class="w-3/4 h-12 rounded-xl mt-1 bg-(--background) text-white text-2xl font-semibold transition-all duration-75 flex flex-row justify-center items-center">
+                <img src="/assets/images/GOOGLE.png" alt="Google" class="w-6 h-6">oogle
+            </button>
+        </form>
+    </div>
 
-    <h2 class="text-xl mt-6">Already have an account? <strong>Login!</strong></h2>
+    <div *ngIf="this.categoriesSection" class="flex flex-col justify-center items-center">
+        <h1 class="text-5xl kumbh-sans-label mb-2 text-center">Nice to meet you, {{this.addedFirstName}}</h1>
+        <h2 class="text-center mb-6">We would like to know some of the events/places you have interest in!<br> Please select at least 3 categories that describe your personal perferences:</h2>
+
+
+        <div class="categories-container w-3/4 flex flex-row flex-wrap-reverse justify-center">
+            <div *ngFor="let category of this.categories">
+                <app-smallcategorylabel 
+                [isSelected]="false" 
+                [label]="category['categoryName']">
+            </app-smallcategorylabel>
+            </div>
+        </div>
+
+        <button class="w-1/4 h-12 rounded-xl mt-10 bg-white text-cyan-800 text-2xl font-semibold transition-all duration-75">Contine</button>
+        <h3 class="text-l mt-2 text-center">Already have an account? <strong>Login!</strong></h3>
+    </div>
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#777" type="ball-scale-multiple" [fullScreen]="true" style="z-index: 999;" >
+        <p style="color: white"> Awaiting authentication... </p>
+    </ngx-spinner>
+    
+    
 </section>

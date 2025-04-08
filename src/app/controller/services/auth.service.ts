@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   sendIdTokenToBackend(idToken: string) {
-    return this.http.post('/api/auth/google', JSON.stringify({ idToken }), {
+    return this.http.post('http://localhost:8765/auth/google/register', JSON.stringify({ idToken }), {
       headers: {
         'Content-Type': 'application/json'
       }

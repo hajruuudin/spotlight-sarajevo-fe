@@ -18,7 +18,8 @@ export class AuthInterceptor implements HttpInterceptor {
   private router = inject(Router)
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("INTERCEPTING")
+    console.log("INTERCEPTING for request:")
+    console.log(request)
     return next.handle(request).pipe(
       tap(
         (event: HttpEvent<any>) => {
@@ -28,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
         },
         (error: any) => {
           if (error instanceof HttpErrorResponse) {
-            if (error.status === 401) {
+            if (error.status === 401 && !request.url.includes('/auth/google')) {
               this.router.navigate(['/auth']);
             }
           }
