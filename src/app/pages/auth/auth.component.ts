@@ -10,49 +10,12 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   styleUrl: './auth.component.css'
 })
 export class AuthComponent {
-  parallaxBg: ElementRef | null = null;
-  parallaxFg: ElementRef | null = null;
-
-  ngAfterViewInit(): void {
-    this.parallaxBg = this.el.nativeElement.querySelector('#parallaxBg');
-    this.parallaxFg = this.el.nativeElement.querySelector('#parallaxFg');
-    document.addEventListener('mousemove', this.parallax);
-  }
-
-  ngOnDestroy(): void {
-    document.removeEventListener('mousemove', this.parallax); // Clean up the event listener
-  }
-
-  parallax = (event: MouseEvent) => {
-    const amountBg = 20;
-    const amountFg = 10;
-
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-
-    const mouseX = event.clientX;
-    const mouseY = event.clientY;
-
-    const offsetXBg = (mouseX - centerX) / centerX * amountBg;
-    const offsetYBg = (mouseY - centerY) / centerY * amountBg;
-
-    const offsetxFg = (mouseX - centerX) / centerX * amountFg;
-    const offsetYFg = (mouseY - centerY) / centerY * amountFg;
-
-    if (this.parallaxBg) {
-      this.renderer.setStyle(this.parallaxBg, 'transform', `translate(${offsetXBg}px, ${offsetYBg}px)`);
-    }
-
-    if (this.parallaxFg) {
-      this.renderer.setStyle(this.parallaxFg, 'transform', `translate(${offsetxFg}px, ${offsetYFg}px)`);
-    }
-  };
-
-
   constructor(
     private fb: FormBuilder,
     private renderer: Renderer2, 
     private el: ElementRef
   ) {}
+
+  
 
 }

@@ -1,9 +1,9 @@
 
-<main class="authentication h-screen w-full flex flex-row justify-center items-center relative overflow-hidden">
-    <img src="/assets/backgrounds/AUTH_BG_1.png" alt="" class="absolute self-end -z-50 scale-110" id="parallaxBg">
-    <img src="/assets/backgrounds/AUTH_BG_2.png" alt="" class="absolute self-end -z-40 scale-110" id="parallaxFg">
+<main class="authentication h-screen w-full flex flex-row justify-center items-center relative md:overflow-hidden">
+    <img src="/assets/backgrounds/AUTH_BG_1.png" alt="" class="absolute self-end -z-50 scale-110 animate-slide-side">
+    <img src="/assets/backgrounds/AUTH_BG_2.png" alt="" class="absolute self-end -z-40 scale-110 animate-slide-side">
     
-    <section class="auth-container w-3/5 h-auto min-h-3/4 bg-(--navbar) rounded-3xl flex flex-col justify-center items-center transition-all">
+    <section class="auth-container w-1/2 h-auto min-h-3/4 bg-(--navbar) rounded-3xl flex flex-col justify-center items-center transition-all pt-5 pb-5 outline-8 outline-(--navbar-outline)">
         <router-outlet></router-outlet>
     </section>
 
