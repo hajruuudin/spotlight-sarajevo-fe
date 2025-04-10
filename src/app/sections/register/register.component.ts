@@ -128,21 +128,27 @@ export class RegisterComponent {
         this.registerCredentialsForm.get('password')?.value
       )
 
-      this.authService.handleSystemSignIn(systemUser).subscribe(
-       (response : any) => {
-        console.log(response)
-        this.addedFirstName = response['payload']['firstName']
-        this.moveToCategoriesSection()
-       },
-       error => {
-        console.error(error)
-        this.toastr.error("Error occured with system register", "Error")
-       }
+      this.authService.checkEmailTaken(this.registerCredentialsForm.get('email')?.value).subscribe(
+        response => {
+          if(response){
+            this.authService.handleSystemSignIn(systemUser).subscribe(
+              (response : any) => {
+               console.log(response)
+               this.addedFirstName = response['payload']['firstName']
+               this.moveToCategoriesSection()
+              },
+              error => {
+               console.error(error)
+               this.toastr.error("Error occured with system register", "Error")
+              }
+             )
+          }
+        },
+        error => {
+          this.toastr.error("Email already associated with an account", "Oops!")
+        }
       )
-      // Here you would typically send the form data to your backend API
-    } else {
-      this.toastr.error('Please fill in all required fields.', 'Validation Error');
-    }
+    } 
   }
 
 
@@ -167,7 +173,8 @@ export class RegisterComponent {
               this.addedFirstName = response['firstName']
             },
             (error) => {
-              console.error('Error sending ID token to backend', error)
+              this.spinner.hide()
+              this.toastr.error(error.error.message, "Error")
             }
           );
         } else {

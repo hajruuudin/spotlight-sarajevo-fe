@@ -58,7 +58,7 @@
                 formControlName="repeatPassword">
             </div>
         
-            <button type="submit" class="w-full h-14 rounded-xl  bg-(--primary) text-white  outline-amber-50 text-xl font-semibold transition-all duration-75">Continue</button>
+            <button type="submit" class="w-full h-14 rounded-xl  bg-(--primary) text-white  outline-amber-50 text-xl font-semibold transition-all duration-75 hover:bg-cyan-600">Continue</button>
             
             <div class="w-full flex flex-row mt-2 mb-2 justify-between items-center">
                 <div class="h-0.5 rounded-2xl w-2/5 bg-white"></div>
@@ -66,7 +66,7 @@
                 <div class="h-0.5 rounded-2xl w-2/5 bg-white"></div>
             </div>
 
-            <button (click)="this.signInWithGoogleCustom()" class="w-full h-14 rounded-xl bg-(--button) text-white outline-1 outline-white text-xl font-semibold transition-all duration-75 flex flex-row justify-center items-center">
+            <button (click)="this.signInWithGoogleCustom()" class="w-full h-14 rounded-xl bg-(--button) hover:bg-(--background) text-white outline-1 outline-white text-xl font-semibold transition-all duration-75 flex flex-row justify-center items-center">
                 <img src="/assets/images/GOOGLE.png" alt="Google" class="w-6 h-6 ml-5">
                 <span class="flex-grow">Register with Google</span>
                 <img src="/assets/images/GOOGLE.png" alt="Google" class="opacity-0 w-6 h-6 mr-5">
@@ -89,7 +89,7 @@
             </div>
         </div>
 
-        <button (click)="moveToQuestionsSection()" class="w-full h-14 rounded-xl  bg-(--primary) text-white  outline-amber-50 text-xl font-semibold transition-all duration-75">Continue</button>
+        <button (click)="moveToQuestionsSection()" class="w-full h-14 rounded-xl  bg-(--primary) hover:bg-cyan-600 text-white  outline-amber-50 text-xl font-semibold transition-all duration-75">Continue</button>
     </div>
 
     <div *ngIf="this.questionsSection" class="flex flex-col justify-center items-center">
@@ -108,19 +108,19 @@
             </div>
         </section>
 
-        <button (click)="this.moveToSuccessSection()" class="w-full h-14 rounded-xl  bg-(--primary) text-white  outline-amber-50 text-xl font-semibold transition-all duration-75">Finish</button>
+        <button (click)="this.moveToSuccessSection()" class="w-full h-14 rounded-xl  bg-(--primary) hover:bg-cyan-600 text-white  outline-amber-50 text-xl font-semibold transition-all duration-75">Finish</button>
     </div>
 
     <div *ngIf="this.successSection" class="flex flex-col justify-center items-center">
         <img src="/assets/images/LOGO_V1.png" alt="SpotlightSarajevoLogo" class="h-auto w-1/3">
         <h1 class="text-3xl kumbh-sans-label mb-2 text-center">Welcome aboard!</h1>
         <h2 class="text-center">Your account has been setup! It's time to start browsing and <br> exploring Sarajevo's cultural, social and touristic values. Best of luck!<br></h2>
-        <a href="/homepage"><button class="w-full h-14 rounded-xl mt-5  bg-(--primary) text-white  outline-amber-50 text-xl font-semibold transition-all duration-75 pl-4 pr-4">To Homepage</button></a>
+        <a href="/auth/login"><button class="w-full h-14 rounded-xl mt-5  bg-(--primary) hover:bg-cyan-600 text-white  outline-amber-50 text-xl font-semibold transition-all duration-75 pl-4 pr-4">Login</button></a>
     </div>
 
 
 
-    <h3 *ngIf="!this.successSection" class="text-l mt-2 text-center">Already have an account? <strong>Login!</strong></h3>
+    <h3 *ngIf="!this.successSection" class="text-l mt-2 text-center">Already have an account? <a href="/auth/login"><strong>Login!</strong></a></h3>
 
     <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#777" type="ball-scale-multiple" [fullScreen]="true" style="z-index: 999;" >
         <p style="color: white"> Loading... </p>

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { PreferencesModel } from '../models/preferences.model';
 import { SystemUserModel } from '../models/system-user.model';
+import { SystemLogin } from '../models/system-login.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,22 +14,6 @@ export class AuthService {
 
   constructor() { }
 
-  handleGoogleSignInSuccess(credentialResponse: any) {
-    const idToken = credentialResponse?.credential;
-    if (idToken) {
-      this.sendIdTokenToBackend(idToken).subscribe(
-        (response) => {
-          console.log('ID token sent and temporarily stored on backend', response);
-        },
-        (error) => {
-          console.error('Error sending ID token to backend', error);
-        }
-      );
-    } else {
-      console.error('No ID token received.');
-    }
-  }
-
   sendIdTokenToBackend(idToken: string) {
     return this.http.post('/api/auth/google/register', JSON.stringify({ idToken }), {
       headers: {
@@ -37,8 +22,25 @@ export class AuthService {
     });
   }
 
+  sendIdTokenToBackendLogin(idToken: string) {
+    return this.http.post('/api/auth/login/google', JSON.stringify({ idToken }), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
   handleSystemSignIn(request: SystemUserModel){
     return this.http.post('/api/auth/system/register', request, {
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      withCredentials: true
+    })
+  }
+
+  handleSystemLogIn(request: SystemLogin){
+    return this.http.post('/api/auth/login/system', request, {
       headers: {
         'Content-Type' : 'application/json'
       },
@@ -55,6 +57,11 @@ export class AuthService {
     });
   }
 
+  checkEmailTaken(request: string){
+    return this.http.get(`/api/auth/check-email?email=${request}`, {
+      withCredentials: true
+    })
+  }
   
   
 }
