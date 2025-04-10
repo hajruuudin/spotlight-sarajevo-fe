@@ -29,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
         },
         (error: any) => {
           if (error instanceof HttpErrorResponse) {
-            if (error.status === 401 && !request.url.includes('/auth/google')) {
+            if (error.status === 401) {
               this.router.navigate(['/auth']);
             }
           }

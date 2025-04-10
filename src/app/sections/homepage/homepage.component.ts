@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HeadingComponent } from "../../components/heading/heading.component";
 import { HttpClient } from '@angular/common/http';
-import { TagService } from '../../controller/services/tag.service';
+import { TagService } from '../../services/tag.service';
 
 @Component({
   selector: 'app-homepage',

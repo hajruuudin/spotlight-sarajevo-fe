@@ -9,7 +9,7 @@ export class TagService {
   constructor(private http: HttpClient) {}
 
   fetchData() {
-    this.http.get("http://localhost:8765/tag").subscribe({
+    this.http.get("/api/tag").subscribe({
       next: (response) => {
         console.log(response);
       },

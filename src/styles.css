@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 
+
+
 .kumbh-sans-regular {
     font-family: "Kumbh Sans", sans-serif;
     font-optical-sizing: auto;
@@ -35,7 +37,30 @@
   --text: #ffffff;
   --background: #051f1a;
   --navbar: #094342;
+  --navbar-outline: #003A39;
   --primary: #11aeb6;
   --secondary: #ffffff;
-  --accent: #94ffc8;
+  --accent: #f0dd6e;
+  --button: #02393d;
+
+  --animate-slide-side: slide 5s ease-in-out infinite;
+
+  @keyframes slide {
+    25% {
+      transform: translateX(50px);
+    },
+    50% {
+      transform: translateX(0px);
+    },
+    75% {
+      transform: translateX(-50px);
+    },
+    100% {
+      transform: translateX(0px);
+    }
+  }
+}
+
+.toast {
+  box-shadow: none !important;
 }

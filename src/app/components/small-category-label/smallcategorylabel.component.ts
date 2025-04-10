@@ -18,7 +18,7 @@ export class SmallcategorylabelComponent {
   }
 
   checkboxStyle() {
-    return this.isSelected ? 'bg-(--primary)' : 'bg-(--background)'
+    return this.isSelected ? 'bg-(--primary)' : 'bg-(--primary)'
   }
   selectedStyle(){
     return this.isSelected ? 'bg-gradient-to-r from-[#051f1a] to-[#11aeb6]' : 'bg-white'
