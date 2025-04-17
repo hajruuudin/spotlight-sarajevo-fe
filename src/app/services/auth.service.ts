@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import { PreferencesModel } from '../models/preferences.model';
 import { SystemUserModel } from '../models/system-user.model';
 import { SystemLogin } from '../models/system-login.model';
@@ -9,7 +8,7 @@ import { SystemLogin } from '../models/system-login.model';
   providedIn: 'root'
 })
 export class AuthService {
-  googleClientId = '564056268905-9j2u47hutljdrv2rgepipilpgp2ogh3e.apps.googleusercontent.com'; // Replace with your actual Client ID
+  googleClientId = '564056268905-9j2u47hutljdrv2rgepipilpgp2ogh3e.apps.googleusercontent.com';
   private http = inject(HttpClient);
 
   constructor() { }

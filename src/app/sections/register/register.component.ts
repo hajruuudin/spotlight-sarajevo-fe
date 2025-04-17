@@ -6,7 +6,6 @@ import { NgFor, NgIf } from '@angular/common';
 import { SmallcategorylabelComponent } from '../../components/small-category-label/smallcategorylabel.component';
 import { CategoryService } from '../../services/category.service';
 import { QuestionComponentComponent } from "../../components/question-component/question-component.component";
-import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PreferencesModel } from '../../models/preferences.model';
 import { SystemUserModel } from '../../models/system-user.model';
@@ -82,15 +81,14 @@ export class RegisterComponent {
     });
     this.progressBar = "w-1/4"
     this.initializeGoogleSignIn();
-      this.categoryService.fetchCategories().subscribe(
-        response => {
-          console.log(response)
-          this.categories = response
+      this.categoryService.fetchCategories().subscribe({
+        next: (response : any) => {
+          this.categories = response.content
         },
-        error => {
+        error: (error) => {
           console.error(error)
         }
-      )
+      })
   }
 
   passwordMatchValidator(group: FormGroup) {
@@ -128,13 +126,13 @@ export class RegisterComponent {
         this.registerCredentialsForm.get('password')?.value
       )
 
-      this.authService.checkEmailTaken(this.registerCredentialsForm.get('email')?.value).subscribe(
-        response => {
+      this.authService.checkEmailTaken(this.registerCredentialsForm.get('email')?.value).subscribe({
+        next: (response) => {
           if(response){
             this.authService.handleSystemSignIn(systemUser).subscribe(
               (response : any) => {
-               console.log(response)
-               this.addedFirstName = response['payload']['firstName']
+               console.log(response.firstName, "THIS ONE IS FAILING")
+               this.addedFirstName = response.firstName
                this.moveToCategoriesSection()
               },
               error => {
@@ -144,10 +142,10 @@ export class RegisterComponent {
              )
           }
         },
-        error => {
+        error: (error) => {
           this.toastr.error("Email already associated with an account", "Oops!")
         }
-      )
+      })
     } 
   }
 
@@ -310,25 +308,6 @@ export class RegisterComponent {
       return false;
     }
   }
-
-
-  // onYesSelected(value: boolean) {
-  //   if (value) {
-  //     this.isYesSelected = true;
-  //     this.isNoSelected = false;
-  //   } else {
-  //     this.isYesSelected = false;
-  //   }
-  // }
-
-  // onNoSelected(value: boolean) {
-  //   if (value) {
-  //     this.isNoSelected = true;
-  //     this.isYesSelected = false;
-  //   } else {
-  //     this.isNoSelected = false;
-  //   }
-  // }
 
   get progressBarWidth(){
     return this.progressBar;

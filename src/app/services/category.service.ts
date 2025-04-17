@@ -10,9 +10,9 @@ export class CategoryService {
 
   constructor(private http: HttpClient) {}
 
-  fetchCategories(): Observable<any[]> {
-    return this.http.get<any>(this.apiUrl).pipe(
-      map(response => response['payload'] || [])
-    );
+  fetchCategories(){
+    return this.http.get(this.apiUrl, {
+      withCredentials: true
+    });
   }
 }
