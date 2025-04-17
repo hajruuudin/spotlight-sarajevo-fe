@@ -63,7 +63,7 @@
         </a>
     </div>
 
-    <div *ngIf="this.isMobilNavbarLoaded" class="bg-(--navbar) inline md:hidden">
+    <div *ngIf="this.isMobilNavbarLoaded" class="bg-(--navbar) inline md:hidden transition-all duration-75">
         <ul class="flex flex-row justify-around flex-wrap items-start w-full">
             <li>
                 <a (click)="toggleMobileNavbar()" routerLink="/saved" routerLinkActive="opacity-100" class="opacity-50 hover:opacity-100 transition-all group">
