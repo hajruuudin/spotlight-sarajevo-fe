@@ -5,6 +5,8 @@ import { AuthService } from '../../services/auth.service';
 import { NgxSpinner, NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { SystemLogin } from '../../models/system-login.model';
 import { ToastrService } from 'ngx-toastr';
+import { SessionService } from '../../services/session.service';
+import { LoggedUserProfile } from '../../models/user-model';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +22,8 @@ export class LoginComponent implements OnInit{
     private authService: AuthService,
     private spinner: NgxSpinnerService,
     private router: Router,
-    private toastr: ToastrService
-
+    private toastr: ToastrService,
+    private session: SessionService
   ) {}
 
   ngOnInit(): void {
@@ -44,17 +46,29 @@ export class LoginComponent implements OnInit{
         new SystemLogin(
           this.loginForm.get('email')?.value,
           this.loginForm.get('password')?.value
-      )).subscribe(
-        response => {
+      )).subscribe({
+        next: (response : any) => {
           this.spinner.hide()
+
+          const loggedUserProfile: LoggedUserProfile = {
+            id: response.user.id,
+            firstName:  response.user.firstName,
+            lastName: response.user.lastName,
+            email: response.user.systemEmail,
+            isAdmin: response.user.isAdmin,
+            isPremium: response.user.isPremium,
+            imageUrl: response.user.imageUrl
+          }
+
+          this.session.setCurrentUser(loggedUserProfile)
           this.router.navigate(['/homepage'])
         },
-        error => {
+        error: (error) => {
           this.spinner.hide()
           this.toastr.error(error.error.message, "Error")
-          console.error('Error logging in to backend', error)
+          console.error('Error logging in to backend with system', error)
         }
-      )
+      })
     } else {
       this.toastr.error('Credentials Missing!', 'Error')
     }
@@ -69,11 +83,24 @@ export class LoginComponent implements OnInit{
           this.authService.sendIdTokenToBackendLogin(idToken).subscribe(
             (response : any) => {
               this.spinner.hide()
+
+              const loggedUserProfile: LoggedUserProfile = {
+                id: response.user.id,
+                firstName:  response.user.firstName,
+                lastName: response.user.lastName,
+                email: response.user.systemEmail,
+                isAdmin: response.user.isAdmin,
+                isPremium: response.user.isPremium,
+                imageUrl: response.user.imageUrl
+              }
+    
+              this.session.setCurrentUser(loggedUserProfile)
               this.router.navigate(['/homepage'])
             },
             (error) => {
               this.spinner.hide()
               this.toastr.error(error.error.message, "Error")
+              console.error('Error logging in to backend with google', error)
             }
           );
         } else {

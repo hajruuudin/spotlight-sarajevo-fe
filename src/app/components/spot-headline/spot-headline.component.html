@@ -1,0 +1,20 @@
+<div class="bg-black w-full lg:h-auto rounded-3xl flex flex-row hover:outline-8 hover:pl-1 outline-2 outline-(--item-border) box-border transition-all ease-in-out duration-200 relative overflow-hidden">
+    <div class="headline-information p-3 flex flex-col mt-4 md:mt-16 justify-center items-start w-full md:w-2/3 z-20">
+      <span class="text-sm md:text-xl">{{spot?.categoryName}}</span>
+      <div class="w-1/4 bg-amber-50 h-0.5 rounded-full"></div>
+      <h3 class="text-xl md:text-3xl font-bold mt-1 whitespace-nowrap">{{spot?.officialName}}</h3>
+      <span class="text-sm md:text-base whitespace-nowrap">{{spot?.smallDescription}}</span>
+      <div class="category-label-medium bg-fuchsia-50 w-auto md:w-32 mt-2 px-2 md:px-5 py-0.5 flex flex-col justify-center items-center rounded-full">
+        <span class="text-xs md:text-base text-black font-semibold">{{spot?.categoryName}}</span>
+      </div>
+    </div>
+    <div
+      class="w-1/2 h-auto rounded-r-3xl relative z-10"
+      [style.backgroundImage]="spot?.imageUrl ? 'url(' + spot?.imageUrl + ')' : ''"
+      style="background-size: cover; background-position: center; scale: 1.3;"
+    >
+    <div
+        class="absolute inset-0 rounded-r-3xl bg-gradient-to-r from-black via-black/20 to-transparent"
+    ></div>
+    </div>
+  </div>
