@@ -11,11 +11,11 @@
         </div>
 
         <div class="headline-container w-full lg:w-1/2 lg:mr-10 flex flex-col justify-between">
-            <h2 class="text-xl md:text-3xl text-center md:text-end mb-2">Todays headline spot</h2>
-            <app-spot-headline
-                [spot]="this.headlineSpot"
-                [navigateToSpotOverview]="this.navigateToSpotOverview">
-            </app-spot-headline>
+            <h2 class="text-xl md:text-3xl text-center md:text-end mb-2">Todays headline event</h2>
+            <app-event-headline
+                [event]="this.headlineEvent"
+                [navigateToEventOverview]="this.navigateToEventOverview">
+            </app-event-headline>
         </div>
      </section>
 </main>
