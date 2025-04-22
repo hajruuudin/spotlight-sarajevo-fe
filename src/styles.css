@@ -35,13 +35,17 @@
   --background: #051f1a;
   --navbar: #094342;
   --navbar-outline: #003A39;
+
   --primary: #11aeb6;
   --secondary: #ffffff;
   --accent: #f0dd6e;
   --button: #02393d;
+
   --item-border: #122924;
 
   --animate-slide-side: slide 5s ease-in-out infinite;
+
+  --max-screen-width: 1366px;
 
   @keyframes slide {
     25% {

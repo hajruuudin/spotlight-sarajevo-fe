@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { HeadingComponent } from "../../components/heading/heading.component";
 import { HttpClient } from '@angular/common/http';
 import { TagService } from '../../services/tag.service';
@@ -8,10 +8,11 @@ import { SpotService } from '../../services/spot.service';
 import { EventShorthand } from '../../models/event-model';
 import { EventService } from '../../services/event.service';
 import { EventHeadlineComponent } from "../../components/event-headline/event-headline.component";
+import { SpotDiscoverComponent } from "../../components/spot-discover/spot-discover.component";
 
 @Component({
   selector: 'app-homepage',
-  imports: [HeadingComponent, SpotHeadlineComponent, EventHeadlineComponent],
+  imports: [HeadingComponent, SpotHeadlineComponent, EventHeadlineComponent, SpotDiscoverComponent],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
@@ -26,6 +27,7 @@ export class HomepageComponent implements OnInit{
     private spotService : SpotService,
     private eventService : EventService
   ) {}
+
 
   ngOnInit(): void {
     this.spotService.getHeadlineSpot().subscribe({
@@ -46,6 +48,4 @@ export class HomepageComponent implements OnInit{
       }
     })
   }
-
-
 }
