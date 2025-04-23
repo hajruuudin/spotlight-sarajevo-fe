@@ -1,15 +1,20 @@
-<div class="w-64 h-64 rounded-2xl bg-(--navbar) flex flex-col group hover:outline-4 outline-(--item-border) transition-all">
+<div *ngIf="spot" class="w-64 h-64 rounded-2xl bg-(--navbar) flex flex-col group hover:outline-4 outline-(--item-border) transition-all">
     <div 
     class="discover-background rounded-t-2xl h-7/12 group-hover:h-6/12  flex flex-col justify-end group-hover:justify-between items-center transition-all"
-    style="background-image: url('{{this.spot?.imageUrl}}'); background-size:cover; background-clip: content-box; background-position: center;"
+    style="background-image: url('{{this.spot.imageUrl}}'); background-size:cover; background-clip: content-box; background-position: center;"
     >
         <span class="hidden group-hover:block transition-all">✦✦✦✦</span>
-        <span class="font-semibold">{{this.spot?.officialName?.toUpperCase()}}</span>
+        <span class="text-xs md:text-base text-white bg-(--navbar) rounded-t-2xl px-4 pt-1 font-semibold">{{spot.categoryName.toUpperCase()}}</span>
+        <!-- <div class="category-label-medium bg-fuchsia-50 w-auto my-2 px-2 md:px-5 py-0.5 flex flex-col justify-center items-center rounded-full">
+            
+        </div> -->
+        
     </div>
     <div class="h-5/12 flex flex-col justify-center my-2 items-center transition-all duration-100">
-        <span class="text-center leading-tight mx-4">{{this.spot?.smallDescription}}</span>
-        <div class="category-label-medium bg-fuchsia-50 w-auto md:w-32 mt-2 px-2 md:px-5 py-0.5 flex flex-col justify-center items-center rounded-full">
-            <span class="text-xs md:text-base text-(--navbar) font-semibold">{{spot?.categoryName}}</span>
+        <span class="font-bold text-xl">{{this.spot.officialName}}</span>
+        <span class="text-center leading-tight mx-4">{{this.spot.smallDescription}}</span>
+        <div class="category-label-medium bg-fuchsia-50 w-auto my-2 px-2 md:px-5 py-0.5 flex flex-col justify-center items-center rounded-full">
+            <span class="text-xs md:text-base text-(--navbar) bg-white font-semibold">{{this.randomTag}}</span>
         </div>
     </div>
 </div>

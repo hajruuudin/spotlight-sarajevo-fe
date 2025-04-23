@@ -13,5 +13,11 @@ export class SpotService {
     })
   }
 
+  getAllSpots(){
+    return this.http.get("/api/spot/shorthands", {
+      withCredentials: true
+    })
+  }
+
 
 }

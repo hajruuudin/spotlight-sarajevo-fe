@@ -1,6 +1,6 @@
-<section class="w-full h-screen flex flex-col items-center  lg:flex-row lg:items-stretch">
-    <app-navbar-user class="lg:w-auto w-full sticky"></app-navbar-user>
-    <section class="m-auto w-full max-w-(--max-screen-width) p-8 lg:p-16">
+<section class="w-full h-screen flex flex-col items-center lg:flex-row lg:items-stretch overflow-auto">
+    <app-navbar-user class="sticky top-0 lg:left-0 w-full lg:w-auto z-50"></app-navbar-user>
+    <section class="m-auto w-full max-w-(--max-screen-width)">
         <router-outlet></router-outlet>
     </section>
 </section>

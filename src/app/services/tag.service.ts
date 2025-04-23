@@ -15,8 +15,6 @@ export class TagService {
       },
       error: (error) => {
         console.error(error);
-        // Your interceptor should handle the 401 before it reaches here
-        // However, you might want to handle other errors here.
       }
     });
   }
