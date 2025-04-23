@@ -3,15 +3,14 @@ import { SpotShorthand } from '../../models/spot-model';
 import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-spot-headline',
+  selector: 'app-spot-discover',
   imports: [NgIf],
-  templateUrl: './spot-headline.component.html',
-  styleUrl: './spot-headline.component.css'
+  templateUrl: './spot-discover.component.html',
+  styleUrl: './spot-discover.component.css'
 })
-export class SpotHeadlineComponent {
-  @Input() spot: SpotShorthand | null = null;
-  @Input() navigateToSpotOverview: (spotId: number) => void = () => {};
-  
+export class SpotDiscoverComponent {
+  @Input() spot : SpotShorthand | null = null;
+
   randomTag: string | null = null;
 
   ngOnInit(): void {

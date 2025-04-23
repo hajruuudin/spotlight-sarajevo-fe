@@ -4,5 +4,6 @@ export interface EventShorthand{
     officialName: string,
     smallDescription: string,
     categoryName: string,
+    tagNames: string[],
     imageUrl: string;
 }

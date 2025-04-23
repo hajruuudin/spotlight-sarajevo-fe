@@ -4,5 +4,7 @@ export interface SpotShorthand{
     officialName: string,
     smallDescription: string,
     categoryName: string,
+    tagNames: string[],
+    rating: DoubleRange,
     imageUrl: string;
 }

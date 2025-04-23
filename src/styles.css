@@ -35,13 +35,19 @@
   --background: #051f1a;
   --navbar: #094342;
   --navbar-outline: #003A39;
+
   --primary: #11aeb6;
-  --secondary: #ffffff;
-  --accent: #f0dd6e;
+  --secondary: #11aeb6;
+  --accent: #00cdc6;
   --button: #02393d;
+
   --item-border: #122924;
 
   --animate-slide-side: slide 5s ease-in-out infinite;
+
+  --max-screen-width: 1366px;
+
+  --navbar-layer: 999;
 
   @keyframes slide {
     25% {
@@ -61,4 +67,8 @@
 
 .toast {
   box-shadow: none !important;
+}
+
+.auth-body{
+  background-image: url(/assets/object-images/backg.png);
 }

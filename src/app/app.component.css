@@ -1,0 +1,3 @@
+.main-content-adjusted {
+    width: calc(100vw - 14rem); /* 100vw (viewport width) minus the sidebar's expanded width */
+}
