@@ -13,4 +13,10 @@ export class EventService {
     })
   }
 
+  getEventsByDate(selectedQueryDate : string){
+    return this.http.get(`/api/event/${selectedQueryDate}`, {
+      withCredentials: true
+    })
+  }
+
 }

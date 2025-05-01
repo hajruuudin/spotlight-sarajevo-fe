@@ -18,8 +18,6 @@ export class AuthInterceptor implements HttpInterceptor {
   private router = inject(Router)
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("INTERCEPTING for request:")
-    console.log(request)
     return next.handle(request).pipe(
       tap(
         (event: HttpEvent<any>) => {
