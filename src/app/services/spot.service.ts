@@ -19,5 +19,9 @@ export class SpotService {
     })
   }
 
-
+  getCategorisedSpots(categoryId : number){
+    return this.http.get(`/api/spot/category/${categoryId}`, {
+      withCredentials: true
+    })
+  }
 }

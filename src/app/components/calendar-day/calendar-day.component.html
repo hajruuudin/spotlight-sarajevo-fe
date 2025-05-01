@@ -1,0 +1,8 @@
+<div
+      (click)="onDayClicked()"
+      class="flex flex-col items-center justify-center w-8 h-8 sm:w-12 sm:h-12 py-8 sm:p-8 rounded-2xl cursor-pointer transition-colors duration-200"
+      [ngClass]="{'bg-cyan-700 text-white': isSelectedDay, 'hover:bg-(--navbar)': !isSelectedDay}"
+    >
+      <span class="text-sm">{{ day.displayInfo?.day }}</span>
+      <span class="text-lg font-semibold">{{ day.displayInfo?.date }}</span>
+    </div>
