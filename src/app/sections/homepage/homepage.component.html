@@ -1,8 +1,7 @@
-<main class="w-full flex flex-col justify-start items-center  p-8 lg:p-16">
-
+<main  class="w-full flex flex-col justify-start items-center  p-8 lg:p-16">
         <app-heading [title]="'Homepage'"></app-heading>
 
-        <div class="section-container w-full my-4 flex flex-col">
+        <div [@fadeInOut] class="section-container w-full my-4 flex flex-col">
             <section id="headlines" class="w-full flex flex-col lg:flex-row justify-between space-x-6">
                 <div class="headline-container w-full lg:w-1/2 flex flex-col justify-between">
                     <h2 class="text-xl md:text-3xl text-center md:text-start my-2">Todays headline spot</h2>
@@ -35,7 +34,7 @@
         </div>
 
         
-        <div class="section-container w-full my-10 bg-(--item-border) p-5 rounded-2xl">
+        <div [@fadeInOut] class="section-container w-full my-10 bg-(--item-border) p-5 rounded-2xl">
             <h2 class="text-xl md:text-3xl text-center my-2">Always popular spots in Sarajevo</h2>
             <section id="popular" class="w-full flex flex-col">
                 <div class="w-full flex flex-col lg:flex-row justify-between md:space-x-8">
@@ -100,7 +99,7 @@
             </section>
         </div>
 
-        <div class="section-container w-full my-4 flex flex-col">
+        <div [@fadeInOut] class="section-container w-full my-4 flex flex-col">
             <h2 class="text-xl md:text-3xl text-center mb-2">Discover Sarajevo's Culture</h2>
             
             <section *ngIf="this.iconicPlaces.length != 0" id="headlines" class="w-full flex flex-col lg:flex-row justify-between lg:space-x-6">

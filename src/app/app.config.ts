@@ -1,15 +1,14 @@
 import { ApplicationConfig, importProvidersFrom, inject, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
-import { HTTP_INTERCEPTORS, HttpClient, HttpHandlerFn, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpHandlerFn, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { BlockUIModule, BlockUIService } from 'ng-block-ui';
+import { BlockUIModule } from 'ng-block-ui';
 import { NgxSpinnerModule } from 'ngx-spinner'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { BrowserAnimationsModule, provideAnimations } from "@angular/platform-browser/animations";
-import { provideToastr } from 'ngx-toastr';
+import { provideAnimations } from "@angular/platform-browser/animations";
+import { provideHotToastConfig } from '@ngxpert/hot-toast';
 
 
 export const appConfig: ApplicationConfig = {
@@ -25,6 +24,10 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(NgxSpinnerModule.forRoot({type: 'ball-scale-multiple'})),
     provideAnimationsAsync(),
     provideAnimations(),
-    provideToastr()
+    provideHotToastConfig({
+      stacking: "depth",
+      position: "top-right"
+    }),
+    importProvidersFrom(BlockUIModule.forRoot())
   ]
 };

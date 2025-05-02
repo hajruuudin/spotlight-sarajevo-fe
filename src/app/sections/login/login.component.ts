@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { NgxSpinner, NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { SystemLogin } from '../../models/system-login.model';
-import { ToastrService } from 'ngx-toastr';
 import { SessionService } from '../../services/session.service';
 import { LoggedUserProfile } from '../../models/user-model';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit{
     private authService: AuthService,
     private spinner: NgxSpinnerService,
     private router: Router,
-    private toastr: ToastrService,
+    private toastr: HotToastService,
     private session: SessionService
   ) {}
 
@@ -65,12 +65,28 @@ export class LoginComponent implements OnInit{
         },
         error: (error) => {
           this.spinner.hide()
-          this.toastr.error(error.error.message, "Error")
+          this.toastr.error('Login error!', {
+            position: 'top-right',
+            style: {
+              border: "2px solid red",
+              padding: "16px",
+              background: ""
+            },
+            theme: "toast"
+          })
           console.error('Error logging in to backend with system', error)
         }
       })
     } else {
-      this.toastr.error('Credentials Missing!', 'Error')
+      this.toastr.error('Credentials missing', {
+        position: 'top-right',
+        style: {
+          border: "2px solid red",
+          padding: "16px",
+          background: ""
+        },
+        theme: "toast"
+      })
     }
   }
 
@@ -99,7 +115,15 @@ export class LoginComponent implements OnInit{
             },
             (error) => {
               this.spinner.hide()
-              this.toastr.error(error.error.message, "Error")
+              this.toastr.error('Login error', {
+                position: 'top-right',
+                style: {
+                  border: "2px solid red",
+                  padding: "16px",
+                  background: ""
+                },
+                theme: "toast"
+              })
               console.error('Error logging in to backend with google', error)
             }
           );
