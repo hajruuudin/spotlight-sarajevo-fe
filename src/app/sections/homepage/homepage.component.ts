@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HeadingComponent } from "../../components/heading/heading.component";
 import { SpotHeadlineComponent } from "../../components/spot-headline/spot-headline.component";
 import { SpotShorthand } from '../../models/spot-model';
@@ -15,14 +15,27 @@ import { EventSearchComponent } from "../../components/event-search/event-search
 import { LandmarkDiscoverComponent } from "../../components/landmark-discover/landmark-discover.component";
 import { CategoryService } from '../../services/category.service';
 import { CategoryBlockComponent } from "../../components/category-block/category-block.component";
+import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-homepage',
   imports: [NgFor, NgIf, HeadingComponent, SpotHeadlineComponent, EventHeadlineComponent, SpotDiscoverComponent, ButtonRegularComponent, SpotSearchComponent, CalendarDayComponent, EventSearchComponent, LandmarkDiscoverComponent, CategoryBlockComponent],
   templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.css'
+  styleUrl: './homepage.component.css',
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('200ms ease-in', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('200ms ease-out', style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
-export class HomepageComponent implements OnInit{
+export class HomepageComponent implements OnInit, OnDestroy{
   headlineSpot : SpotShorthand | null = null;
   headlineEvent : EventShorthand | null = null;
   spots : SpotShorthand[] | null = null;
@@ -40,7 +53,7 @@ export class HomepageComponent implements OnInit{
   constructor(
     private spotService : SpotService,
     private eventService : EventService,
-    private categoryService : CategoryService
+    private categoryService : CategoryService,
   ) {}
 
 
@@ -72,6 +85,10 @@ export class HomepageComponent implements OnInit{
     this.loadQueryAndDisplayDays()
     this.loadLandmarkSpots()
     this.loadCategories()
+  }
+
+  ngOnDestroy(): void{
+
   }
 
   loadQueryAndDisplayDays() {

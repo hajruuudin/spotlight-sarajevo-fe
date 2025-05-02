@@ -65,13 +65,13 @@
                 <h2 class="text-2xl font-bold">or</h2>
                 <div class="h-0.5 rounded-2xl w-2/5 bg-white"></div>
             </div>
-
-            <button (click)="this.signInWithGoogleCustom()" class="w-full h-14 rounded-xl bg-(--button) hover:bg-(--background) text-white outline-1 outline-white text-xl font-semibold transition-all duration-75 flex flex-row justify-center items-center">
-                <img src="/assets/images/GOOGLE.png" alt="Google" class="w-6 h-6 ml-5">
-                <span class="flex-grow">Register with Google</span>
-                <img src="/assets/images/GOOGLE.png" alt="Google" class="opacity-0 w-6 h-6 mr-5">
-            </button>
         </form>
+
+        <button (click)="this.signInWithGoogleCustom()" class="w-full h-14 rounded-xl bg-(--button) hover:bg-(--background) text-white outline-1 outline-white text-xl font-semibold transition-all duration-75 flex flex-row justify-center items-center">
+            <img src="/assets/images/GOOGLE.png" alt="Google" class="w-6 h-6 ml-5">
+            <span class="flex-grow">Register with Google</span>
+            <img src="/assets/images/GOOGLE.png" alt="Google" class="opacity-0 w-6 h-6 mr-5">
+        </button>
     </div>
 
     <div *ngIf="this.categoriesSection" class="flex flex-col justify-center items-center">
@@ -84,6 +84,7 @@
                 <app-smallcategorylabel 
                     [isSelected]="this.isCategorySelected(categories['categoryName'])" 
                     [label]="category['categoryName']"
+                    [isLimitReached]="this.categoriesSelected.length == 3"
                     (isSelectedChange)="onCategorySelected($event, category['categoryName'])">
                 </app-smallcategorylabel>
             </div>
@@ -118,13 +119,9 @@
         <a href="/auth/login"><button class="w-full h-14 rounded-xl mt-5  bg-(--primary) hover:bg-cyan-600 text-white  outline-amber-50 text-xl font-semibold transition-all duration-75 pl-4 pr-4">Login</button></a>
     </div>
 
-
-
     <h3 *ngIf="!this.successSection" class="text-l mt-2 text-center">Already have an account? <a href="/auth/login"><strong>Login!</strong></a></h3>
 
-    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#777" type="ball-scale-multiple" [fullScreen]="true" style="z-index: 999;" >
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#777" type="fire" [fullScreen]="true" style="z-index: 999;" >
         <p style="color: white"> Loading... </p>
     </ngx-spinner>
-    
-    
 </section>

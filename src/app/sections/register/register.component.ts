@@ -6,9 +6,9 @@ import { NgFor, NgIf } from '@angular/common';
 import { SmallcategorylabelComponent } from '../../components/small-category-label/smallcategorylabel.component';
 import { CategoryService } from '../../services/category.service';
 import { QuestionComponentComponent } from "../../components/question-component/question-component.component";
-import { ToastrService } from 'ngx-toastr';
 import { PreferencesModel } from '../../models/preferences.model';
 import { SystemUserModel } from '../../models/system-user.model';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 declare global {
   interface Window {
@@ -68,7 +68,7 @@ export class RegisterComponent {
     private authService: AuthService,
     private spinner: NgxSpinnerService,
     private categoryService: CategoryService,
-    private toastr : ToastrService
+    private toastr : HotToastService
   ) {}
 
   ngOnInit(){
@@ -104,21 +104,20 @@ export class RegisterComponent {
       const repeatPassword = this.registerCredentialsForm.get('repeatPassword')?.value;
 
       if (password.length < 6) {
-        this.toastr.error('Password must be longer than 6 characters.', 'Validation Error');
+        this.toastr.error('Password must be longer than 6 characters.', {style: {border: "2px solid red"}});
         return;
       }
 
       if (!/[A-Z]/.test(password)) {
-        this.toastr.error('Password must contain at least one uppercase letter.', 'Validation Error');
+        this.toastr.error('Password must contain at least one uppercase letter.', {style: {border: "2px solid red"}});
         return;
       }
 
       if (password !== repeatPassword) {
-        this.toastr.error('Passwords do not match.', 'Validation Error');
+        this.toastr.error('Passwords do not match.', {style: {border: "2px solid red"}});
         return;
       }
 
-      console.log('Form submitted:', this.registerCredentialsForm.value);
       let systemUser = new SystemUserModel(
         this.registerCredentialsForm.get('firstName')?.value,
         this.registerCredentialsForm.get('lastName')?.value,
@@ -131,22 +130,23 @@ export class RegisterComponent {
           if(response){
             this.authService.handleSystemSignIn(systemUser).subscribe(
               (response : any) => {
-               console.log(response.firstName, "THIS ONE IS FAILING")
                this.addedFirstName = response.firstName
                this.moveToCategoriesSection()
               },
               error => {
                console.error(error)
-               this.toastr.error("Error occured with system register", "Error")
+               this.toastr.error("Error occured with system register", {style: {border: "2px solid red", padding: "20px"}})
               }
              )
           }
         },
         error: (error) => {
-          this.toastr.error("Email already associated with an account", "Oops!")
+          this.toastr.info("Email already associated with an account", {style: {border: "2px solid cyan", padding: "20px"}})
         }
       })
-    } 
+    } else {
+      this.toastr.error("Please fill in the credentials!", {style: {border: "2px solid red", padding: "20px"}})
+    }
   }
 
 
@@ -172,10 +172,11 @@ export class RegisterComponent {
             },
             (error) => {
               this.spinner.hide()
-              this.toastr.error(error.error.message, "Error")
+              this.toastr.error(error.error.message, {style: {border: "2px solid red", padding: "20px"}})
             }
           );
         } else {
+          this.toastr.error("Internal error! Try again later :(", {style: {border: "2px solid red", padding: "20px"}})
           console.error('No ID token received.');
         }
       }
@@ -193,7 +194,6 @@ export class RegisterComponent {
         this.categoriesSelected.splice(index, 1);
       }
     }
-    console.log('Selected Categories:', this.categoriesSelected);
   }
 
   isCategorySelected(categoryName: string): boolean {
@@ -209,13 +209,7 @@ export class RegisterComponent {
 
   moveToQuestionsSection(){
     if(this.categoriesSelected.length < this.maxSelectedCategories){
-      this.toastr.error('Please select at least 3 categories!', 'Hold up!', {
-        tapToDismiss: true,
-        positionClass: 'toast-top-left',
-        progressBar: true,
-        progressAnimation: 'decreasing',
-        timeOut: 2000
-      });
+      this.toastr.info('Please select at least 3 categories!', {style: {border: "2px solid cyan", padding: "20px"}});
       return;
     }
     this.categoriesSection = false;
@@ -227,13 +221,8 @@ export class RegisterComponent {
   moveToSuccessSection(){
     this.spinner.show()
     if(!this.verifyQuestionsSelected()){
-      this.toastr.error('Please answer all of the questions!', 'Hold up!', {
-        tapToDismiss: true,
-        positionClass: 'toast-top-left',
-        progressBar: true,
-        progressAnimation: 'decreasing',
-        timeOut: 2000
-      });
+      this.spinner.hide()
+      this.toastr.info('Please answer all the questions!', {style: {border: "2px solid cyan", padding: "20px"}});
       return;
     } else {
       let request = new PreferencesModel(
@@ -256,11 +245,10 @@ export class RegisterComponent {
           this.progressLabel = "Success"
         },
         error => {
-          // OVDE TREBA BIT ERROR SECTION :()
+          this.toastr.error("Internal error! Try again later :(", {style: {border: "2px solid red", padding: "20px"}})
         }
       )
     }
-    
   }
 
   questionASelected(q : any, value : boolean){

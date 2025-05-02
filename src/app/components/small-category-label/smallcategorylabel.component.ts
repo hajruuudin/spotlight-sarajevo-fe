@@ -1,4 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-smallcategorylabel',
@@ -9,12 +10,21 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 export class SmallcategorylabelComponent {
   @Input() label: string = '';
   @Input() isSelected: boolean = false;
+  @Input() isLimitReached: boolean = false;
   @Output() isSelectedChange = new EventEmitter<boolean>();
+
+  constructor(
+    private toastr: HotToastService
+  ) {}
 
   @HostListener('click')
   onClick() {
-    this.isSelected = !this.isSelected;
-    this.isSelectedChange.emit(this.isSelected);
+    if(!this.isLimitReached || this.isSelected){
+      this.isSelected = !this.isSelected;
+      this.isSelectedChange.emit(this.isSelected);
+    } else {
+      this.toastr.error("You can only select three categories", {style: {border: "2px solid red", padding: "20px"}})
+    }
   }
 
   checkboxStyle() {
