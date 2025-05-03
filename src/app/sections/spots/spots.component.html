@@ -1,3 +1,81 @@
-<main class="flex flex-col justify-start items-center">
+<main  class="flex flex-col justify-start items-center p-8 lg:p-16 overflow-visible">
     <app-heading [title]="'Browse Spots'"></app-heading>
+
+    <form [@fadeInOut] [formGroup]="this.searchForm" class="w-full">
+        <app-search-bar
+            [id]="'spotSearch'"
+            [initialSearchTerm]="''"
+            [name]="'searchquery'"
+            [placeholder]="'Seach spots...'"
+            (searchInputChanged)="onSearchInputChange($event)"
+            (searchSubmitted)="onSearchSubmit($event)"
+        >
+        </app-search-bar>
+    </form>
+
+    <section [@fadeInOut] id="results-and-filter" class="w-full flex flex-col lg:flex-row items-start">
+        <div id="filter-container-large" class="w-full lg:w-1/4 lg:p-4 sticky border-4 border-(--item-border) top-20 lg:top-4 rounded-2xl bg-(--background) lg:bg-(--navbar) my-4 lg:my-0 flex flex-col justify-start items-start z-30">
+            <form [formGroup]="filterForm" class="w-full">
+                <!-- BELOW LARGE: SIDEBAR FILTER SECTION -->
+                <div id="filter-conainer-mobile" class="w-full flex lg:hidden flex-row justify-center items-stretch">
+
+                    <div id="sort" class="bg-(--background) w-1/3 flex flex-col justify-center items-center rounded-2xl">
+                        <div class="flex flex-row w-full h-full">
+                            <select id="sort-options" formControlName="sort-options" class="w-full border-2 border-(--primary) rounded-l-2xl px-4">
+                                <option *ngFor="let option of sortOptions" value="{{option}}">{{option}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="sort" class="bg-(--background) w-1/3 flex flex-col justify-center items-center rounded-2xl">
+                        <div class="flex flex-row w-full h-full">
+                            <select id="category-options" formControlName="sort-options" class="w-full border-2 border-(--primary) p-2">
+                                <option *ngFor="let category of categories" value="{{category.categoryName}}">{{category.categoryName}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="apply" class="bg-(--item-border) py-4 w-1/3 flex flex-row justify-center items-center">
+                        Apply
+                    </div>
+                </div>
+                <!-- BELOW LARGE: SIDEBAR FILTER SECTION -->
+                
+                <!-- ABOVE LARGE: SIDEBAR FILTER SECTION -->
+                <div id="filter-form-full" class="hidden lg:flex flex-col justify-start items-start">
+                    <h2 class="text-2xl my-2 font-bold">Sort</h2>
+
+                    <div class="w-full flex flex-row justify-between items-center">
+                        <label for="sort-alphabetical">Alphabetical</label>
+                        <input type="radio" id="sort-alphabetical" value="alphabetical" formControlName="sort-options"/>
+                    </div>
+
+                    <div class="w-full flex flex-row justify-between items-center">
+                        <label for="sort-rating">Top Rated</label>
+                        <input type="radio" id="sort-rating" value="rating" formControlName="sort-options"/>
+                    </div>
+
+                    <div class="w-full flex flex-row justify-between items-center">
+                        <label for="sort-popularity">Popularity</label>
+                        <input type="radio" id="sort-popularity" value="popularity" formControlName="sort-options"/>
+                    </div>
+
+                    <h2 class="text-2xl my-2 font-bold">Category</h2>
+
+                    <div *ngFor="let category of this.categories" class="w-full flex flex-row justify-between items-center">
+                        <label for="d-{{category.categoryName}}">{{category.categoryName}}</label>
+                        <input type="checkbox" id="d-{{category.categoryName}}" value="{{category.categoryName}}" formControlName="category-options"/>
+                    </div>
+                </div>
+                <!-- ABOVE LARGE: SIDEBAR FILTER SECTION -->
+                
+            </form>
+        </div>
+
+        <div id="results-container" class="w-full lg:w-3/4 lg:ml-4 flex flex-col space-y-4 justify-start items-stretch">
+            <app-spot-search *ngFor="let spot of this.searchResult"
+                [spot]="spot"
+            ></app-spot-search>
+        </div>
+    </section>
 </main>
