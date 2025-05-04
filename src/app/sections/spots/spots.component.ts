@@ -7,13 +7,17 @@ import { SpotShorthand } from '../../models/spot-model';
 import { SpotService } from '../../services/spot.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpotSearchComponent } from "../../components/spot-search/spot-search.component";
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { CategoryService } from '../../services/category.service';
 import { CategoryModel } from '../../models/category-model';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ButtonRegularComponent } from "../../components/button-regular/button-regular.component";
 
 @Component({
   selector: 'app-spots',
-  imports: [NgFor, HeadingComponent, SearchBarComponent, ReactiveFormsModule, SpotSearchComponent],
+  imports: [NgFor, NgIf, HeadingComponent, SearchBarComponent, ReactiveFormsModule, SpotSearchComponent, MatSelectModule, MatFormFieldModule, ButtonRegularComponent],
   templateUrl: './spots.component.html',
   styleUrl: './spots.component.css',
   animations: [
@@ -26,15 +30,33 @@ import { CategoryModel } from '../../models/category-model';
         animate('200ms ease-out', style({ opacity: 0 })),
       ]),
     ]),
+
+    trigger('fadeInOutComponents', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('50ms ease-in', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('50ms ease-out', style({ opacity: 0 })),
+      ]),
+    ]),
   ],
 })
 export class SpotsComponent implements OnInit{
+  @BlockUI('search-block') searchBlock : NgBlockUI | null = null;
+
   searchForm : FormGroup;
   filterForm : FormGroup;
+  currentSearchTerm : string = '';
+
+  pageNumber : number = 0;
+  pageSize : number = 5;
+  totalElements : number = 100;
+
   searchResult: SpotShorthand[] = [];
 
+  sortOptions : string[] = ["alphabetical", "rating", "popularity"]
   categories : CategoryModel[] = []
-  sortOptions : string[] = ["Alphabetical", "Rating", "Popularity"]
 
   constructor(
     private formBuilder : FormBuilder,
@@ -45,15 +67,16 @@ export class SpotsComponent implements OnInit{
   {
     this.searchForm = this.formBuilder.group({})
     this.filterForm = this.formBuilder.group({
-      "sort-options": [''],
-      "category-options" : ['']
+      "sortOptions": [''],
+      "categoryOptions" : ['']
     })
   }
 
   ngOnInit(): void {
-    this.spotService.getAllSpots().subscribe({
+    this.spotService.getSpotShorthands('', '', [], this.pageNumber, this.pageSize).subscribe({
       next: (response : any) => {
         this.searchResult = response['content'] as SpotShorthand[]
+        this.totalElements = response['totalElements']
       },
       error: (error : Error) => {
         console.error(error)
@@ -71,15 +94,51 @@ export class SpotsComponent implements OnInit{
     })
   }
 
-  onSearchInputChange(searchTerm: string) {
-    console.log('Search input changed:', searchTerm);
-    // Perform filtering or other actions based on the input
-    // this.filterResults(searchTerm);
+  onSearchSubmit(searchTerm: string) {
+    this.pageNumber = 0;
+    this.currentSearchTerm = searchTerm;
+
+    let categoryIds = this.getSelectedCategoryIds()
+  
+    this.spotService.getSpotShorthands(searchTerm, this.filterForm.get('sortOptions')?.value, categoryIds, this.pageNumber, this.pageSize).subscribe({
+      next: (response : any) => {
+        this.searchResult = response['content'] as SpotShorthand[]
+        this.totalElements = response['totalElements']
+      },
+      error: (error : Error) => {
+        console.error(error)
+      }
+    })
   }
 
-  onSearchSubmit(searchTerm: string) {
-    console.log('Search submitted:', searchTerm);
-    // Perform the actual search action (e.g., API call)
-    // this.performSearch(searchTerm);
+  onCategoryCheckboxChange(event: any): void {
+    const categoryId = parseInt(event.target.value, 10);
+    const isChecked = event.target.checked;
+    const categoryOptionsControl = this.filterForm.get('categoryOptions');
+    let currentCategories = categoryOptionsControl?.value as number[];
+
+    if (isChecked) {
+      currentCategories = [...currentCategories, categoryId];
+    } else {
+      currentCategories = currentCategories.filter(id => id !== categoryId);
+    }
+
+    categoryOptionsControl?.setValue(currentCategories);
+  }
+
+  getSelectedCategoryIds(): number[] {
+    return this.filterForm.get('categoryOptions')?.value || [];
+  }
+
+  onLoadMoreClick(){
+    this.pageNumber++
+    this.spotService.getSpotShorthands(this.currentSearchTerm, this.filterForm.get('sortOptions')?.value, this.getSelectedCategoryIds(), this.pageNumber, this.pageSize).subscribe({
+      next: (response : any) => {
+        this.searchResult = this.searchResult.concat(response['content'] as SpotShorthand[])
+      },
+      error: (error : Error) => {
+        console.error(error)
+      }
+    })
   }
 }

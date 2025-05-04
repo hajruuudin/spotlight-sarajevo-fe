@@ -76,7 +76,7 @@ export class HomepageComponent implements OnInit, OnDestroy{
       }
     })
 
-    this.spotService.getAllSpots().subscribe({
+    this.spotService.getSpotShorthands('', '', [], 0, 10).subscribe({
       next: (response: any) => {
         this.spots = response['content']
       }

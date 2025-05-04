@@ -16,19 +16,9 @@ export class SearchBarComponent {
   @Input() name : string | null = null;
   @Input() id : string | null = null;
   @Input() initialSearchTerm: string = '';
-  @Output() searchInputChanged = new EventEmitter<string>();
   @Output() searchSubmitted = new EventEmitter<string>();
 
   searchInput = new FormControl(this.initialSearchTerm);
-
-  constructor() {
-    this.searchInput.valueChanges.pipe(
-      debounceTime(300),
-      distinctUntilChanged()
-    ).subscribe(value => {
-      this.searchInputChanged.emit(value!); // Zapamti ovo, ako bude fulilo nekad
-    });
-  }
 
   searchButtonClicked() {
     this.searchSubmitted.emit(this.searchInput.value!); // I ovo konju
