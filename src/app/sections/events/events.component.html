@@ -1,3 +1,92 @@
-<main class="flex flex-col justify-start items-center">
+<main class="flex flex-col justify-start items-center p-8 lg:p-16 overflow-visible">
     <app-heading [title]="'Browse Events'"></app-heading>
+
+    <form [@fadeInOut] [formGroup]="this.searchForm" class="w-full">
+        <app-search-bar
+            [id]="'eventSearch'"
+            [initialSearchTerm]="''"
+            [name]="'searchquery'"
+            [placeholder]="'Seach events...'"
+            (searchSubmitted)="onSearchSubmit($event)"
+        >
+        </app-search-bar>
+    </form>
+
+    <section [@fadeInOut] id="results-and-filter" class="w-full flex flex-col lg:flex-row items-start">
+        <div id="filter-container-large" class="w-full lg:w-1/4 lg:p-4 sticky border-4 border-(--navbar) top-20 lg:top-4 rounded-2xl bg-(--background) lg:bg-(--navbar) my-4 lg:my-0 flex flex-col justify-start items-start z-30">
+            <form [formGroup]="filterForm" class="w-full">
+                <!-- BELOW LARGE: SIDEBAR FILTER SECTION -->
+                <div id="filter-conainer-mobile" class="w-full flex lg:hidden flex-row justify-center items-stretch">
+                    <div id="sort" class="bg-(--background) w-1/2 py-2 flex flex-col justify-center items-center rounded-2xl">
+                        <div class="flex flex-row w-full h-full">
+                            <mat-form-field appearance="fill" class="w-full">
+                                <mat-select
+                                  formControlName="sortOptions"
+                                  panelClass="sort-dropdown">
+                                  <mat-option *ngFor="let sort of sortOptions" [value]="sort">
+                                    {{ sort }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="w-1/2 py-2 flex flex-col items-center rounded-2xl">
+                        <mat-form-field appearance="fill" class="w-full">
+                          <mat-select
+                            formControlName="categoryOptions"
+                            multiple
+                            panelClass="categories-dropdown">
+                            <mat-option *ngFor="let category of categories" [value]="category.id">
+                              {{ category.categoryName }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- BELOW LARGE: SIDEBAR FILTER SECTION -->
+                
+                <!-- ABOVE LARGE: SIDEBAR FILTER SECTION -->
+                <div id="filter-form-full" class="hidden lg:flex flex-col justify-start items-start">
+                    <h2 class="text-2xl my-2 font-bold">Sort</h2>
+
+                    <div class="w-full flex flex-row justify-between items-center">
+                        <label for="sort-alphabetical">Alphabetical</label>
+                        <input type="radio" id="sort-alphabetical" value="alphabetical" formControlName="sortOptions"/>
+                    </div>
+
+                    <div class="w-full flex flex-row justify-between items-center">
+                        <label for="sort-date">Date</label>
+                        <input type="radio" id="sort-date" value="date" formControlName="sortOptions"/>
+                    </div>
+
+                    <h2 class="text-2xl my-2 font-bold">Category</h2>
+
+                    <div *ngFor="let category of this.categories" class="w-full flex flex-row justify-between items-center">
+                        <label for="d-{{ category.categoryName }}">{{category.categoryName}}</label>
+                        <input
+                        type="checkbox"
+                        id="d-{{ category.categoryName }}"
+                        [value]="category.id"
+                        (change)="onCategoryCheckboxChange($event)"
+                        />
+                    </div>
+                </div>
+                <!-- ABOVE LARGE: SIDEBAR FILTER SECTION -->
+                
+            </form>
+        </div>
+
+        <div id="results-container" class="w-full lg:w-3/4 lg:ml-4 flex flex-col space-y-4 justify-start items-stretch">
+            <app-event-search [@fadeInOutComponents] *ngFor="let event of this.searchResult"
+                [event]="event"
+            ></app-event-search>
+
+            <div class="flex flex-col items-center justify-center">
+                <app-not-found *ngIf="this.searchResult.length == 0"></app-not-found>
+                <p *ngIf="this.searchResult.length != 0">Showing {{this.searchResult.length}} results of {{totalElements}} events</p>
+                <app-button-regular *ngIf="this.searchResult.length < this.totalElements" (click)="this.onLoadMoreClick()" [buttonLabel]="'Load more'"></app-button-regular>
+            </div>
+        </div>
+    </section>
 </main>

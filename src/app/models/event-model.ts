@@ -3,6 +3,7 @@ export interface EventShorthand{
     slug: string;
     officialName: string,
     smallDescription: string,
+    startDateFormatted: string,
     categoryName: string,
     tagNames: string[],
     imageUrl: string;

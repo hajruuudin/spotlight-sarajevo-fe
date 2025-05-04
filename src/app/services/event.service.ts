@@ -19,4 +19,16 @@ export class EventService {
     })
   }
 
+  getEventsShorthand(search: string, sort: string, categories: number[], pageNumber: number, pageSize: number){
+    let url = `/api/event/shorthand?search=${search}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+
+    categories.forEach(category => {
+      url += `&categories=${category}`
+    })
+
+    return this.http.get(url, {
+      withCredentials: true
+    })
+  }
+
 }
