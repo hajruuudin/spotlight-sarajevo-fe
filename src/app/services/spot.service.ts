@@ -19,6 +19,19 @@ export class SpotService {
     })
   }
 
+  getSpotShorthands(search: string, sort: string, categories: number[], pageNumber: number, pageSize: number){
+    let url = `/api/spot/shorthands?search=${search}&sort=${sort}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+    console.log(url)
+
+    categories.forEach(category => {
+      url += `&categories=${category}`
+    })
+
+    return this.http.get(url, {
+      withCredentials: true
+    })
+  }
+
   getCategorisedSpots(categoryId : number){
     return this.http.get(`/api/spot/category/${categoryId}`, {
       withCredentials: true

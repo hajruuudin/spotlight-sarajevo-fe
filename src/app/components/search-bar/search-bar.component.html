@@ -1,0 +1,15 @@
+<div class="w-full my-4 relative flex flex-row group rounded-2xl bg-(--navbar)">
+    <input
+        [formControl] = "this.searchInput"
+        type="text"
+        placeholder="{{this.placeholder}}"
+        id="{{this.id}}"
+        name="{{this.name}}"
+        class="rounded-2xl w-full py-4 px-2 border-4 bg-(--background) border-(--navbar) transition-all"
+    >
+    <button (click)="this.searchButtonClicked()" class="absolute top-0 right-0 h-full w-1/4 px-2 py-4 rounded-2xl text-(--white) bg-(--navbar) hover:bg-cyan-700 transition-all flex justify-center items-center">
+        <img src="/assets/images/SPOTS.png" alt="Search" class="w-12 h-12">
+        <span class="text-xl font-bold hidden md:inline">Search</span>
+    </button>
+</div>
+
