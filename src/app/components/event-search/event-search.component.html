@@ -3,16 +3,18 @@
         <div class="category-label-medium bg-fuchsia-50 w-auto mt-2 px-2 md:px-5 py-0.5 flex flex-col grow justify-start items-center rounded-full">
             <span class="text-xs md:text-base text-black font-semibold whitespace-nowrap">{{this.randomTag}}</span>
         </div>
-        <div class="grow"></div>
-        <span class="text-sm md:text-xl pt-4 md:pt-12">{{event.categoryName}}</span>
-        <div class="w-1/4 bg-amber-50 h-0.5 rounded-full"></div>
-        <h3 class="text-xl md:text-3xl font-bold mt-1 whitespace-nowrap">{{event.officialName}}</h3>
+        <div class="flex flex-row items-start justify-center mt-4 lg:mt-12 space-x-2">
+            <span class="text-sm md:text-xl ">{{event.categoryName}} |</span>
+            <span class="text-white text-sm md:text-xl font-bold whitespace-nowrap">{{event.startDateFormatted}}</span>
+        </div>
+        <div class="w-2/4 bg-amber-50 h-0.5 rounded-full"></div>
+        <h3 class="text-xl md:text-3xl font-bold whitespace-nowrap mt-2">{{event.officialName}}</h3>
         <span class="text-sm md:text-base whitespace-nowrap">{{event.smallDescription}}</span>
     </div>
     <div
       class="w-1/2 h-auto rounded-r-3xl relative z-10"
       [style.backgroundImage]="event.imageUrl ? 'url(' + event.imageUrl + ')' : ''"
-      style="background-size: cover; background-position: center; scale: 1.3;"
+      style="background-size: cover; background-position: center; scale: 1;"
     >
     <div
         class="absolute inset-0 rounded-r-3xl bg-gradient-to-r from-black via-black/20 to-transparent"

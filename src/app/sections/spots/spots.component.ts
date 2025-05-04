@@ -10,14 +10,14 @@ import { SpotSearchComponent } from "../../components/spot-search/spot-search.co
 import { NgFor, NgIf } from '@angular/common';
 import { CategoryService } from '../../services/category.service';
 import { CategoryModel } from '../../models/category-model';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ButtonRegularComponent } from "../../components/button-regular/button-regular.component";
+import { NotFoundComponent } from "../../components/not-found/not-found.component";
 
 @Component({
   selector: 'app-spots',
-  imports: [NgFor, NgIf, HeadingComponent, SearchBarComponent, ReactiveFormsModule, SpotSearchComponent, MatSelectModule, MatFormFieldModule, ButtonRegularComponent],
+  imports: [NgFor, NgIf, HeadingComponent, SearchBarComponent, ReactiveFormsModule, SpotSearchComponent, MatSelectModule, MatFormFieldModule, ButtonRegularComponent, NotFoundComponent],
   templateUrl: './spots.component.html',
   styleUrl: './spots.component.css',
   animations: [
@@ -43,8 +43,6 @@ import { ButtonRegularComponent } from "../../components/button-regular/button-r
   ],
 })
 export class SpotsComponent implements OnInit{
-  @BlockUI('search-block') searchBlock : NgBlockUI | null = null;
-
   searchForm : FormGroup;
   filterForm : FormGroup;
   currentSearchTerm : string = '';
