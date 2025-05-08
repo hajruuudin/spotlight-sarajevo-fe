@@ -10,6 +10,7 @@ import { NgIf } from '@angular/common';
 })
 export class LandmarkDiscoverComponent {
   @Input() landmark: SpotShorthand | null = null;
+  @Input() widthOption: string = ''
   @Input() navigateToLandmarkOverview: (spotId: number) => void = () => {};
   
   randomTag: string | null = null;

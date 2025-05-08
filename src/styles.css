@@ -51,6 +51,8 @@
 
   --navbar-layer: 999;
 
+  --discover-event: 500px;
+
   @keyframes slide {
     25% {
       transform: translateX(50px);
