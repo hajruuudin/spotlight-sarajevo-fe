@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button-regular',
@@ -8,6 +8,10 @@ import { Component, Input } from '@angular/core';
 })
 export class ButtonRegularComponent {
   @Input() buttonLabel : String | null = null;
-  @Input() buttonOnClick: () => void = () => {};
+  @Output() buttonOnClick = new EventEmitter<void>();
+
+  onClick(): void {
+    this.buttonOnClick.emit();
+  }
   
 }
