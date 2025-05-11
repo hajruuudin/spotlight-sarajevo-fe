@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CollectionCreateModel } from '../models/collection-model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,11 @@ export class CollectionService {
     })
   }
 
-  addCustomCollection(collectionName: string, collectionType: string){
-    return this.http.post(`/api/collection/custom`, {collectionName, collectionType}, {
+  getAllCustomCollections(){}
+
+  addCustomCollection(request: CollectionCreateModel){
+    return this.http.post(`/api/collection/custom`, request, {
       withCredentials: true
     })
-  }
-
+  } // DOdati da se provjerava ime
 }

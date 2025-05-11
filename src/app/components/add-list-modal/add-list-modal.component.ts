@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, Ma
 import { HotToastService } from '@ngxpert/hot-toast';
 import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
 import { CollectionService } from '../../services/collection.service';
+import { CollectionCreateModel, CollectionModel } from '../../models/collection-model';
 
 export interface DialogData {
   message: string;
@@ -27,8 +28,8 @@ export class AddListModalComponent {
     private collectionService: CollectionService
   ) {
     this.newCollectionForm = this.fb.group({
-      'collection-name' : ['', Validators.required],
-      'collection-type' : ['', Validators.required]
+      'collectionName' : ['', Validators.required],
+      'collectionType' : ['', Validators.required]
     })
   }
 
@@ -42,10 +43,24 @@ export class AddListModalComponent {
     } else {
       this.spinner.show()
 
+      console.log(this.newCollectionForm.get('collectionName')?.value)
+
       this.collectionService.addCustomCollection(
-        this.newCollectionForm.get('collection-name')?.value,
-        this.newCollectionForm.get('collection-type')?.value
-      )
+        new CollectionCreateModel(
+          this.newCollectionForm.get('collectionName')?.value,
+          this.newCollectionForm.get('collectionType')?.value
+        )
+      ).subscribe({
+        next: (respone: CollectionModel | any) => {
+          this.spinner.hide()
+          this.toastr.show("Collection added:", respone.collectionName)
+          this.dialogRef.close()
+        },
+        error: (error: Error) => {
+          this.spinner.hide()
+          this.toastr.show("Error while making custom collection")
+        }
+      })
     }
   }
 }

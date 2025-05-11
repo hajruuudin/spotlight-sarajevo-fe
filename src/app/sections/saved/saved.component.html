@@ -1,7 +1,7 @@
 <main class="flex flex-col justify-start items-center p-8 lg:p-16 overflow-visible">
     <app-heading [title]="'Saved'"></app-heading>
 
-    <section id="saved-main-container" class="w-full flex flex-row items-start mt-10 space-x-4">
+    <section [@fadeInOut] id="saved-main-container" class="w-full flex flex-row items-start mt-10 space-x-4">
         <div id="list-option-container" class="w-2/6 h-auto p-4 bg-(--navbar) rounded-2xl flex flex-col">
             <form [formGroup]="collectionsForm">
                 <h2 class="text-xl font-bold self-start">Default Collections</h2>

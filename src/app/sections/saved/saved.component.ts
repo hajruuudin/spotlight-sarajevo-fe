@@ -7,21 +7,23 @@ import { SessionService } from '../../services/session.service';
 import { NgFor, NgIf } from '@angular/common';
 import { CollectionService } from '../../services/collection.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CollectionModel } from '../../models/collection-model';
+import { CollectionWithItemsModel } from '../../models/collection-model';
 import { SpotSearchComponent } from "../../components/spot-search/spot-search.component";
 import { SpotShorthand } from '../../models/spot-model';
 import { EventShorthand } from '../../models/event-model';
 import { EventSearchComponent } from "../../components/event-search/event-search.component";
+import { fadeInOutAnimation } from '../../animations/app.animations';
 
 @Component({
   selector: 'app-saved',
   imports: [NgIf, NgFor, ReactiveFormsModule, HeadingComponent, ButtonRegularComponent, SpotSearchComponent, EventSearchComponent],
   templateUrl: './saved.component.html',
-  styleUrl: './saved.component.css'
+  styleUrl: './saved.component.css',
+  animations: [fadeInOutAnimation]
 })
 export class SavedComponent implements OnInit{
   dialogResult = '';
-  displayedCollection : CollectionModel | null = null
+  displayedCollection : CollectionWithItemsModel | null = null
 
   collectionsForm: FormGroup
 
