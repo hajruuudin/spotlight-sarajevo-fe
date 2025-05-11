@@ -1,0 +1,33 @@
+<div class="bg-(--navbar) kumbh-sans-regular ">
+    <h2 class="text-white text-2xl font-bold mx-4 py-4 text-center">Add a Custom Collection</h2>
+    <section class="w-full h-full">
+        <form [formGroup]="this.newCollectionForm" class="flex flex-col justify-center items-center">
+            <h2 class="text-2xl font-bold">Collection Name</h2>
+            <input 
+            class="w-5/6 h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2" 
+            type="text" 
+            name="collectionName" 
+            id="name-input"
+            placeholder="My favourite spots"
+            formControlName="collectionName">
+
+            <h2 class="text-2xl font-bold mt-4">Collection type</h2>
+            <div class="w-5/6 flex flex-row justify-between items-center">
+                <label for="spots" class="text-2xl">Spots</label>
+                <input type="radio" id="spots" value="SPOT" formControlName="collectionType"/>
+            </div>
+            <div class="w-5/6 flex flex-row justify-between items-center">
+                <label for="events" class="text-2xl">Events</label>
+                <input type="radio" id="events" value="EVENT" formControlName="collectionType"/>
+            </div>
+        </form>
+    </section>
+    <mat-dialog-actions align="center">
+        <button mat-button mat-dialog-close="" class="px-4 py-2 text-xl rounded-l-2xl bg-red-900 hover:bg-(--primary) transition-all">Cancel</button>
+        <button mat-button (click)="this.onSaveClick()" cdkFocusInitial class="px-4 py-2 text-xl rounded-r-2xl bg-cyan-600 hover:bg-(--primary) transition-all">Okay</button>
+    </mat-dialog-actions>
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#00cdc6" type="fire" [fullScreen]="true" style="z-index: 999;" >
+        <p style="color: white; font-weight: bold;"> Loading... </p>
+    </ngx-spinner>
+</div>
