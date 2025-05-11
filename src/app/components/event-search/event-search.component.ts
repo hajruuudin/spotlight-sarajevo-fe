@@ -10,6 +10,7 @@ import { NgIf } from '@angular/common';
 })
 export class EventSearchComponent {
   @Input() event: EventShorthand | null = null;
+  @Input() widthOption: string = ''
   @Input() navigateToEventOverview: (spotId: number) => void = () => {};
   
   randomTag: string | null = null;

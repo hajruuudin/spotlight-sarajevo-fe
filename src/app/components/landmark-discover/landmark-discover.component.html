@@ -1,4 +1,4 @@
-<div *ngIf="landmark" class="bg-black my-4 w-full lg:h-auto rounded-3xl flex flex-row hover:outline-8 hover:pl-1 outline-2 outline-(--item-border) box-border transition-all ease-in-out duration-200 overflow-hidden z-30">
+<div *ngIf="landmark" [style.width]="widthOption" class="bg-black my-4 w-full lg:h-auto rounded-3xl flex flex-row hover:outline-8 hover:pl-1 outline-2 outline-(--item-border) box-border transition-all ease-in-out duration-200 overflow-hidden z-30">
     <div class="search-information p-3 flex flex-col justify-center items-center w-full my-6 md:w-1/3 z-20">
         <div class="grow"></div>
         <h3 class="text-xl md:text-3xl font-bold mt-1 whitespace-nowrap">{{landmark.officialName}}</h3>
