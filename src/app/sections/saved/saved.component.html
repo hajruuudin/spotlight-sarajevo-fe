@@ -1,5 +1,38 @@
 <main class="flex flex-col justify-start items-center p-8 lg:p-16 overflow-visible">
     <app-heading [title]="'Saved'"></app-heading>
 
-    <app-button-regular (buttonOnClick)="openDialog()" [buttonLabel]="'Test Modal'"></app-button-regular>
+    <section id="saved-main-container" class="w-full flex flex-row items-start mt-10 space-x-4">
+        <div id="list-option-container" class="w-2/6 h-auto p-4 bg-(--navbar) rounded-2xl flex flex-col">
+            <form [formGroup]="collectionsForm">
+                <h2 class="text-xl font-bold self-start">Default Collections</h2>
+
+                <div class="w-full flex flex-row justify-between items-center">
+                    <label for="all-spots">All Spots</label>
+                    <input type="radio" id="all-spots" value="All Spots" formControlName="collection-option"/>
+                </div>
+
+                <div class="w-full flex flex-row justify-between items-center">
+                    <label for="all-events">All Events</label>
+                    <input type="radio" id="all-events" value="All Events" formControlName="collection-option"/>
+                </div>
+
+                <h2 *ngIf="this.session.isCurrentUserPremium" class="text-xl font-bold self-start">Custom Collections</h2>
+            </form>
+            <app-button-regular (buttonOnClick)="openDialog()" [buttonLabel]="'Add List'" class="self-center"></app-button-regular>
+        </div>
+
+        <div *ngIf="this.displayedCollection?.collectionType == 'SPOT'" id="list-item-container" class="w-4/6 h-auto flex flex-col justify-around items-stretch space-y-4">
+            <app-spot-search *ngFor="let spot of spotItems"
+                [spot]="spot"
+            >
+            </app-spot-search>
+        </div>
+
+        <div *ngIf="this.displayedCollection?.collectionType == 'EVENT'" id="list-item-container" class="w-4/6 h-auto flex flex-col justify-around items-stretch space-y-4">
+            <app-event-search *ngFor="let event of eventItems"
+                [event]="event"
+            >
+            </app-event-search>
+        </div>
+    </section>
 </main>
