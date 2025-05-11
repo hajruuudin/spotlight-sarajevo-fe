@@ -1,3 +1,72 @@
-<main class="flex flex-col justify-start items-center">
+<main class="flex flex-col justify-start items-center p-8 lg:p-16 overflow-visible">
     <app-heading [title]="'Discover'"></app-heading>
+
+    <section [@fadeInOut] id="discover-recent" class="mt-10 w-full h-auto flex flex-col justify-center items-start">
+        <span class="text-base tracking-widest">RECENT</span>
+        <h2 class="text-xl md:text-3xl mb-2">Discover the most recently addded Spots</h2>
+        <div id="discover-recent-container" class="w-full h-auto flex flex-row justify-start items-center overflow-x-auto space-x-6">
+            <app-spot-discover *ngFor="let recent of this.recentlyAddedSpots"
+            [spot]="recent"
+            ></app-spot-discover>
+        </div>
+        <app-button-regular [buttonLabel]="'Search all spots'" class="self-end"></app-button-regular>
+    </section>
+
+    <section [@fadeInOut] id="discover-historical" class="w-full h-auto flex flex-col justify-center items-start">
+        <span class="text-base tracking-widest">HISTORICAL</span>
+        <h2 class="text-xl md:text-3xl">Explore Sarajevos historical Sites & Landmarks</h2>
+        <div id="discover-historical-container" class="w-full h-auto flex flex-row justify-start items-center overflow-x-auto space-x-6">
+            <app-landmark-discover *ngFor="let landmark of this.historicalSites"
+            [landmark]="landmark"
+            [widthOption]="'400px'"
+            ></app-landmark-discover>
+            <app-landmark-discover *ngFor="let landmark of this.historicalSites"
+            [landmark]="landmark"
+            [widthOption]="'400px'"
+            ></app-landmark-discover>
+            <app-landmark-discover *ngFor="let landmark of this.historicalSites"
+            [landmark]="landmark"
+            [widthOption]="'400px'"
+            ></app-landmark-discover>
+        </div>
+        <app-button-regular [buttonLabel]="'Search all Landmarks'" class="self-end"></app-button-regular>
+    </section>
+
+    <section [@fadeInOut] id="discover-top-rated" class="w-full h-auto flex flex-col justify-center items-start">
+        <span class="text-base tracking-widest">TOP RATED</span>
+        <h2 class="text-xl md:text-3xl mb-2">The most popular and top rated spots in Sarajevo</h2>
+        <div id="discover-recent-container" class="w-full h-auto flex flex-row justify-start items-center overflow-x-auto space-x-6">
+            <app-spot-discover *ngFor="let spot of this.topRated"
+            [spot]="spot"
+            ></app-spot-discover>
+        </div>
+        <app-button-regular [buttonLabel]="'Search all top rated'" class="self-end"></app-button-regular>
+    </section>
+
+    <section [@fadeInOut] id="discover-upcoming-events" class="w-full h-auto flex flex-col justify-center items-start">
+        <span class="text-base tracking-widest">UPCOMING EVENTS</span>
+        <h2 class="text-xl md:text-3xl">Take a peek at the upcoming events in Sarajevo</h2>
+        <div id="discover-upcoming-events-container" class="w-full h-auto flex flex-row justify-start items-center overflow-x-auto space-x-6">
+            <app-event-search *ngFor="let event of this.upcomingEvents"
+            [event]="event"
+            [widthOption]="'500px'"
+            ></app-event-search>
+            <app-event-search *ngFor="let event of this.upcomingEvents"
+            [event]="event"
+            [widthOption]="'500px'"
+            ></app-event-search>
+        </div>
+        <app-button-regular [buttonLabel]="'Search all upcoming events'" class="self-end"></app-button-regular>
+    </section>
+
+    <section [@fadeInOut] id="discover-personal" class="w-full h-auto flex flex-col justify-center items-start">
+        <span class="text-base tracking-widest">PERSONAL</span>
+        <h2 class="text-xl md:text-3xl mb-2">Based on your favourite categories</h2>
+        <div id="discover-personal-container" class="w-full h-auto flex flex-row justify-start items-center overflow-x-auto space-x-6">
+            <app-spot-discover *ngFor="let spot of this.personalSpots"
+            [spot]="spot"
+            ></app-spot-discover>
+        </div>
+        <app-button-regular [buttonLabel]="'Search all personal spots'" class="self-end"></app-button-regular>
+    </section>
 </main>

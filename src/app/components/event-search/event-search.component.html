@@ -1,10 +1,10 @@
-<div *ngIf="event" class="bg-black w-full lg:h-auto rounded-3xl flex flex-row hover:outline-8 hover:pl-1 outline-2 outline-(--item-border) box-border transition-all ease-in-out duration-200 overflow-hidden z-30">
+<div *ngIf="event" [style.width]="widthOption" class="bg-black w-full lg:h-auto rounded-3xl flex flex-row hover:outline-8 hover:pl-1 outline-2 outline-(--item-border) box-border transition-all ease-in-out duration-200 overflow-hidden z-30">
     <div class="search-information p-3 flex flex-col justify-center items-start w-1/2 md:w-2/3 z-20">
         <div class="category-label-medium bg-fuchsia-50 w-auto mt-2 px-2 md:px-5 py-0.5 flex flex-col grow justify-start items-center rounded-full">
             <span class="text-xs md:text-base text-black font-semibold whitespace-nowrap">{{this.randomTag}}</span>
         </div>
         <div class="flex flex-row items-start justify-center mt-4 lg:mt-12 space-x-2">
-            <span class="text-sm md:text-xl ">{{event.categoryName}} |</span>
+            <span class="text-sm md:text-xl whitespace-nowrap">{{event.categoryName}} |</span>
             <span class="text-white text-sm md:text-xl font-bold whitespace-nowrap">{{event.startDateFormatted}}</span>
         </div>
         <div class="w-2/4 bg-amber-50 h-0.5 rounded-full"></div>
