@@ -8,3 +8,31 @@ export interface SpotShorthand{
     rating: DoubleRange,
     imageUrl: string;
 }
+
+export class SpotModel {
+    constructor(
+        public id: number,
+        public slug: string,
+        public officialName: string,
+        public smallDescription: string,
+        public fullDescription: string,
+        public rating: number,
+        public latitude: number,
+        public longitude: number,
+        public categoryName: string,
+        public tagNames: string[],
+        public cleanliness: number,
+        public affordability: number,
+        public accessibility: number,
+        public staffKindness: number,
+        public quality: number,
+        public atmosphere: number,
+        public workHours: object[],
+        public reviews: object[],
+        public created: Date,
+        public createdBy: string,
+        public modified: Date,
+        public modifiedBy: string,
+        public imageUrl: string,
+    ) { }
+}

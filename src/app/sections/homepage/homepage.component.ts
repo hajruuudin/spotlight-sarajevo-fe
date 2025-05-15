@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeadingComponent } from "../../components/heading/heading.component";
 import { SpotHeadlineComponent } from "../../components/spot-headline/spot-headline.component";
 import { SpotShorthand } from '../../models/spot-model';
@@ -15,8 +15,9 @@ import { EventSearchComponent } from "../../components/event-search/event-search
 import { LandmarkDiscoverComponent } from "../../components/landmark-discover/landmark-discover.component";
 import { CategoryService } from '../../services/category.service';
 import { CategoryBlockComponent } from "../../components/category-block/category-block.component";
-import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { Router } from '@angular/router';
+import { SpotDataService } from '../../services/spot-data.service';
 
 @Component({
   selector: 'app-homepage',
@@ -35,7 +36,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
     ]),
   ],
 })
-export class HomepageComponent implements OnInit, OnDestroy{
+export class HomepageComponent implements OnInit {
   headlineSpot : SpotShorthand | null = null;
   headlineEvent : EventShorthand | null = null;
   spots : SpotShorthand[] | null = null;
@@ -47,13 +48,12 @@ export class HomepageComponent implements OnInit, OnDestroy{
 
   calendarEvents : any = []
 
-  navigateToSpotOverview: (spotId: number) => void = () => {console.log("Clicked")};
-  navigateToEventOverview: (eventId: number) => void = () => {console.log("Clicked")};
-
   constructor(
     private spotService : SpotService,
+    private spotDataService : SpotDataService,
     private eventService : EventService,
     private categoryService : CategoryService,
+    private router: Router
   ) {}
 
 
@@ -87,9 +87,20 @@ export class HomepageComponent implements OnInit, OnDestroy{
     this.loadCategories()
   }
 
-  ngOnDestroy(): void{
 
-  }
+  navigateToSpotOverview(spotSlug: string) {
+    this.spotDataService.fetchAndSetSpotOverview(spotSlug).subscribe({
+      next: (response : any) => {
+        this.router.navigate([`spot/${spotSlug}`])
+      }
+    })
+
+  };
+
+  navigateToEventOverview(eventSlug: string) {
+    this.router.navigate([`event/${eventSlug}`])
+  };
+  
 
   loadQueryAndDisplayDays() {
     this.eventsCalendarDays = [];
@@ -154,4 +165,5 @@ export class HomepageComponent implements OnInit, OnDestroy{
       }
     })
   }
+
 }

@@ -14,6 +14,7 @@ import { AddEventComponent } from './sections/add-event/add-event.component';
 import { RequestsComponent } from './sections/requests/requests.component';
 import { LoginComponent } from './sections/login/login.component';
 import { RegisterComponent } from './sections/register/register.component';
+import { SpotOverviewComponent } from './sections/spot-overview/spot-overview.component';
 
 export const routes: Routes = [
     {
@@ -63,6 +64,10 @@ export const routes: Routes = [
             {
                 path: 'profile',
                 component: ProfileComponent
+            },
+            {
+                path: 'spot/:spot-slug',
+                component: SpotOverviewComponent
             }
         ]
     },
