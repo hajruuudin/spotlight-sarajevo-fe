@@ -1,0 +1,20 @@
+<main *ngIf="this.spot" id="spot-overview-container" class="w-full flex flex-col justify-start items-center p-8 space-y-4 lg:p-16">
+    <app-overview-heading
+        [objectOfficialName]="this.spot.officialName"
+        [objectSmallDescription]="this.spot.smallDescription"
+    ></app-overview-heading>
+
+    <section [@fadeInOut] class="w-full h-auto flex flex-col space-y-4 lg:flex-row lg:space-x-4">
+        <div id="images-info-container" class="w-full lg:w-1/2 flex flex-col items-center">
+            <app-image-gallery
+                [thumbnailImage]="this.spot.imageUrl"
+                [images]="[this.spot.imageUrl]"
+            ></app-image-gallery>
+        </div>
+
+        <div id="spot-overview-container" class="w-full lg:w-1/2 flex flex-col">
+            <h3 class="font-bold tracking-wider mb-2">DESCRIPTION</h3>
+            <P>{{this.spot.fullDescription}}</P>
+        </div>
+    </section>
+</main>

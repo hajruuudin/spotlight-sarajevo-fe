@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SpotModel } from '../models/spot-model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,12 @@ export class SpotService {
 
   getCategorisedSpots(categoryId : number){
     return this.http.get(`/api/spot/category/${categoryId}`, {
+      withCredentials: true
+    })
+  }
+
+  getSpotOverviewBySlug(spotSlug: string){
+    return this.http.get<SpotModel>(`/api/spot/overview/${spotSlug}`, {
       withCredentials: true
     })
   }

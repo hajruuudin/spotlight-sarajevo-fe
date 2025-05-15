@@ -1,0 +1,15 @@
+<section class="w-full flex flex-row justify-center items-center">
+    <div
+      class="h-0.5 rounded-2xl bg-white w-1/2"
+      [@expand]="'expanded'"
+    ></div>
+    <div class="flex flex-col justify-center items-center mx-6">
+        <h1 class="text-2xl md:text-4xl font-bold kumbh-sans-bold text-center whitespace-nowrap">{{ this.objectOfficialName }}</h1>
+        <h2 class="text-base md:text-xl text-center whitespace-nowrap">{{ this.objectSmallDescription }}</h2>
+    </div>
+    
+    <div
+      class="h-0.5 rounded-2xl bg-white w-1/2"
+      [@expand]="'expanded'"
+    ></div>
+</section>
