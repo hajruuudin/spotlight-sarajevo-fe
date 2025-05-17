@@ -20,6 +20,8 @@ import {Chart,
   Tooltip,
   Legend
 } from 'chart.js';
+import { NotFoundComponent } from "../../components/not-found/not-found.component";
+import { ButtonRegularComponent } from "../../components/button-regular/button-regular.component";
 
 Chart.register(
   RadarController,
@@ -34,7 +36,7 @@ Chart.register(
 
 @Component({
   selector: 'app-spot-overview',
-  imports: [NgIf, NgFor, OverviewHeadingComponent, ImageGalleryComponent, SmallTagLabelComponent],
+  imports: [NgIf, NgFor, OverviewHeadingComponent, ImageGalleryComponent, SmallTagLabelComponent, NotFoundComponent, ButtonRegularComponent],
   templateUrl: './spot-overview.component.html',
   styleUrl: './spot-overview.component.css',
   animations: [fadeInOutAnimation]
@@ -90,6 +92,9 @@ export class SpotOverviewComponent implements OnInit, AfterViewInit{
               next: (response : any) => {
                 this.spot = response as SpotModel
                 this.formatWorkHours(this.spot.workHours)
+                setTimeout(() => {
+                  this.loadQualityChart()
+                }, 200)
                 this.formattedWorkHoursKeys = Object.keys(this.formattedWorkHours)
               },
               error: (error : Error) => {
@@ -144,7 +149,6 @@ export class SpotOverviewComponent implements OnInit, AfterViewInit{
   }
 
   loadQualityChart(){
-    setTimeout(() => {
     let ctx = this.qualityChartCanvas.nativeElement;
       this.qualityChart = new Chart(ctx, {
         type: 'radar',
@@ -193,7 +197,6 @@ export class SpotOverviewComponent implements OnInit, AfterViewInit{
           }
         }
       });
-    }, 100);
   }
 
   test(){

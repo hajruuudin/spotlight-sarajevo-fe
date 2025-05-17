@@ -71,13 +71,25 @@
             </div>
 
             <!-- Radar Chart Section -->
-            <div class="w-full h-auto">
+            <div *ngIf="this.spot.categoryName != 'Historical Site'" class="w-full h-auto">
                 <h3 class="font-bold tracking-wider mb-2 text-center">QUALITY</h3>
                 <canvas #qualityChartCanvas id="quality-radar-chart" class="bg-(--navbar) rounded-4xl"></canvas>
             </div>
 
             <!-- Reviews Section -->
-            <div></div>
+            <div class="w-full h-auto flex flex-col items-stretch">
+                <h3 class="font-bold tracking-wider mb-2 text-start">REVIEWS</h3>
+                <app-button-regular
+                [buttonLabel]="'Leave a review'"
+                ></app-button-regular>
+
+                <div class="w-full h-0.5 rounded-2xl bg-white opacity-50"></div>
+                <app-not-found *ngIf="this.spot.reviews.length == 0"
+                [head]="'No Reviews'"
+                [message]="'Be the first to review this place!'"
+                class="-z-10"
+                ></app-not-found>
+            </div>
         </div>
     </section>
 </main>

@@ -88,7 +88,7 @@
             ></app-spot-search>
 
             <div class="flex flex-col items-center justify-center">
-                <app-not-found *ngIf="this.searchResult.length == 0"></app-not-found>
+                <app-not-found *ngIf="this.searchResult.length == 0" [head]="'Sorry'" [message]="'We couldn`t find what you were looking for'" [messageContinued]="'If the event or spot is missing, make sure to send a Community request!'"></app-not-found>
                 <p *ngIf="this.searchResult.length != 0">Showing {{this.searchResult.length}} results of {{totalElements}} spots</p>
                 <app-button-regular *ngIf="this.searchResult.length < this.totalElements" (click)="this.onLoadMoreClick()" [buttonLabel]="'Load more'"></app-button-regular>
             </div>

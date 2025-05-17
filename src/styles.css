@@ -28,6 +28,10 @@
       "YOPQ" 300;
 }
 
+.z-999{
+  z-index: 999;
+}
+
 @theme {
     /*COLORS*/
   --text: #ffffff;

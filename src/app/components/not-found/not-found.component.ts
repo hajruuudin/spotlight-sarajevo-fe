@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-not-found',
-  imports: [],
+  imports: [NgIf],
   templateUrl: './not-found.component.html',
   styleUrl: './not-found.component.css',
   host: {
@@ -10,5 +11,8 @@ import { Component } from '@angular/core';
   }
 })
 export class NotFoundComponent {
+  @Input() head = '';
+  @Input() message = ''
+  @Input() messageContinued = ''
 
 }

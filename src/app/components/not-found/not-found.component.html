@@ -1,4 +1,6 @@
-<h2 class="z-10 font-bold text-4xl">Sorry</h2>
-<p class="text-center">We couldn't find what you were looking for</p>
-<p class="text-center">If the event or spot is missing, make sure to send a Community request!</p>
+<h2 *ngIf="this.head != ''" class="z-10 font-bold text-4xl">{{this.head}}</h2>
+<!-- <p class="text-center">We couldn't find what you were looking for</p>
+<p class="text-center">If the event or spot is missing, make sure to send a Community request!</p> -->
+<p class="text-center">{{this.message}}</p>
+<p class="text-center">{{this.messageContinued}}</p>
 
