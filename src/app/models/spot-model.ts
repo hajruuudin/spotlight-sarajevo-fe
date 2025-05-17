@@ -1,3 +1,5 @@
+import { WorkHoursDB } from "./util-model";
+
 export interface SpotShorthand{
     id: number;
     slug: string;
@@ -20,6 +22,7 @@ export class SpotModel {
         public latitude: number,
         public longitude: number,
         public categoryName: string,
+        public address: string,
         public tagNames: string[],
         public cleanliness: number,
         public affordability: number,
@@ -27,7 +30,7 @@ export class SpotModel {
         public staffKindness: number,
         public quality: number,
         public atmosphere: number,
-        public workHours: object[],
+        public workHours: WorkHoursDB[],
         public reviews: object[],
         public created: Date,
         public createdBy: string,

@@ -4,7 +4,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'app-button-regular',
   imports: [],
   templateUrl: './button-regular.component.html',
-  styleUrl: './button-regular.component.css'
+  styleUrl: './button-regular.component.css',
+  host: {
+
+  }
 })
 export class ButtonRegularComponent {
   @Input() buttonLabel : String | null = null;
