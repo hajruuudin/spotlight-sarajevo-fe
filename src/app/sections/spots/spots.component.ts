@@ -14,6 +14,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ButtonRegularComponent } from "../../components/button-regular/button-regular.component";
 import { NotFoundComponent } from "../../components/not-found/not-found.component";
+import { Title } from '@angular/platform-browser';
+import { SpotDataService } from '../../services/spot-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-spots',
@@ -59,7 +62,10 @@ export class SpotsComponent implements OnInit{
   constructor(
     private formBuilder : FormBuilder,
     private spotService : SpotService,
+    private spotDataService: SpotDataService,
     private categoryService: CategoryService,
+    private titleService: Title,
+    private router: Router,
     private toastr : HotToastService
   )
   {
@@ -75,6 +81,7 @@ export class SpotsComponent implements OnInit{
       next: (response : any) => {
         this.searchResult = response['content'] as SpotShorthand[]
         this.totalElements = response['totalElements']
+        this.titleService.setTitle("Search Spots")
       },
       error: (error : Error) => {
         console.error(error)
@@ -139,4 +146,12 @@ export class SpotsComponent implements OnInit{
       }
     })
   }
+
+   navigateToSpotOverview(spotSlug: string) {
+    this.spotDataService.fetchAndSetSpotOverview(spotSlug).subscribe({
+      next: (response : any) => {
+        this.router.navigate([`spot/${spotSlug}`])
+      }
+    })
+  };
 }

@@ -13,6 +13,7 @@ import { SpotShorthand } from '../../models/spot-model';
 import { EventShorthand } from '../../models/event-model';
 import { EventSearchComponent } from "../../components/event-search/event-search.component";
 import { fadeInOutAnimation } from '../../animations/app.animations';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-saved',
@@ -30,6 +31,7 @@ export class SavedComponent implements OnInit{
   constructor(
     public dialog: MatDialog,
     private collectionService: CollectionService,
+    private titleService: Title,
     public session: SessionService,
     private fb: FormBuilder
   ) {
@@ -40,11 +42,13 @@ export class SavedComponent implements OnInit{
   
   ngOnInit(): void {
     this.session.currentUser$.subscribe({})
+    this.titleService.setTitle("Saved Spots/Events")
 
     this.collectionService.getCollection("All Spots").subscribe({
       next: (response : any) => {
         console.log(response)
         this.displayedCollection = response
+        
       },
       error: (error : Error) => {
         console.error(error)

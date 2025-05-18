@@ -25,7 +25,7 @@
                 <h2 class="text-xl md:text-3xl text-center md:text-start mb-2">From your favourite categories</h2>
                 <div id="favourite-spots-container" class="flex flex-row space-x-6 overflow-x-auto">
                     <div *ngFor="let spot of this.spots">
-                        <app-spot-discover [spot]="spot"></app-spot-discover>
+                        <app-spot-discover [spot]="spot" (click)="this.navigateToSpotOverview(spot.slug)"></app-spot-discover>
                     </div>
                 </div>
             </section>
@@ -46,7 +46,7 @@
                     </app-spot-search>
                     <app-spot-search
                         [spot]="this.headlineSpot"
-                        (click)="this.headlineSpot?.slug"
+                        (click)="navigateToSpotOverview(headlineSpot?.slug!)"
                         class="w-full lg:w-1/2 my-2"
                         >
                     </app-spot-search>
@@ -105,17 +105,17 @@
             <section *ngIf="this.iconicPlaces.length != 0" id="headlines" class="w-full flex flex-col lg:flex-row justify-between lg:space-x-6">
                <app-landmark-discover
                     [landmark]="this.iconicPlaces[0]"
-                    (click)="this.iconicPlaces[0].slug"
+                    (click)="navigateToSpotOverview(iconicPlaces[0].slug)"
                 >
                 </app-landmark-discover>
                 <app-landmark-discover
                     [landmark]="this.iconicPlaces[0]"
-                    (click)="this.iconicPlaces[0].slug"
+                    (click)="navigateToSpotOverview(iconicPlaces[0].slug)"
                 >
                 </app-landmark-discover>
                 <app-landmark-discover
                     [landmark]="this.iconicPlaces[0]"
-                    (click)="this.iconicPlaces[0].slug"
+                    (click)="navigateToSpotOverview(iconicPlaces[0].slug)"
                 >
                 </app-landmark-discover>    
             </section>

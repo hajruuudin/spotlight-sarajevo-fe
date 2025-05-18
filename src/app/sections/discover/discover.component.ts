@@ -12,6 +12,7 @@ import { LandmarkDiscoverComponent } from '../../components/landmark-discover/la
 import { EventSearchComponent } from "../../components/event-search/event-search.component";
 import { fadeInOutAnimation, fadeInOutComponentsAnimation } from '../../animations/app.animations';
 import { ButtonRegularComponent } from "../../components/button-regular/button-regular.component";
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-discover',
@@ -29,6 +30,7 @@ export class DiscoverComponent implements OnInit{
 
   constructor(
     private spotService: SpotService,
+    private titleService: Title,
     private eventService: EventService
   ) {}
 
@@ -51,6 +53,8 @@ export class DiscoverComponent implements OnInit{
         console.error('Error loading data:', error);
       },
     });
+
+    this.titleService.setTitle('Discover Sarajevo')
   }
 
 

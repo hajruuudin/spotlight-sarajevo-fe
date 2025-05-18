@@ -7,6 +7,7 @@ import { SystemLogin } from '../../models/system-login.model';
 import { SessionService } from '../../services/session.service';
 import { LoggedUserProfile } from '../../models/user-model';
 import { HotToastService } from '@ngxpert/hot-toast';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private titleService: Title,
     private spinner: NgxSpinnerService,
     private router: Router,
     private toastr: HotToastService,
@@ -32,6 +34,7 @@ export class LoginComponent implements OnInit{
       password: ['', [Validators.required]],
     });
     this.initializeGoogleLogIn()
+    this.titleService.setTitle('Login - Spotlight Sarajevo')
   }
 
   logInWithGoogleCustom(): void {

@@ -6,7 +6,7 @@
 
     <section [@fadeInOut] class="w-full h-full overflow-visible flex flex-col space-y-4 lg:flex-row relative lg:space-x-4">
         <!-- GALLERY AND MAIN INFOT SECTION -->
-        <div id="images-info-container" class="w-full h-auto lg:w-1/2 self-start flex flex-col items-center space-y-6 sticky top-5">
+        <div id="images-info-container" class="w-full h-auto lg:w-1/2 self-start flex flex-col items-center space-y-6 lg:sticky top-5">
             <app-image-gallery
                 [thumbnailImage]="this.spot.imageUrl"
                 [images]="[this.spot.imageUrl]"
@@ -78,17 +78,38 @@
 
             <!-- Reviews Section -->
             <div class="w-full h-auto flex flex-col items-stretch">
-                <h3 class="font-bold tracking-wider mb-2 text-start">REVIEWS</h3>
-                <app-button-regular
-                [buttonLabel]="'Leave a review'"
-                ></app-button-regular>
+                <h3 class="font-bold tracking-wider mb-1 text-start">YOUR REVIEW</h3>
 
-                <div class="w-full h-0.5 rounded-2xl bg-white opacity-50"></div>
-                <app-not-found *ngIf="this.spot.reviews.length == 0"
-                [head]="'No Reviews'"
-                [message]="'Be the first to review this place!'"
+                <!-- User review & delete review -->
+                <app-button-regular *ngIf="!this.userSpotReview"
+                    (buttonOnClick)="this.openReviewDialog()"
+                    [buttonLabel]="'Leave a review'"
+                ></app-button-regular>
+                <app-review-card *ngIf="this.userSpotReview"
+                    [review]="this.userSpotReview"
+                    [isOwnReview]="true"
+                >
+                    <app-button-regular *ngIf="this.userSpotReview"
+                        [buttonLabel]="'Delete existing review'"
+                        (buttonOnClick)="this.openDeleteReviewDialog()"
+                    >
+                    </app-button-regular>
+                </app-review-card>
+                
+                
+
+                <!-- Other people reviews -->
+                <h3 class="font-bold tracking-wider mb-1 mt-3 text-start">OTHER REVIEWS</h3>
+                <app-not-found *ngIf="this.spotReviews.length == 0"
+                [head]="'Oops!'"
+                [message]="'No other users have rated this spot so far!'"
                 class="-z-10"
                 ></app-not-found>
+                <app-review-card
+                    *ngFor="let review of this.spotReviews"
+                    [review]="review"
+                    [isOwnReview]="false"
+                ></app-review-card>
             </div>
         </div>
     </section>

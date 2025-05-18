@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, inject, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { InMemoryScrollingFeature, InMemoryScrollingOptions, provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
 import { routes } from './app.routes';
 import { HttpHandlerFn, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth-interceptor.service';
@@ -10,11 +10,17 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
 
+const scrollConfig: InMemoryScrollingOptions = {
+  scrollPositionRestoration: 'top',
+  anchorScrolling: 'enabled',
+};
+
+const inMemoryScrollingFeature: InMemoryScrollingFeature = withInMemoryScrolling(scrollConfig);
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
-    provideRouter(routes),
+    provideRouter(routes, inMemoryScrollingFeature),
     provideHttpClient(withInterceptors([
       (req, next: HttpHandlerFn) => inject(AuthInterceptor).intercept(req, {
         handle: (internalReq) => next(internalReq)
