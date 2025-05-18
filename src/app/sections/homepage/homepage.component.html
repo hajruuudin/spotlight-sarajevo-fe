@@ -15,6 +15,7 @@
                     <h2 class="text-xl md:text-3xl text-center md:text-end my-2">Upcoming Event</h2>
                     <app-event-headline
                         [event]="this.headlineEvent"
+                        (click)="this.navigateToEventOverview(this.headlineEvent?.slug!)"
                     >
                     </app-event-headline>
                 </div>
