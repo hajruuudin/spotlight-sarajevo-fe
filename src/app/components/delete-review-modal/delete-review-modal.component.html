@@ -1,0 +1,14 @@
+<div class="bg-(--navbar) kumbh-sans-regular overflow-y-scroll">
+    <h2 class="text-white text-2xl font-bold mx-4 py-4 text-center">Delete Review for {{this.data.name}}?</h2>
+    <section class="w-full h-full">
+        <h2 class="text-xl text-center">Are you sure you want to delete the existing review?</h2>
+        <div class="flex flex-row justify-center items-center w-full py-4">
+            <button (click)="this.onNoClick()" class="font-bold px-4 py-2 text-xl rounded-l-2xl bg-(--primary) hover:bg-cyan-900 transition-all">Cancel</button>
+            <button (click)="this.onYesClick()" cdkFocusInitial class="font-bold px-4 py-2 text-xl rounded-r-2xl bg-cyan-800 hover:bg-cyan-900 transition-all">Yes, delete</button>
+        </div>
+    </section>
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#00cdc6" type="fire" [fullScreen]="true" style="z-index: 999;" >
+        <p style="color: white; font-weight: bold;"> Loading... </p>
+    </ngx-spinner>
+</div>

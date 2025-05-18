@@ -18,6 +18,7 @@ import { CategoryBlockComponent } from "../../components/category-block/category
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 import { SpotDataService } from '../../services/spot-data.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-homepage',
@@ -52,6 +53,7 @@ export class HomepageComponent implements OnInit {
     private spotService : SpotService,
     private spotDataService : SpotDataService,
     private eventService : EventService,
+    private titleService: Title,
     private categoryService : CategoryService,
     private router: Router
   ) {}
@@ -85,6 +87,7 @@ export class HomepageComponent implements OnInit {
     this.loadQueryAndDisplayDays()
     this.loadLandmarkSpots()
     this.loadCategories()
+    this.titleService.setTitle('Homepage')
   }
 
 
@@ -94,7 +97,6 @@ export class HomepageComponent implements OnInit {
         this.router.navigate([`spot/${spotSlug}`])
       }
     })
-
   };
 
   navigateToEventOverview(eventSlug: string) {

@@ -15,6 +15,7 @@ import { EventSearchComponent } from "../../components/event-search/event-search
 import { NgFor, NgIf } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { NotFoundComponent } from "../../components/not-found/not-found.component";
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-events',
@@ -60,6 +61,7 @@ export class EventsComponent {
   constructor(
     private formBuilder : FormBuilder,
     private eventService : EventService,
+    private titleService: Title,
     private categoryService: CategoryService,
     private toastr : HotToastService
   )
@@ -91,6 +93,8 @@ export class EventsComponent {
         console.error(error)
       }
     })
+
+    this.titleService.setTitle('Search Events')
   }
 
   onSearchSubmit(searchTerm: string) {

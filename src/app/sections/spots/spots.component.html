@@ -85,6 +85,7 @@
         <div id="results-container" class="w-full lg:w-3/4 lg:ml-4 flex flex-col space-y-4 justify-start items-stretch">
             <app-spot-search [@fadeInOutComponents] *ngFor="let spot of this.searchResult"
                 [spot]="spot"
+                (click)="this.navigateToSpotOverview(spot.slug)"
             ></app-spot-search>
 
             <div class="flex flex-col items-center justify-center">

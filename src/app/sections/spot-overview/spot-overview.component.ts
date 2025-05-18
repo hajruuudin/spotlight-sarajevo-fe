@@ -22,6 +22,13 @@ import {Chart,
 } from 'chart.js';
 import { NotFoundComponent } from "../../components/not-found/not-found.component";
 import { ButtonRegularComponent } from "../../components/button-regular/button-regular.component";
+import { MatDialog } from '@angular/material/dialog';
+import { AddReviewModalComponent } from '../../components/add-review-modal/add-review-modal.component';
+import { ReviewModel } from '../../models/review-model';
+import { ReviewService } from '../../services/review.service';
+import { ReviewCardComponent } from "../../components/review-card/review-card.component";
+import { DeleteReviewModalComponent } from '../../components/delete-review-modal/delete-review-modal.component';
+import { Title } from '@angular/platform-browser';
 
 Chart.register(
   RadarController,
@@ -36,7 +43,7 @@ Chart.register(
 
 @Component({
   selector: 'app-spot-overview',
-  imports: [NgIf, NgFor, OverviewHeadingComponent, ImageGalleryComponent, SmallTagLabelComponent, NotFoundComponent, ButtonRegularComponent],
+  imports: [NgIf, NgFor, OverviewHeadingComponent, ImageGalleryComponent, SmallTagLabelComponent, NotFoundComponent, ButtonRegularComponent, ReviewCardComponent],
   templateUrl: './spot-overview.component.html',
   styleUrl: './spot-overview.component.css',
   animations: [fadeInOutAnimation]
@@ -46,6 +53,8 @@ export class SpotOverviewComponent implements OnInit, AfterViewInit{
 
   slug: string = ''
   spot: SpotModel | null = null;
+  userSpotReview: ReviewModel | null = null;
+  spotReviews: ReviewModel[] = []
   formattedWorkHoursKeys : string[] = [];
   formattedWorkHours: {
     "MON" : string[];
@@ -67,11 +76,18 @@ export class SpotOverviewComponent implements OnInit, AfterViewInit{
   workDays: (keyof typeof this.formattedWorkHours)[] = Object.keys(this.formattedWorkHours) as (keyof typeof this.formattedWorkHours)[];
   qualityChart: Chart | null = null;
 
+  reviewPageNumber : number = 0;
+  reviewPageSize : number = 5;
+  totalElements : number = 100;
+
   constructor(
     private router: Router,
+    public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private spotService: SpotService,
     private spotDataService: SpotDataService,
+    private reviewService: ReviewService,
+    private titleServie: Title,
     private spinner: NgxSpinnerService,
     private toastr: HotToastService
   ){}
@@ -83,6 +99,9 @@ export class SpotOverviewComponent implements OnInit, AfterViewInit{
         this.formatWorkHours(this.spot.workHours)
       }
       this.formattedWorkHoursKeys = Object.keys(this.formattedWorkHours)
+      this.getUserSpotReview()
+      this.getOtherSpotReviews()
+      this.titleServie.setTitle(`${this.spot?.officialName} - Overview`)
     } else {
       this.activatedRoute.paramMap.subscribe({
         next: (params: any) => {
@@ -96,6 +115,8 @@ export class SpotOverviewComponent implements OnInit, AfterViewInit{
                   this.loadQualityChart()
                 }, 200)
                 this.formattedWorkHoursKeys = Object.keys(this.formattedWorkHours)
+                this.getUserSpotReview()
+                this.getOtherSpotReviews()
               },
               error: (error : Error) => {
                 this.toastr.error(error.message);
@@ -199,10 +220,6 @@ export class SpotOverviewComponent implements OnInit, AfterViewInit{
       });
   }
 
-  test(){
-    console.log(this.qualityChart)
-  }
-
   getChartData(){
     return {
       labels: [
@@ -229,5 +246,55 @@ export class SpotOverviewComponent implements OnInit, AfterViewInit{
         pointHoverBorderColor: 'rgb(255, 99, 132)'
       }]
     }
+  }
+
+  openReviewDialog(): void {
+      const dialogRef = this.dialog.open(AddReviewModalComponent, {
+        width: '600px',
+        height: '600px',
+        data: {name: this.spot?.officialName, spotId: this.spot?.id}
+      });
+
+      dialogRef.afterClosed().subscribe(status => {
+      if(status){
+        this.getUserSpotReview()
+      }
+    })
+  }
+
+  openDeleteReviewDialog(){
+    const dialogRef = this.dialog.open(DeleteReviewModalComponent, {
+      width: '600px',
+      data: {name: this.spot?.officialName, spotId: this.spot?.id}
+    })
+
+    dialogRef.afterClosed().subscribe(status => {
+      if(status){
+        this.getUserSpotReview()
+      }
+    })
+  }
+
+  getUserSpotReview(){
+    this.reviewService.getUserReview(this.spot?.id!).subscribe({
+      next: (response : ReviewModel | any) => {
+        this.userSpotReview = response
+      },
+      error: (error: Error) => {
+        console.error(error);
+      }
+    })
+  }
+
+  getOtherSpotReviews(){
+    this.reviewService.getOtherSpotReviews(this.reviewPageNumber, this.reviewPageSize, this.spot?.id!).subscribe({
+      next: (response : any) => {
+        this.reviewPageNumber++;
+        this.spotReviews = response['content']
+      },
+      error: (error: Error) => {
+        console.error(error)
+      }
+    })
   }
 }

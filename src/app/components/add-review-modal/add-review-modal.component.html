@@ -1,1 +1,87 @@
-<p>add-review-modal works!</p>
+<div class="bg-(--navbar) kumbh-sans-regular overflow-y-scroll">
+    <h2 class="text-white text-2xl font-bold mx-4 py-4 text-center">Add a Review for {{this.data.name}}</h2>
+    <section class="w-full h-full">
+        <!-- BODY-->
+         <form method="post" [formGroup]="this.reviewForm" class="w-full h-auto px-4 flex flex-col items-center justify-start">
+            <label for="review-title" class="text-xl font-bold mt-2">Review Title</label>
+            <input 
+            class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-1" 
+            type="text" 
+            name="reviewTitle"
+            id="review-title"
+            placeholder="A one sentence headline to describe the review / main idea"
+            formControlName="reviewTitle">
+
+            <label for="review-content" class="text-xl font-bold mt-2">Review Content</label>
+            <textarea 
+            class="w-full border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-1" 
+            name="reviewContent"
+            id="review-content"
+            placeholder=""
+            rows="5"
+            formControlName="reviewContent"></textarea>
+
+            <label for="overall-rating" class="text-xl font-bold mt-2">Rating</label>
+            <mat-slider min="0" max="10" step="1" showTickMarks discrete>
+                <span>0</span>
+                <input class="w-full" matSliderThumb value="5" id="overall-rating" name="rating" formControlName="rating">
+                <span>10</span>
+            </mat-slider>
+
+            <span class="text-xl font-bold mt-2">Quality Stats</span>
+            <div class="w-10/12 border-2 rounded-2xl border-(--primary) flex flex-col justify-center items-center space-x-2">
+                <label for="cleanliness" class="text-xl mt-2">Cleanliness</label>
+                <mat-slider min="0" max="10" step="1" showTickMarks discrete>
+                    <span>0</span>
+                    <input class="w-full" matSliderThumb value="5" id="cleanliness" name="cleanliness" formControlName="cleanliness">
+                    <span>10</span>
+                </mat-slider>
+
+                <label for="affordability" class="text-xl mt-2">Affordability</label>
+                <mat-slider min="0" max="10" step="1" showTickMarks discrete>
+                    <span>0</span>
+                    <input class="w-full" matSliderThumb value="5" id="affordability" name="affordability" formControlName="affordability">
+                    <span>10</span>
+                </mat-slider>
+
+            <label for="overal-quality" class="text-xl mt-2">Overall Quality</label>
+                <mat-slider min="0" max="10" step="1" showTickMarks discrete>
+                    <span>0</span>
+                    <input class="w-full" matSliderThumb value="5" id="overal-quality" name="overal-quality" formControlName="overal-quality">
+                    <span>10</span>
+                </mat-slider>
+
+                <label for="staff-kindness" class="text-xl mt-2">Staff Kindness</label>
+                <mat-slider min="0" max="10" step="1" showTickMarks discrete>
+                    <span>0</span>
+                    <input class="w-full" matSliderThumb value="5" id="staff-kindness" name="staff-kindness" formControlName="staff-kindness">
+                    <span>10</span>
+                </mat-slider>
+
+                <label for="accessibility" class="text-xl mt-2">Accessibility</label>
+                <mat-slider min="0" max="10" step="1" showTickMarks discrete>
+                    <span>0</span>
+                    <input class="w-full" matSliderThumb value="5" id="accessibility" name="accessibility" formControlName="accessibility">
+                    <span>10</span>
+                </mat-slider>
+
+                <label for="atmosphere" class="text-xl mt-2">Atmosphere</label>
+                <mat-slider min="0" max="10" step="1" showTickMarks discrete>
+                    <span>0</span>
+                    <input class="w-full" matSliderThumb value="5" id="atmosphere" name="atmosphere" formControlName="atmosphere">
+                    <span>10</span>
+                </mat-slider>
+            </div>
+        </form>
+        <div class="flex flex-row justify-center items-center w-full py-4">
+            <button (click)="this.onNoClick()" class="font-bold px-4 py-2 text-xl rounded-l-2xl bg-(--primary) hover:bg-cyan-900 transition-all">Cancel</button>
+            <button (click)="this.onSaveClick()" cdkFocusInitial class="font-bold px-4 py-2 text-xl rounded-r-2xl bg-cyan-800 hover:bg-cyan-900 transition-all">Okay</button>
+        </div>
+    </section>
+
+    
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#00cdc6" type="fire" [fullScreen]="true" style="z-index: 999;" >
+        <p style="color: white; font-weight: bold;"> Loading... </p>
+    </ngx-spinner>
+</div>
