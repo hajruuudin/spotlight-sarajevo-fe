@@ -19,6 +19,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
 import { SpotDataService } from '../../services/spot-data.service';
 import { Title } from '@angular/platform-browser';
+import { EventDataService } from '../../services/event-data.service';
 
 @Component({
   selector: 'app-homepage',
@@ -53,6 +54,7 @@ export class HomepageComponent implements OnInit {
     private spotService : SpotService,
     private spotDataService : SpotDataService,
     private eventService : EventService,
+    private eventDataService: EventDataService,
     private titleService: Title,
     private categoryService : CategoryService,
     private router: Router
@@ -100,7 +102,11 @@ export class HomepageComponent implements OnInit {
   };
 
   navigateToEventOverview(eventSlug: string) {
-    this.router.navigate([`event/${eventSlug}`])
+    this.eventDataService.fetchAndSetEventOverview(eventSlug).subscribe({
+      next: (response : any) => {
+        this.router.navigate([`event/${eventSlug}`])
+      }
+    })
   };
   
 

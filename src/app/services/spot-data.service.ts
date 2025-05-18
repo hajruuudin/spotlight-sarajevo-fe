@@ -7,7 +7,7 @@ import { SpotService } from './spot.service';
   providedIn: 'root'
 })
 export class SpotDataService {
-private currentSpotOverview = new BehaviorSubject<SpotModel | null>(null);
+  private currentSpotOverview = new BehaviorSubject<SpotModel | null>(null);
   currentSpotOverview$ = this.currentSpotOverview.asObservable();
 
   constructor(private spotService: SpotService) {}

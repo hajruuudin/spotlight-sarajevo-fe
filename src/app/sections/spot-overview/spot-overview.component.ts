@@ -119,7 +119,6 @@ export class SpotOverviewComponent implements OnInit, AfterViewInit{
                 this.getOtherSpotReviews()
               },
               error: (error : Error) => {
-                this.toastr.error(error.message);
                 console.error(error)
               }
             })

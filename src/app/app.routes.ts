@@ -15,6 +15,7 @@ import { RequestsComponent } from './sections/requests/requests.component';
 import { LoginComponent } from './sections/login/login.component';
 import { RegisterComponent } from './sections/register/register.component';
 import { SpotOverviewComponent } from './sections/spot-overview/spot-overview.component';
+import { EventOverviewComponent } from './sections/event-overview/event-overview.component';
 
 export const routes: Routes = [
     {
@@ -68,6 +69,10 @@ export const routes: Routes = [
             {
                 path: 'spot/:spot-slug',
                 component: SpotOverviewComponent
+            },
+            {
+                path: 'event/:event-slug',
+                component: EventOverviewComponent
             }
         ]
     },
