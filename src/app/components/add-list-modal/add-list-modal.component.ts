@@ -54,11 +54,12 @@ export class AddListModalComponent {
         next: (respone: CollectionModel | any) => {
           this.spinner.hide()
           this.toastr.show("Collection added:", respone.collectionName)
-          this.dialogRef.close()
+          this.dialogRef.close({respone: true})
         },
         error: (error: Error) => {
           this.spinner.hide()
           this.toastr.show("Error while making custom collection")
+          this.dialogRef.close({respone: false})
         }
       })
     }

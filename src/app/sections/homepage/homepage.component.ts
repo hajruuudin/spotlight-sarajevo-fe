@@ -20,10 +20,11 @@ import { Router } from '@angular/router';
 import { SpotDataService } from '../../services/spot-data.service';
 import { Title } from '@angular/platform-browser';
 import { EventDataService } from '../../services/event-data.service';
+import { ButtonPrimaryComponent } from "../../components/button-primary/button-primary.component";
 
 @Component({
   selector: 'app-homepage',
-  imports: [NgFor, NgIf, HeadingComponent, SpotHeadlineComponent, EventHeadlineComponent, SpotDiscoverComponent, ButtonRegularComponent, SpotSearchComponent, CalendarDayComponent, EventSearchComponent, LandmarkDiscoverComponent, CategoryBlockComponent],
+  imports: [NgFor, NgIf, HeadingComponent, SpotHeadlineComponent, EventHeadlineComponent, SpotDiscoverComponent, ButtonRegularComponent, SpotSearchComponent, CalendarDayComponent, EventSearchComponent, LandmarkDiscoverComponent, CategoryBlockComponent, ButtonPrimaryComponent],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css',
   animations: [

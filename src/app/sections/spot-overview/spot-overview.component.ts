@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpotDataService } from '../../services/spot-data.service';
 import { OverviewHeadingComponent } from "../../components/overview-heading/overview-heading.component";
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { ImageGalleryComponent } from "../../components/image-gallery/image-gallery.component";
 import { fadeInOutAnimation } from '../../animations/app.animations';
 import { WorkHoursDB } from '../../models/util-model';
@@ -29,6 +29,8 @@ import { ReviewService } from '../../services/review.service';
 import { ReviewCardComponent } from "../../components/review-card/review-card.component";
 import { DeleteReviewModalComponent } from '../../components/delete-review-modal/delete-review-modal.component';
 import { Title } from '@angular/platform-browser';
+import { ButtonPrimaryComponent } from "../../components/button-primary/button-primary.component";
+import { CollectionModalComponent } from '../../components/collection-modal/collection-modal.component';
 
 Chart.register(
   RadarController,
@@ -43,7 +45,7 @@ Chart.register(
 
 @Component({
   selector: 'app-spot-overview',
-  imports: [NgIf, NgFor, OverviewHeadingComponent, ImageGalleryComponent, SmallTagLabelComponent, NotFoundComponent, ButtonRegularComponent, ReviewCardComponent],
+  imports: [NgIf, NgFor, NgClass, OverviewHeadingComponent, ImageGalleryComponent, SmallTagLabelComponent, NotFoundComponent, ButtonRegularComponent, ReviewCardComponent, ButtonPrimaryComponent],
   templateUrl: './spot-overview.component.html',
   styleUrl: './spot-overview.component.css',
   animations: [fadeInOutAnimation]
@@ -271,6 +273,13 @@ export class SpotOverviewComponent implements OnInit, AfterViewInit{
       if(status){
         this.getUserSpotReview()
       }
+    })
+  }
+
+  openCollectionDialog(){
+    const dialogRef = this.dialog.open(CollectionModalComponent, {
+      width: '300px',
+      data: {name: this.spot?.officialName, objectId: this.spot?.id, type: 'SPOT'}
     })
   }
 

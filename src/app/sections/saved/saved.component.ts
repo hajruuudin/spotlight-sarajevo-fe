@@ -7,17 +7,20 @@ import { SessionService } from '../../services/session.service';
 import { NgFor, NgIf } from '@angular/common';
 import { CollectionService } from '../../services/collection.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CollectionWithItemsModel } from '../../models/collection-model';
+import { CollectionModel, CollectionWithItemsModel } from '../../models/collection-model';
 import { SpotSearchComponent } from "../../components/spot-search/spot-search.component";
 import { SpotShorthand } from '../../models/spot-model';
 import { EventShorthand } from '../../models/event-model';
 import { EventSearchComponent } from "../../components/event-search/event-search.component";
 import { fadeInOutAnimation } from '../../animations/app.animations';
 import { Title } from '@angular/platform-browser';
+import { KebabCasePipe } from '../../pipes/kebab-case.pipe';
+import { NotFoundComponent } from "../../components/not-found/not-found.component";
+import { ButtonPrimaryComponent } from "../../components/button-primary/button-primary.component";
 
 @Component({
   selector: 'app-saved',
-  imports: [NgIf, NgFor, ReactiveFormsModule, HeadingComponent, ButtonRegularComponent, SpotSearchComponent, EventSearchComponent],
+  imports: [NgIf, NgFor, KebabCasePipe, ReactiveFormsModule, HeadingComponent, ButtonRegularComponent, SpotSearchComponent, EventSearchComponent, NotFoundComponent, ButtonPrimaryComponent],
   templateUrl: './saved.component.html',
   styleUrl: './saved.component.css',
   animations: [fadeInOutAnimation]
@@ -25,6 +28,7 @@ import { Title } from '@angular/platform-browser';
 export class SavedComponent implements OnInit{
   dialogResult = '';
   displayedCollection : CollectionWithItemsModel | null = null
+  customCollections : CollectionModel[] | null = null;
 
   collectionsForm: FormGroup
 
@@ -55,6 +59,8 @@ export class SavedComponent implements OnInit{
       }
     })
 
+    this.fetchCustomCollections()
+
     this.collectionsForm.get('collection-option')!.valueChanges.subscribe(value => {
       this.collectionService.getCollection(value).subscribe({
         next: (response : any) => {
@@ -74,9 +80,21 @@ export class SavedComponent implements OnInit{
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-      this.dialogResult = result;
+      if(result){
+        this.fetchCustomCollections()
+      }
     });
+  }
+
+  fetchCustomCollections(){
+    this.collectionService.getAllCustomCollections().subscribe({
+      next: (response : any) => {
+        this.customCollections = response as CollectionModel[]
+      },
+      error: (error: Error) => {
+        console.error(error)
+      }
+    })
   }
 
   get spotItems(): SpotShorthand[] {
