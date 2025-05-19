@@ -17,22 +17,35 @@
                 </div>
 
                 <h2 *ngIf="this.session.isCurrentUserPremium" class="text-xl font-bold self-start">Custom Collections</h2>
+
+                <div *ngFor="let collection of this.customCollections" class="w-full flex flex-row justify-between items-center">
+                    <label for="{{collection.collectionName}}">{{collection.collectionName}}</label>
+                    <input type="radio" id="{{collection.collectionName | kebabCase }}" value="{{collection.collectionName }}" formControlName="collection-option"/>
+                </div>
             </form>
-            <app-button-regular (buttonOnClick)="openDialog()" [buttonLabel]="'Add List'" class="self-center"></app-button-regular>
+            <app-button-primary (buttonOnClick)="openDialog()" [buttonLabel]="'Add List'" class="self-center"></app-button-primary>
         </div>
 
-        <div *ngIf="this.displayedCollection?.collectionType == 'SPOT'" id="list-item-container" class="w-4/6 h-auto flex flex-col justify-around items-stretch space-y-4">
+        <div *ngIf="this.displayedCollection?.collectionType == 'SPOT' && this.displayedCollection?.collectionItems?.length != 0" id="list-item-container" class="w-4/6 h-auto flex flex-col justify-around items-stretch space-y-4">
             <app-spot-search *ngFor="let spot of spotItems"
                 [spot]="spot"
             >
             </app-spot-search>
         </div>
 
-        <div *ngIf="this.displayedCollection?.collectionType == 'EVENT'" id="list-item-container" class="w-4/6 h-auto flex flex-col justify-around items-stretch space-y-4">
+        <div *ngIf="this.displayedCollection?.collectionType == 'EVENT' && this.displayedCollection?.collectionItems?.length != 0" id="list-item-container" class="w-4/6 h-auto flex flex-col justify-around items-stretch space-y-4">
             <app-event-search *ngFor="let event of eventItems"
                 [event]="event"
             >
             </app-event-search>
         </div>
+
+        <div *ngIf="this.displayedCollection?.collectionItems?.length == 0" class="w-4/6 h-auto flex flex-col justify-around items-stretch space-y-4">
+            <app-not-found
+                [head]="'No items'"
+                [message]="'This collection is empty! Add some objects!'"
+            ></app-not-found>
+        </div>
+        
     </section>
 </main>

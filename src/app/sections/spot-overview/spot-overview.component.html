@@ -50,7 +50,7 @@
 
             <!-- Work Hours & Tags section -->
             <div class="w-full flex flex-col lg:flex-row justify-between items-start">
-                <section class="w-full lg:w-1/2 flex flex-col">
+                <section *ngIf="this.spot.categoryName != 'Historical Site'" class="w-full lg:w-1/2 flex flex-col">
                     <h3 class="font-bold tracking-wider mb-2 text-center">WORK HOURS</h3>
                     <div *ngFor="let day of workDays" class="w-full">
                         <div *ngIf="formattedWorkHours[day].length !== 0" class="flex flex-row w-full justify-between items-center space-x-2">
@@ -67,7 +67,7 @@
                     </div>                    
                 </section>
 
-                <section class="w-full lg:w-1/2 flex flex-col justify-start">
+                <section [ngClass]="this.spot.categoryName != 'Historical Site' ? 'w-full lg:w-1/2 flex flex-col justify-start' : 'w-full flex flex-col justify-start'">
                     <h3 class="font-bold tracking-wider mb-2 text-center">TAGS</h3>
                     <div class="flex flex-row justify-center items-center flex-wrap">
                         <app-small-tag-label *ngFor="let tag of this.spot.tagNames"
@@ -88,19 +88,20 @@
                 <h3 class="font-bold tracking-wider mb-1 text-start">YOUR REVIEW</h3>
 
                 <!-- User review & delete review -->
-                <app-button-regular *ngIf="!this.userSpotReview"
+                <app-button-primary *ngIf="!this.userSpotReview"
                     (buttonOnClick)="this.openReviewDialog()"
                     [buttonLabel]="'Leave a review'"
-                ></app-button-regular>
+                    class="w-full"
+                ></app-button-primary>
                 <app-review-card *ngIf="this.userSpotReview"
                     [review]="this.userSpotReview"
                     [isOwnReview]="true"
                 >
-                    <app-button-regular *ngIf="this.userSpotReview"
+                    <app-button-primary *ngIf="this.userSpotReview"
                         [buttonLabel]="'Delete existing review'"
                         (buttonOnClick)="this.openDeleteReviewDialog()"
                     >
-                    </app-button-regular>
+                    </app-button-primary>
                 </app-review-card>
                 
                 

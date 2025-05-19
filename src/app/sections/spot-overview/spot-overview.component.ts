@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpotDataService } from '../../services/spot-data.service';
 import { OverviewHeadingComponent } from "../../components/overview-heading/overview-heading.component";
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { ImageGalleryComponent } from "../../components/image-gallery/image-gallery.component";
 import { fadeInOutAnimation } from '../../animations/app.animations';
 import { WorkHoursDB } from '../../models/util-model';
@@ -45,7 +45,7 @@ Chart.register(
 
 @Component({
   selector: 'app-spot-overview',
-  imports: [NgIf, NgFor, OverviewHeadingComponent, ImageGalleryComponent, SmallTagLabelComponent, NotFoundComponent, ButtonRegularComponent, ReviewCardComponent, ButtonPrimaryComponent],
+  imports: [NgIf, NgFor, NgClass, OverviewHeadingComponent, ImageGalleryComponent, SmallTagLabelComponent, NotFoundComponent, ButtonRegularComponent, ReviewCardComponent, ButtonPrimaryComponent],
   templateUrl: './spot-overview.component.html',
   styleUrl: './spot-overview.component.css',
   animations: [fadeInOutAnimation]

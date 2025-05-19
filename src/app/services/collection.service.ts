@@ -18,7 +18,9 @@ export class CollectionService {
   }
 
   getAllCustomCollections(){
-    // returns the custom collections of a user
+    return this.http.get(`/api/collection/custom`, {
+      withCredentials: true
+    })
   }
 
   addCustomCollection(request: CollectionCreateModel){

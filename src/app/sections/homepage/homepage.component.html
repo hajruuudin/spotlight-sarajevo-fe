@@ -31,7 +31,7 @@
                 </div>
             </section>
 
-            <app-button-regular [buttonLabel]="'View All'" class="self-center lg:self-end"></app-button-regular>
+            <app-button-primary [buttonLabel]="'View All'" class="self-center lg:self-end mt-2"></app-button-primary>
         </div>
 
         
@@ -91,7 +91,7 @@
                     ></app-event-search>
                 </div>
 
-                <app-button-regular *ngIf="this.calendarEvents.length != 0" [buttonLabel]="'View All'" class="self-center lg:self-end"></app-button-regular>
+                <app-button-primary *ngIf="this.calendarEvents.length != 0" [buttonLabel]="'View All'" class="self-center lg:self-end"></app-button-primary>
 
                 <div *ngIf="this.calendarEvents.length == 0" id="event-calendar-events" class="w-full flex flex-col items-center">
                     <img src="/assets/images/LOGO_V1.png" class="w-32 h-auto opacity-30"/>
@@ -121,7 +121,8 @@
                 </app-landmark-discover>    
             </section>
 
-            <app-button-regular *ngIf="this.iconicPlaces.length != 0" [buttonLabel]="'Search Landmarks'" class="self-center lg:self-end"></app-button-regular>
+            
+            <app-button-primary *ngIf="this.iconicPlaces.length != 0" [buttonLabel]="'Search Landmarks'" class="self-center lg:self-end"></app-button-primary>
              
             <section class="w-full flex flex-col justify-start mt-6">
                 <h2 class="text-xl md:text-3xl text-center mb-2">Browse by categories</h2>
