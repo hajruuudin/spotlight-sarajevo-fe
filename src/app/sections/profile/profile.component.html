@@ -1,3 +1,110 @@
 <main class="flex flex-col justify-start items-center p-8 lg:p-16 overflow-visible">
     <app-heading [title]="'Profile'"></app-heading>
+
+    <!-- Profile Information & Picture Logo (Optional) -->
+    <section
+        class="w-full h-auto flex flex-col justify-start items-center md:flex-row md:justify-between md:space-x-6  mt-10">
+        <div
+            class="w-full md:w-2/3 order-2 md:order-1 flex-col space-y-6 items-center md:items-center justify-center md:justify-start">
+            <span class="font-bold tracking-widest">INFO</span>
+            <h2 class="text-3xl">General Information</h2>
+            <div
+                class="w-full flex flex-col md:flex-row justify-center items-center md:justify-between space-y-4 md:space-x-4 md:space-y-0 mt-4">
+                <div class="w-full md:w-1/2 flex flex-col space-y-4">
+                    <div class="w-full bg-(--background-dimmed) text-xl lg:text-2xl rounded-xl px-2 py-4">
+                        {{this.loggedUser?.firstName}}</div>
+                    <div class="w-full bg-(--background-dimmed) text-xl lg:text-2xl rounded-xl px-2 py-4">
+                        {{this.loggedUser?.email}}</div>
+                </div>
+                <div class="w-full md:w-1/2 flex flex-col space-y-4">
+                    <div class="w-full bg-(--background-dimmed) text-xl lg:text-2xl rounded-xl px-2 py-4">
+                        {{this.loggedUser?.lastName}}</div>
+                    <div class="w-full bg-(--background-dimmed) text-xl lg:text-2xl rounded-xl px-2 py-4">
+                        {{this.loggedUser?.isPremium ? 'Premium User' : 'Regular User'}}</div>
+                </div>
+            </div>
+            <app-button-primary [buttonLabel]="'Logout'" (buttonOnClick)="this.onLogoutPressed()"></app-button-primary>
+        </div>
+        <div
+            class="w-2/3 md:w-1/3 max-w-sm aspect-square order-1 md:order-2 flex flex-row justify-center items-center bg-(--background-dimmed) rounded-full">
+            <img src="/assets/images/USER.png" alt="User" class="w-1/2">
+        </div>
+    </section>
+
+    <!-- Profile stats section: Total visited spots, Attended events & Community Requests -->
+     <section class="bg-(--background-dimmed) rounded-2xl w-full h-auto flex flex-col items-center md:items-start justify-center py-16 px-8 mt-10">
+        <span class="font-bold tracking-widest">STATS</span>
+        <h2 class="text-3xl">Your experience in Sarajevo so far</h2>
+        <div class="w-full flex flex-col md:flex-row justify-between items-center mx-2 my-4 space-y-4 md:space-y-0">
+            <div class="rounded-full w-1/2 md:w-2/12 p-8 flex flex-col justify-center items-center space-y-2 bg-(--navbar)">
+                <span class="text-6xl font-extrabold">45</span>
+                <span class="text-xl text-center">Spots <br> visited!</span>
+            </div>
+            <img src="/assets/images/LOGO_V1.png" alt="Logo" class="opacity-50 w-24">
+            <div class="rounded-full w-1/2 md:w-2/12 p-8 flex flex-col justify-center items-center space-y-2 bg-(--navbar)">
+                <span class="text-6xl font-extrabold">12</span>
+                <span class="text-xl text-center">Events attended!</span>
+            </div>
+            <img src="/assets/images/LOGO_V1.png" alt="Logo" class="opacity-50 w-24">
+            <div class="rounded-full w-1/2 md:w-2/12 p-8 flex flex-col justify-center items-center space-y-2 bg-(--navbar)">
+                <span class="text-6xl font-extrabold">7</span>
+                <span class="text-xl text-center">Community contributions!</span>
+            </div>
+        </div>
+     </section>
+
+     <!-- Community request section -->
+    <section class="w-full flex flex-col md:flex-row items-center md:items-center justify-center md:justify-around my-16">
+        <div class="w-full md:w-2/3 pl-0 md:pl-10 flex flex-col justify-center items-center md:items-start">
+            <span class="font-bold tracking-widest">COMMUNITY</span>
+            <h2 class="text-3xl">Add Spots & Events</h2>
+            <p class="text-xl w-full md:w-2/3 my-2 text-center md:text-start">SpotlightSarajevo is heavily based on its active user community. In order to provide information about all spots & events, we rely heavily not just on the work of our admins, but on the contribution of our community.
+            </p>
+            <p class="text-xl w-full md:w-2/3 my-2 text-center md:text-start">If You know about a spot or an event that is not in the system right now, feel free to make a report using our form, and our admins will be sure to review the request as fast as possible. The more spots and events in the system, the better for the whole city!
+            </p>
+            <app-button-primary [buttonLabel]="'Make Community Request'" class="md:self-start my-4"></app-button-primary>
+        </div>
+
+        <div class="hidden md:flex flex-col w-1/3">
+            <img src="/assets/images/LOGO_V1.png" alt="Logo" class="w-2/3 min-w-xs h-auto">
+        </div>
+    </section>
+    
+    <!-- Premium plan section -->
+    <section class="w-full flex flex-col md:flex-row items-center justify-between my-16 bg-(--background-dimmed) rounded-2xl px-8 py-12">
+        <div class="w-full md:w-2/3 flex flex-col justify-center items-center md:items-start">
+            <span class="font-bold tracking-widest">PREMIUM</span>
+            <h2 class="text-3xl text-center md:text-start">The premium plan for our supporters!</h2>
+            <p class="text-xl w-full md:w-3/4 my-2 text-center md:text-start">
+            The services of SpotlightSarajevo are made with the intention of providing a quick and easy guide to Sarajevo for all of its citizens and tourists. We value every individual who chooses to use our application and understand that every person has their own views of the application's functionality.
+            </p>
+            <p class="text-xl w-full md:w-3/4 my-2 text-center md:text-start">
+            Despite this, our developers are always working hard to improve the application and populate the system as necessary. Therefore, every bit of financial gain the application makes is of vital importance to us.
+            </p>
+            <p class="text-xl w-full md:w-3/4 my-2 text-center md:text-start">
+            We understand that paying for an online service is not everyone’s cup of tea, so for the people that do opt to do so, we have added bonus functions to the application to further improve the experience. Become a monthly premium member of SpotlightSarajevo and enjoy added benefits!
+            </p>
+            <app-button-primary [buttonLabel]="'Go Premium'" class="md:self-start my-4"></app-button-primary>
+        </div>
+
+        <div class="flex flex-col h-full w-full md:w-1/3 justify-start items-stretch space-y-4 mt-8 md:mt-0">
+            <div class="flex items-center space-x-2 justify-center bg-(--navbar) p-4 rounded-xl text-xl">
+                <img src="/assets/images/CHECKMARK.png" alt="" class="w-10"/>
+                <span>Add free experience</span>
+            </div>
+            <div class="flex items-center space-x-2 justify-center bg-(--navbar) p-4 rounded-xl text-xl">
+                <img src="/assets/images/LOCATION_ICON.png" alt="" class="w-12"/>
+                <span>Dedicated Map Search</span>
+            </div>
+            <div class="flex items-center space-x-2 justify-center bg-(--navbar) p-4 rounded-xl text-xl">
+                <img src="/assets/images/EVENTS.png" alt="" class="w-12"/>
+                <span>Event Calendar Search</span>
+            </div>
+            <div class="flex items-center space-x-2 justify-center bg-(--navbar) p-4 rounded-xl text-xl">
+                <img src="/assets/images/LIST.png" alt="" class="w-10"/>
+                <span>Unlimited Lists</span>
+            </div>
+        </div>
+    </section>
+
 </main>
