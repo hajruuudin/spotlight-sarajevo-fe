@@ -29,6 +29,8 @@ import { ReviewService } from '../../services/review.service';
 import { ReviewCardComponent } from "../../components/review-card/review-card.component";
 import { DeleteReviewModalComponent } from '../../components/delete-review-modal/delete-review-modal.component';
 import { Title } from '@angular/platform-browser';
+import { ButtonPrimaryComponent } from "../../components/button-primary/button-primary.component";
+import { CollectionModalComponent } from '../../components/collection-modal/collection-modal.component';
 
 Chart.register(
   RadarController,
@@ -43,7 +45,7 @@ Chart.register(
 
 @Component({
   selector: 'app-spot-overview',
-  imports: [NgIf, NgFor, OverviewHeadingComponent, ImageGalleryComponent, SmallTagLabelComponent, NotFoundComponent, ButtonRegularComponent, ReviewCardComponent],
+  imports: [NgIf, NgFor, OverviewHeadingComponent, ImageGalleryComponent, SmallTagLabelComponent, NotFoundComponent, ButtonRegularComponent, ReviewCardComponent, ButtonPrimaryComponent],
   templateUrl: './spot-overview.component.html',
   styleUrl: './spot-overview.component.css',
   animations: [fadeInOutAnimation]
@@ -271,6 +273,13 @@ export class SpotOverviewComponent implements OnInit, AfterViewInit{
       if(status){
         this.getUserSpotReview()
       }
+    })
+  }
+
+  openCollectionDialog(){
+    const dialogRef = this.dialog.open(CollectionModalComponent, {
+      width: '300px',
+      data: {name: this.spot?.officialName, objectId: this.spot?.id, type: 'SPOT'}
     })
   }
 

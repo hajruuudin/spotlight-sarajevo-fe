@@ -6,7 +6,7 @@ import { EventDataService } from '../../services/event-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { HotToastBuilder, HotToastService } from '@ngxpert/hot-toast';
+import { HotToastService } from '@ngxpert/hot-toast';
 import { Title } from '@angular/platform-browser';
 import { OverviewHeadingComponent } from "../../components/overview-heading/overview-heading.component";
 import { ImageGalleryComponent } from "../../components/image-gallery/image-gallery.component";

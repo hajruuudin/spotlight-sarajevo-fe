@@ -17,11 +17,31 @@ export class CollectionService {
     })
   }
 
-  getAllCustomCollections(){}
+  getAllCustomCollections(){
+    // returns the custom collections of a user
+  }
 
   addCustomCollection(request: CollectionCreateModel){
     return this.http.post(`/api/collection/custom`, request, {
       withCredentials: true
     })
   } // DOdati da se provjerava ime
+
+  getCollectionsWithItemStatus(objectId: number, objectType: string){
+    return this.http.get(`/api/collection/all?objectId=${objectId}&objectType=${objectType}`, {
+      withCredentials: true
+    })
+  }
+
+  addItemToCollection(collectionName: string, objectId: number){
+    return this.http.post(`/api/collection/addObject?collectionName=${collectionName}&objectId=${objectId}`, {}, {
+      withCredentials: true
+    })
+  }
+
+  removeItemFromCollection(collectionName: string, objectId: number){
+    return this.http.delete(`/api/collection/removeObject?collectionName=${collectionName}&objectId=${objectId}`, {
+      withCredentials: true
+    })
+  }
 }

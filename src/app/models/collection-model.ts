@@ -1,23 +1,30 @@
 import { EventShorthand } from "./event-model";
 import { SpotShorthand } from "./spot-model";
 
-export interface CollectionModel{
+export interface CollectionModel {
     id: number,
     collectionName: string,
     collectionType: string,
     userId: number
 }
 
-export interface CollectionWithItemsModel{
+export interface CollectionWithItemsModel {
     id: number,
     collectionName: string,
     collectionType: string,
     collectionItems: (SpotShorthand | EventShorthand)[];
 }
 
-export class CollectionCreateModel{
+export class CollectionCreateModel {
     constructor(
         public collectionName: string,
         public collectionType: string
-    ) {}
+    ) { }
+}
+
+export class CollectionStatus {
+    constructor(
+        public collectionName: string,
+        public itemStatus: boolean
+    ) { }
 }

@@ -31,6 +31,13 @@
                     <p class="text-xl font-bold">{{this.spot.categoryName}}</p>
                 </div>
             </div>
+
+            <div class="w-full flex flex-row justify-around items-center">
+                <app-button-primary
+                    [buttonLabel]="'Add to collection'"
+                    (buttonOnClick)="this.openCollectionDialog()"
+                ></app-button-primary>
+            </div>
         </div>
 
         <!-- ADDITIONAL INFO & REVIEW SECTION -->

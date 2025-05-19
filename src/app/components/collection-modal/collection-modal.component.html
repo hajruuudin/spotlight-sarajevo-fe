@@ -1,0 +1,23 @@
+<div class="bg-(--navbar) kumbh-sans-regular">
+    <h2 class="text-white text-2xl font-bold mx-4 py-4 text-center">Add {{this.data.name}} to collections</h2>
+    <section class="w-3/4 h-full px-6">
+        <form *ngIf="this.isFormVisible" [formGroup]="this.collectionsFormGroup" class="w-full">
+            <div formArrayName="collections" class="w-full">
+                <div class="w-full flex flex-row justify-around" *ngFor="let group of collectionsFormArray.controls; let i = index" [formGroupName]="i">
+                <label class="w-full text-xl">
+                    <input type="checkbox" formControlName="itemStatus"/>
+                    {{ group.get('collectionName')?.value }}
+                </label>
+                </div>
+            </div>
+        </form>
+    </section>
+    <mat-dialog-actions align="center">
+        <button mat-button mat-dialog-close="" class="font-bold px-4 py-2 text-xl rounded-l-2xl bg-(--primary) hover:bg-cyan-900 transition-all">Cancel</button>
+        <button mat-button (click)="this.onSaveClick()" cdkFocusInitial class="font-bold px-4 py-2 text-xl rounded-r-2xl bg-cyan-800 hover:bg-cyan-900 transition-all">Okay</button>
+    </mat-dialog-actions>
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#00cdc6" type="fire" [fullScreen]="true" style="z-index: 999;" >
+        <p style="color: white; font-weight: bold;"> Loading... </p>
+    </ngx-spinner>
+</div>
