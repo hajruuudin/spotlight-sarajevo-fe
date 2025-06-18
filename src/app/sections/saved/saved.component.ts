@@ -20,7 +20,7 @@ import { ButtonPrimaryComponent } from "../../components/button-primary/button-p
 
 @Component({
   selector: 'app-saved',
-  imports: [NgIf, NgFor, KebabCasePipe, ReactiveFormsModule, HeadingComponent, ButtonRegularComponent, SpotSearchComponent, EventSearchComponent, NotFoundComponent, ButtonPrimaryComponent],
+  imports: [NgIf, NgFor, KebabCasePipe, ReactiveFormsModule, HeadingComponent, SpotSearchComponent, EventSearchComponent, NotFoundComponent, ButtonPrimaryComponent],
   templateUrl: './saved.component.html',
   styleUrl: './saved.component.css',
   animations: [fadeInOutAnimation]

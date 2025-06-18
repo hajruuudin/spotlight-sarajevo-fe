@@ -1,3 +1,8 @@
 <main class="flex flex-col justify-start items-center">
     <app-heading [title]="'All Data'"></app-heading>
+
+    <app-ss-table
+        [tableData]="this.spotShorthands"
+        [tableType]="true"
+    ></app-ss-table>
 </main>

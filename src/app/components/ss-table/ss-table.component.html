@@ -1,0 +1,56 @@
+<div class="bg-(--navbar) rounded-2xl w-full overflow-x-auto p-4">
+  <table class="w-full table-fixed text-left text-white">
+    <thead class="border-b border-gray-400">
+      <tr class="text-sm uppercase tracking-wide text-white p-4">
+        <th class="py-2 px-4 text-2xl text-center">ID</th>
+        <th class="py-2 px-4 text-2xl text-center">TYPE</th>
+        <th class="py-2 px-4 text-2xl text-center">NAME</th>
+        <th class="py-2 px-4 text-2xl text-center">CATEGORY</th>
+        <th class="py-2 px-4 text-2xl text-center">ADDED</th>
+        <th class="py-2 px-4 text-2xl text-center">MODIFIED</th>
+
+        <ng-container *ngIf="tableType">
+          <th class="py-2 px-4 text-2xl text-center">RATING</th>
+        </ng-container>
+
+        <ng-container *ngIf="!tableType">
+          <th class="py-2 px-4 text-2xl text-center">DATE</th>
+        </ng-container>
+
+        <th class="py-2 px-4 text-center"> </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr
+        *ngFor="let row of tableData"
+        class="border-b border-gray-700 hover:bg-(--primary) transition h-16"
+      >
+        <td class="py-2 px-4 text-center">{{ row.id }}</td>
+        <td class="py-2 px-4 text-center">{{ tableType ? 'SPOT' : 'EVENT' }}</td>
+        <td class="py-2 px-4 text-center">{{ row.officialName }}</td>
+        <td class="py-2 px-4 text-center">{{ row.categoryName }}</td>
+        <td class="py-2 px-4 text-center">{{ row.created | date }}</td>
+        <td class="py-2 px-4 text-center">{{ row.modified != null ? row.modified : 'Never'}}</td>
+
+        <!-- SpotShorthand values -->
+        <ng-container *ngIf="isSpot(row)">
+          <td class="py-2 px-4 text-center">{{ row.rating }} / 10</td>
+        </ng-container>
+
+        <!-- EventShorthand values -->
+        <ng-container *ngIf="isEvent(row)">
+          <td class="py-2 px-4 text-center">{{ row.startDateFormatted }}</td>
+        </ng-container>
+
+        <td class="py-2 px-4 text-center">
+          <button
+            class="bg-gray-300 text-black text-sm px-4 w-full py-1 rounded-lg hover:bg-gray-200 transition"
+          >
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

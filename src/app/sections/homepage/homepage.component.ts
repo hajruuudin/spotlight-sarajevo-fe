@@ -24,7 +24,7 @@ import { ButtonPrimaryComponent } from "../../components/button-primary/button-p
 
 @Component({
   selector: 'app-homepage',
-  imports: [NgFor, NgIf, HeadingComponent, SpotHeadlineComponent, EventHeadlineComponent, SpotDiscoverComponent, ButtonRegularComponent, SpotSearchComponent, CalendarDayComponent, EventSearchComponent, LandmarkDiscoverComponent, CategoryBlockComponent, ButtonPrimaryComponent],
+  imports: [NgFor, NgIf, HeadingComponent, SpotHeadlineComponent, EventHeadlineComponent, SpotDiscoverComponent, SpotSearchComponent, CalendarDayComponent, EventSearchComponent, LandmarkDiscoverComponent, CategoryBlockComponent, ButtonPrimaryComponent],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css',
   animations: [

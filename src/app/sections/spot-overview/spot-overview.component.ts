@@ -45,7 +45,7 @@ Chart.register(
 
 @Component({
   selector: 'app-spot-overview',
-  imports: [NgIf, NgFor, NgClass, OverviewHeadingComponent, ImageGalleryComponent, SmallTagLabelComponent, NotFoundComponent, ButtonRegularComponent, ReviewCardComponent, ButtonPrimaryComponent],
+  imports: [NgIf, NgFor, NgClass, OverviewHeadingComponent, ImageGalleryComponent, SmallTagLabelComponent, NotFoundComponent, ReviewCardComponent, ButtonPrimaryComponent],
   templateUrl: './spot-overview.component.html',
   styleUrl: './spot-overview.component.css',
   animations: [fadeInOutAnimation]
