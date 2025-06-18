@@ -64,7 +64,12 @@ export class LoginComponent implements OnInit{
           }
 
           this.session.setCurrentUser(loggedUserProfile)
-          this.router.navigate(['/homepage'])
+
+          if(loggedUserProfile.isAdmin){
+            this.router.navigate(['/admin'])
+          } else {
+            this.router.navigate(['/homepage'])
+          }
         },
         error: (error) => {
           this.spinner.hide()
@@ -114,7 +119,12 @@ export class LoginComponent implements OnInit{
               }
     
               this.session.setCurrentUser(loggedUserProfile)
-              this.router.navigate(['/homepage'])
+
+              if(loggedUserProfile.isAdmin){
+                this.router.navigate(['/admin'])
+              } else {
+                this.router.navigate(['/homepage'])
+              }
             },
             (error) => {
               this.spinner.hide()

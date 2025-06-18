@@ -3,10 +3,12 @@ export interface EventShorthand{
     slug: string;
     officialName: string,
     smallDescription: string,
-    startDateFormatted: string,
     categoryName: string,
     tagNames: string[],
+    startDateFormatted: string,
     imageUrl: string;
+    created: Date;
+    modified: Date;
 }
 
 export class EventModel {

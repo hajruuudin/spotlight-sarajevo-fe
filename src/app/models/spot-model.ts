@@ -9,6 +9,8 @@ export interface SpotShorthand{
     tagNames: string[],
     rating: DoubleRange,
     imageUrl: string;
+    created: Date;
+    modified: Date;
 }
 
 export class SpotModel {
