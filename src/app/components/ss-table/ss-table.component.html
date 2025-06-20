@@ -1,260 +1,211 @@
 <div class="bg-(--navbar) rounded-2xl w-full overflow-x-auto py-4">
-  <table class="w-full table-fixed text-left text-white">
-    <thead class="border-b border-gray-400 w-full">
-      <tr class="text-sm uppercase tracking-wide text-white p-4">
-        <th class="py-2 px-2 text-2xl text-center w-12">ID</th>
-        <th class="py-2 px-2 text-2xl text-center w-24">TYPE</th>
-        <th class="py-2 px-2 text-2xl text-center w-64">NAME</th>
-        <th class="py-2 px-2 text-2xl text-center">CATEGORY</th>
-        <th class="py-2 px-2 text-2xl text-center">ADDED</th>
-        <th class="py-2 px-2 text-2xl text-center">MODIFIED</th>
+    <table class="w-full table-fixed text-left text-white">
+        <thead class="border-b border-gray-400 w-full">
+            <tr class="text-sm uppercase tracking-wide text-white p-4">
+                <th class="py-2 px-2 text-2xl text-center w-12">ID</th>
+                <th class="py-2 px-2 text-2xl text-center w-24">TYPE</th>
+                <th class="py-2 px-2 text-2xl text-center w-64">NAME</th>
+                <th class="py-2 px-2 text-2xl text-center">CATEGORY</th>
+                <th class="py-2 px-2 text-2xl text-center">ADDED</th>
+                <th class="py-2 px-2 text-2xl text-center">MODIFIED</th>
 
-        <ng-container *ngIf="tableType">
-          <th class="py-2 px-4 text-2xl text-center">RATING</th>
-        </ng-container>
+                <ng-container *ngIf="tableType">
+                    <th class="py-2 px-4 text-2xl text-center">RATING</th>
+                </ng-container>
 
-        <ng-container *ngIf="!tableType">
-          <th class="py-2 px-4 text-2xl text-center">DATE</th>
-        </ng-container>
+                <ng-container *ngIf="!tableType">
+                    <th class="py-2 px-4 text-2xl text-center">DATE</th>
+                </ng-container>
 
-        <th class="py-2 px-4 text-center"> </th>
-      </tr>
-    </thead>
-
-    <tbody class="w-full">
-        <ng-container *ngFor="let row of tableData">
-            <!-- Regular row -->
-            <tr
-            class="border-b border-cyan-200 hover:bg-(--primary) transition h-16"
-            >
-            <td class="py-1 px-2 text-center text-xl">{{ row.id }}</td>
-            <td class="py-1 px-2 text-center text-xl">{{ tableType ? 'SPOT' : 'EVENT' }}</td>
-            <td class="py-1 px-2 text-center text-xl">{{ row.officialName }}</td>
-            <td class="py-1 px-2 text-center text-xl">{{ row.categoryName }}</td>
-            <td class="py-1 px-2 text-center text-xl">{{ row.created | date }}</td>
-            <td class="py-1 px-2 text-center text-xl">{{ row.modified != null ? row.modified : 'Never'}}</td>
-
-            <ng-container *ngIf="isSpot(row)">
-                <td class="py-2 px-4 text-center">{{ row.rating }} / 10</td>
-            </ng-container>
-
-            <ng-container *ngIf="isEvent(row)">
-                <td class="py-2 px-4 text-center">{{ row.startDateFormatted }}</td>
-            </ng-container>
-
-                <td class="py-2 px-4 text-center">
-                    <button
-                    class="bg-gray-300 text-black text-sm px-4 w-full py-1 rounded-lg hover:bg-gray-200 transition"
-                    (click)="loadItemInfoSection(row.slug, tableType ? 'SPOT' : 'EVENT')"
-                    >
-                    Edit
-                    </button>
-                </td>
+                <th class="py-2 px-4 text-center"> </th>
             </tr>
+        </thead>
 
-            <!-- Expanded details row -->
-            <tr *ngIf="selectedSlug === row.slug">
-            <td colspan="8%" class="bg-(--navbar-black) p-4 animate-fade-in">
-                <!-- Details section -->
-                <div *ngIf="isSpot(fullItemInfo!)" class="w-full flex flex-wrap gap-4 text-white">
-                    <form class="w-full flex flex-row justify-start items-start" [formGroup]="this.detailsSectionForm">
-                        <div class="w-[600px] flex flex-col justify-center items-stretch">
-                            <input 
-                            class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2" 
-                            type="text" 
-                            name="slug" 
-                            id="name-input"
-                            placeholder="Spot Slug"
-                            formControlName="slug">
+        <tbody class="w-full">
+            <ng-container *ngFor="let row of tableData">
+                <!-- Regular row -->
+                <tr class="border-b border-cyan-200 hover:bg-(--primary) transition h-16">
+                    <td class="py-1 px-2 text-center text-xl">{{ row.id }}</td>
+                    <td class="py-1 px-2 text-center text-xl">{{ tableType ? 'SPOT' : 'EVENT' }}</td>
+                    <td class="py-1 px-2 text-center text-xl">{{ row.officialName }}</td>
+                    <td class="py-1 px-2 text-center text-xl">{{ row.categoryName }}</td>
+                    <td class="py-1 px-2 text-center text-xl">{{ row.created | date }}</td>
+                    <td class="py-1 px-2 text-center text-xl">{{ row.modified != null ? row.modified : 'Never'}}</td>
 
-                            <input 
-                            class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-4" 
-                            type="text" 
-                            name="officialName" 
-                            id="name-input"
-                            placeholder="Spot Official Name"
-                            formControlName="officialName">
+                    <ng-container *ngIf="isSpot(row)">
+                        <td class="py-2 px-4 text-center">{{ row.rating }} / 10</td>
+                    </ng-container>
 
-                            <input 
-                            class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-4" 
-                            type="text" 
-                            name="smallDescription" 
-                            id="name-input"
-                            placeholder="Spot Small Desription / headline"
-                            formControlName="smallDescription">
+                    <ng-container *ngIf="isEvent(row)">
+                        <td class="py-2 px-4 text-center">{{ row.startDateFormatted }}</td>
+                    </ng-container>
 
-                            <textarea 
-                            class="w-full border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-4" 
-                            name="fullDescription"
-                            id="review-content"
-                            placeholder="Spot Desription"
-                            rows="6"
-                            formControlName="fullDescription"></textarea>
-                        </div>
+                    <td class="py-2 px-4 text-center">
+                        <app-button-primary
+                            (buttonOnClick)="loadItemInfoSection(row.slug, tableType ? 'SPOT' : 'EVENT')"
+                            [buttonLabel]="'Edit'"></app-button-primary>
+                    </td>
+                </tr>
 
-                        <div class="w-[600px] flex flex-col justify-center items-stretch mx-4">
-                            <label for="category-select">Category</label>
-                            <select
-                            class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mb-4 bg-[--navbar-dark] text-white"
-                            name="category"
-                            id="category-select"
-                            formControlName="categoryId"
-                            >
-                                <option *ngFor="let category of this.categorySelectItems"
-                                [value]="category.id"
-                                >{{category.categoryName}}</option>
-                            </select>
+                <!-- Expanded details row -->
+                <tr *ngIf="selectedSlug === row.slug">
+                    <td colspan="8%" class="bg-(--navbar-black) animate-fade-in">
+                        <!-- Details section -->
+                        <div *ngIf="isSpot(fullItemInfo!)" class="w-full flex flex-wrap text-white">
+                            <form class="w-full flex flex-row justify-start items-start"
+                                [formGroup]="this.detailsSectionForm">
+                                <div class="w-[500px] flex flex-col justify-center items-stretch p-4">
+                                    <label for="slug" class="mb-1">Slug</label>
+                                    <input
+                                        class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all"
+                                        type="text" name="slug" id="name-input" placeholder="Spot Slug"
+                                        formControlName="slug">
 
-                            <label for="category-select">Tags</label>
-                            <ng-multiselect-dropdown
-                                class="border-2 rounded-2xl"
-                                [placeholder]="'custom placeholder'"
-                                [settings]="this.tagDropdownSettings"
-                                [data]="this.tagDropdownAllItems"
-                                [(ngModel)]="this.tagDropdownSelectedItems"
-                                formControlName="tagNames"
-                                (onSelect)="onItemSelect($event)"
-                                (onSelectAll)="onSelectAll($event)"
-                            >
-                            </ng-multiselect-dropdown>
+                                    <label for="officialName" class="mt-4 mb-1">Official Name</label>
+                                    <input
+                                        class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all"
+                                        type="text" name="officialName" id="name-input" placeholder="Spot Official Name"
+                                        formControlName="officialName">
 
-                            <div id="hours-sections" class="flex flex-col justify-center items-center space-y-4 my-4">
-                                <div class="w-full flex flex-row justify-between items-center">
-                                    <label class="text-2xl font-semibold grow" for="mondayTime">MON</label>
-                                    <button
-                                    class="bg-cyan-700 text-white font-bold text-md px-4 py-3 mx-2 rounded-2xl hover:bg-cyan-500 transition"
-                                    (click)="labelWorkDayAsClosed('mondayTime')"
-                                    >
-                                    Label as Closed
-                                    </button>
-                                    <input 
-                                    class="w-32 h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all" 
-                                    type="time"
-                                    name="mondayTime" 
-                                    id="mondayTime"
-                                    formControlName="mondayTime">
+                                    <label for="smallDescription" class="mt-4 mb-1">Small Description</label>
+                                    <input
+                                        class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all"
+                                        type="text" name="smallDescription" id="name-input"
+                                        placeholder="Spot Small Desription / headline"
+                                        formControlName="smallDescription">
+
+                                    <label for="fullDescription" class="mt-4 mb-1">Small Description</label>
+                                    <textarea
+                                        class="w-full border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all"
+                                        name="fullDescription" id="review-content" placeholder="Spot Desription"
+                                        rows="6" formControlName="fullDescription"></textarea>
+
+                                    <label for="address" class="mt-4 mb-1">Addres</label>
+                                    <input
+                                        class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all"
+                                        type="text" name="address" id="address" placeholder="Spot Address"
+                                        formControlName="address">
+
+                                    <div class="w-full flex flex-row justify-between items-center">
+                                        <div class="flex flex-col justify-center items-center">
+                                            <label for="lat" class="mt-4 mb-1">Lattitude</label>
+                                            <input
+                                                class="w-full h-12 border-2 mr-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all"
+                                                type="number" min="-90" max="90" step="any" name="lat" id="lat"
+                                                placeholder="Spot Lattitude" formControlName="lat">
+                                        </div>
+
+                                        <div class="flex flex-col justify-center items-center">
+                                            <label for="long" class="mt-4 mb-1">Longitude</label>
+                                            <input
+                                                class="w-full h-12 border-2 ml2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all"
+                                                type="number" min="-180" max="180" step="any" name="long" id="long"
+                                                placeholder="Spot Longitude" formControlName="long">
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="w-full flex flex-row justify-between items-center">
-                                    <label class="text-2xl font-semibold grow" for="tuesdayTime">TUE</label>
-                                    <button
-                                    class="bg-cyan-700 text-white font-bold text-md px-4 py-3 mx-2 rounded-2xl hover:bg-cyan-500 transition"
-                                    (click)="labelWorkDayAsClosed('tuesdayTime')"
+                                <div
+                                    class="w-[800px] flex flex-col bg-(--navbar-dark) justify-center items-stretch mx-4  p-4">
+                                    <label for="category-select" class="mb-1">Category</label>
+                                    <select
+                                        class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mb-4 bg-[--navbar-dark] text-white"
+                                        name="category" id="category-select" formControlName="categoryName">
+                                        <option *ngFor="let category of this.categorySelectItems" [value]="category.categoryName">
+                                            {{category.categoryName}}
+                                        </option>
+                                    </select>
+
+                                    <label for="category-select">Tags</label>
+                                    <ng-multiselect-dropdown class="border-2 rounded-2xl"
+                                        [placeholder]="'custom placeholder'" [settings]="this.tagDropdownSettings"
+                                        [data]="this.tagDropdownAllItems" [(ngModel)]="this.tagDropdownSelectedItems"
+                                        formControlName="tagNames" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
                                     >
-                                    Label as Closed
-                                    </button>
-                                    <input 
-                                    class="w-32 h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all" 
-                                    type="time"
-                                    name="tuesdayTime" 
-                                    id="tuesdayTime"
-                                    formControlName="tuesdayTime">
+                                    </ng-multiselect-dropdown>
+
+                                    <div id="hours-sections"
+                                        class="flex flex-col justify-center items-center space-y-4 my-4">
+                                        <div class="w-full flex flex-row justify-between items-center"
+                                            *ngFor="let day of days">
+                                            <label class="text-2xl font-semibold grow capitalize"
+                                                [for]="day + 'StartTime'">{{ day | uppercase }}</label>
+                                            <button
+                                                class="bg-cyan-700 text-white font-bold text-md px-4 py-3 mx-2 rounded-2xl hover:bg-cyan-500 transition"
+                                                (click)="labelWorkDayAsClosed(day)">
+                                                Label as Closed
+                                            </button>
+
+                                            <input
+                                                class="w-32 h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mr-1"
+                                                type="time" [id]="day + 'StartTime'"
+                                                [formControlName]="day + 'StartTime'">
+
+                                            <input
+                                                class="w-32 h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all ml-1"
+                                                type="time" [id]="day + 'EndTime'" [formControlName]="day + 'EndTime'">
+                                        </div>
+                                    </div>
+
                                 </div>
 
-                                <div class="w-full flex flex-row justify-between items-center">
-                                    <label class="text-2xl font-semibold grow" for="wednesdayTime">WED</label>
-                                    <button
-                                    class="bg-cyan-700 text-white font-bold text-md px-4 py-3 mx-2 rounded-2xl hover:bg-cyan-500 transition"
-                                    (click)="labelWorkDayAsClosed('wednesdayTime')"
-                                    >
-                                    Label as Closed
-                                    </button>
-                                    <input 
-                                    class="w-32 h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all" 
-                                    type="time"
-                                    name="wednesdayTime" 
-                                    id="wednesdayTime"
-                                    formControlName="wednesdayTime">
-                                </div>
+                                <div class="w-[180px] flex flex-col justify-center items-stretch mx-4  p-4">
+                                    <label for="overallQuality" class="text-center mb-1">Overall Quality</label>
+                                    <input
+                                        class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all"
+                                        type="number" min="1" max="10" name="overallQuality" id="overallQuality"
+                                        placeholder="" formControlName="overallQuality">
 
-                                <div class="w-full flex flex-row justify-between items-center">
-                                    <label class="text-2xl font-semibold grow" for="thursdayTime">THU</label>
-                                    <button
-                                    class="bg-cyan-700 text-white font-bold text-md px-4 py-3 mx-2 rounded-2xl hover:bg-cyan-500 transition"
-                                    (click)="labelWorkDayAsClosed('thursdayTime')"
-                                    >
-                                    Label as Closed
-                                    </button>
-                                    <input 
-                                    class="w-32 h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all" 
-                                    type="time"
-                                    name="thursdayTime" 
-                                    id="thursdayTime"
-                                    formControlName="thursdayTime">
-                                </div>
+                                    <label for="atmosphere" class="text-center mt-4">Atmosphere</label>
+                                    <input
+                                        class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2"
+                                        type="number" min="1" max="10" name="atmosphere" id="atmosphere" placeholder=""
+                                        formControlName="atmosphere">
 
-                                <div class="w-full flex flex-row justify-between items-center">
-                                    <label class="text-2xl font-semibold grow" for="fridayTime">FRI</label>
-                                    <button
-                                    class="bg-cyan-700 text-white font-bold text-md px-4 py-3 mx-2 rounded-2xl hover:bg-cyan-500 transition"
-                                    (click)="labelWorkDayAsClosed('fridayTime')"
-                                    >
-                                    Label as Closed
-                                    </button>
-                                    <input 
-                                    class="w-32 h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all" 
-                                    type="time"
-                                    name="fridayTime" 
-                                    id="fridayTime"
-                                    formControlName="fridayTime">
-                                </div>
+                                    <label for="affordability" class="text-center mt-4">Affordability</label>
+                                    <input
+                                        class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2"
+                                        type="number" min="1" max="10" name="affordability" id="affordability"
+                                        placeholder="" formControlName="affordability">
 
-                                <div class="w-full flex flex-row justify-between items-center">
-                                    <label class="text-2xl font-semibold grow" for="saturdayTime">SAT</label>
-                                    <button
-                                    class="bg-cyan-700 text-white font-bold text-md px-4 py-3 mx-2 rounded-2xl hover:bg-cyan-500 transition"
-                                    (click)="labelWorkDayAsClosed('saturdayTime')"
-                                    >
-                                    Label as Closed
-                                    </button>
-                                    <input 
-                                    class="w-32 h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all" 
-                                    type="time"
-                                    name="saturdayTime" 
-                                    id="saturdayTime"
-                                    formControlName="saturdayTime">
-                                </div>
+                                    <label for="cleanliness" class="text-center mt-4">Cleanliness</label>
+                                    <input
+                                        class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2"
+                                        type="number" min="1" max="10" name="cleanliness" id="cleanliness"
+                                        placeholder="" formControlName="cleanliness">
 
-                                <div class="w-full flex flex-row justify-between items-center">
-                                    <label class="text-2xl font-semibold grow" for="sundayTime">SUN</label>
-                                    <button
-                                    class="bg-cyan-700 text-white font-bold text-md px-4 py-3 mx-2 rounded-2xl hover:bg-cyan-500 transition"
-                                    (click)="labelWorkDayAsClosed('sundayTime')"
-                                    >
-                                    Label as Closed
-                                    </button>
-                                    <input 
-                                    class="w-32 h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all" 
-                                    type="time"
-                                    name="sundayTime" 
-                                    id="sundayTime"
-                                    formControlName="sundayTime">
+                                    <label for="accessibility" class="text-center mt-4">Accessibility</label>
+                                    <input
+                                        class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2"
+                                        type="number" min="1" max="10" name="accessibility" id="accessibility"
+                                        placeholder="" formControlName="accessibility">
+
+                                    <label for="staffKindness" class="text-center mt-4">Staff Kindness</label>
+                                    <input
+                                        class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all mt-2"
+                                        type="number" min="1" max="10" name="staffKindness" id="staffKindness"
+                                        placeholder="" formControlName="staffKindness">
                                 </div>
+                            </form>
+
+                            <div class="flex justify-end w-full my-4 mx-4 space-x-2">
+                                <app-button-primary 
+                                    [buttonLabel]="'Save'"
+                                    (buttonOnClick)="this.saveItemInfo()"   
+                                ></app-button-primary>
+                                <app-button-primary 
+                                    [buttonLabel]="'Cancel'"
+                                    [buttonType]="'cancel'"
+                                    (buttonOnClick)="closeItemInfoSection()"
+                                ></app-button-primary>
                             </div>
                         </div>
-
-                        <div class="w-[250px] flex flex-col justify-center items-stretch mx-4">
-                            <!-- SPACE FOR RATING -->
-                        </div>
-                    </form>
-                    
-                    <!-- <input class="bg-gray-700 text-white p-2 rounded w-full md:w-[48%]" placeholder="Name..." [value]="fullItemInfo.officialName" />
-                    <input class="bg-gray-700 text-white p-2 rounded w-full md:w-[48%]" placeholder="Headline..." [value]="fullItemInfo.address" />
-                    <textarea class="bg-gray-700 text-white p-2 rounded w-full" placeholder="Description..." [value]="fullItemInfo.smallDescription"></textarea>
-                    <input class="bg-gray-700 text-white p-2 rounded w-full" placeholder="Address..." [value]="fullItemInfo.address" /> -->
-
-                    <!-- Buttons -->
-                    <div class="flex justify-between w-full mt-4">
-                        <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Save</button>
-                        <button (click)="closeItemInfoSection()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Cancel</button>
-                    </div>
-                </div>
-            </td>
-            </tr>
-        </ng-container>
+                    </td>
+                </tr>
+            </ng-container>
         </tbody>
 
-  </table>
+    </table>
 
-  <h2 class="text-center w-full">This will be the pagination buttons</h2>
+    <h2 class="text-center w-full">This will be the pagination buttons</h2>
 </div>

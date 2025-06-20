@@ -1,1 +1,6 @@
-<button (click)="onClick()"  class="w-full font-bold text-xl bg-(--primary) hover:bg-cyan-400 px-4 py-2 rounded-2xl">{{this.buttonLabel}}</button>
+<button 
+    (click)="onClick()"  
+    [ngClass]="buttonType == 'cancel' ? 'w-full font-bold text-xl bg-red-400 hover:bg-red-800 px-4 py-2 rounded-2xl' : 'w-full font-bold text-xl bg-(--primary) hover:bg-cyan-400 px-4 py-2 rounded-2xl'"
+    class="w-full font-bold text-xl bg-(--primary) hover:bg-cyan-400 px-4 py-2 rounded-2xl">
+    {{this.buttonLabel}}
+</button>
