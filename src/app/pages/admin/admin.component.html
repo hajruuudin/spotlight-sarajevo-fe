@@ -1,6 +1,7 @@
-<section class="w-full h-screen flex flex-row items-stretch">
-    <app-navbar-admin class="w-auto"></app-navbar-admin>
-    <section class="w-full m-16">
+<section class="w-full h-screen flex flex-row items-stretch overflow-auto">
+    <app-navbar-admin class="sticky top-0 lg:left-0 w-full lg:w-auto z-50"></app-navbar-admin>
+    <section class="m-auto w-full h-full max-w-(--max-screen-width) overflow-visible flex flex-col justify-between">
         <router-outlet></router-outlet>
+        <app-footer></app-footer>
     </section>
 </section>

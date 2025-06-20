@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@use '@angular/material' as mat;
 
 
 .kumbh-sans-regular {
@@ -42,6 +43,7 @@
   --navbar: #094342;
 
   --navbar-dark: #053f3e; 
+  --navbar-black: #023a3a; 
   --navbar-outline: #003A39;
 
   --primary: #11aeb6;
@@ -73,6 +75,25 @@
       transform: translateX(0px);
     }
   }
+
+  
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 .toast {
@@ -81,4 +102,25 @@
 
 .auth-body{
   background-image: url(/assets/object-images/backg.png);
+}
+
+
+.my-mat-field {
+  background-color: var(--navbar-dark);
+  border-radius: 12px;
+  padding: 0.5rem;
+
+  ::ng-deep .mat-form-field-label {
+    font-family: 'Kumbh Sans';
+    color: white;
+  }
+
+  ::ng-deep .mat-select-value {
+    font-family: 'Kumbh Sans';
+    color: white;
+  }
+
+  ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 4px;
+  }
 }

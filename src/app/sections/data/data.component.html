@@ -1,8 +1,17 @@
-<main class="flex flex-col justify-start items-center">
+<main class="flex flex-col justify-start items-center p-8 lg:p-16 overflow-visible">
     <app-heading [title]="'All Data'"></app-heading>
+
+    <h2 class="text-3xl font-bold my-4 self-start">Spots</h2>
 
     <app-ss-table
         [tableData]="this.spotShorthands"
         [tableType]="true"
+    ></app-ss-table>
+
+    <h2 class="text-3xl font-bold my-4 self-start">Events</h2>
+
+    <app-ss-table
+        [tableData]="this.eventShorthands"
+        [tableType]="false"
     ></app-ss-table>
 </main>

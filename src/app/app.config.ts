@@ -9,6 +9,7 @@ import { NgxSpinnerModule } from 'ngx-spinner'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
@@ -34,6 +35,7 @@ export const appConfig: ApplicationConfig = {
       stacking: "depth",
       position: "top-right"
     }),
-    importProvidersFrom(BlockUIModule.forRoot())
+    importProvidersFrom(BlockUIModule.forRoot()),
+    importProvidersFrom(NgMultiSelectDropDownModule.forRoot())
   ]
 };
