@@ -1,17 +1,53 @@
 <main class="flex flex-col justify-start items-center p-8 lg:p-16 overflow-visible">
     <app-heading [title]="'All Data'"></app-heading>
 
-    <h2 class="text-3xl font-bold my-4 self-start">Spots</h2>
+   <form [formGroup]="this.spotSearchForm" class="w-full">
+        <app-search-bar
+            [id]="'searchTerm'"
+            [initialSearchTerm]="''"
+            [name]="'searchTerm'"
+            [placeholder]="'Seach spot data...'"
+            (searchSubmitted)="handleSpotSearchTerm($event)"
+        >
+        </app-search-bar>
+    </form>
 
     <app-ss-table
         [tableData]="this.spotShorthands"
         [tableType]="true"
+        [tableMaxPage]="this.spotMaxPage"
+        [tablePageSize]="this.spotPageSize"
+        [tablePageNumber]="this.spotPageNumber"
+        
+        (itemInfoSaved)="handleSpotUpdate($event)"
+        (itemNextPage)="this.handleNextPage($event)"
+        (itemPreviousPage)="this.handlePreviousPage($event)"
     ></app-ss-table>
 
-    <h2 class="text-3xl font-bold my-4 self-start">Events</h2>
+    <form [formGroup]="this.eventSearchForm" class="w-full mt-8">
+        <app-search-bar
+            [id]="'searchTerm'"
+            [initialSearchTerm]="''"
+            [name]="'searchTerm'"
+            [placeholder]="'Seach event data...'"
+            (searchSubmitted)="handleEventSearchTerm($event)"
+        >
+        </app-search-bar>
+    </form>
 
     <app-ss-table
         [tableData]="this.eventShorthands"
         [tableType]="false"
+        [tableMaxPage]="this.eventMaxPage"
+        [tablePageSize]="this.eventPageSize"
+        [tablePageNumber]="this.eventPageNumber"
+        
+        (eventItemInfoSaved)="handleEventUpdate($event)"
+        (itemNextPage)="this.handleNextPage($event)"
+        (itemPreviousPage)="this.handlePreviousPage($event)"
     ></app-ss-table>
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#00cdc6" type="fire" [fullScreen]="true" style="z-index: 999;" >
+        <p style="color: white; font-weight: bold;"> Loading... </p>
+    </ngx-spinner>
 </main>

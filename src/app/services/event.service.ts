@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EventModel } from '../models/event-model';
+import { EventModel, EventUpdateModel } from '../models/event-model';
 
 @Injectable({
   providedIn: 'root'
@@ -38,4 +38,9 @@ export class EventService {
     })
   }
 
+  updateEvent(eventUpdate: EventUpdateModel){
+    return this.http.put<EventModel>(`/api/event/admin`, eventUpdate, {
+      withCredentials: true
+    })
+  }
 }

@@ -3,12 +3,12 @@ export interface EventShorthand{
     slug: string;
     officialName: string,
     smallDescription: string,
+    startDateFormatted: string,
     categoryName: string,
     tagNames: string[],
-    startDateFormatted: string,
-    imageUrl: string;
-    created: Date;
-    modified: Date;
+    imageUrl: string,
+    created: string,
+    modified: string
 }
 
 export class EventModel {
@@ -35,5 +35,27 @@ export class EventModel {
     public createdBy: string,
     public modified: string,
     public modifiedBy: string
+  ) {}
+}
+
+export class EventUpdateModel {
+  constructor(
+    public id: number,
+    public slug: string,
+    public officialName: string,
+    public smallDescription: string,
+    public fullDescription: string,
+    public categoryName: string,
+    public tagNames: string[],
+    public startDate: string,
+    public endDate: string,
+    public entryPrice: number,
+    public ageLimit: number,
+    public reservation: boolean,
+    public openStatus: string,
+    public cancelRefund: string,
+    public eventLanguage: string,
+    public address: string,
+    public locationDescription: string
   ) {}
 }

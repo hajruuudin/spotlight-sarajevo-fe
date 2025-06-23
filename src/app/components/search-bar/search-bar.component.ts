@@ -21,6 +21,6 @@ export class SearchBarComponent {
   searchInput = new FormControl(this.initialSearchTerm);
 
   searchButtonClicked() {
-    this.searchSubmitted.emit(this.searchInput.value!); // I ovo konju
+    this.searchSubmitted.emit(this.searchInput.value!);
   }
 }

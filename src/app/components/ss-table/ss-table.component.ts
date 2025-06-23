@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SpotModel, SpotShorthand } from '../../models/spot-model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SpotModel, SpotShorthand, SpotUpdateModel } from '../../models/spot-model';
 import { EventModel, EventShorthand } from '../../models/event-model';
 import { DatePipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { SpotService } from '../../services/spot.service';
@@ -7,14 +7,16 @@ import { EventService } from '../../services/event.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { TagService } from '../../services/tag.service';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
 import { ButtonPrimaryComponent } from "../button-primary/button-primary.component";
 import { ButtonRegularComponent } from "../button-regular/button-regular.component";
+import { MatIconModule } from '@angular/material/icon';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-ss-table',
-  imports: [NgFor, NgIf, DatePipe, NgMultiSelectDropDownModule, ReactiveFormsModule, FormsModule, ButtonPrimaryComponent, UpperCasePipe],
+  imports: [NgFor, NgIf, DatePipe, NgMultiSelectDropDownModule, ReactiveFormsModule, FormsModule, ButtonPrimaryComponent, UpperCasePipe, MatIconModule],
   templateUrl: './ss-table.component.html',
   styleUrl: './ss-table.component.css',
   host: {
@@ -22,13 +24,19 @@ import { ButtonRegularComponent } from "../button-regular/button-regular.compone
   }
 })
 export class SsTableComponent implements OnInit {
-  days: string[] = [
-    'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
-  ];
-
-
   @Input() tableType: Boolean = false;
   @Input() tableData: (SpotShorthand | EventShorthand)[] = [];
+  @Input() tablePageNumber: number = 0;
+  @Input() tableMaxPage: number = 55;
+  @Input() tablePageSize: number = 999;
+  @Output() itemInfoSaved = new EventEmitter<any>();
+  @Output() eventItemInfoSaved = new EventEmitter<any>();
+  @Output() itemNextPage = new EventEmitter<any>();
+  @Output() itemPreviousPage = new EventEmitter<any>();
+
+  protected days: string[] = [
+    'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
+  ];
 
   protected isItemInfoShowed: Boolean = false;
   protected selectedSlug: string = ''
@@ -43,27 +51,46 @@ export class SsTableComponent implements OnInit {
     itemsShowLimit: 5,
     limitSelection: 5
   }
+
+  protected eventTagDropdownSettings = {
+    singleSelection: false,
+    idField: 'tagId',
+    textField: 'tagName',
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    itemsShowLimit: 5,
+    limitSelection: 5
+  }
+
+  protected tagDropdownAllItems: { tagId: number, tagName: string }[] = []
+  // Tags and Category selection for spots
   protected tagDropdownSelectedItems: { tagId: number; tagName: string }[] = [];
   protected categorySelectItems: any = {}
-  protected tagDropdownAllItems: { tagId: number, tagName: string }[] = []
+  // Tags and Category selection for events
+  protected eventTagDropdownSelectedItems: { tagId: number; tagName: string }[] = [];
+  protected eventCategorySelectItems: any = {}
+
   protected detailsSectionForm: FormGroup
+  protected eventDetailsSectionForm: FormGroup
 
   constructor(
     private spotService: SpotService,
     private eventService: EventService,
     private tagService: TagService,
     private categoryService: CategoryService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: HotToastService
   ) {
     this.detailsSectionForm = this.fb.group({
-      slug: [''],
-      officialName: [''],
-      smallDescription: [''],
-      fullDescription: [''],
-      categoryName: [''],
-      tagNames: [[]],
+      id: ['', Validators.required],
+      slug: ['', Validators.required],
+      officialName: ['', Validators.required],
+      smallDescription: ['', Validators.required],
+      fullDescription: ['', Validators.required],
+      categoryName: ['', Validators.required],
+      tags: [[], Validators.required],
 
-      // Work hours per day
+      // Work hours — optional
       mondayStartTime: [''],
       mondayEndTime: [''],
       tuesdayStartTime: [''],
@@ -79,19 +106,43 @@ export class SsTableComponent implements OnInit {
       sundayStartTime: [''],
       sundayEndTime: [''],
 
-      // Rating fields
-      overallQuality: [''],
-      atmosphere: [''],
-      staffKindness: [''],
-      cleanliness: [''],
-      affordability: [''],
-      accessibility: [''],
+      // Ratings — required
+      overallQuality: ['', Validators.required],
+      atmosphere: ['', Validators.required],
+      staffKindness: ['', Validators.required],
+      cleanliness: ['', Validators.required],
+      affordability: ['', Validators.required],
+      accessibility: ['', Validators.required],
 
-      // Location
-      address: [''],
-      lat: [''],
-      long: ['']
+      // Location — required
+      address: ['', Validators.required],
+      lat: ['', Validators.required],
+      lon: ['', Validators.required]
     });
+
+    this.eventDetailsSectionForm = this.fb.group({
+      id: ['', Validators.required],
+      slug: ['', Validators.required],
+      officialName: ['', Validators.required],
+      smallDescription: ['', Validators.required],
+      fullDescription: ['', Validators.required],
+      categoryName: ['', Validators.required],
+      tags: [[], Validators.required],
+
+      // Date and time
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      locationDescription: ['', Validators.required],
+      address: ['', Validators.required],
+
+      // Event specific data
+      entryPrice: [''],
+      ageLimit: [''],
+      reservation: [''],
+      cancelRefund: [''],
+      openStatus: [''],
+      eventLanguage: [''],
+    })
   }
 
   ngOnInit(): void {
@@ -123,11 +174,53 @@ export class SsTableComponent implements OnInit {
   isEvent(
     row: SpotShorthand | SpotModel | EventShorthand | EventModel | null | undefined
   ): row is EventShorthand | EventModel {
-    return !!row && 'startDateFormatted' in row;
+    return !!row && ('startDateFormatted' in row || 'startDate' in row);
   }
 
-  saveItemInfo(){
-      console.log(this.detailsSectionForm.value);
+  nextPage() {
+    if (this.tableMaxPage != this.tablePageNumber + 1) {
+      if (this.tableType) {
+        this.itemNextPage.emit("SPOT")
+      } else {
+        this.itemNextPage.emit("EVENT")
+      }
+    } else {
+      return
+    }
+  }
+
+  previousPage() {
+    if (this.tablePageNumber != 0) {
+      if (this.tableType) {
+        this.itemPreviousPage.emit("SPOT")
+      } else {
+        this.itemPreviousPage.emit("EVENT")
+      }
+    } else {
+      return;
+    }
+  }
+
+  saveItemInfo() {
+    if (this.detailsSectionForm.invalid) {
+      this.detailsSectionForm.markAllAsTouched();
+      this.toastr.warning("All fields except the work hours must be set!")
+      return;
+    }
+
+    const formData = this.detailsSectionForm.value;
+    this.itemInfoSaved.emit(formData as SpotUpdateModel);
+  }
+
+  saveEventItemInfo() {
+    if (this.eventDetailsSectionForm.invalid) {
+      this.eventDetailsSectionForm.markAllAsTouched();
+      this.toastr.warning("All fields except the event details must be set!")
+      return;
+    }
+
+    const formData = this.eventDetailsSectionForm.value;
+    this.eventItemInfoSaved.emit(formData);
   }
 
 
@@ -149,12 +242,13 @@ export class SsTableComponent implements OnInit {
           this.fullItemInfo = response as SpotModel
 
           this.detailsSectionForm.patchValue({
+            id: this.fullItemInfo.id,
             slug: this.fullItemInfo.slug,
             officialName: this.fullItemInfo.officialName,
             smallDescription: this.fullItemInfo.smallDescription,
             fullDescription: this.fullItemInfo.fullDescription,
             categoryName: this.fullItemInfo.categoryName,
-            tagNames: this.fullItemInfo.tagNames,
+            tags: this.fullItemInfo.tagNames,
 
             mondayStartTime: this.fullItemInfo.workHours[0]?.startTime || '',
             mondayEndTime: this.fullItemInfo.workHours[0]?.endTime || '',
@@ -179,7 +273,7 @@ export class SsTableComponent implements OnInit {
             accessibility: this.fullItemInfo.accessibility,
             address: this.fullItemInfo.address,
             lat: this.fullItemInfo.latitude,
-            long: this.fullItemInfo.longitude
+            lon: this.fullItemInfo.longitude
           });
 
 
@@ -196,6 +290,34 @@ export class SsTableComponent implements OnInit {
       this.eventService.getEventOverviewBySlug(itemSlug).subscribe({
         next: (response: any) => {
           this.fullItemInfo = response as EventModel
+
+          this.eventDetailsSectionForm.patchValue({
+            id: this.fullItemInfo.id,
+            slug: this.fullItemInfo.slug,
+            officialName: this.fullItemInfo.officialName,
+            smallDescription: this.fullItemInfo.smallDescription,
+            fullDescription: this.fullItemInfo.fullDescription,
+            categoryName: this.fullItemInfo.categoryName,
+            tags: this.fullItemInfo.tagNames,
+            startDate: this.fullItemInfo.startDate,
+            endDate: this.fullItemInfo.endDate,
+            locationDescription: this.fullItemInfo.locationDescription,
+            address: this.fullItemInfo.address,
+            entryPrice: this.fullItemInfo.entryPrice,
+            ageLimit: this.fullItemInfo.ageLimit,
+            reservation: this.fullItemInfo.reservation,
+            cancelRefund: this.fullItemInfo.cancelRefund,
+            openStatus: this.fullItemInfo.openStatus,
+            eventLanguage: this.fullItemInfo.eventLanguage,
+          });
+
+          this.eventTagDropdownSelectedItems = this.tagDropdownAllItems.filter(tag =>
+            this.fullItemInfo!.tagNames.includes(tag.tagName)
+          );
+          this.setPreselectedEventTags(this.fullItemInfo.tagNames)
+
+          console.log("Selected tags are:", this.eventTagDropdownSelectedItems)
+          
         },
         error: (error: HttpErrorResponse) => {
           console.error(error)
@@ -210,17 +332,30 @@ export class SsTableComponent implements OnInit {
     );
   }
 
+  setPreselectedEventTags(fullItemTagNames: string[]){
+     this.eventTagDropdownSelectedItems = this.tagDropdownAllItems.filter(tagItem =>
+      fullItemTagNames.includes(tagItem.tagName)
+    );
+  }
 
   onItemSelect(item: any) {
     if (!this.tagDropdownSelectedItems.some(i => i.tagName === item.tagName)) {
       this.tagDropdownSelectedItems.push(item);
     }
-    console.log(this.tagDropdownSelectedItems);
   }
 
   onItemDeSelect(item: any) {
     this.tagDropdownSelectedItems = this.tagDropdownSelectedItems.filter(i => i.tagName !== item.tagName);
-    console.log(this.tagDropdownSelectedItems);
+  }
+
+  onEventItemSelect(item: any){
+    if (!this.eventTagDropdownSelectedItems.some(i => i.tagName === item.tagName)) {
+      this.eventTagDropdownSelectedItems.push(item);
+    }
+  }
+
+  onEventItemDeSelect(item: any){
+    this.eventTagDropdownSelectedItems = this.eventTagDropdownSelectedItems.filter(i => i.tagName !== item.tagName);
   }
 
   labelWorkDayAsClosed(workDay: string) {

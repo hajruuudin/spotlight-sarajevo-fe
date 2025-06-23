@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SpotModel } from '../models/spot-model';
+import { SpotModel, SpotUpdateModel } from '../models/spot-model';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +40,12 @@ export class SpotService {
 
   getSpotOverviewBySlug(spotSlug: string){
     return this.http.get<SpotModel>(`/api/spot/overview/${spotSlug}`, {
+      withCredentials: true
+    })
+  }
+
+  updateSpot(spotUpdate: SpotUpdateModel){
+    return this.http.put<SpotModel>(`/api/spot/admin`, spotUpdate, {
       withCredentials: true
     })
   }
