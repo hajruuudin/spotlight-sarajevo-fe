@@ -45,4 +45,8 @@
         (itemNextPage)="this.handleNextPage($event)"
         (itemPreviousPage)="this.handlePreviousPage($event)"
     ></app-ss-table>
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#00cdc6" type="fire" [fullScreen]="true" style="z-index: 999;" >
+        <p style="color: white; font-weight: bold;"> Loading... </p>
+    </ngx-spinner>
 </main>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SpotModel, SpotShorthand } from '../../models/spot-model';
+import { SpotModel, SpotShorthand, SpotUpdateModel } from '../../models/spot-model';
 import { EventModel, EventShorthand } from '../../models/event-model';
 import { DatePipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { SpotService } from '../../services/spot.service';
@@ -12,6 +12,7 @@ import { CategoryService } from '../../services/category.service';
 import { ButtonPrimaryComponent } from "../button-primary/button-primary.component";
 import { ButtonRegularComponent } from "../button-regular/button-regular.component";
 import { MatIconModule } from '@angular/material/icon';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-ss-table',
@@ -59,15 +60,17 @@ export class SsTableComponent implements OnInit {
     private eventService: EventService,
     private tagService: TagService,
     private categoryService: CategoryService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: HotToastService
   ) {
     this.detailsSectionForm = this.fb.group({
+      id: ['', Validators.required],
       slug: ['', Validators.required],
       officialName: ['', Validators.required],
       smallDescription: ['', Validators.required],
       fullDescription: ['', Validators.required],
       categoryName: ['', Validators.required],
-      tagNames: [[], Validators.required],
+      tags: [[], Validators.required],
 
       // Work hours — optional
       mondayStartTime: [''],
@@ -96,7 +99,7 @@ export class SsTableComponent implements OnInit {
       // Location — required
       address: ['', Validators.required],
       lat: ['', Validators.required],
-      long: ['', Validators.required]
+      lon: ['', Validators.required]
     });
   }
 
@@ -159,13 +162,12 @@ export class SsTableComponent implements OnInit {
   saveItemInfo() {
     if (this.detailsSectionForm.invalid) {
       this.detailsSectionForm.markAllAsTouched();
-      console.warn('Form is invalid. Please fill in all required fields.');
+      this.toastr.warning("All fields except the work hours must be set!")
       return;
     }
 
     const formData = this.detailsSectionForm.value;
-    this.itemInfoSaved.emit(formData);
-    console.log('Form submitted:', formData);
+    this.itemInfoSaved.emit(formData as SpotUpdateModel);
   }
 
 
@@ -187,12 +189,13 @@ export class SsTableComponent implements OnInit {
           this.fullItemInfo = response as SpotModel
 
           this.detailsSectionForm.patchValue({
+            id: this.fullItemInfo.id,
             slug: this.fullItemInfo.slug,
             officialName: this.fullItemInfo.officialName,
             smallDescription: this.fullItemInfo.smallDescription,
             fullDescription: this.fullItemInfo.fullDescription,
             categoryName: this.fullItemInfo.categoryName,
-            tagNames: this.fullItemInfo.tagNames,
+            tags: this.fullItemInfo.tagNames,
 
             mondayStartTime: this.fullItemInfo.workHours[0]?.startTime || '',
             mondayEndTime: this.fullItemInfo.workHours[0]?.endTime || '',
@@ -217,7 +220,7 @@ export class SsTableComponent implements OnInit {
             accessibility: this.fullItemInfo.accessibility,
             address: this.fullItemInfo.address,
             lat: this.fullItemInfo.latitude,
-            long: this.fullItemInfo.longitude
+            lon: this.fullItemInfo.longitude
           });
 
 

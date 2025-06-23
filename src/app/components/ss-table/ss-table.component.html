@@ -30,7 +30,7 @@
                     <td class="py-1 px-2 text-center text-xl">{{ row.officialName }}</td>
                     <td class="py-1 px-2 text-center text-xl">{{ row.categoryName }}</td>
                     <td class="py-1 px-2 text-center text-xl">{{ row.created | date }}</td>
-                    <td class="py-1 px-2 text-center text-xl">{{ row.modified != null ? row.modified : 'Never'}}</td>
+                    <td class="py-1 px-2 text-center text-xl">{{ row.modified | date }}</td>
 
                     <ng-container *ngIf="isSpot(row)">
                         <td class="py-2 px-4 text-center">{{ row.rating }} / 10</td>
@@ -100,7 +100,7 @@
                                             <input
                                                 class="w-full h-12 border-2 ml2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all"
                                                 type="number" min="-180" max="180" step="any" name="long" id="long"
-                                                placeholder="Spot Longitude" formControlName="long">
+                                                placeholder="Spot Longitude" formControlName="lon">
                                         </div>
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@
                                     <ng-multiselect-dropdown class="border-2 rounded-2xl"
                                         [placeholder]="'custom placeholder'" [settings]="this.tagDropdownSettings"
                                         [data]="this.tagDropdownAllItems" [(ngModel)]="this.tagDropdownSelectedItems"
-                                        formControlName="tagNames" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
+                                        formControlName="tags" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
                                     >
                                     </ng-multiselect-dropdown>
 

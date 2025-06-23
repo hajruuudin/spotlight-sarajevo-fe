@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { HeadingComponent } from "../../components/heading/heading.component";
 import { SpotService } from '../../services/spot.service';
-import { SpotShorthand } from '../../models/spot-model';
+import { SpotModel, SpotShorthand, SpotUpdateModel } from '../../models/spot-model';
 import { EventShorthand } from '../../models/event-model';
 import { EventService } from '../../services/event.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SsTableComponent } from "../../components/ss-table/ss-table.component";
 import { SearchBarComponent } from "../../components/search-bar/search-bar.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { HotToastService } from '@ngxpert/hot-toast';
+import { NgxSpinner, NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-data',
-  imports: [HeadingComponent, SsTableComponent, SearchBarComponent, ReactiveFormsModule],
+  imports: [HeadingComponent, SsTableComponent, SearchBarComponent, ReactiveFormsModule, NgxSpinnerComponent],
   templateUrl: './data.component.html',
   styleUrl: './data.component.css'
 })
@@ -33,7 +35,9 @@ export class DataComponent implements OnInit{
   constructor(
     private spotService: SpotService,
     private eventService: EventService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: HotToastService,
+    private spinner: NgxSpinnerService
   ){
     this.spotSearchForm = this.fb.group({
       'searchTerm' : ['']
@@ -97,16 +101,19 @@ export class DataComponent implements OnInit{
     this.fetchSpots(spotSearchTerm, this.spotPageNumber)
   }
 
-  handleSpotUpdate(formData: any){
-    
-  }
+  handleSpotUpdate(spotUpdate: SpotUpdateModel){
+    this.spinner.show();
 
-  formatSpotUpdateData(){
-    //Format the spot for the backend
-  }
-
-  updateSpot(){
-    // Finnally update the spot
+    this.spotService.updateSpot(spotUpdate).subscribe({
+      next: (response: SpotModel) => {
+        this.spinner.hide()
+        this.toastr.success(`${response.officialName} updated with new data!`)
+      },
+      error: (response: HttpErrorResponse) => {
+        this.spinner.hide()
+        this.toastr.error(response.message)
+      }
+    })
   }
 
   handleEventSearchTerm(eventSearchTerm: string){
@@ -115,15 +122,5 @@ export class DataComponent implements OnInit{
 
   handleEventUpdate(formData: any){
 
-  }
-
-  formatEventUpdateData(){
-    //Format the event for the backend
-  }
-
-  updateEvent(){
-    // Finnally update the event
-  }
-
-  
+  }  
 }
