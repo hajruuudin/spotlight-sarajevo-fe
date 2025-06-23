@@ -42,6 +42,7 @@
         [tablePageSize]="this.eventPageSize"
         [tablePageNumber]="this.eventPageNumber"
         
+        (eventItemInfoSaved)="handleEventUpdate($event)"
         (itemNextPage)="this.handleNextPage($event)"
         (itemPreviousPage)="this.handlePreviousPage($event)"
     ></app-ss-table>

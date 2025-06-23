@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HeadingComponent } from "../../components/heading/heading.component";
 import { SpotService } from '../../services/spot.service';
 import { SpotModel, SpotShorthand, SpotUpdateModel } from '../../models/spot-model';
-import { EventShorthand } from '../../models/event-model';
+import { EventModel, EventShorthand, EventUpdateModel } from '../../models/event-model';
 import { EventService } from '../../services/event.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SsTableComponent } from "../../components/ss-table/ss-table.component";
@@ -120,7 +120,18 @@ export class DataComponent implements OnInit{
     this.fetchEvents(eventSearchTerm, this.eventPageNumber)
   }
 
-  handleEventUpdate(formData: any){
+  handleEventUpdate(eventUpdate: EventUpdateModel){
+    this.spinner.show();
 
+    this.eventService.updateEvent(eventUpdate).subscribe({
+      next: (response: EventModel) => {
+        this.spinner.hide()
+        this.toastr.success(`${response.officialName} updated with new data!`)
+      },
+      error: (response: HttpErrorResponse) => {
+        this.spinner.hide()
+        this.toastr.error(response.message)
+      }
+    })
   }  
 }
