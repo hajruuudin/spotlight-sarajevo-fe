@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SpotModel, SpotShorthand } from '../../models/spot-model';
 import { EventModel, EventShorthand } from '../../models/event-model';
 import { DatePipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
@@ -7,14 +7,15 @@ import { EventService } from '../../services/event.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { TagService } from '../../services/tag.service';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
 import { ButtonPrimaryComponent } from "../button-primary/button-primary.component";
 import { ButtonRegularComponent } from "../button-regular/button-regular.component";
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-ss-table',
-  imports: [NgFor, NgIf, DatePipe, NgMultiSelectDropDownModule, ReactiveFormsModule, FormsModule, ButtonPrimaryComponent, UpperCasePipe],
+  imports: [NgFor, NgIf, DatePipe, NgMultiSelectDropDownModule, ReactiveFormsModule, FormsModule, ButtonPrimaryComponent, UpperCasePipe, MatIconModule],
   templateUrl: './ss-table.component.html',
   styleUrl: './ss-table.component.css',
   host: {
@@ -22,13 +23,18 @@ import { ButtonRegularComponent } from "../button-regular/button-regular.compone
   }
 })
 export class SsTableComponent implements OnInit {
-  days: string[] = [
-    'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
-  ];
-
-
   @Input() tableType: Boolean = false;
   @Input() tableData: (SpotShorthand | EventShorthand)[] = [];
+  @Input() tablePageNumber: number = 0;
+  @Input() tableMaxPage: number = 55;
+  @Input() tablePageSize: number = 999;
+  @Output() itemInfoSaved = new EventEmitter<any>();
+  @Output() itemNextPage = new EventEmitter<any>();
+  @Output() itemPreviousPage = new EventEmitter<any>();
+
+  protected days: string[] = [
+    'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
+  ];
 
   protected isItemInfoShowed: Boolean = false;
   protected selectedSlug: string = ''
@@ -56,14 +62,14 @@ export class SsTableComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.detailsSectionForm = this.fb.group({
-      slug: [''],
-      officialName: [''],
-      smallDescription: [''],
-      fullDescription: [''],
-      categoryName: [''],
-      tagNames: [[]],
+      slug: ['', Validators.required],
+      officialName: ['', Validators.required],
+      smallDescription: ['', Validators.required],
+      fullDescription: ['', Validators.required],
+      categoryName: ['', Validators.required],
+      tagNames: [[], Validators.required],
 
-      // Work hours per day
+      // Work hours — optional
       mondayStartTime: [''],
       mondayEndTime: [''],
       tuesdayStartTime: [''],
@@ -79,18 +85,18 @@ export class SsTableComponent implements OnInit {
       sundayStartTime: [''],
       sundayEndTime: [''],
 
-      // Rating fields
-      overallQuality: [''],
-      atmosphere: [''],
-      staffKindness: [''],
-      cleanliness: [''],
-      affordability: [''],
-      accessibility: [''],
+      // Ratings — required
+      overallQuality: ['', Validators.required],
+      atmosphere: ['', Validators.required],
+      staffKindness: ['', Validators.required],
+      cleanliness: ['', Validators.required],
+      affordability: ['', Validators.required],
+      accessibility: ['', Validators.required],
 
-      // Location
-      address: [''],
-      lat: [''],
-      long: ['']
+      // Location — required
+      address: ['', Validators.required],
+      lat: ['', Validators.required],
+      long: ['', Validators.required]
     });
   }
 
@@ -126,8 +132,40 @@ export class SsTableComponent implements OnInit {
     return !!row && 'startDateFormatted' in row;
   }
 
-  saveItemInfo(){
-      console.log(this.detailsSectionForm.value);
+  nextPage() {
+    if (this.tableMaxPage != this.tablePageNumber + 1) {
+      if (this.tableType) {
+        this.itemNextPage.emit("SPOT")
+      } else {
+        this.itemNextPage.emit("EVENT")
+      }
+    } else {
+      return
+    }
+  }
+
+  previousPage() {
+    if (this.tablePageNumber != 0) {
+      if (this.tableType) {
+        this.itemPreviousPage.emit("SPOT")
+      } else {
+        this.itemPreviousPage.emit("EVENT")
+      }
+    } else {
+      return;
+    }
+  }
+
+  saveItemInfo() {
+    if (this.detailsSectionForm.invalid) {
+      this.detailsSectionForm.markAllAsTouched();
+      console.warn('Form is invalid. Please fill in all required fields.');
+      return;
+    }
+
+    const formData = this.detailsSectionForm.value;
+    this.itemInfoSaved.emit(formData);
+    console.log('Form submitted:', formData);
   }
 
 

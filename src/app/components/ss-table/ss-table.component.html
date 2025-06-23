@@ -207,5 +207,9 @@
 
     </table>
 
-    <h2 class="text-center w-full">This will be the pagination buttons</h2>
+    <section class="w-full flex flex-row justify-center items-center space-x-4 mt-4">
+        <img src="/assets/images/ARROW_BACK.png" class='size-6' (click)="this.previousPage()">
+        <span class="text-xl">Page {{this.tablePageNumber + 1}} of {{this.tableMaxPage}}</span>
+        <img src="/assets/images/ARROW_FORWARD.png" class='size-6' (click)="this.nextPage()">
+    </section>
 </div>

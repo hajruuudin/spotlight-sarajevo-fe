@@ -27,6 +27,7 @@
     "@react-oauth/google": "^0.12.1",
     "@tailwindcss/postcss": "^4.1.3",
     "chart.js": "^4.4.9",
+    "ionicons": "^8.0.9",
     "material-icons": "^1.13.14",
     "ng-block-ui": "^4.0.1",
     "ng-multiselect-dropdown": "^1.0.0",
