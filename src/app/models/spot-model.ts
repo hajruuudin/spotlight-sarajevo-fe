@@ -73,6 +73,41 @@ export class SpotUpdateModel {
     public cleanliness: number,
     public staffKindness: number,
     public accessibility: number,
-    public tag: string[]
+    public tags: string[]
   ) {}
 }
+
+export class SpotCreateModel {
+  constructor(
+    public officialName: string,
+    public slug: string,
+    public categoryName: string,
+    public address: string,
+    public lat: number,
+    public lon: number,
+    public fullDescription: string,
+    public smallDescription: string,
+    public mondayStartTime: string,
+    public mondayEndTime: string,
+    public tuesdayStartTime: string,
+    public tuesdayEndTime: string,
+    public wednesdayStartTime: string,
+    public wednesdayEndTime: string,
+    public thursdayStartTime: string,
+    public thursdayEndTime: string,
+    public fridayStartTime: string,
+    public fridayEndTime: string,
+    public saturdayStartTime: string,
+    public saturdayEndTime: string,
+    public sundayStartTime: string,
+    public sundayEndTime: string,
+    public affordability: number,
+    public atmosphere: number,
+    public overallQuality: number,
+    public cleanliness: number,
+    public staffKindness: number,
+    public accessibility: number,
+    public tags: string[]
+  ) {}
+}
+

@@ -59,3 +59,24 @@ export class EventUpdateModel {
     public locationDescription: string
   ) {}
 }
+
+export class EventCreateModel {
+  constructor(
+    public slug: string,
+    public officialName: string,
+    public smallDescription: string,
+    public fullDescription: string,
+    public categoryName: string,
+    public tags: string[],
+    public startDate: string,
+    public endDate: string,
+    public entryPrice: number,
+    public ageLimit: number,
+    public reservation: boolean,
+    public openStatus: string,
+    public cancelRefund: string,
+    public eventLanguage: string,
+    public address: string,
+    public locationDescription: string
+  ) {}
+}

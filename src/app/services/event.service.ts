@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EventModel, EventUpdateModel } from '../models/event-model';
+import { EventCreateModel, EventModel, EventUpdateModel } from '../models/event-model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +34,12 @@ export class EventService {
 
   getEventOverviewBySlug(slug: string){
     return this.http.get<EventModel>(`/api/event/overview/${slug}`, {
+      withCredentials: true
+    })
+  }
+
+  addEvent(eventCreate: EventCreateModel){
+    return this.http.post<EventModel>(`/api/event/admin`, eventCreate, {
       withCredentials: true
     })
   }
