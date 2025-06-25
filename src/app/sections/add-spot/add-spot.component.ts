@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HeadingComponent } from "../../components/heading/heading.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { NgFor, UpperCasePipe } from '@angular/common';
+import { NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { TagService } from '../../services/tag.service';
 import { SpotService } from '../../services/spot.service';
 import { CategoryService } from '../../services/category.service';
@@ -16,7 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-spot',
-  imports: [NgFor, HeadingComponent, ReactiveFormsModule, NgMultiSelectDropDownModule, UpperCasePipe, NgxSpinnerComponent, ButtonPrimaryComponent],
+  imports: [NgIf, NgFor, HeadingComponent, ReactiveFormsModule, NgMultiSelectDropDownModule, UpperCasePipe, NgxSpinnerComponent, ButtonPrimaryComponent],
   templateUrl: './add-spot.component.html',
   styleUrl: './add-spot.component.css'
 })
@@ -73,6 +73,7 @@ export class AddSpotComponent implements OnInit {
       sundayEndTime: [''],
 
       // Ratings — required
+      rating: ['', Validators.required],
       overallQuality: ['', Validators.required],
       atmosphere: ['', Validators.required],
       staffKindness: ['', Validators.required],
@@ -157,6 +158,7 @@ export class AddSpotComponent implements OnInit {
         formValues.sundayStartTime,
         formValues.sundayEndTime,
 
+        Number(formValues.rating),
         Number(formValues.affordability),
         Number(formValues.atmosphere),
         Number(formValues.overallQuality),

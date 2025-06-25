@@ -101,6 +101,7 @@ export class SpotCreateModel {
     public saturdayEndTime: string,
     public sundayStartTime: string,
     public sundayEndTime: string,
+    public rating: number,
     public affordability: number,
     public atmosphere: number,
     public overallQuality: number,
