@@ -46,11 +46,12 @@
                 </select>
 
                 <label for="category-select">Tags</label>
-                <ng-multiselect-dropdown *ngIf="this.tagDropdownAllItems" class="border-2 rounded-2xl" [placeholder]="'Tag names'"
-                    [settings]="this.tagDropdownSettings" [data]="this.tagDropdownAllItems"
-                    [(ngModel)]="this.tagDropdownSelectedItems" formControlName="tags" (onSelect)="onItemSelect($event)"
-                    (onDeSelect)="onItemDeSelect($event)">
-                </ng-multiselect-dropdown>
+                <ng-container *ngIf="tagDropdownAllItems!.length > 0">
+                    <ng-multiselect-dropdown class="border-2 rounded-2xl" [placeholder]="'Tag options'"
+                        [settings]="tagDropdownSettings" [data]="tagDropdownAllItems" formControlName="tags"
+                        (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)">
+                    </ng-multiselect-dropdown>
+                </ng-container>
 
                 <div class="w-full flex flex-col justify-between items-center h-auto mt-4">
                     <div class="w-full flex flex-row justify-between items-center space-x-4">
@@ -152,11 +153,8 @@
 
         <div class="w-full flex flex-col items-center my-2 px-4">
             <label for="event-image" class="text-4xl text-center font-bold mb-2">Event Thumbnail Image</label>
-            <input
-                type="file"
-                id="event-image"
-                (change)="onFileSelected($event)"
-                accept="image/*" class="w-full rounded-2xl border-2 border-gray-300 focus:outline-none focus:ring-0 h-12 flex items-center justify-center cursor-pointer file:h-12 file:px-6 file:mr-4 file:bg-(--navbar) file:py-2 file:rounded-2xl file:border-0 file:text-sm file:font-semibol hover:file:bg-(--primary)"
+            <input type="file" id="event-image" (change)="onFileSelected($event)" accept="image/*"
+                class="w-full rounded-2xl border-2 border-gray-300 focus:outline-none focus:ring-0 h-12 flex items-center justify-center cursor-pointer file:h-12 file:px-6 file:mr-4 file:bg-(--navbar) file:py-2 file:rounded-2xl file:border-0 file:text-sm file:font-semibol hover:file:bg-(--primary)"
                 style="line-height: normal;">
         </div>
     </form>
@@ -165,7 +163,8 @@
         <app-button-primary [buttonLabel]="'Add New Event'" (buttonOnClick)="this.onItemSave()"></app-button-primary>
     </div>
 
-    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#00cdc6" type="fire" [fullScreen]="true" style="z-index: 999;" >
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#00cdc6" type="fire" [fullScreen]="true"
+        style="z-index: 999;">
         <p style="color: white; font-weight: bold;"> Loading... </p>
     </ngx-spinner>
 </main>
