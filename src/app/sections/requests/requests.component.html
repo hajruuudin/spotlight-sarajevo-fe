@@ -1,3 +1,20 @@
-<main class="flex flex-col justify-start items-center">
-    <app-heading [title]="'Community Requests'"></app-heading>
+<main class="flex flex-col justify-start items-center p-8 lg:p-16 overflow-visible">
+    <app-heading [title]="'Community Requests'" class="mb-4"></app-heading>
+
+    <section *ngIf="this.allRequests.length != 0" id="requests-display"
+        class="w-3/4 flex flex-col justify-start items-stretch space-y-6">
+        <app-community-request-card *ngFor="let request of allRequests" [request]="request"
+            (deletePressed)="this.deleteItem(request.id)"></app-community-request-card>
+    </section>
+
+    <section *ngIf="this.allRequests.length == 0" id="requests-display"
+        class="w-3/4 flex flex-col justify-start items-center space-x-8">
+        <app-not-found [head]="'No Requests Found'"
+            [message]="'There is currently no requests! What a happy community!'"></app-not-found>
+    </section>
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#00cdc6" type="fire" [fullScreen]="true"
+        style="z-index: 999;">
+        <p style="color: white; font-weight: bold;"> Loading... </p>
+    </ngx-spinner>
 </main>

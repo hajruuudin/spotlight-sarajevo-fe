@@ -41,10 +41,15 @@
         </ul>
 
         <a routerLink="/logout" routerLinkActive="opacity-100" class="hidden md:inline opacity-50 hover:opacity-100 transition-all group">
-            <div class="flex flex-row items-center">
+            <div class="flex flex-row items-center" (click)="this.onLogout()">
                 <img src="/assets/images/LOGOUT.png" alt="LOGOUT" class="h-12 scale-75 m-1.5">
                 <p class="hidden lg:block text-2xl kumbh-sans-label opacity-0 transition-opacity duration-200 ease-in-out group-hover:opacity-100 whitespace-nowrap">Log Out</p>
             </div>
         </a>
     </div>
+
+     <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#00cdc6" type="fire" [fullScreen]="true"
+        style="z-index: 999;">
+        <p style="color: white; font-weight: bold;"> Loading... </p>
+    </ngx-spinner>
 </nav>

@@ -29,38 +29,44 @@ export class AuthService {
     });
   }
 
-  handleSystemSignIn(request: SystemUserModel){
+  handleSystemSignIn(request: SystemUserModel) {
     return this.http.post('/api/auth/system/register', request, {
       headers: {
-        'Content-Type' : 'application/json'
+        'Content-Type': 'application/json'
       },
       withCredentials: true
     })
   }
 
-  handleSystemLogIn(request: SystemLogin){
+  handleSystemLogIn(request: SystemLogin) {
     return this.http.post('/api/auth/login/system', request, {
       headers: {
-        'Content-Type' : 'application/json'
+        'Content-Type': 'application/json'
       },
       withCredentials: true
     })
   }
 
-  registerWithSurveyData(request: PreferencesModel){
+  handleSystemLogOut() {
+    return this.http.post(`api/auth/logout`, {}, {
+      withCredentials: true
+    })
+  }
+
+  registerWithSurveyData(request: PreferencesModel) {
     return this.http.post('/api/auth/register', request, {
       headers: {
-        'Content-Type' : 'application/json'
+        'Content-Type': 'application/json'
       },
       withCredentials: true
     });
   }
 
-  checkEmailTaken(request: string){
+  checkEmailTaken(request: string) {
     return this.http.get(`/api/auth/check-email?email=${request}`, {
       withCredentials: true
     })
   }
-  
-  
+
+
 }
