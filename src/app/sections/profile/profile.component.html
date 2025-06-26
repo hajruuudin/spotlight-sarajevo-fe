@@ -62,7 +62,7 @@
             </p>
             <p class="text-xl w-full md:w-2/3 my-2 text-center md:text-start">If You know about a spot or an event that is not in the system right now, feel free to make a report using our form, and our admins will be sure to review the request as fast as possible. The more spots and events in the system, the better for the whole city!
             </p>
-            <app-button-primary [buttonLabel]="'Make Community Request'" class="md:self-start my-4"></app-button-primary>
+            <app-button-primary [buttonLabel]="'Make Community Request'" class="md:self-start my-4" (buttonOnClick)="this.navigateToCommunityRequestPage()"></app-button-primary>
         </div>
 
         <div class="hidden md:flex flex-col w-1/3">

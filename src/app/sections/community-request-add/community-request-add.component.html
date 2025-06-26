@@ -1,0 +1,52 @@
+<main class="flex flex-col justify-start items-center p-8 lg:p-16 overflow-visible">
+    <app-heading [title]="'Make a Community Request'"></app-heading>
+
+    <section id="main-form-section" class="w-full flex flex-col justify-start items-center">
+        <form method="post" [formGroup]="requestForm" class="w-2/3 flex flex-col justify-start items-center mx-auto">
+            <div class="w-full flex flex-row justify-between items-center space-x-8 mt-4">
+                <div class="w-1/2 flex flex-col justify-start items-center">
+                    <label for="objectType" class="text-2xl font-semibold">Object Type</label>
+                    <span class="text-base italic">Select which thing do you want to be updated</span>
+                    <select
+                        class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all bg-[--navbar-dark] text-white"
+                        name="objectType" id="objectType" formControlName="objectType">
+                        <option value="EVENT">Event</option>
+                        <option value="SPOT">Spot</option>
+                    </select>
+                </div>
+
+                <div class="w-1/2 flex flex-col justify-start items-center">
+                    <label for="requestType" class="text-2xl font-semibold">Request Type</label>
+                    <span class="text-base italic">Select what kind of request it is</span>
+                    <select
+                        class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all bg-[--navbar-dark] text-white"
+                        name="requestType" id="requestType" formControlName="requestType">
+                        <option value="ADD">Add new Information</option>
+                        <option value="UPDATE">Update Existing Information</option>
+                        <option value="DELETE">Remove Invalid Information</option>
+                    </select>
+                </div>
+            </div>
+
+            <label for="requestName" class="mt-4 text-2xl font-semibold">Request Name</label>
+            <span class="text-base italic">Give a short title to the request, just something to get the immediate idea
+                for the request</span>
+            <input
+                class="w-full h-12 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all"
+                type="text" name="requestName" id="requestName" placeholder="Example: Update this spot"
+                formControlName="requestName">
+
+            <label for="requestDescription" class="mt-4 text-2xl font-semibold">Request Description</label>
+            <span class="text-base italic text-center">Describe all the details of the request; what you want to be
+                added/updated/removed, why, how to improve the data or anyhting that would be considered useful
+                information to label on the specified spot/event</span>
+            <textarea
+                class="w-full h-36 border-2 rounded-2xl p-2 focus-visible:border-2 focus-visible:outline-0 transition-all"
+                type="text" name="requestDescription" id="requestDescription" placeholder="Example: Do this and this..."
+                formControlName="requestDescription">
+            </textarea>
+        </form>
+
+        <app-button-primary class="mt-8" [buttonLabel]="'Make Request'"(buttonOnClick)="this.makeRequest()"></app-button-primary>
+    </section>
+</main>

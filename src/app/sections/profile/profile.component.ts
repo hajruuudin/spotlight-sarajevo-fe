@@ -6,6 +6,8 @@ import { Title } from '@angular/platform-browser';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LoggedUserProfile } from '../../models/user-model';
 import { ButtonPrimaryComponent } from "../../components/button-primary/button-primary.component";
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +22,9 @@ export class ProfileComponent implements OnInit{
     private sessionService: SessionService,
     private toastr: HotToastService,
     private titleService: Title,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private authService: AuthService,
+    private router: Router
   ){}
 
   ngOnInit(){
@@ -34,6 +38,16 @@ export class ProfileComponent implements OnInit{
   }
 
   onLogoutPressed(){
-    // TO-DO: Implement log in
+    this.spinner.show()
+    this.authService.handleSystemLogOut().subscribe({
+      next: (resonse : any) => {
+        this.spinner.hide()
+        this.router.navigate(['/auth/login'])
+      }
+    })
+  }
+
+  navigateToCommunityRequestPage(){
+    this.router.navigate(['/add-community-request'])
   }
 }
