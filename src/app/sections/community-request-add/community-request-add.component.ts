@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HeadingComponent } from "../../components/heading/heading.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { ButtonRegularComponent } from "../../components/button-regular/button-regular.component";
 import { ButtonPrimaryComponent } from "../../components/button-primary/button-primary.component";
@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-community-request-add',
-  imports: [HeadingComponent, ReactiveFormsModule, ButtonPrimaryComponent],
+  imports: [HeadingComponent, ReactiveFormsModule, ButtonPrimaryComponent, NgxSpinnerComponent],
   templateUrl: './community-request-add.component.html',
   styleUrl: './community-request-add.component.css'
 })

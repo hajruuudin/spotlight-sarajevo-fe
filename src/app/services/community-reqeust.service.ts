@@ -16,13 +16,13 @@ export class CommunityReqeustService {
   }
 
   getAllRequests(){
-    return this.http.get<CommunityReqeustModel>(`/api/community-request`, {
+    return this.http.get<CommunityReqeustModel>(`/api/community-request/admin/get-all`, {
       withCredentials: true
     })
   }
 
-  deleteRequest(){
-    return this.http.delete(`/api/community-request`, {
+  deleteRequest(itemId: number){
+    return this.http.delete(`/api/community-request/admin/${itemId}`, {
       withCredentials: true
     })
   }
