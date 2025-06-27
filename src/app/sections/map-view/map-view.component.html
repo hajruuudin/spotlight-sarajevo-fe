@@ -1,0 +1,10 @@
+<div id="map" style="height: 600px; width: 100%;" class="rounded-2xl my-4 border-4 border-(--navbar)"></div>
+
+
+    <app-search-bar
+        [id]="'spotSearch'"
+        [placeholder]="'Search spots'"
+        (searchSubmitted)="this.searchSpots($event)"
+    >
+    </app-search-bar>
+

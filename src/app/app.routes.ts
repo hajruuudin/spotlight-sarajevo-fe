@@ -17,6 +17,7 @@ import { RegisterComponent } from './sections/register/register.component';
 import { SpotOverviewComponent } from './sections/spot-overview/spot-overview.component';
 import { EventOverviewComponent } from './sections/event-overview/event-overview.component';
 import { CommunityRequestAddComponent } from './sections/community-request-add/community-request-add.component';
+import { MapViewComponent } from './sections/map-view/map-view.component';
 
 export const routes: Routes = [
     {
@@ -50,6 +51,10 @@ export const routes: Routes = [
             {
                 path: 'spots',
                 component: SpotsComponent
+            },
+            {
+                path: 'map-view',
+                component: MapViewComponent
             },
             {
                 path: 'homepage',

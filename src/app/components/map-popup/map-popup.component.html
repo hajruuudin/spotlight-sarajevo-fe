@@ -1,0 +1,17 @@
+<div class="rounded-lg overflow-hidden w-64">
+  <!-- Image on top -->
+  <img [src]="spotImageUrl" alt="Spot Image" class="w-full h-32 object-cover" />
+
+  <!-- Content below image -->
+  <div class="bg-white p-3">
+    <h3 class="text-2xl font-semibold text-gray-900 text-center">{{ spotName }}</h3>
+    <p class="text-sm text-gray-600 mb-2 text-center">{{ spotCategory }}</p>
+
+    <button
+      (click)="onNavigateClicked()"
+      class="mt-1 w-full bg-cyan-900 hover:bg-cyan-500 text-white text-sm py-2 rounded-md transition"
+    >
+      Details
+    </button>
+  </div>
+</div>
