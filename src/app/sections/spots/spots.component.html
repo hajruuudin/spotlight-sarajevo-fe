@@ -1,8 +1,9 @@
 <main class="flex flex-col justify-start items-center p-8 lg:p-16 overflow-visible">
     <app-heading [title]="'Browse Spots'"></app-heading>
 
-    <form [@fadeInOut] [formGroup]="this.searchForm" class="w-full">
+    <form [@fadeInOut] [formGroup]="this.searchForm" class="w-full flex flex-row items-center">
         <app-search-bar
+            class="w-full"
             [id]="'spotSearch'"
             [initialSearchTerm]="''"
             [name]="'searchquery'"
@@ -10,6 +11,11 @@
             (searchSubmitted)="onSearchSubmit($event)"
         >
         </app-search-bar>
+        <app-button-primary
+        class="w-auto ml-6 h-full"
+            [buttonLabel]="'Map Overview'"
+            (buttonOnClick)="this.navigateToMapOverview()"
+        ></app-button-primary>
     </form>
 
     <section [@fadeInOut] id="results-and-filter" class="w-full flex flex-col lg:flex-row items-start">

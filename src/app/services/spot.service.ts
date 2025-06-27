@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SpotCreateModel, SpotModel, SpotUpdateModel } from '../models/spot-model';
+import { SpotCreateModel, SpotLocationModel, SpotModel, SpotUpdateModel } from '../models/spot-model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,12 @@ export class SpotService {
 
   getAllSpots(){
     return this.http.get("/api/spot/shorthands", {
+      withCredentials: true
+    })
+  }
+
+  getSpotLocations(search: String){
+    return this.http.get<SpotLocationModel[]>(`/api/spot/location-data?search=${search}`, {
       withCredentials: true
     })
   }

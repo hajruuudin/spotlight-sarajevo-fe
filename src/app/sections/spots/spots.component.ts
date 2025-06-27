@@ -17,10 +17,11 @@ import { NotFoundComponent } from "../../components/not-found/not-found.componen
 import { Title } from '@angular/platform-browser';
 import { SpotDataService } from '../../services/spot-data.service';
 import { Router } from '@angular/router';
+import { ButtonPrimaryComponent } from "../../components/button-primary/button-primary.component";
 
 @Component({
   selector: 'app-spots',
-  imports: [NgFor, NgIf, HeadingComponent, SearchBarComponent, ReactiveFormsModule, SpotSearchComponent, MatSelectModule, MatFormFieldModule, ButtonRegularComponent, NotFoundComponent],
+  imports: [NgFor, NgIf, HeadingComponent, SearchBarComponent, ReactiveFormsModule, SpotSearchComponent, MatSelectModule, MatFormFieldModule, ButtonRegularComponent, NotFoundComponent, ButtonPrimaryComponent],
   templateUrl: './spots.component.html',
   styleUrl: './spots.component.css',
   animations: [
@@ -154,4 +155,8 @@ export class SpotsComponent implements OnInit{
       }
     })
   };
+
+  navigateToMapOverview(){
+    this.router.navigate(['map-view'])
+  }
 }

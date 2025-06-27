@@ -13,6 +13,15 @@ export interface SpotShorthand{
     modified: Date;
 }
 
+export interface SpotLocationModel{
+  slug: string,
+  lattitude: number,
+  longitude: number,
+  officialName: string,
+  categoryName: string,
+  imageUrl: string
+}
+
 export class SpotModel {
     constructor(
         public id: number,
