@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { environment } from '../environments/environment';
-import { HomepageIcon } from "./resources/icons/homepage-icon/homepage-icon";
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [HomepageIcon],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

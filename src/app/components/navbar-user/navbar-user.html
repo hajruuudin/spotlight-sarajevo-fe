@@ -1,0 +1,29 @@
+<nav id="navbarUserMain" class="w-full h-16 dark:bg-(--background-200) bg-(--background-800) sticky top-0 flex flex-row justify-between items-center">
+    <div id="navIconContainer" class="w-1/6 flex flex-row justify-start items-center ml-4">
+        <img src="/assets/images/LogoSolo.png" class="h-14">
+    </div>
+    <div id="navListContainer" class="w-4/6">
+        <ul class="grow flex flex-row justify-center items-center space-x-6">
+            <li>
+                <a routerLink="/discover"><app-discover-icon classes="w-9 dark:text-(--primary-600) text-(--primary-200) opacity-75 hover:opacity-100 hover:w-10 transition-all"></app-discover-icon></a>
+            </li>
+            <li>
+                <a routerLink="/spots"><app-spots-icon classes="w-9 dark:text-(--primary-600) text-(--primary-200) opacity-75 hover:opacity-100 hover:w-10 transition-all"></app-spots-icon></a>
+            </li>
+            <li>
+                <a routerLink="/homepage"><app-homepage-icon classes="w-9 dark:text-(--primary-600) text-(--primary-200) opacity-75 hover:opacity-100 hover:w-10 transition-all"></app-homepage-icon></a>
+            </li>
+            <li>
+                <a routerLink="/events"><app-events-icon classes="w-9 dark:text-(--primary-600) text-(--primary-200) opacity-75 hover:opacity-100 hover:w-10 transition-all"></app-events-icon></a>
+            </li>
+            <li>
+                <a routerLink="/collections"><app-collection-icon classes="w-9 dark:text-(--primary-600) text-(--primary-200) opacity-75 hover:opacity-100 hover:w-10 transition-all"></app-collection-icon></a>
+            </li>
+        </ul>
+    </div>
+    <div id="navProfileContainer" class="w-1/6 flex flex-row justify-end items-center mr-4">
+        <span>
+            <a routerLink="/profile"><app-profile-icon classes="w-9 dark:text-(--primary-600) text-(--primary-200) opacity-75 hover:opacity-100 hover:w-10 transition-all"></app-profile-icon></a>
+        </span>
+    </div>
+</nav>
