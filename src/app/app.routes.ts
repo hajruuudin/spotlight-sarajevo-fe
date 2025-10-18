@@ -25,6 +25,7 @@ import { AdminAddSpots } from './pages/admin-pages/admin-add-spots/admin-add-spo
 import { AdminAddEvents } from './pages/admin-pages/admin-add-events/admin-add-events';
 import { AdminAddGuides } from './pages/admin-pages/admin-add-guides/admin-add-guides';
 import { NotFound } from './interfaces/not-found/not-found';
+import { CommunityRequests } from './pages/user-pages/community-requests/community-requests';
 
 export const routes: Routes = [
     {
@@ -55,7 +56,9 @@ export const routes: Routes = [
 
             { path: 'transport', component: Transport, title: 'Public Transport - SpotlightSarajevo' },
 
-            { path: 'collections', component: Collections, title: 'Your Collections - SpotlightSarajevo' }
+            { path: 'collections', component: Collections, title: 'Your Collections - SpotlightSarajevo' },
+
+            { path: 'requests', component: CommunityRequests, title: 'Community Requests - SpotlightSarajevo' },
         ]
     },
     {
