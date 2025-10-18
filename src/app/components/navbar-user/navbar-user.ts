@@ -14,7 +14,7 @@ import { Profile } from "../../pages/user-pages/profile/profile";
 
 @Component({
   selector: 'app-navbar-user',
-  imports: [HomepageIcon, ProfileIcon, DiscoverIcon, SpotsIcon, EventsIconComponent, CollectionIcon, RouterLink, GuidesIcon, RequestIcon, TransportIcon, HamburgerIcon, RouterLinkActive, Profile],
+  imports: [HomepageIcon, ProfileIcon, DiscoverIcon, SpotsIcon, EventsIconComponent, CollectionIcon, RouterLink, GuidesIcon, RequestIcon, TransportIcon, HamburgerIcon, RouterLinkActive],
   templateUrl: './navbar-user.html',
   styleUrl: './navbar-user.css'
 })
