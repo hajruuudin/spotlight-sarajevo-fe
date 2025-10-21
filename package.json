@@ -29,6 +29,8 @@
     "@angular/forms": "^20.2.0",
     "@angular/platform-browser": "^20.2.0",
     "@angular/router": "^20.2.0",
+    "@ngneat/overview": "6.1.1",
+    "@ngxpert/hot-toast": "^5.1.2",
     "@tailwindcss/postcss": "^4.1.14",
     "@types/node": "^24.7.2",
     "dotenv": "^17.2.3",
