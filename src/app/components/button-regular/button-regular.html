@@ -1,0 +1,13 @@
+@if (this.buttonIcon == "DEFAULT") {
+<button (click)="this.handleClick()" [ngClass]="this.classAddons + ' dark:bg-(--secondary-400) h-14 w-20 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-4 hover:dark:border-(--secondary-400)'">
+    <span>{{ this.buttonContent }}</span>
+</button>
+} @else if (this.buttonIcon == "GOOGLE") {
+<button (click)="this.handleClick()" [ngClass]="this.classAddons + ' dark:bg-(--secondary-400) h-14 w-20 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-4 hover:dark:border-(--secondary-400)'">
+    <span class="w-full h-full flex flex-row justify-center items-center">
+        <app-google-icon></app-google-icon>
+    </span>
+</button>
+}
+
+
