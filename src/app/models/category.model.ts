@@ -1,19 +1,19 @@
 export class SpotCategoryModel{
     constructor(
-        private id: number,
-        private spotCategoryNameBs: string,
-        private spotCategoryNameEn: string,
-        private spotCategoryDescriptionBs: string,
-        private spotCategoryDescriptionEn: string,
+        public id: number,
+        public spotCategoryNameBs: string,
+        public spotCategoryNameEn: string,
+        public spotCategoryDescriptionBs: string,
+        public spotCategoryDescriptionEn: string,
     ){}
 }
 
 export class EventCategoryModel{
     constructor(
-        private id: number,
-        private eventCategoryNameBs: string,
-        private eventCategoryNameEn: string,
-        private eventCategoryDescriptionBs: string,
-        private eventCategoryDescriptionEn: string,
+        public id: number,
+        public eventCategoryNameBs: string,
+        public eventCategoryNameEn: string,
+        public eventCategoryDescriptionBs: string,
+        public eventCategoryDescriptionEn: string,
     ){}
 }

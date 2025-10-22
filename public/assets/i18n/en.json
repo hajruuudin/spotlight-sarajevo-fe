@@ -1,0 +1,26 @@
+{
+    "register" : {
+        "title" : "Welcome to SpotlightSarajevo!",
+        "sectionDescription" : "Where all events, spots and iconic moments are collected together! Please register Your account to use the Application",
+        "firstName" : "First name...",
+        "lastName" : "Last name...",
+        "email" : "Email...",
+        "password" : "Password...",
+        "repeatPassword" : "Repeat password...",
+        "registerButton" : "Register",
+        "loginRedirect" : "Already have an account?",
+        "loginRedirectLink" : "Login here!",
+        "categorySectionTitle" : "Nice to meet You, ",
+        "categorySectionDescription" : "Now, to better enhance Your experience, tell us which spots You like to visit the most. Select three categories that match Your vibe.",
+        "categorySectionButton" : "Continue",
+        "categorySectionEventsTitle" : "Now, onto Events!",
+        "categorySectionEventsDescription" : "Lovely choices! Now, it's time to do the same for events. Select three categories that match Your vibe.",
+        "categorySectionEventsButton" : "Continue",
+        "surveyTitle" : "Lastly, a couple of questions...",
+        "surveyDescription" : "We're almost done! Before finishing, please answer just a couple of questions for us to better uderstand who the users of our application are!",
+        "surveyButton" : "Finalize",
+        "finalTitle" : "Welcome aboard!",
+        "finalDescription" : "Countless events and spots are waiting to be discovered! We wish You the best experience @ SpotlightSarajevo!",
+        "finalButton" : "Homepage"
+    }
+}

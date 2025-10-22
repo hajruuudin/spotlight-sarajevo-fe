@@ -1,9 +1,11 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { provideHttpClient } from '@angular/common/http';
+import { TranslocoHttpLoader } from './transloco-loader';
+import { provideTransloco } from '@ngneat/transloco';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +26,14 @@ export const appConfig: ApplicationConfig = {
         fontWeight: '500'
       },
       stacking: 'depth'
-    })
+    }), provideHttpClient(), provideTransloco({
+        config: { 
+          availableLangs: ['en', 'ba'],
+          defaultLang: 'en',
+          reRenderOnLangChange: true,
+          prodMode: !isDevMode(),
+        },
+        loader: TranslocoHttpLoader
+      })
   ]
 };

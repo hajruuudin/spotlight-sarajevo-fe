@@ -5,10 +5,11 @@ import { LoginModel } from '../../../models/auth.model';
 import { ButtonRegular } from "../../../components/button-regular/button-regular";
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpinnerService } from '../../../services/spinner-service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-login',
-  imports: [TextInput, ReactiveFormsModule, ButtonRegular],
+  imports: [TextInput, ReactiveFormsModule, ButtonRegular, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
   host: {
@@ -42,7 +43,6 @@ export class Login implements OnInit{
       )
       
       console.log(loginObject)
-
     }
   }
 }

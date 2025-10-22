@@ -7,24 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
-<body class="kumbh-sans bg-(--background-900) dark:bg-(--background-50) text-(--text-50) dark:text-(--text-950)">
+<body class="kumbh-sans bg-(--background-900) dark:bg-(--background-50) text-(--text-50) dark:text-(--text-950) text-lg/6">
   <app-root></app-root>
-  <!-- LITERALLY FOR DEVELOPMENT PURPOSES TO SWITCH THE THEME -->
-  <button id="themer" style="position: absolute; bottom: 10; right: 10;" class="bg-white text-dark">Toggle Theme</button>
 </body>
-
-<script>
- themer.addEventListener("click", () => {
-  const html = document.documentElement; // <html> element
-  const currentTheme = html.getAttribute("data-theme");
-
-  // Toggle between 'light' and 'dark'
-  if (currentTheme === "dark") {
-    html.setAttribute("data-theme", "light");
-  } else {
-    html.setAttribute("data-theme", "dark");
-  }
-});
-
-</script>
 </html>
