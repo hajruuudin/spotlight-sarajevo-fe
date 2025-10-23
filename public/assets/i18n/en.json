@@ -22,5 +22,13 @@
         "finalTitle" : "Welcome aboard!",
         "finalDescription" : "Countless events and spots are waiting to be discovered! We wish You the best experience @ SpotlightSarajevo!",
         "finalButton" : "Homepage"
+    },
+    "login" : {
+        "emailInput" : "Email...",
+        "passwordInput" : "Password...",
+        "forgotPassword" : "Forgot password?",
+        "forgotPasswordLink" : "Reset it here",
+        "register" : "New to SpotlightSarajevo?",
+        "registerLink" : "Register here!"
     }
 }

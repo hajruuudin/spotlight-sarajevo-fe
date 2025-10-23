@@ -22,5 +22,13 @@
         "finalTitle" : "Dobrodošli!",
         "finalDescription" : "Bezbroj lokala, aktuelnosti i događaja čeka Vaše prisustvo! Želimo vam ugodno korištenje @ SpotlightSarajevo",
         "finalButton" : "Početna"
+    },
+    "login" : {
+        "emailInput" : "Email...",
+        "passwordInput" : "Lozinka...",
+        "forgotPassword" : "Zaboravili ste lozinku?",
+        "forgotPasswordLink" : "Obnovite lozinku ovde!",
+        "register" : "Novi korisnik za SpotlightSarajevo?",
+        "registerLink" : "Kreirajte račun ovde!"
     }
 }

@@ -6,20 +6,23 @@ import { ButtonRegular } from "../../../components/button-regular/button-regular
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpinnerService } from '../../../services/spinner-service';
 import { RouterLink } from "@angular/router";
+import { LanguageService } from '../../../services/language-service';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-login',
-  imports: [TextInput, ReactiveFormsModule, ButtonRegular, RouterLink],
+  imports: [TextInput, ReactiveFormsModule, ButtonRegular, RouterLink, TranslocoPipe],
   templateUrl: './login.html',
   styleUrl: './login.css',
   host: {
-    class: "dark:bg-(--primary-200) bg-(--primary-700) rounded-2xl w-2/5 max-w-5xl h-auto hover:outline-4 dark:hover:outline-(--primary-600) hover:outline-(--primary-600) transition-all flex flex-col jusitfy-center items-center space-y-2 px-12 py-4 shadow-xl"
+    class: "dark:bg-(--primary-200) bg-(--primary-700) md:rounded-2xl w-full md:w-3/5 xl:w-2/5 max-w-5xl h-full md:h-auto hover:outline-4 dark:hover:outline-(--primary-600) hover:outline-(--primary-600) transition-all flex flex-col jusitfy-center items-center space-y-2 px-12 py-4 shadow-xl"
   }
 })
 export class Login implements OnInit{
   protected loginForm! : FormGroup;
 
   constructor(
+    public lang: LanguageService,
     private fb: FormBuilder,
     private toast: HotToastService,
     private spinner: SpinnerService
