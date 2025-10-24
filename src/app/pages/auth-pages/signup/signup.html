@@ -57,8 +57,8 @@
             <div class="w-1/2 h-1 rounded-full bg-(--primary-900) my-2"></div>
 
             <div class="w-full flex flex-col md:flex-row justify-center items-center space-y-2 md:space-x-2 md:space-y-0 mt-2">
-                <app-button-regular [buttonContent]="'register.registerButton' | transloco" classAddons="w-full"></app-button-regular>
-                <app-button-regular buttonContent="" buttonIcon="GOOGLE_REGISTER" classAddons="w-full"></app-button-regular>
+                <app-button-regular (click)="initialiseSystemCredentials()" [buttonContent]="'register.registerButton' | transloco" classAddons="w-full"></app-button-regular>
+                <app-button-regular (click)="this.signInWithGoogleCustom()" buttonContent="" buttonIcon="GOOGLE_REGISTER" classAddons="w-full"></app-button-regular>
             </div>
 
             <span>{{ 'register.loginRedirect' | transloco }}<a routerLink="/auth/login" class="font-bold"> {{ 'register.loginRedirectLink' | transloco }}</a></span>

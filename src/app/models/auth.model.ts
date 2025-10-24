@@ -4,3 +4,12 @@ export class LoginModel {
         public password: String
     ){}
 }
+
+export class SystemUserModel {
+    constructor(
+        public firstName: String,
+        public lasName: String,
+        public email: String,
+        public password: String
+    ){}
+}

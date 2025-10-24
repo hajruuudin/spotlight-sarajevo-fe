@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpinnerService } from '../../../services/spinner-service';
@@ -13,6 +13,15 @@ import { CategorySelector } from '../../../components/category-selector/category
 import { QuestionComponent } from "../../../components/question-component/question-component";
 import { TranslocoPipe } from '@ngneat/transloco';
 import { LanguageService } from '../../../services/language-service';
+import { AuthService } from '../../../services/auth-service';
+import { SystemUserModel } from '../../../models/auth.model';
+import { error } from 'console';
+
+declare global {
+  interface Window {
+    google: any;
+  }
+}
 
 @Component({
   selector: 'app-signup',
@@ -25,11 +34,11 @@ import { LanguageService } from '../../../services/language-service';
 })
 export class Signup implements OnInit{
   protected progressBarWidth: String = 'w-1/5'
-  protected isCredentialsSectionLoaded: Boolean = false;
+  protected isCredentialsSectionLoaded: Boolean = true;
   protected isSpotCategoriesSectionLoaded: Boolean = false;
   protected isEventCategoriesSectionLoaded: Boolean = false;
   protected isSurveySectionLoaded: Boolean = false;
-  protected isCompleteSectionLoaded: Boolean = true;
+  protected isCompleteSectionLoaded: Boolean = false;
 
   protected systemCredentialsForm!: FormGroup;
 
@@ -74,7 +83,9 @@ export class Signup implements OnInit{
 
   constructor(
     private categoryService: CategoryService,
+    private authService: AuthService,
     public lang: LanguageService,
+    private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private spinner: SpinnerService,
     private toastr: HotToastService
@@ -106,6 +117,8 @@ export class Signup implements OnInit{
         console.error(response.message)
       }
     })
+
+    this.initializeGoogleSignIn();
   }
 
   onCategoryHover(description: String): void {
@@ -187,6 +200,72 @@ export class Signup implements OnInit{
       return true;
     } else {
       return false;
+    }
+  }
+
+  passwordMatchValidator(group: FormGroup) {
+    const password = group.get('password')?.value;
+    const repeatPassword = group.get('repeatPassword')?.value;
+
+    console.log(password)
+    console.log(repeatPassword)
+    return password == repeatPassword ? true : false;
+  }
+
+  /* Methods for communicating with the backend */
+  signInWithGoogleCustom(): void {
+    console.log(this.authService.googleClientId)
+    window.google.accounts.id.prompt();
+  }
+  
+  initializeGoogleSignIn(): void {
+    console.log(this.authService.googleClientId)
+    window.google.accounts.id.initialize({      
+      client_id: this.authService.googleClientId,
+      callback: (credentialResponse : any) => {
+        const idToken = credentialResponse?.credential;
+        if (idToken) {
+          this.authService.storeGoogleCredentials(idToken).subscribe({
+            next: (response : any) => {
+              this.isCredentialsSectionLoaded = false;
+              this.isSpotCategoriesSectionLoaded = true;
+              this.progressBarWidth = 'w-2/5'
+              this.registeredFirstName = response['firstName']
+              this.cdr.detectChanges();
+            },
+            error: (error : HttpErrorResponse) => {
+              this.toastr.error('Oops, there was an error registering... Try again later :(', {style: {
+                border: '2px red'
+              }})
+            }
+          });
+        } else {
+          this.toastr.error("Internal error! Try again later :(", {style: {border: "2px solid red", padding: "20px"}})
+          console.error('No ID token received.');
+        }
+      }
+    });
+  }
+
+  initialiseSystemCredentials(): void {
+    if(!this.systemCredentialsForm.valid){
+      this.toastr.error("Please fill in the form")
+    } else {
+      if (!this.passwordMatchValidator(this.systemCredentialsForm)){
+        this.toastr.error("Passwords do not match")
+      } else {
+
+        // Case: Make email already taken validation!!!!
+        // Case: Make strictre password creation rules
+        const userCredentials: SystemUserModel = new SystemUserModel(
+          this.systemCredentialsForm.get('firstName')?.value,
+          this.systemCredentialsForm.get('lastName')?.value,
+          this.systemCredentialsForm.get('email')?.value,
+          this.systemCredentialsForm.get('password')?.value,
+        )
+
+        console.log(userCredentials)
+      }
     }
   }
 

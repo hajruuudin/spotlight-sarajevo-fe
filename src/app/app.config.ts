@@ -26,7 +26,9 @@ export const appConfig: ApplicationConfig = {
         fontWeight: '500'
       },
       stacking: 'depth'
-    }), provideHttpClient(), provideTransloco({
+    }), 
+    provideHttpClient(), 
+    provideTransloco({
         config: { 
           availableLangs: ['en', 'ba'],
           defaultLang: 'en',
@@ -34,6 +36,6 @@ export const appConfig: ApplicationConfig = {
           prodMode: !isDevMode(),
         },
         loader: TranslocoHttpLoader
-      })
+    }),
   ]
 };
