@@ -14,7 +14,7 @@ import { QuestionComponent } from "../../../components/question-component/questi
 import { TranslocoPipe } from '@ngneat/transloco';
 import { LanguageService } from '../../../services/language-service';
 import { AuthService } from '../../../services/auth-service';
-import { SystemUserModel } from '../../../models/auth.model';
+import { PreferencesModel, SystemUserModel } from '../../../models/auth.model';
 import { error } from 'console';
 
 declare global {
@@ -32,7 +32,7 @@ declare global {
     class: "dark:bg-(--primary-200) bg-(--primary-700) md:rounded-2xl md:w-3/5 w-full max-w-5xl h-full md:h-auto md:max-h-6/7 hover:outline-4 dark:hover:outline-(--primary-600) hover:outline-(--primary-600) transition-all flex flex-col justify-start items-center space-y-2 shadow-xl relative overflow-auto"
   }
 })
-export class Signup implements OnInit{
+export class Signup implements OnInit {
   protected progressBarWidth: String = 'w-1/5'
   protected isCredentialsSectionLoaded: Boolean = true;
   protected isSpotCategoriesSectionLoaded: Boolean = false;
@@ -53,28 +53,32 @@ export class Signup implements OnInit{
       questionEn: "Have you visited Sarajevo's historical sites and iconic landmarks, focusing on exploring the hsitorical aspect of Sarajevo? (1/4)",
       questionBa: "Da li ste posjetili Sarajevsku kulturnu baštinu i ikonične historijske tačke te kultna, poznata mjesta? (1/4)",
       isASelected: false,
-      isBSelected: false
+      isBSelected: false,
+      isAnswred: false
     },
     {
       id: 2,
       questionEn: "Are you interested in exploring less popular spots instead of commonly accessed and vanilla-esque places? (2/4)",
       questionBa: "Da li ste zainteresovani u istraživanju i posjećivanju manje poznatih mjesta i lokala u sarajevu umjesto popularnih 'standardica'? (2/4)",
       isASelected: false,
-      isBSelected: false
+      isBSelected: false,
+      isAnswred: false
     },
     {
       id: 3,
       questionEn: "Do you enjoy loud and open audience events, like concerts, pubs, clubs and events which orientate around live performances and energy? (3/4)",
       questionBa: "Da li volite bučnu atmosferu, otvorene događaje i energične lokale kao što su pabovi, klubovi i muzika uživo? (3/4)",
       isASelected: false,
-      isBSelected: false
+      isBSelected: false,
+      isAnswred: false
     },
     {
       id: 4,
       questionEn: "Are you intereseted in attending educational and community events to improve Your social-educative status and learn/explore various topics? (4/4)",
       questionBa: "Da li ste zainteresovani u učestvovanju u raznim edukacionim, humanitarnim i socijalnim događajima u cilju poboljšanja Vašeg znanja i vještina u raznim tematikama? (4/4)",
       isASelected: false,
-      isBSelected: false
+      isBSelected: false,
+      isAnswred: false
     }
   ]
 
@@ -89,7 +93,7 @@ export class Signup implements OnInit{
     private fb: FormBuilder,
     private spinner: SpinnerService,
     private toastr: HotToastService
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.systemCredentialsForm = this.fb.group({
@@ -101,19 +105,19 @@ export class Signup implements OnInit{
     })
 
     this.categoryService.getAllSpotCategories().subscribe({
-      next: (response : SpotCategoryModel[]) => {
+      next: (response: SpotCategoryModel[]) => {
         this.allSpotCategories = response;
       },
-      error: (response : HttpErrorResponse) => {
+      error: (response: HttpErrorResponse) => {
         console.error(response.message)
       }
     })
 
     this.categoryService.getAllEventCategories().subscribe({
-      next: (response : EventCategoryModel[]) => {
+      next: (response: EventCategoryModel[]) => {
         this.allEventCategories = response;
       },
-      error: (response : HttpErrorResponse) => {
+      error: (response: HttpErrorResponse) => {
         console.error(response.message)
       }
     })
@@ -126,11 +130,11 @@ export class Signup implements OnInit{
   }
 
 
-  updateCategoryDescription(newDescription: string){
+  updateCategoryDescription(newDescription: string) {
     this.currentCategoryDescription = newDescription
   }
 
-  resetCategoryDescription(){
+  resetCategoryDescription() {
     this.currentCategoryDescription = 'Hover over a cateogry to see its description!'
   }
 
@@ -157,10 +161,11 @@ export class Signup implements OnInit{
     }
   }
 
-   questionASelected(q : any, value : boolean){
+  questionASelected(q: any, value: boolean) {
     let newQuestions = this.questions.map(question => {
-      if(question.id === q.id){
-        return {...question, isASelected: value}
+      if (question.id === q.id) {
+        question.isAnswred = true
+        return { ...question, isASelected: value }
       } else {
         return question
       }
@@ -170,10 +175,11 @@ export class Signup implements OnInit{
     console.log(this.questions)
   }
 
-  questionBSelected(q : any, value : boolean){
+  questionBSelected(q: any, value: boolean) {
     let newQuestions = this.questions.map(question => {
-      if(question.id === q.id){
-        return {...question, isBSelected: value}
+      if (question.id === q.id) {
+        question.isAnswred = true
+        return { ...question, isBSelected: value }
       } else {
         return question
       }
@@ -183,11 +189,11 @@ export class Signup implements OnInit{
     console.log(this.questions)
   }
 
-  verifyQuestionsSelected(){
+  verifyQuestionsSelected() {
     let check = true;
 
     this.questions.forEach(question => {
-      if(!question.isASelected && !question.isBSelected ){
+      if (!question.isASelected && !question.isBSelected) {
         check = false;
       }
     })
@@ -195,8 +201,8 @@ export class Signup implements OnInit{
     return check;
   }
 
-  getQuestionAnswer(question : any){
-    if(question.isASelected){
+  getQuestionAnswer(question: any) {
+    if (question.isASelected) {
       return true;
     } else {
       return false;
@@ -212,35 +218,45 @@ export class Signup implements OnInit{
     return password == repeatPassword ? true : false;
   }
 
+  checkSurveyAnswers(): Record<string, boolean> {
+    const answers: Record<string, boolean> = {};
+
+    this.questions.forEach((q, index) => {
+      answers[`question${index + 1}`] = q.isASelected;
+    });
+
+    console.log(answers)
+    return answers;
+  }
+
+
   /* Methods for communicating with the backend */
   signInWithGoogleCustom(): void {
     console.log(this.authService.googleClientId)
     window.google.accounts.id.prompt();
   }
-  
+
   initializeGoogleSignIn(): void {
     console.log(this.authService.googleClientId)
-    window.google.accounts.id.initialize({      
+    window.google.accounts.id.initialize({
       client_id: this.authService.googleClientId,
-      callback: (credentialResponse : any) => {
+      callback: (credentialResponse: any) => {
         const idToken = credentialResponse?.credential;
         if (idToken) {
           this.authService.storeGoogleCredentials(idToken).subscribe({
-            next: (response : any) => {
-              this.isCredentialsSectionLoaded = false;
-              this.isSpotCategoriesSectionLoaded = true;
-              this.progressBarWidth = 'w-2/5'
-              this.registeredFirstName = response['firstName']
-              this.cdr.detectChanges();
+            next: (response: any) => {
+              this.moveToSpotCategoriesSection(response)
             },
-            error: (error : HttpErrorResponse) => {
-              this.toastr.error('Oops, there was an error registering... Try again later :(', {style: {
-                border: '2px red'
-              }})
+            error: (error: HttpErrorResponse) => {
+              this.toastr.error('Oops, there was an error registering... Try again later :(', {
+                style: {
+                  border: '2px red'
+                }
+              })
             }
           });
         } else {
-          this.toastr.error("Internal error! Try again later :(", {style: {border: "2px solid red", padding: "20px"}})
+          this.toastr.error("Internal error! Try again later :(", { style: { border: "2px solid red", padding: "20px" } })
           console.error('No ID token received.');
         }
       }
@@ -248,15 +264,21 @@ export class Signup implements OnInit{
   }
 
   initialiseSystemCredentials(): void {
-    if(!this.systemCredentialsForm.valid){
+    if (!this.systemCredentialsForm.valid) {
       this.toastr.error("Please fill in the form")
     } else {
-      if (!this.passwordMatchValidator(this.systemCredentialsForm)){
+      if (!this.passwordMatchValidator(this.systemCredentialsForm)) {
         this.toastr.error("Passwords do not match")
       } else {
+        const password = this.systemCredentialsForm.get('password')?.value;
 
-        // Case: Make email already taken validation!!!!
-        // Case: Make strictre password creation rules
+        if (!password || password.length < 6 || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
+          this.toastr.error(
+            "Password must be at least 6 characters long, have one uppercase letter and one number"
+          );
+          return;
+        }
+
         const userCredentials: SystemUserModel = new SystemUserModel(
           this.systemCredentialsForm.get('firstName')?.value,
           this.systemCredentialsForm.get('lastName')?.value,
@@ -264,8 +286,80 @@ export class Signup implements OnInit{
           this.systemCredentialsForm.get('password')?.value,
         )
 
-        console.log(userCredentials)
+        this.authService.storeSystemCredentials(userCredentials).subscribe({
+          next: (response: any) => {
+            this.moveToSpotCategoriesSection(response)
+          },
+          error: (error: HttpErrorResponse) => {
+            this.toastr.error(
+              'Oops, there was an error registering:' + error.error.message,
+              { style: { border: '2px red' } }
+            )
+          }
+        })
+
       }
+    }
+  }
+
+  moveToSpotCategoriesSection(response: any) {
+    this.isCredentialsSectionLoaded = false;
+    this.isSpotCategoriesSectionLoaded = true;
+    this.progressBarWidth = 'w-2/5'
+    this.registeredFirstName = response['firstName']
+    this.cdr.detectChanges();
+  }
+
+  moveToEventCategoriesSection(selectedSpotCategories: number[]) {
+    if(selectedSpotCategories.length < 3){
+      this.toastr.info("Please select exactly three categories.")
+    } else {
+      this.isSpotCategoriesSectionLoaded = false;
+      this.isEventCategoriesSectionLoaded = true
+      this.progressBarWidth = 'w-3/5'
+      this.cdr.detectChanges();
+    }
+  }
+
+  moveToSurveySection(selectedEventCategories: number[]) {
+    if(selectedEventCategories.length < 3){
+      this.toastr.info("Please select exactly three categories.")
+    } else {
+      this.isEventCategoriesSectionLoaded = false
+      this.isSurveySectionLoaded = true
+      this.progressBarWidth = 'w-4/5'
+      this.cdr.detectChanges();
+    }
+   }
+
+  moveToCompletionSection() {
+    if(this.questions.every(q => q.isAnswred === true)){
+      const surveyAnswers = this.checkSurveyAnswers();
+
+      const preferencesModel = new PreferencesModel(
+        this.selectedSpotCategories,
+        this.selectedEventCategories,
+        surveyAnswers['question1'],
+        surveyAnswers['question2'],
+        surveyAnswers['question3'],
+        surveyAnswers['question4']
+      )
+
+      console.log(preferencesModel)
+
+      this.authService.registerToSystem(preferencesModel).subscribe({
+        next: (response : any) => {
+          this.isSurveySectionLoaded = false
+          this.isCompleteSectionLoaded = true
+          this.progressBarWidth = 'w-4/5'
+          this.cdr.detectChanges();
+        },
+        error: (error : HttpErrorResponse) => {
+          this.toastr.error("Oops, something went wrong. Sorry, try again later!")
+        }
+      })
+    } else {
+      this.toastr.info("Please answer all the questions.")
     }
   }
 

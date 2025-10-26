@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { SpinnerService } from '../../services/spinner-service';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,5 +8,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './spinner-component.css'
 })
 export class SpinnerComponent {
-  constructor(public spinner: SpinnerService) {}
+  /** Show/hide the spinner */
+  @Input() visible = false;
+
+  /** Optional text below the spinner */
+  @Input() message = 'Loading...';
 }

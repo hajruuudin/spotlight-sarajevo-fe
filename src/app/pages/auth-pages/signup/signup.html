@@ -87,7 +87,7 @@
 
         <span class="h-10 mt-4">{{ this.currentCategoryDescription }}</span>
 
-        <app-button-regular [buttonContent]="'register.categorySectionButton' | transloco" classAddons="w-1/2 my-4"></app-button-regular>
+        <app-button-regular (click)="this.moveToEventCategoriesSection(this.selectedSpotCategories)" [buttonContent]="'register.categorySectionButton' | transloco" classAddons="w-1/2 my-4"></app-button-regular>
     </section>
     }
 
@@ -112,7 +112,7 @@
 
         <span class="h-10 mt-4">{{ this.currentCategoryDescription}}</span>
 
-        <app-button-regular [buttonContent]="'register.categorySectionEventsButton' | transloco" classAddons="w-1/2 my-4"></app-button-regular>
+        <app-button-regular (click)="this.moveToSurveySection(this.selectedEventCategories)" [buttonContent]="'register.categorySectionEventsButton' | transloco" classAddons="w-1/2 my-4"></app-button-regular>
     </section>
     }
 
@@ -134,7 +134,7 @@
             }
         </div>        
 
-        <app-button-regular [buttonContent]="'register.surveyButton' | transloco" classAddons="w-1/2 my-4"></app-button-regular>
+        <app-button-regular (click)="this.moveToCompletionSection()" [buttonContent]="'register.surveyButton' | transloco" classAddons="w-1/2 my-4"></app-button-regular>
     </section>
     }
 
@@ -148,3 +148,5 @@
     </section>
     }
 </section>
+
+<!-- Fullscreen overlay -->

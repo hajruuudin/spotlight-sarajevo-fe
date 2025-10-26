@@ -148,3 +148,36 @@ body {
 .max-w-application {
   max-width: 1366px;
 }
+
+/* ANIMATIONS */
+.fade-in-animation {
+  animation: fade-in 0.25s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 100;
+  }
+}
+
+.fade-out-animation {
+  animation: fade-out 0.25s;
+}
+
+
+@keyframes fade-out {
+  from {
+    opacity: 100;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+
+

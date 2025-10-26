@@ -1,6 +1,6 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, isDevMode } from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, isDevMode, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { routes } from './app.routes';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { provideHttpClient } from '@angular/common/http';
@@ -17,13 +17,15 @@ export const appConfig: ApplicationConfig = {
       duration: 4000,
       position: 'top-right',
       style: {
-        background: '#055b61',
-        border: '2px solid #1ae9f5',
+        background: '#032d30',
+        border: '1px solid #1ae9f5',
         color: '#fff',
         borderRadius: '12px',
-        padding: '12px 16px',
+        padding: '6px 16px',
         fontSize: '16px',
-        fontWeight: '500'
+        fontWeight: '500',
+        textAlign: 'start',
+        alignItems: 'center'
       },
       stacking: 'depth'
     }), 
