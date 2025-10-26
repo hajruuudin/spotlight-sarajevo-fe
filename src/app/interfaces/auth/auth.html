@@ -1,1 +1,22 @@
-<p>auth works!</p>
+<div class="auth-container w-full h-screen flex flex-col justify-center items-center">
+    <img id="backgroundImage" src="/assets/images/SS_BACKGROUND_AUTH.jpg">
+    <router-outlet></router-outlet>
+
+    <div class="absolute bottom-10 w-auto h-10 rounded-full left-auto md:left-10 bg-(--primary-200) outline-2 hover:outline-4 transition-all outline-(--primary-400) flex flex-row justify-center items-center">
+        <button
+            id="themer"
+            class="bg-(--primary-300) text-dark w-auto h-full rounded-l-full flex justify-center items-center px-2"
+            (click)="toggleTheme()"
+        >
+            <img src="/assets/icons/MOON.svg" alt="Toggle Theme" class="w-16 h-6" />
+        </button>
+
+        <button
+            id="language"
+            class="bg-(--primary-300) text-dark w-auto h-full rounded-r-full flex justify-center items-center px-2"
+            (click)="toggleLanguage()"
+        >
+            <img [src]="this.lang.getLanguage() === 'en' ? '/assets/icons/EN.svg' : '/assets/icons/BA.svg'" class="w-10 h-8" />
+        </button>
+   </div>
+</div>

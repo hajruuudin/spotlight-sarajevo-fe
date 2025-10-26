@@ -139,19 +139,6 @@
     font-family: 'Kumbh Sans';
 }
 
-/* DELETE LATER, BUTTON TO TEST DARK MODE*/
-#themer {
-  position: fixed;
-  bottom: 1rem;   /* distance from bottom */
-  left: 1rem;     /* distance from left */
-  z-index: 1000;  /* make sure it’s above everything */
-  padding: 0.5rem 1rem;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 0.375rem; /* rounded corners */
-  cursor: pointer;
-}
 
 body {
   transition: background-color 0.3s, color 0.3s;
@@ -161,3 +148,36 @@ body {
 .max-w-application {
   max-width: 1366px;
 }
+
+/* ANIMATIONS */
+.fade-in-animation {
+  animation: fade-in 0.25s;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 100;
+  }
+}
+
+.fade-out-animation {
+  animation: fade-out 0.25s;
+}
+
+
+@keyframes fade-out {
+  from {
+    opacity: 100;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+
+

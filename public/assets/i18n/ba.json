@@ -1,0 +1,34 @@
+{
+    "register" : {
+        "title" : "Dobrodošli u SpotlightSarajevo!",
+        "sectionDescription" : "Gdje su sva dešavanja, aktuelnosti i lokali sadržani na jednom mjestu! Kreirajte račun kako biste nastavili koristiti aplikaciju.",
+        "firstName" : "Ime...",
+        "lastName" : "Prezime...",
+        "email" : "Mejl...",
+        "password" : "Lozinka...",
+        "repeatPassword" : "Ponovite lozinku...",
+        "registerButton" : "Registracija",
+        "loginRedirect" : "Već imate profil?",
+        "loginRedirectLink" : "Ulogujte se ovde!",
+        "categorySectionTitle" : "Lijep pozdrav, ",
+        "categorySectionDescription" : "Sad, kako bi poboljšali vaš ugođaj, recite nam na koja mjesta volite izlaziti! Odaberite tri kategorije mjesta koje Vam odgovaraju",
+        "categorySectionButton" : "Nastavite",
+        "categorySectionEventsTitle" : "Sada, o dešavanjima!",
+        "categorySectionEventsDescription" : "Odličan izbor! Sada, ponovite isto za razne događaje. Odaberite tri kategorije aktuelnosti kojima bi najčešće prisustvovali.",
+        "categorySectionEventsButton" : "Nastavite",
+        "surveyTitle" : "Najzad, par pitanja...",
+        "surveyDescription" : "Još malo pa gotovo! Sada odgovorite na par pitanja kako bi bolje shvatili koje osobe tačno koriste našu aplikaciju kako bi mogli pružiti najbolje iskustvo.",
+        "surveyButton" : "Završi",
+        "finalTitle" : "Dobrodošli!",
+        "finalDescription" : "Bezbroj lokala, aktuelnosti i događaja čeka Vaše prisustvo! Želimo vam ugodno korištenje @ SpotlightSarajevo",
+        "finalButton" : "Početna"
+    },
+    "login" : {
+        "emailInput" : "Email...",
+        "passwordInput" : "Lozinka...",
+        "forgotPassword" : "Zaboravili ste lozinku?",
+        "forgotPasswordLink" : "Obnovite lozinku ovde!",
+        "register" : "Novi korisnik za SpotlightSarajevo?",
+        "registerLink" : "Kreirajte račun ovde!"
+    }
+}
