@@ -1,1 +1,41 @@
-<app-page-header class="max-w-application pt-4" title="Homepage" subtitle="An overview of recent Happenings"></app-page-header>
+<app-page-header 
+animate.enter="fade-in-animation" class="max-w-application pt-4" [title]='"homepage.headerTitle" | transloco' [subtitle]='"homepage.headerSubtitle" | transloco'></app-page-header>
+
+<section animate.enter="fade-in-animation" id="homepageHeadersSectionContainer" class="w-full h-auto mt-3 mb-6 flex flex-col justify-start items-center space-y-4">
+    <div id="homepageHeadersSection" class="max-w-application w-full flex flex-col md:flex-row justify-start md:justify-between items-center md:items-start px-2 md:px-4 space-y-4 md:space-y-0 md:space-x-4">
+        <div class="w-full md:w-1/2 h-auto flex flex-col space-y-2 justify-center items-stretch">
+            <span class="text-2xl w-full md:text-start font-semibold">{{ 'homepage.headlineSectionSpot' | transloco}}</span>
+            <app-headline-spot classAddons="w-full" [spotShorthand]="this.testSpot"></app-headline-spot>
+        </div>
+        <div class="w-full md:w-1/2 h-auto flex flex-col space-y-2 justify-start items-stretch">
+            <span class="text-2xl w-full md:text-end font-semibold">{{ 'homepage.headlineSectionEvent' | transloco}}</span>
+            <app-headline-event classAddons="w-full" [eventShorthand]="this.testEvent"></app-headline-event>
+        </div>
+    </div>
+
+    <div id="homepageFavouritesSection" class="max-w-application px-2 md:px-4 w-full flex flex-col justify-center items-center">
+        <span class="text-2xl w-full md:text-start font-semibold">{{ 'homepage.headlineSectionFavourites' | transloco}}</span>
+        <div class="w-full max-w-application flex flex-row space-x-4 justify-start py-4 items-center overflow-x-scroll overflow-y-hidden">
+            @for (spot of testSpotFavourites; track spot.spotId) {
+                <app-small-spot-card [spotShorthand]="spot" classAddons=""></app-small-spot-card>
+            }
+        </div>
+    </div>
+
+    <div class="w-full flex flex-row justify-end max-w-application px-2">
+        <app-button-regular classAddons="px-4" [buttonContent]='"homepage.viewAllButton" | transloco'></app-button-regular>
+    </div>
+    
+</section>
+
+<section id="homepagePopularSectionContainer" class="w-full h-64 bg-(--primary-100)">
+    <div id="homepagePopularSection" class="max-w-application">
+
+    </div>
+</section>
+
+<section id="homepageDiscoverSectionContainer" class="w-full h-64">
+    <div id="homepageDiscoverSection" class="max-w-application">
+
+    </div>
+</section>

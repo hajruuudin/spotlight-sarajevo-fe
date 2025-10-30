@@ -16,7 +16,10 @@ import { Profile } from "../../pages/user-pages/profile/profile";
   selector: 'app-navbar-user',
   imports: [HomepageIcon, ProfileIcon, DiscoverIcon, SpotsIcon, EventsIconComponent, CollectionIcon, RouterLink, GuidesIcon, RequestIcon, TransportIcon, HamburgerIcon, RouterLinkActive],
   templateUrl: './navbar-user.html',
-  styleUrl: './navbar-user.css'
+  styleUrl: './navbar-user.css',
+  host: {
+    class: 'sticky top-0 z-50'
+  }
 })
 export class NavbarUser {
   protected isMobileNavbarLoaded : Boolean = true;
