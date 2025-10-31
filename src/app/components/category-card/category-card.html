@@ -1,1 +1,18 @@
-<p>category-card works!</p>
+<div 
+[style.background-color]="spotCategoryModel ? spotCategoryModel.spotCategoryColorCode + 'AA' : eventCategoryModel?.eventCategoryColorCode + 'AA'"
+[ngClass]="'w-72 md:w-96 h-32 flex flex-row justify-center items-center rounded-2xl'"
+>
+    @if (this.spotCategoryModel == null) {
+        @if (!this.isDescriptionShown) {
+            <span class="uppercase font-semibold">{{ this.eventCategoryModel?.eventCategoryNameEn }}</span>
+        } @else {
+            <span class="font-normal">{{ this.eventCategoryModel?.eventCategoryDescriptionEn }}</span>
+        }   
+    } @else {
+        @if (!this.isDescriptionShown) {
+            <span class="uppercase font-semibold">{{ this.spotCategoryModel.spotCategoryNameEn }}</span>
+        } @else {
+            <span class="font-normal">{{ this.spotCategoryModel.spotCategoryDescriptionEn }}</span>
+        }   
+    }
+</div>

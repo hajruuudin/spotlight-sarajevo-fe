@@ -7,14 +7,18 @@ import { HeadlineSpot } from '../../../components/headline-spot/headline-spot';
 import { SmallSpotCard } from '../../../components/small-spot-card/small-spot-card';
 import { ButtonRegular } from "../../../components/button-regular/button-regular";
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { SpotSearch } from "../spot-search/spot-search";
 import { SearchSpotCard } from "../../../components/search-spot-card/search-spot-card";
 import { CalendarDateIcon } from '../../../components/calendar-date-icon/calendar-date-icon';
 import { SearchEventCard } from "../../../components/search-event-card/search-event-card";
+import { HistoricalSpotCard } from "../../../components/historical-spot-card/historical-spot-card";
+import { EventCategoryModel, SpotCategoryModel } from '../../../models/category.model';
+import { CategoryService } from '../../../services/category-service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { CategoryCard } from '../../../components/category-card/category-card';
 
 @Component({
   selector: 'app-homepage',
-  imports: [PageHeader, HeadlineEvent, HeadlineSpot, SmallSpotCard, ButtonRegular, TranslocoPipe, SearchSpotCard, CalendarDateIcon, SearchEventCard],
+  imports: [PageHeader, HeadlineEvent, HeadlineSpot, SmallSpotCard, ButtonRegular, TranslocoPipe, SearchSpotCard, CalendarDateIcon, SearchEventCard, HistoricalSpotCard, CategoryCard],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
   host: {
@@ -26,11 +30,16 @@ export class Homepage implements OnInit{
   protected selectedDate: string = ''
   public eventCalendarDays : any = []
 
+  public spotCategories : SpotCategoryModel[] = []
+  public eventCategories : EventCategoryModel[] = []
+
   constructor(
-    public transloco: TranslocoService
+    public transloco: TranslocoService,
+    private categoryService: CategoryService
   ){}
 
   ngOnInit(): void {
+    this.loadSpotAndEventCategories()
     this.loadQueryAndDisplayDays()
   }
   public testSpot = new SpotShorthandModel(
@@ -83,8 +92,28 @@ export class Homepage implements OnInit{
     // this.loadEventsForDate(selectedQueryDate);
   }
 
-   handleDaySelection(selectedQueryDate: string) {
+  handleDaySelection(selectedQueryDate: string) {
     this.selectedDate = selectedQueryDate;
     // this.loadEventsForDate(selectedQueryDate);
+  }
+
+  loadSpotAndEventCategories(){
+    this.categoryService.getAllSpotCategories().subscribe({
+      next: (response : SpotCategoryModel[]) => {
+        this.spotCategories = response
+      },
+      error: (response : HttpErrorResponse) => {
+        console.error(response)
+      }
+    })
+
+    this.categoryService.getAllEventCategories().subscribe({
+      next: (response : EventCategoryModel[]) => {
+        this.eventCategories = response
+      },
+      error: (response : HttpErrorResponse) => {
+        console.error(response)
+      }
+    })
   }
 }

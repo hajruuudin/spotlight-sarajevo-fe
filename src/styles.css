@@ -190,6 +190,21 @@ body {
   }
 }
 
+@keyframes scroll-horizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 
+.scroll-container {
+  animation: scroll-horizontal 20s linear infinite;
+}
+
+.scroll-container:hover{
+  animation-play-state: paused;
+}
 
 
