@@ -1,4 +1,10 @@
 {
+    "navbar" : {
+
+    },
+    "footer" : {
+
+    },
     "register" : {
         "title" : "Welcome to SpotlightSarajevo!",
         "sectionDescription" : "Where all events, spots and iconic moments are collected together! Please register Your account to use the Application",
@@ -30,5 +36,17 @@
         "forgotPasswordLink" : "Reset it here",
         "register" : "New to SpotlightSarajevo?",
         "registerLink" : "Register here!"
+    },
+    "homepage" : {
+        "headerTitle" : "Homepage",
+        "headerSubtitle" : "An overview of recent happenings, Your favourites and headline events!",
+        "headlineSectionSpot" : "Todays headline Spot",
+        "headlineSectionEvent" : "Todays headline Event",
+        "headlineSectionFavourites" : "Based on Your favourite spots",
+        "popularSectionSpots" : "Always popular places in Sarajevo",
+        "popularSectionEvents" : "Upcoming events in Sarajevo",
+        "discoverSectionLandmarks" : "Discover Sarajevos Culture",
+        "discoverSectionCategories" : "Explore Different Categories",
+        "viewAllButton" : "View All"
     }
 }

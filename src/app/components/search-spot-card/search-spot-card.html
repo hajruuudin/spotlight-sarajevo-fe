@@ -1,0 +1,24 @@
+@if (this.spotShorthand) {
+<!-- DATA AND INFORMATION CONTAINER -->
+<div class="p-3 flex flex-col h-auto justify-between items-start w-2/3 md:w-1/2 z-20 group-hover:pl-4 transition-all space-y-8">
+    <div class="flex flex-col justify-center items-start grow">
+        <div class="bg-white self-start w-auto mt-2 px-2 md:px-5 py-0.5 flex flex-col justify-center items-center rounded-full">
+            <span class="text-xs md:text-base text-black font-semibold">{{ this.spotShorthand.spotRating }} / 10</span>
+        </div>
+    </div>
+
+    <div class="flex flex-col w-full justify-center items-start">
+        <span class="text-sm md:text-xl">{{ this.spotShorthand.spotCategory }}</span>
+        <div class="w-1/4 bg-white h-0.5 rounded-full"></div>
+        <h3 class="text-xl md:text-3xl font-bold mt-1 whitespace-nowrap">{{ this.spotShorthand.spotOfficialName }}</h3>
+        <span class="text-sm md:text-base whitespace-nowrap">{{ this.spotShorthand.spotSmallDescription }}</span>
+    </div>
+</div>
+
+<!-- IMAGE AND GRADIENT BG -->
+<div class="w-1/2 md:w-2/3 lg:w-1/2 h-auto rounded-r-2xl relative z-10"
+    [style.backgroundImage]="this.spotShorthand.spotThumbnailImage ? 'url(' + this.spotShorthand.spotThumbnailImage + ')' : ''"
+    style="background-size: cover; background-position: center; transform: scale(1.0);">
+    <div class="absolute inset-0 rounded-r-2xl bg-gradient-to-r from-black via-black/20 to-transparent"></div>
+</div>
+}

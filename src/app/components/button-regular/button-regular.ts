@@ -21,7 +21,7 @@ import { GoogleIcon } from "../../resources/icons/google-icon/google-icon";
   templateUrl: './button-regular.html',
   styleUrl: './button-regular.css',
   host: {
-    class: "w-full"
+    class: 'w-full'
   }
 })
 export class ButtonRegular {

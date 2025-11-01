@@ -40,6 +40,7 @@ export const routes: Routes = [
         path: '',
         component: User,
         children: [
+            { path: '', redirectTo: 'homepage', pathMatch: 'full'},
             { path: 'homepage', component: Homepage, title: 'Homepage - SpotlightSarajevo' },
 
             { path: 'spots', component: SpotSearch, title: 'Browse Spots - SpotlightSarajevo' },

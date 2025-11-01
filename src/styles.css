@@ -179,5 +179,48 @@ body {
   }
 }
 
+@keyframes expand {
+  0% {
+    transform: scaleX(0);
+    transform-origin: center;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: center;
+  }
+}
+
+@keyframes scroll-horizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-40%);
+  }
+}
+
+.scroll-container-slow {
+  animation: scroll-horizontal 60s linear infinite;
+}
+
+.scroll-container-medium {
+  animation: scroll-horizontal 30s linear infinite;
+}
+
+.scroll-container-fast {
+  animation: scroll-horizontal 20s linear infinite;
+}
+
+.scroll-container-slow:hover {
+  animation-play-state: paused;
+}
+
+.scroll-container-medium:hover {
+  animation-play-state: paused;
+}
+
+.scroll-container-fast:hover {
+  animation-play-state: paused;
+}
 
 

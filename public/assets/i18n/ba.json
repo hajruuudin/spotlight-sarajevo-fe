@@ -1,4 +1,10 @@
 {
+    "navbar" : {
+
+    },
+    "footer" : {
+        
+    },
     "register" : {
         "title" : "Dobrodošli u SpotlightSarajevo!",
         "sectionDescription" : "Gdje su sva dešavanja, aktuelnosti i lokali sadržani na jednom mjestu! Kreirajte račun kako biste nastavili koristiti aplikaciju.",
@@ -30,5 +36,17 @@
         "forgotPasswordLink" : "Obnovite lozinku ovde!",
         "register" : "Novi korisnik za SpotlightSarajevo?",
         "registerLink" : "Kreirajte račun ovde!"
+    },
+    "homepage" : {
+        "headerTitle" : "Početna",
+        "headerSubtitle" : "Pregled svih dešavanja, popularnij lokala i nadolazećih zbivanja!",
+        "headlineSectionSpot" : "Današnji lokal za posjetiti",
+        "headlineSectionEvent" : "Današnja, glavna aktuelnost",
+        "headlineSectionFavourites" : "Iz Vaših najdražih kategorija",
+        "popularSectionSpots" : "Uvijek popularni lokali u Sarajevu",
+        "popularSectionEvents" : "Nadolazeći događaji i aktuelnosti",
+        "discoverSectionLandmarks" : "Iskusite Sarajevsku historijsku stranu",
+        "discoverSectionCategories" : "Pretražite prema kategorijama",
+        "viewAllButton" : "Vidi sve"
     }
 }

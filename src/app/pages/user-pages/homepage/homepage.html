@@ -1,1 +1,148 @@
-<app-page-header class="max-w-application pt-4" title="Homepage" subtitle="An overview of recent Happenings"></app-page-header>
+<section animate.enter="fade-in-animation" id="homepageHeadersSectionContainer" class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4">
+    <app-page-header 
+    animate.enter="fade-in-animation" class="max-w-application pt-4" [title]='"homepage.headerTitle" | transloco' [subtitle]='"homepage.headerSubtitle" | transloco'></app-page-header>
+
+    <div id="homepageHeadersSection" class="max-w-application w-full flex flex-col md:flex-row justify-start md:justify-between items-center md:items-start px-4 md:px-8 space-y-4 md:space-y-0 md:space-x-4">
+        <div class="w-full md:w-1/2 h-auto flex flex-col space-y-2 justify-center items-stretch">
+            <span class="text-2xl w-full md:text-start font-semibold">{{ 'homepage.headlineSectionSpot' | transloco}}</span>
+            <app-headline-spot classAddons="w-full" [spotShorthand]="this.testSpot"></app-headline-spot>
+        </div>
+        <div class="w-full md:w-1/2 h-auto flex flex-col space-y-2 justify-start items-stretch">
+            <span class="text-2xl w-full md:text-end font-semibold">{{ 'homepage.headlineSectionEvent' | transloco}}</span>
+            <app-headline-event classAddons="w-full" [eventShorthand]="this.testEvent"></app-headline-event>
+        </div>
+    </div>
+
+    <div id="homepageFavouritesSection" class="max-w-application px-4 md:px-8 w-full flex flex-col justify-center items-center">
+        <span class="text-2xl w-full md:text-start font-semibold">{{ 'homepage.headlineSectionFavourites' | transloco}}</span>
+        <div class="w-full max-w-application flex flex-row space-x-6 justify-center py-4 items-center overflow-x-auto overflow-y-hidden">
+            <div class="scroll-container-slow flex flex-row justify-center items-center space-x-4">
+                @for (spot of testSpotFavourites; track spot.spotId) {
+                    <app-small-spot-card [spotShorthand]="spot" classAddons=""></app-small-spot-card>
+                }
+                @for (spot of testSpotFavourites; track spot.spotId) {
+                    <app-small-spot-card [spotShorthand]="spot" classAddons=""></app-small-spot-card>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full flex flex-row justify-center md:justify-end max-w-application px-4 md:px-8">
+        <app-button-primary classAddons="px-4" [buttonContent]='"homepage.viewAllButton" | transloco'></app-button-primary>
+    </div>
+</section>
+
+<section style="box-shadow: 0px -10px 40px #00000044;" animate.enter="fade-in-animation" id="homepagePopularSectionContainer" class="w-full h-auto flex flex-col justify-start items-center space-y-4 bg-(--background-100)">
+    <div id="homepagePopularSection" class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full py-6">
+        <!-- SUB-SECTION TITLE -->
+        <div class="flex flex-col w-full justify-center items-center md:items-start h-auto mb-2">
+            <span class="text-xs sm:text-base md:text-xl tracking-wider">POPULAR</span>
+            <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold">{{ 'homepage.popularSectionSpots' | transloco}}</h2>
+        </div>
+
+        <!-- POPULAR SPOTS CONTAINER - FIRST TWO ROWS -->
+        <div class="w-full h-auto flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 space-x-4 my-2 items-stretch">
+            <app-search-spot-card [spotShorthand]="this.testSpot"></app-search-spot-card>
+            <app-search-spot-card [spotShorthand]="this.testSpot"></app-search-spot-card>
+        </div>
+
+         <!-- POPULAR SPOTS CONTAINER - SECOND TWO ROWS -->
+        <div class="w-full h-auto flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 space-x-4 my-2 items-stretch">
+            <app-search-spot-card [spotShorthand]="this.testSpot"></app-search-spot-card>
+            <app-search-spot-card [spotShorthand]="this.testSpot"></app-search-spot-card>
+        </div>
+    </div>
+
+    <div id="homepageCalendarSection" class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full my-2">
+        <!-- SUB-SECTION TITLE -->
+        <div class="flex flex-col w-full justify-center items-center md:items-start h-auto my-2">
+            <span class="text-xs sm:text-base md:text-xl tracking-wider">COMING UP</span>
+            <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold">{{ 'homepage.popularSectionEvents' | transloco}}</h2>
+        </div>
+
+        <!-- CALENDAR PICKER SECTION -->
+        <div class="w-full h-auto flex flex-row justify-center items-center overflow-x-scroll sm:overflow-hidden my-2">
+            <div class="w-1/3 hidden sm:inline h-1 rounded-full bg-white"></div>
+            <div class="w-full sm:w-auto flex flex-row justify-around items-center space-x-1 mx-1">
+                @for (day of this.eventCalendarDays; track $index) {
+                    <app-calendar-date-icon 
+                    [day]="day" 
+                    [isSelectedDay]="day.queryDate === selectedDate"
+                    (daySelected)="handleDaySelection($event)"></app-calendar-date-icon>
+                }
+            </div>
+            <div class="w-1/3 hidden sm:inline h-1 rounded-full bg-white"></div>
+        </div>
+
+        <!-- CALENDAR EVENT RESULTS SECTION -->
+         <div class="w-full h-auto flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 my-2">
+            <app-search-event-card [eventShorthand]="this.testEvent"></app-search-event-card>
+            <app-search-event-card [eventShorthand]="this.testEvent"></app-search-event-card>
+        </div>
+
+        <div class="w-full flex flex-row justify-center md:justify-end max-w-application my-4">
+            <app-button-primary classAddons="px-4" [buttonContent]='"homepage.viewAllButton" | transloco'></app-button-primary>
+        </div>
+    </div>
+</section>
+
+<section animate.enter="fade-in-animation" id="homepageDiscoverSectionContainer" class="w-full h-auto flex flex-col justify-start items-center space-y-4">
+    <div id="homepageDiscoverLandmarks" class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full pt-6 pb-0">
+        <!-- SUB-SECTION TITLE -->
+        <div class="flex flex-col w-full justify-center items-center md:items-start h-auto my-2">
+            <span class="text-xs sm:text-base md:text-xl tracking-wider">DISCOVER</span>
+            <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold">{{ 'homepage.discoverSectionLandmarks' | transloco}}</h2>
+        </div>
+
+        <!-- DISCOVER LANDMARKS  -->
+        <div class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4">
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+        </div>
+
+        <div class="w-full flex flex-row justify-center md:justify-end max-w-application">
+            <app-button-primary classAddons="px-4" [buttonContent]='"homepage.viewAllButton" | transloco'></app-button-primary>
+        </div>
+    </div>
+
+    <div id="homepageDiscoverCategories" class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full pt-0 pb-6">
+        <!-- SUB-SECTION TITLE -->
+        <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
+            <span class="text-xs sm:text-base md:text-xl tracking-wider">CATEGORIES</span>
+            <h2 class="text-xl sm:text-2xl md:text-3xl font-semibold">{{ 'homepage.discoverSectionCategories' | transloco}}</h2>
+        </div>
+
+        <!-- SPOT CATEGORIES SECTION -->
+        <div class="w-full max-w-application h-auto overflow-x-auto mb-1 mt-2">
+            <div class="scroll-container-fast flex flex-row justify-start items-center space-x-2">
+                @for (cat of this.spotCategories; track $index) {
+                <app-category-card [spotCategoryModel]="cat" [eventCategoryModel]="null"></app-category-card>
+                }
+                @for (cat of this.spotCategories; track $index) {
+                <app-category-card [spotCategoryModel]="cat" [eventCategoryModel]="null"></app-category-card>
+                }
+            </div>
+        </div>
+
+        <!-- EVENT CATEGORIES SECTION -->
+        <div class="w-full max-w-application h-auto overflow-x-auto group mt-1 mb-2">
+            <div class="scroll-container-fast flex flex-row justify-center items-center space-x-2">
+                @for (cat of this.eventCategories; track $index) {
+                <app-category-card [spotCategoryModel]="null" [eventCategoryModel]="cat"></app-category-card>
+                }
+                @for (cat of this.eventCategories; track $index) {
+                <app-category-card [spotCategoryModel]="null" [eventCategoryModel]="cat"></app-category-card>
+                }
+            </div>
+        </div>
+
+        <div class="w-full flex flex-row justify-center md:justify-end max-w-application mt-2">
+            <app-button-primary classAddons="px-4" [buttonContent]='"homepage.viewAllButton" | transloco'></app-button-primary>
+        </div>
+    </div>
+</section>

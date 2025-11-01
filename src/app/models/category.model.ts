@@ -5,6 +5,7 @@ export class SpotCategoryModel{
         public spotCategoryNameEn: string,
         public spotCategoryDescriptionBs: string,
         public spotCategoryDescriptionEn: string,
+        public spotCategoryColorCode: string
     ){}
 }
 
@@ -15,5 +16,6 @@ export class EventCategoryModel{
         public eventCategoryNameEn: string,
         public eventCategoryDescriptionBs: string,
         public eventCategoryDescriptionEn: string,
+        public eventCategoryColorCode: string
     ){}
 }
