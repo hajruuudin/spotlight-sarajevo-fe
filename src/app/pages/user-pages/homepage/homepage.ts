@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { PageHeader } from "../../../components/page-header/page-header";
 import { HeadlineEvent } from "../../../components/headline-event/headline-event";
 import { EventShorthandModel } from '../../../models/event.model';
@@ -15,17 +15,17 @@ import { EventCategoryModel, SpotCategoryModel } from '../../../models/category.
 import { CategoryService } from '../../../services/category-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CategoryCard } from '../../../components/category-card/category-card';
+import { ButtonPrimary } from "../../../components/button-primary/button-primary";
 
 @Component({
   selector: 'app-homepage',
-  imports: [PageHeader, HeadlineEvent, HeadlineSpot, SmallSpotCard, ButtonRegular, TranslocoPipe, SearchSpotCard, CalendarDateIcon, SearchEventCard, HistoricalSpotCard, CategoryCard],
+  imports: [PageHeader, HeadlineEvent, HeadlineSpot, SmallSpotCard, TranslocoPipe, SearchSpotCard, CalendarDateIcon, SearchEventCard, HistoricalSpotCard, CategoryCard, ButtonPrimary],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
   host: {
     class: "flex flex-col w-full justify-start items-center"
   }
 })
-
 export class Homepage implements OnInit{
   protected selectedDate: string = ''
   public eventCalendarDays : any = []
@@ -35,6 +35,7 @@ export class Homepage implements OnInit{
 
   constructor(
     public transloco: TranslocoService,
+    public cdr: ChangeDetectorRef,
     private categoryService: CategoryService
   ){}
 
@@ -42,6 +43,7 @@ export class Homepage implements OnInit{
     this.loadSpotAndEventCategories()
     this.loadQueryAndDisplayDays()
   }
+
   public testSpot = new SpotShorthandModel(
     1,
     "Kilim Ilidza",
@@ -101,6 +103,7 @@ export class Homepage implements OnInit{
     this.categoryService.getAllSpotCategories().subscribe({
       next: (response : SpotCategoryModel[]) => {
         this.spotCategories = response
+        this.cdr.detectChanges();
       },
       error: (response : HttpErrorResponse) => {
         console.error(response)
@@ -110,6 +113,7 @@ export class Homepage implements OnInit{
     this.categoryService.getAllEventCategories().subscribe({
       next: (response : EventCategoryModel[]) => {
         this.eventCategories = response
+        this.cdr.detectChanges();
       },
       error: (response : HttpErrorResponse) => {
         console.error(response)

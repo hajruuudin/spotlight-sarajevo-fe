@@ -20,6 +20,9 @@ import { GoogleIcon } from "../../resources/icons/google-icon/google-icon";
   imports: [NgClass, GoogleIcon],
   templateUrl: './button-regular.html',
   styleUrl: './button-regular.css',
+  host: {
+    class: 'w-full'
+  }
 })
 export class ButtonRegular {
   @Input() public buttonContent: String = ''

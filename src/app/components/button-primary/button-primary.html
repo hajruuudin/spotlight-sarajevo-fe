@@ -1,0 +1,5 @@
+@if (this.buttonIcon == "DEFAULT") {
+<button (click)="this.handleClick()" [ngClass]="this.classAddons + ' dark:bg-(--secondary-400) h-12 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-4 hover:dark:border-(--secondary-400)'">
+    <span>{{ this.buttonContent }}</span>
+</button>
+} 

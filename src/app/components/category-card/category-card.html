@@ -4,15 +4,15 @@
 >
     @if (this.spotCategoryModel == null) {
         @if (!this.isDescriptionShown) {
-            <span class="uppercase font-semibold">{{ this.eventCategoryModel?.eventCategoryNameEn }}</span>
+            <span class="uppercase font-semibold px-2">{{ this.eventCategoryModel?.eventCategoryNameEn }}</span>
         } @else {
-            <span class="font-normal">{{ this.eventCategoryModel?.eventCategoryDescriptionEn }}</span>
+            <span class="font-normal px-2">{{ this.eventCategoryModel?.eventCategoryDescriptionEn }}</span>
         }   
     } @else {
         @if (!this.isDescriptionShown) {
-            <span class="uppercase font-semibold">{{ this.spotCategoryModel.spotCategoryNameEn }}</span>
+            <span class="uppercase font-semibold px-2">{{ this.spotCategoryModel.spotCategoryNameEn }}</span>
         } @else {
-            <span class="font-normal">{{ this.spotCategoryModel.spotCategoryDescriptionEn }}</span>
+            <span class="font-normal px-2">{{ this.spotCategoryModel.spotCategoryDescriptionEn }}</span>
         }   
     }
 </div>
