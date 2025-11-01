@@ -48,5 +48,21 @@
         "discoverSectionLandmarks" : "Iskusite Sarajevsku historijsku stranu",
         "discoverSectionCategories" : "Pretražite prema kategorijama",
         "viewAllButton" : "Vidi sve"
+    },
+        "discover": {
+        "headerTitle": "Istraži",
+        "headerSubtitle": "Otkrij najpopularnija mjesta i nadolazeće događaje!",
+        "recentSpan": "NEDAVNO",
+        "recentTitle": "Nedavno dodana mjesta za istraživanje",
+        "landmarkSpan": "ZNAČAJNA MJESTA",
+        "landmarkTitle": "Otkrij historijske lokacije i znamenitosti",
+        "popularSpan": "POPULARNO",
+        "popularTitle": "Ovo su najbolje ocijenjena i najpopularnija mjesta u Sarajevu",
+        "eventSpan": "DOGAĐAJI",
+        "eventTitle": "Pogledaj nadolazeće događaje",
+        "favouriteSpotsSpan": "OMILJENI LOKALI",
+        "favouriteSpotsTitle": "Preporučen lokali prema Vašim osobnosti i interesima",
+        "favouriteEventsSpan" : "OMILJENI TIP DOGAĐAJA",
+        "favouriteEventsTitle" : "Iz kolekcije Vaših omiljenih tipova provoda i slično"
     }
 }

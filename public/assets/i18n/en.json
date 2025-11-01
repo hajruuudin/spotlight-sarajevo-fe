@@ -48,5 +48,21 @@
         "discoverSectionLandmarks" : "Discover Sarajevos Culture",
         "discoverSectionCategories" : "Explore Different Categories",
         "viewAllButton" : "View All"
+    },
+    "discover" : {
+        "headerTitle" : "Discover",
+        "headerSubtitle" : "Discover the most popular spots & upcoming events!",
+        "recentSpan" : "RECENT",
+        "recentTitle" : "Recently added spots to explore",
+        "landmarkSpan" : "LANDMARK",
+        "landmarkTitle" : "Discover Historical sites & Landmarks",
+        "popularSpan" : "POPULAR",
+        "popularTitle" : "These are the top rated & popular spots in Sarajevo",
+        "eventSpan" : "EVENTS",
+        "eventTitle" : "View some upcoming events",
+        "favouriteSpotsSpan" : "FAVOURITE SPOTS",
+        "favouriteSpotsTitle" : "Based on Your favourite locals & spots!",
+        "favouriteEventsSpan" : "FAVOURITE EVENTS",
+        "favouriteEventsTitle" : "From Your personal event categories"
     }
 }

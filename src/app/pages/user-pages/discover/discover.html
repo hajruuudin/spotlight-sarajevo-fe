@@ -1,1 +1,122 @@
-<app-page-header class="max-w-application pt-4" title="Discover" subtitle="Discover the most popular spots & upcoming events!"></app-page-header>
+<section animate.enter="fade-in-animation" id="discoverHeaderAndFirstSectionContainer" class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4">
+    <div id="discoverHeaderAndFirstSection" class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+        <app-page-header class="max-w-application py-4" [title]="'discover.headerTitle' | transloco" [subtitle]="'discover.headerSubtitle' | transloco"></app-page-header>
+    
+        <!-- RECENTS SECTION -->
+        <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
+            <span class="text-base md:text-base font-semibold tracking-wider">{{ 'discover.recentSpan' | transloco}}</span>
+            <h2 class="text-xl md:text-3xl ">{{ 'discover.recentTitle' | transloco}}</h2>
+        </div>
+        <div class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1">
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+        </div>
+        <div class="w-full flex flex-row justify-center md:justify-end max-w-application mb-8">
+            <app-button-primary classAddons="px-4" [buttonContent]='"homepage.viewAllButton" | transloco'></app-button-primary>
+        </div>
+
+        <!-- LANDMARK SECTION -->
+        <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
+            <span class="text-base md:text-base font-semibold tracking-wider">{{ 'discover.landmarkSpan' | transloco}}</span>
+            <h2 class="text-xl md:text-3xl ">{{ 'discover.landmarkTitle' | transloco}}</h2>
+        </div>
+        <div class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1">
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+        </div>
+        <div class="w-full flex flex-row justify-center md:justify-end max-w-application">
+            <app-button-primary classAddons="px-4" [buttonContent]='"homepage.viewAllButton" | transloco'></app-button-primary>
+        </div>
+    </div>
+</section>
+
+<section animate.enter="fade-in-animation" id="discoverPopularUpcomingSectionContainer" class="w-full bg-(--background-100) h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4">
+    <div id="discoverPopularUpcomingSection" class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+        <!-- POPULAR SECTION -->
+        <div class="flex flex-col w-full justify-center items-center md:items-start h-auto pt-2">
+            <span class="text-base md:text-base font-semibold tracking-wider">{{ 'discover.popularSpan' | transloco}}</span>
+            <h2 class="text-xl md:text-3xl ">{{ 'discover.popularTitle' | transloco}}</h2>
+        </div>
+        <div class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1">
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+        </div>
+        <div class="w-full flex flex-row justify-center md:justify-end max-w-application mb-8">
+            <app-button-primary classAddons="px-4" [buttonContent]='"homepage.viewAllButton" | transloco'></app-button-primary>
+        </div>
+
+        <!-- UPCOMING SECTION -->
+        <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
+            <span class="text-base md:text-base font-semibold tracking-wider">{{ 'discover.eventSpan' | transloco}}</span>
+            <h2 class="text-xl md:text-3xl ">{{ 'discover.eventTitle' | transloco}}</h2>
+        </div>
+        <div class="w-full max-w-application h-auto flex flex-row justify-start space-x-4 items-stretch overflow-x-scroll py-4 pl-1">
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+        </div>
+        <div class="w-full flex flex-row justify-center md:justify-end max-w-application">
+            <app-button-primary classAddons="px-4" [buttonContent]='"homepage.viewAllButton" | transloco'></app-button-primary>
+        </div>
+    </div>
+</section>
+
+<section animate.enter="fade-in-animation" id="discoverFavouritesSectionContainer" class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4">
+    <div id="discoverFavouritesSection" class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+        <!-- FAVOURITE SPOTS SECTION -->
+        <div class="flex flex-col w-full justify-center items-center md:items-start h-auto pt-2">
+            <span class="text-base md:text-base font-semibold tracking-wider">{{ 'discover.favouriteSpotsSpan' | transloco}}</span>
+            <h2 class="text-xl md:text-3xl ">{{ 'discover.favouriteSpotsTitle' | transloco}}</h2>
+        </div>
+        <div class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1">
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+            <app-small-spot-card [spotShorthand]="this.testSpot"></app-small-spot-card>
+        </div>
+        <div class="w-full flex flex-row justify-center md:justify-end max-w-application mb-8">
+            <app-button-primary classAddons="px-4" [buttonContent]='"homepage.viewAllButton" | transloco'></app-button-primary>
+        </div>
+
+        <!-- FAVOURITE EVENTS SECTION -->
+        <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
+            <span class="text-base md:text-base font-semibold tracking-wider">{{ 'discover.favouriteEventsSpan' | transloco}}</span>
+            <h2 class="text-xl md:text-3xl ">{{ 'discover.favouriteEventsTitle' | transloco}}</h2>
+        </div>
+        <div class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1">
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+            <app-small-event-card [eventShorthand]="this.testEvent"></app-small-event-card>
+        </div>
+        <div class="w-full flex flex-row justify-center md:justify-end max-w-application">
+            <app-button-primary classAddons="px-4" [buttonContent]='"homepage.viewAllButton" | transloco'></app-button-primary>
+        </div>
+    </div>
+</section>
