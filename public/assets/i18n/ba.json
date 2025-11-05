@@ -43,9 +43,13 @@
         "headlineSectionSpot" : "Današnji lokal za posjetiti",
         "headlineSectionEvent" : "Današnja, glavna aktuelnost",
         "headlineSectionFavourites" : "Iz Vaših najdražih kategorija",
+        "popularSectionSpotsSpan" : "POPUALRNO",
         "popularSectionSpots" : "Uvijek popularni lokali u Sarajevu",
+        "popularSectionEventsSpan" : "NADOLAZEĆE",
         "popularSectionEvents" : "Nadolazeći događaji i aktuelnosti",
+        "discoverSectionLandmarksSpan" : "ISTRAŽI",
         "discoverSectionLandmarks" : "Iskusite Sarajevsku historijsku stranu",
+        "discoverSectionCategoriesSpan" : "KATEGORIJE",
         "discoverSectionCategories" : "Pretražite prema kategorijama",
         "viewAllButton" : "Vidi sve"
     },
@@ -64,5 +68,25 @@
         "favouriteSpotsTitle": "Preporučen lokali prema Vašim osobnosti i interesima",
         "favouriteEventsSpan" : "OMILJENI TIP DOGAĐAJA",
         "favouriteEventsTitle" : "Iz kolekcije Vaših omiljenih tipova provoda i slično"
+    },
+    "search" : {
+        "searchSpotsTitle" : "Pretraži lokale",
+        "searchEventsTitle" : "Pretraži dešavanja",
+        "searchSpotsSubtitle" : "Pretraži razne lokale širom Sarajevo",
+        "searchEventsSubtitle" : "Pretraži razna dešavanja u Sarajevu",
+        "searchPaginationOne" : "Prikazano",
+        "searchPagiationTwo" : " od ",
+        "searchSpotsPaginationThree" : "lokala",
+        "searchEventsPaginationThree" : "dešavanja",
+        "searchLoadMoreButton" : "Učitaj još",
+        "searchFilters" : "Filteri",
+        "searchSorting" : "Sortiranje",
+        "searchButton" : "Pretraži",
+        "searchApply" : "Učitaj"
+    },
+    "sorting" : {
+        "SORT_01" : "Po Abecedi",
+        "SORT_02" : "Najpopularnije",
+        "SORT_03" : "Najbolje ocjenjeno"
     }
 }

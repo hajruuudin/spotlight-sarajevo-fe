@@ -11,6 +11,7 @@ import { RequestIcon } from "../../resources/icons/request-icon/request-icon";
 import { TransportIcon } from "../../resources/icons/transport-icon/transport-icon";
 import { HamburgerIcon } from "../../resources/icons/hamburger-icon/hamburger-icon";
 import { Profile } from "../../pages/user-pages/profile/profile";
+import { SessionService } from '../../services/session-service';
 
 @Component({
   selector: 'app-navbar-user',
@@ -25,7 +26,23 @@ export class NavbarUser {
   protected isMobileNavbarLoaded : Boolean = true;
   protected isMobileNavbarOpen = false; 
 
+  constructor(protected session: SessionService){}
+
   toggleMobileNavbar() {
     this.isMobileNavbarOpen = !this.isMobileNavbarOpen;
+  }
+
+  toggleTheme(): void {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  }
+
+  toggleLanguage() {
+    const newLang = this.session.getStoredLanguage() === 'en' ? 'ba' : 'en';
+    this.session.setStoredLanguage(newLang);
   }
 }

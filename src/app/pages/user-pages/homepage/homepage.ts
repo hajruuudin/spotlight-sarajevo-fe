@@ -5,7 +5,6 @@ import { EventShorthandModel } from '../../../models/event.model';
 import { SpotShorthandModel } from '../../../models/spot.model';
 import { HeadlineSpot } from '../../../components/headline-spot/headline-spot';
 import { SmallSpotCard } from '../../../components/small-spot-card/small-spot-card';
-import { ButtonRegular } from "../../../components/button-regular/button-regular";
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { SearchSpotCard } from "../../../components/search-spot-card/search-spot-card";
 import { CalendarDateIcon } from '../../../components/calendar-date-icon/calendar-date-icon';
@@ -16,6 +15,7 @@ import { CategoryService } from '../../../services/category-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CategoryCard } from '../../../components/category-card/category-card';
 import { ButtonPrimary } from "../../../components/button-primary/button-primary";
+import { SessionService } from '../../../services/session-service';
 
 @Component({
   selector: 'app-homepage',
@@ -34,7 +34,7 @@ export class Homepage implements OnInit{
   public eventCategories : EventCategoryModel[] = []
 
   constructor(
-    public transloco: TranslocoService,
+    public session: SessionService,
     public cdr: ChangeDetectorRef,
     private categoryService: CategoryService
   ){}
@@ -71,7 +71,8 @@ export class Homepage implements OnInit{
   loadQueryAndDisplayDays() {
     this.eventCalendarDays = [];
     let date = new Date();
-    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const daysOfWeekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const daysOfWeekBs = ['Ned', 'Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub']; // 05.11.2025: Fix this sometime, needs to load the days based on language
   
     for (let i = 0; i < 7; i++) {
       const year = date.getFullYear();
@@ -79,7 +80,7 @@ export class Homepage implements OnInit{
       const dayOfMonthPadded = String(date.getDate()).padStart(2, '0');
       const formattedDate = `${year}-${month}-${dayOfMonthPadded}`;
       const dayOfWeekIndex = date.getDay();
-      const dayOfWeek = daysOfWeek[dayOfWeekIndex];
+      const dayOfWeek = daysOfWeekEn[dayOfWeekIndex];
       const dayOfMonth = date.getDate();
   
       this.eventCalendarDays.push({
