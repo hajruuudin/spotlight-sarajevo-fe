@@ -30,7 +30,7 @@ export class EventSearch {
   protected sortingMethods: string[] = ['SORT_01', 'SORT_04', 'SORT_03']
 
   protected selectedCategoryIds: number[] = []
-  protected selectedSortingMethod: string = 'Alphabetical'
+  protected selectedSortingMethod: string = 'SORT_01'
 
   protected isFilterPopupLoaded: boolean = false
   protected isSortingPopupLoaded: boolean = false

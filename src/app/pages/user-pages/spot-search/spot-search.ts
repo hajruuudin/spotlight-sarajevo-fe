@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PageHeader } from "../../../components/page-header/page-header";
 import { SearchBar } from "../../../components/search-bar/search-bar";
-import { TranslocoPipe, TranslocoDirective } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SessionService } from '../../../services/session-service';
 import { SpinnerService } from '../../../services/spinner-service';
@@ -17,7 +17,7 @@ import { SearchSpotCard } from '../../../components/search-spot-card/search-spot
 
 @Component({
   selector: 'app-spot-search',
-  imports: [PageHeader, SearchBar, TranslocoPipe, ReactiveFormsModule, CategoryFilterSelector, ButtonSecondary, SortingSelector, SearchSpotCard, TranslocoDirective],
+  imports: [PageHeader, SearchBar, TranslocoPipe, ReactiveFormsModule, CategoryFilterSelector, ButtonSecondary, SortingSelector, SearchSpotCard],
   templateUrl: './spot-search.html',
   styleUrl: './spot-search.css',
   host: {
@@ -30,7 +30,7 @@ export class SpotSearch implements OnInit{
   protected sortingMethods: string[] = ['SORT_01', 'SORT_02', 'SORT_03']
 
   protected selectedCategoryIds: number[] = []
-  protected selectedSortingMethod: string = 'Alphabetical'
+  protected selectedSortingMethod: string = 'SORT_01'
 
   protected isFilterPopupLoaded: boolean = false
   protected isSortingPopupLoaded: boolean = false
