@@ -14,6 +14,7 @@ import { ButtonSecondary } from "../../../components/button-secondary/button-sec
 import { SortingSelector } from '../../../components/sorting-selector/sorting-selector';
 import { SpotShorthandModel } from '../../../models/spot.model';
 import { SearchSpotCard } from '../../../components/search-spot-card/search-spot-card';
+import { SortOptions } from '../../../utils/enums/SortOptions';
 
 @Component({
   selector: 'app-spot-search',
@@ -27,10 +28,13 @@ import { SearchSpotCard } from '../../../components/search-spot-card/search-spot
 export class SpotSearch implements OnInit{
   protected spotSearchForm: FormGroup
   protected spotCategories: SpotCategoryModel[] = []
-  protected sortingMethods: string[] = ['SORT_01', 'SORT_02', 'SORT_03']
+  protected sortingMethods: string[] = [
+    SortOptions.ALPHABETICAL.toString(), 
+    SortOptions.RATING.toString()
+  ]
 
   protected selectedCategoryIds: number[] = []
-  protected selectedSortingMethod: string = 'SORT_01'
+  protected selectedSortingMethod: string = SortOptions.ALPHABETICAL.toString()
 
   protected isFilterPopupLoaded: boolean = false
   protected isSortingPopupLoaded: boolean = false

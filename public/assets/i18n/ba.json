@@ -85,8 +85,9 @@
         "searchApply" : "Učitaj"
     },
     "sorting" : {
-        "SORT_01" : "Po Abecedi",
-        "SORT_02" : "Najpopularnije",
-        "SORT_03" : "Najbolje ocjenjeno"
+        "ALPHABETICAL" : "Po Abecedi",
+        "POPULARITY" : "Najpopularnije",
+        "RATING" : "Najbolje ocjenjeno",
+        "UPCOMING" : "Nadolazeći"
     }
 }

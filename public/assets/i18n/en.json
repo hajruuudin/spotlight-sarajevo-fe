@@ -85,9 +85,9 @@
         "searchApply" : "Apply"
     },
     "sorting" : {
-        "SORT_01" : "Alphabetical",
-        "SORT_02" : "By Populariy",
-        "SORT_03" : "Top Rated",
-        "SORT_04" : "Upcoming"
+        "ALPHABETICAL" : "Alphabetical",
+        "POPULARITY" : "By Populariy",
+        "RATING" : "Top Rated",
+        "UPCOMING" : "Upcoming"
     }
 }
