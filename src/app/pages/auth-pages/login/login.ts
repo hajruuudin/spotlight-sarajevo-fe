@@ -6,10 +6,10 @@ import { ButtonRegular } from "../../../components/button-regular/button-regular
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpinnerService } from '../../../services/spinner-service';
 import { Router, RouterLink } from "@angular/router";
-import { LanguageService } from '../../../services/language-service';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { AuthService } from '../../../services/auth-service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SessionService } from '../../../services/session-service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +25,7 @@ export class Login implements OnInit {
 
   constructor(
     public authService: AuthService,
-    public lang: LanguageService,
+    public session: SessionService,
     public spinner: SpinnerService,
     private router: Router,
     private fb: FormBuilder,

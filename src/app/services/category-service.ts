@@ -13,13 +13,13 @@ export class CategoryService {
 
   getAllSpotCategories(){
     return this.http.get<SpotCategoryModel[]>(this.API_URL + '/category/allSpot', {
-      withCredentials: false
+      withCredentials: true
     })
   }
 
   getAllEventCategories(){
     return this.http.get<EventCategoryModel[]>(this.API_URL + '/category/allEvent', {
-      withCredentials: false
+      withCredentials: true
     })
   }
 }

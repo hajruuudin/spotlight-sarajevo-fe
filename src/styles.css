@@ -154,6 +154,28 @@ body {
   animation: fade-in 0.25s;
 }
 
+.fade-out-animation {
+  animation: fade-out 0.25s;
+}
+
+.blink-in-animation {
+  animation: fade-in 0.05s;
+}
+
+.blink-out-animation {
+  animation: fade-out 0.05s;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 100;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -166,17 +188,6 @@ body {
 
 .fade-out-animation {
   animation: fade-out 0.25s;
-}
-
-
-@keyframes fade-out {
-  from {
-    opacity: 100;
-  }
-
-  to {
-    opacity: 0;
-  }
 }
 
 @keyframes expand {

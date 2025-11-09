@@ -16,7 +16,7 @@
             class="bg-(--primary-300) text-dark w-auto h-full rounded-r-full flex justify-center items-center px-2"
             (click)="toggleLanguage()"
         >
-            <img [src]="this.lang.getLanguage() === 'en' ? '/assets/icons/EN.svg' : '/assets/icons/BA.svg'" class="w-10 h-8" />
+            <img [src]="this.session.getStoredLanguage() === 'en' ? '/assets/icons/EN.svg' : '/assets/icons/BA.svg'" class="w-10 h-8" />
         </button>
    </div>
 </div>

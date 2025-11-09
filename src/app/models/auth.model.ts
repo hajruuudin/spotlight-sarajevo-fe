@@ -24,3 +24,22 @@ export class PreferencesModel {
         public questionFour: Boolean,
     ) {}
 }
+
+export class LoginResponse {
+    constructor(
+        public token: String,
+        public user: LoggedUserModel
+    ) {}
+}
+
+export class LoggedUserModel {
+    constructor(
+        public id: number,
+        public firstName: String,
+        public lastName: String,
+        public email: String,
+        public username: String,
+        public isAdmin: boolean,
+        public isPremium: boolean
+    ) {}
+}

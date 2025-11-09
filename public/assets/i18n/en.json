@@ -43,9 +43,13 @@
         "headlineSectionSpot" : "Todays headline Spot",
         "headlineSectionEvent" : "Todays headline Event",
         "headlineSectionFavourites" : "Based on Your favourite spots",
+        "popularSectionSpotsSpan" : "POPULAR",
         "popularSectionSpots" : "Always popular places in Sarajevo",
+        "popularSectionEventsSpan" : "COMING UP",
         "popularSectionEvents" : "Upcoming events in Sarajevo",
+        "discoverSectionLandmarksSpan" : "DISCOVER",
         "discoverSectionLandmarks" : "Discover Sarajevos Culture",
+        "discoverSectionCategoriesSpan" : "CATEGORIES",
         "discoverSectionCategories" : "Explore Different Categories",
         "viewAllButton" : "View All"
     },
@@ -64,5 +68,26 @@
         "favouriteSpotsTitle" : "Based on Your favourite locals & spots!",
         "favouriteEventsSpan" : "FAVOURITE EVENTS",
         "favouriteEventsTitle" : "From Your personal event categories"
+    },
+    "search" : {
+        "searchSpotsTitle" : "Browse Spots",
+        "searchEventsTitle" : "Browse Events",
+        "searchSpotsSubtitle" : "Browse and serach for spots in Sarajevo",
+        "searchEventsSubtitle" : "Browse and serach for events in Sarajevo",
+        "searchPaginationOne" : "Showing",
+        "searchPagiationTwo" : " out of ",
+        "searchSpotsPaginationThree" : "spots",
+        "searchEventsPaginationThree" : "events",
+        "searchLoadMoreButton" : "Load More",
+        "searchFilters" : "Filters",
+        "searchSorting" : "Sorting",
+        "searchButton" : "Search",
+        "searchApply" : "Apply"
+    },
+    "sorting" : {
+        "ALPHABETICAL" : "Alphabetical",
+        "POPULARITY" : "By Populariy",
+        "RATING" : "Top Rated",
+        "UPCOMING" : "Upcoming"
     }
 }

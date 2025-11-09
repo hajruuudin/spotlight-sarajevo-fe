@@ -12,10 +12,9 @@ import { RouterLink } from "@angular/router";
 import { CategorySelector } from '../../../components/category-selector/category-selector';
 import { QuestionComponent } from "../../../components/question-component/question-component";
 import { TranslocoPipe } from '@ngneat/transloco';
-import { LanguageService } from '../../../services/language-service';
 import { AuthService } from '../../../services/auth-service';
 import { PreferencesModel, SystemUserModel } from '../../../models/auth.model';
-import { error } from 'console';
+import { SessionService } from '../../../services/session-service';
 
 declare global {
   interface Window {
@@ -88,7 +87,7 @@ export class Signup implements OnInit {
   constructor(
     private categoryService: CategoryService,
     private authService: AuthService,
-    public lang: LanguageService,
+    public session: SessionService,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private spinner: SpinnerService,

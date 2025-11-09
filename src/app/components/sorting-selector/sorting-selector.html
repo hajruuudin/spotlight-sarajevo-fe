@@ -1,0 +1,8 @@
+ <div
+    (click)="this.onMethodSelect(this.sortingMethod)"
+    [ngClass]="this.isSelected ? 
+    'w-full py-4 bg-(--accent-300) rounded-2xl font-bold' : 
+    'w-full py-4 bg-(--background-300) rounded-2xl font-bold'
+    ">
+    {{ this.sortingMethod }}
+ </div>

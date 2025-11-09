@@ -10,8 +10,7 @@
         [placeholder]="'login.emailInput' | transloco " id="emailInput" value=""></app-text-input>
     <app-text-input formControlName="password" classAddons="w-full" type="password"
         [placeholder]="'login.passwordInput' | transloco "></app-text-input>
-    <span>{{ 'login.forgotPassword' | transloco}} <a href="#" class="font-bold">{{ 'login.forgotPasswordLink' |
-            transloco}}</a></span>
+    <span>{{ 'login.forgotPassword' | transloco}} <a href="#" class="font-bold">{{ 'login.forgotPasswordLink' | transloco}}</a></span>
     <div class="w-full flex flex-col justify-center items-center space-y-2 py-4">
         <div class="w-full flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-2">
             <app-button-regular (pressed)="this.loginWithSystem()" buttonContent="Login" buttonIcon="DEFAULT"

@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
-import { LanguageService } from '../../services/language-service';
+import { SessionService } from '../../services/session-service';
 
 @Component({
   selector: 'app-auth',
@@ -15,7 +15,7 @@ export class Auth implements OnInit {
   public languageIcon: string = '/assets/icons/EN.svg';
 
   constructor(
-    public lang: LanguageService,
+    public session: SessionService,
     private el: ElementRef,
     private renderer: Renderer2
   ) {}
@@ -63,7 +63,7 @@ export class Auth implements OnInit {
   }
 
   toggleLanguage() {
-    const newLang = this.lang.getLanguage() === 'en' ? 'ba' : 'en';
-    this.lang.setLanguage(newLang);
+    const newLang = this.session.getStoredLanguage() === 'en' ? 'ba' : 'en';
+    this.session.setStoredLanguage(newLang);
   }
 }
