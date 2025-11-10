@@ -19,3 +19,13 @@ export class EventCategoryModel{
         public eventCategoryColorCode: string
     ){}
 }
+
+export class TagModel{
+    constructor(
+        public id: number,
+        public tagNameEn: string,
+        public tagNameBs: string,
+        public tagDescriptionEn: string,
+        public tagDescriptionBs: string
+    ){}
+}

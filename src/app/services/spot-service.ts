@@ -40,7 +40,7 @@ export class SpotService {
      * 
      */
     findSpotsPaginated(pageNumber: number, pageSize: number, searchTerm: string, sortOption: string, categoryIds: number[]){
-        return this.http.get(this.apiUrl + '/spot/find-spots', {
+        return this.http.get(this.apiUrl + `/spot/find-spots?pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortOption=${sortOption}&categoryIds=${categoryIds}`, {
             withCredentials: true
         })
     }

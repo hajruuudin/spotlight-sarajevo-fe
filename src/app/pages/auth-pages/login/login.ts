@@ -41,7 +41,7 @@ export class Login implements OnInit {
   }
 
   loginWithGoogle(): void {
-    this.spinner.show()
+    this.spinner.showGlobalSpinner()
     window.google.accounts.id.prompt();
   }
 
@@ -73,11 +73,11 @@ export class Login implements OnInit {
         if (idToken) {
           this.authService.loginWithGoogle(idToken).subscribe({
             next: (response: any) => {
-              this.spinner.hide()
+              this.spinner.hideGlobalSpinner()
               this.router.navigate(['/homepage'])
             },
             error: (error: HttpErrorResponse) => {
-              this.spinner.hide()
+              this.spinner.hideGlobalSpinner()
               this.toast.error(error.error.message)
             }
           });

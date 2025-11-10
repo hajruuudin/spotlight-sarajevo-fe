@@ -1,14 +1,4 @@
-// export class SpotShorthandModel {
-//     constructor(
-//         public spotId: number,
-//         public spotOfficialName: String,
-//         public spotSmallDescription: String,
-//         public spotCategory: String,
-//         public spotThumbnailImage: String,
-//         public spotRating: String,
-//         public spotTags: String[]
-//     ){}
-// }
+import { TagModel } from "./category.model";
 
 export class SpotShorthandModel {
     constructor(
@@ -19,6 +9,7 @@ export class SpotShorthandModel {
         public smallDescriptionEn: string,
         public categoryNameBs: string,
         public categoryNameEn: string,
+        public spotTags: TagModel[],
         public combinedRating: number,
         public thumbnailImage: string
     ){}

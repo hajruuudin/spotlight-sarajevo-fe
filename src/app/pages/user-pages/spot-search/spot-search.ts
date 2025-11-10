@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, OnInit } from '@angular/core';
 import { PageHeader } from "../../../components/page-header/page-header";
 import { SearchBar } from "../../../components/search-bar/search-bar";
 import { TranslocoPipe } from '@ngneat/transloco';
@@ -17,10 +17,11 @@ import { SearchSpotCard } from '../../../components/search-spot-card/search-spot
 import { SortOptions } from '../../../utils/enums/SortOptions';
 import { SpotService } from '../../../services/spot-service';
 import { Subscription } from 'rxjs';
+import { SpinnerSmallComponent } from "../../../components/spinner-small-component/spinner-small-component";
 
 @Component({
   selector: 'app-spot-search',
-  imports: [PageHeader, SearchBar, TranslocoPipe, ReactiveFormsModule, CategoryFilterSelector, ButtonSecondary, SortingSelector, SearchSpotCard],
+  imports: [PageHeader, SearchBar, TranslocoPipe, ReactiveFormsModule, CategoryFilterSelector, ButtonSecondary, SortingSelector, SearchSpotCard, SpinnerSmallComponent],
   templateUrl: './spot-search.html',
   styleUrl: './spot-search.css',
   host: {
@@ -48,8 +49,8 @@ export class SpotSearch implements OnInit{
   constructor(
     private categoryService: CategoryService,
     private spotService: SpotService,
-    //====== COMMON NON-OBJECT SERVICES =====//
-    public session: SessionService,
+    //====== COMMON SERVICES =====//
+    private session: SessionService,
     private fb: FormBuilder,
     private spinner: SpinnerService,
     private toastr: HotToastService,
@@ -62,19 +63,11 @@ export class SpotSearch implements OnInit{
     })
   }
 
-  // public testSpot = new SpotShorthandModel(
-  //     1,
-  //     "Kilim Ilidza",
-  //     "This is just a test spot for the frotnend",
-  //     "Cafe",
-  //     "https://i.ibb.co/7HWPLBJ/Screenshot-2025-10-30-at-9-13-33-PM.png",
-  //     "9.4",
-  //     ['Alcohol', 'Dance', 'Live']
-  // )
+  protected isSectionLoading = computed(() => this.spinner.loadingSection())
 
-  // public testSpotArray = [
-  //   this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot
-  // ]
+  getCurrentLanguage() : string {
+    return this.session.getStoredLanguage()
+  }
 
   ngOnInit(): void {
     this.sub = this.session.language.subscribe(lang => {
@@ -89,13 +82,16 @@ export class SpotSearch implements OnInit{
       error: (error : HttpErrorResponse) => {}
     })
 
-    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
+    this.spinner.showSectionSpinner()
+    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.RATING.toString(), []).subscribe({
       next: (response : any) => {
+        this.spinner.hideSectionSpinner()
         this.spotSearchResults = response['content']
         this.cdr.detectChanges()
         console.log(this.spotSearchResults)
       },
       error: (response : HttpErrorResponse) => {
+        this.spinner.hideSectionSpinner()
         this.toastr.error(response.message)
       }
     })

@@ -12,9 +12,10 @@ import { SpinnerService } from './services/spinner-service';
 })
 export class App {
   protected readonly title = signal('spotlight-sarajevo-fe');
-  loading = false;
+  protected loading = false;
   protected apiUrl = environment.API_URL
 
   constructor(private spinner: SpinnerService) {}
-  isLoading = computed(() => this.spinner.loading());
+
+  isLoading = computed(() => this.spinner.loadingGlobal());
 }
