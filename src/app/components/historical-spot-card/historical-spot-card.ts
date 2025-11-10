@@ -8,5 +8,6 @@ import { SpotShorthandModel } from '../../models/spot.model';
   styleUrl: './historical-spot-card.css'
 })
 export class HistoricalSpotCard {
-  @Input() spotShorthand!: SpotShorthandModel
+  @Input() lang: String = 'en'
+  @Input() spot!: SpotShorthandModel
 }

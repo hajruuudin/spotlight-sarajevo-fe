@@ -5,7 +5,7 @@
     <div id="homepageHeadersSection" class="max-w-application w-full flex flex-col md:flex-row justify-start md:justify-between items-center md:items-start px-4 md:px-8 space-y-4 md:space-y-0 md:space-x-4">
         <div class="w-full md:w-1/2 h-auto flex flex-col space-y-2 justify-center items-stretch">
             <span class="text-2xl w-full md:text-start font-semibold">{{ 'homepage.headlineSectionSpot' | transloco}}</span>
-            <app-headline-spot classAddons="w-full" [spotShorthand]="this.testSpot"></app-headline-spot>
+            <app-headline-spot classAddons="w-full" [lang]="this.lang" [spot]="this.headlineSpot!"></app-headline-spot>
         </div>
         <div class="w-full md:w-1/2 h-auto flex flex-col space-y-2 justify-start items-stretch">
             <span class="text-2xl w-full md:text-end font-semibold">{{ 'homepage.headlineSectionEvent' | transloco}}</span>
@@ -17,11 +17,11 @@
         <span class="text-2xl w-full md:text-start font-semibold">{{ 'homepage.headlineSectionFavourites' | transloco}}</span>
         <div class="w-full max-w-application flex flex-row space-x-6 justify-center py-4 items-center overflow-x-auto overflow-y-hidden">
             <div class="scroll-container-slow flex flex-row justify-center items-center space-x-4">
-                @for (spot of testSpotFavourites; track spot.spotId) {
-                    <app-small-spot-card [spotShorthand]="spot" classAddons=""></app-small-spot-card>
+                @for (spot of this.favouriteSpots; track spot.id) {
+                    <app-small-spot-card [lang]="this.lang" [spot]="spot" classAddons=""></app-small-spot-card>
                 }
-                @for (spot of testSpotFavourites; track spot.spotId) {
-                    <app-small-spot-card [spotShorthand]="spot" classAddons=""></app-small-spot-card>
+                @for (spot of this.favouriteSpots; track spot.id) {
+                    <app-small-spot-card [lang]="this.lang" [spot]="spot" classAddons=""></app-small-spot-card>
                 }
             </div>
         </div>
@@ -42,14 +42,14 @@
 
         <!-- POPULAR SPOTS CONTAINER - FIRST TWO ROWS -->
         <div class="w-full h-auto flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 space-x-4 my-2 items-stretch">
-            <app-search-spot-card [spotShorthand]="this.testSpot"></app-search-spot-card>
-            <app-search-spot-card [spotShorthand]="this.testSpot"></app-search-spot-card>
+            <app-search-spot-card [lang]="this.lang" [spotShorthand]="this.popularSpots[0]"></app-search-spot-card>
+            <app-search-spot-card [lang]="this.lang" [spotShorthand]="this.popularSpots[1]"></app-search-spot-card>
         </div>
 
          <!-- POPULAR SPOTS CONTAINER - SECOND TWO ROWS -->
         <div class="w-full h-auto flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 space-x-4 my-2 items-stretch">
-            <app-search-spot-card [spotShorthand]="this.testSpot"></app-search-spot-card>
-            <app-search-spot-card [spotShorthand]="this.testSpot"></app-search-spot-card>
+            <app-search-spot-card [lang]="this.lang" [spotShorthand]="this.popularSpots[3]"></app-search-spot-card>
+            <app-search-spot-card [lang]="this.lang" [spotShorthand]="this.popularSpots[4]"></app-search-spot-card>
         </div>
     </div>
 
@@ -96,13 +96,9 @@
 
         <!-- DISCOVER LANDMARKS  -->
         <div class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4">
-            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
-            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
-            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
-            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
-            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
-            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
-            <app-historical-spot-card [spotShorthand]="this.testSpot"></app-historical-spot-card>
+            @for (spot of this.landmarkSpots; track spot.id) {
+                <app-historical-spot-card [lang]="this.lang" [spot]="spot"></app-historical-spot-card>
+            }
         </div>
 
         <div class="w-full flex flex-row justify-center md:justify-end max-w-application">

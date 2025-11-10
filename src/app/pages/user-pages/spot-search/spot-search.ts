@@ -15,6 +15,8 @@ import { SortingSelector } from '../../../components/sorting-selector/sorting-se
 import { SpotShorthandModel } from '../../../models/spot.model';
 import { SearchSpotCard } from '../../../components/search-spot-card/search-spot-card';
 import { SortOptions } from '../../../utils/enums/SortOptions';
+import { SpotService } from '../../../services/spot-service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-spot-search',
@@ -26,6 +28,8 @@ import { SortOptions } from '../../../utils/enums/SortOptions';
   }
 })
 export class SpotSearch implements OnInit{
+  protected lang: String = 'en'
+  protected sub!: Subscription
   protected spotSearchForm: FormGroup
   protected spotCategories: SpotCategoryModel[] = []
   protected sortingMethods: string[] = [
@@ -39,8 +43,11 @@ export class SpotSearch implements OnInit{
   protected isFilterPopupLoaded: boolean = false
   protected isSortingPopupLoaded: boolean = false
 
+  protected spotSearchResults: SpotShorthandModel[] = []
+
   constructor(
     private categoryService: CategoryService,
+    private spotService: SpotService,
     //====== COMMON NON-OBJECT SERVICES =====//
     public session: SessionService,
     private fb: FormBuilder,
@@ -55,28 +62,41 @@ export class SpotSearch implements OnInit{
     })
   }
 
-  public testSpot = new SpotShorthandModel(
-      1,
-      "Kilim Ilidza",
-      "This is just a test spot for the frotnend",
-      "Cafe",
-      "https://i.ibb.co/7HWPLBJ/Screenshot-2025-10-30-at-9-13-33-PM.png",
-      "9.4",
-      ['Alcohol', 'Dance', 'Live']
-  )
+  // public testSpot = new SpotShorthandModel(
+  //     1,
+  //     "Kilim Ilidza",
+  //     "This is just a test spot for the frotnend",
+  //     "Cafe",
+  //     "https://i.ibb.co/7HWPLBJ/Screenshot-2025-10-30-at-9-13-33-PM.png",
+  //     "9.4",
+  //     ['Alcohol', 'Dance', 'Live']
+  // )
 
-  public testSpotArray = [
-    this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot
-  ]
+  // public testSpotArray = [
+  //   this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot
+  // ]
 
   ngOnInit(): void {
+    this.sub = this.session.language.subscribe(lang => {
+      this.lang = lang;
+    });
+
     this.categoryService.getAllSpotCategories().subscribe({
       next: (response : SpotCategoryModel[]) => {
         this.spotCategories = response
         this.cdr.detectChanges()
       },
-      error: (error : HttpErrorResponse) => {
-        // probably redirect to error
+      error: (error : HttpErrorResponse) => {}
+    })
+
+    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
+      next: (response : any) => {
+        this.spotSearchResults = response['content']
+        this.cdr.detectChanges()
+        console.log(this.spotSearchResults)
+      },
+      error: (response : HttpErrorResponse) => {
+        this.toastr.error(response.message)
       }
     })
   }

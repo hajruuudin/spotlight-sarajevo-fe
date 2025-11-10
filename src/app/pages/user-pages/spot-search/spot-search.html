@@ -57,12 +57,12 @@
                 </div>
                 <div class="w-full flex flex-col lg:flex-row justify-center items-center space-x-0 lg:space-x-4">
                     <div class="w-full flex flex-col jusitfy-start items-center space-y-4 mb-2 md:mt-2">
-                        @for (spot of this.testSpotArray; track $index) {
-                        <app-search-spot-card [spotShorthand]="spot"></app-search-spot-card>
+                        @for (spot of this.spotSearchResults; track $index) {
+                        <app-search-spot-card [lang]="this.lang" [spotShorthand]="spot"></app-search-spot-card>
                         }
                     </div>
                     <div class="w-full flex flex-col jusitfy-start items-center space-y-4 mt-2 md:mt-0">
-                        @for (spot of this.testSpotArray; track $index) {
+                        @for (spot of this.spotSearchResults; track $index) {
                         <app-search-spot-card [spotShorthand]="spot"></app-search-spot-card>
                         }
                     </div>

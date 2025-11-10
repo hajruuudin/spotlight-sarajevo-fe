@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { SpotShorthandModel } from '../../models/spot.model';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-search-spot-card',
@@ -11,6 +12,7 @@ import { SpotShorthandModel } from '../../models/spot.model';
   }
 })
 export class SearchSpotCard {
+  @Input() lang: String = 'en'
   @Input() classAddons: String = "";
   @Input() spotShorthand!: SpotShorthandModel;
 }
