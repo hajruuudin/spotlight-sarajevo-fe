@@ -50,7 +50,7 @@ export class Discover implements OnInit{
   }
 
   loadRecentlyAddedSpots(){
-    this.spotService.findSpotsPaginated(0, 1, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
+    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
       next: (response: any) => {
         this.recentlyAddedSpots = response['content']
         this.cdr.detectChanges()
@@ -62,7 +62,7 @@ export class Discover implements OnInit{
   }
 
   loadLandmarkSpots(){
-    this.spotService.findSpotsPaginated(0, 1, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
+    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
       next: (response: any) => {
         this.landmarkSpots = response['content']
         this.cdr.detectChanges()
@@ -74,7 +74,7 @@ export class Discover implements OnInit{
   }
 
   loadPopularSpots(){
-    this.spotService.findSpotsPaginated(0, 1, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
+    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
       next: (response: any) => {
         this.popularSpots = response['content']
         this.cdr.detectChanges()
@@ -86,7 +86,7 @@ export class Discover implements OnInit{
   }
 
   loadFavouriteSpots(){
-    this.spotService.findSpotsPaginated(0, 1, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
+    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
       next: (response: any) => {
         this.favouriteSpots = response['content']
         this.cdr.detectChanges()
@@ -97,15 +97,6 @@ export class Discover implements OnInit{
     })
   }
 
-  // public testSpot = new SpotShorthandModel(
-  //     1,
-  //     "Kilim Ilidza",
-  //     "This is just a test spot for the frotnend",
-  //     "Cafe",
-  //     "https://i.ibb.co/7HWPLBJ/Screenshot-2025-10-30-at-9-13-33-PM.png",
-  //     "9.4",
-  //     ['Alcohol', 'Dance', 'Live']
-  //   )
   
     public testEvent = new EventShorthandModel(
       1,
@@ -117,7 +108,4 @@ export class Discover implements OnInit{
       ['Alcohol', 'Dance', 'Live']
     )
   
-    // public testSpotFavourites: SpotShorthandModel[] = [
-    //   this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot
-    // ]
 }

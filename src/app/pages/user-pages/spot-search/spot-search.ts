@@ -58,8 +58,7 @@ export class SpotSearch implements OnInit{
   ){
     this.spotSearchForm = this.fb.group({
       'searchTerm' : ['', Validators.required],
-      'sortOption' : ['', Validators.required],
-      'filterCategoryIds' : [[], Validators.required]
+      'sortOption' : ['', Validators.required]
     })
   }
 
@@ -88,7 +87,6 @@ export class SpotSearch implements OnInit{
         this.spinner.hideSectionSpinner()
         this.spotSearchResults = response['content']
         this.cdr.detectChanges()
-        console.log(this.spotSearchResults)
       },
       error: (response : HttpErrorResponse) => {
         this.spinner.hideSectionSpinner()
@@ -98,12 +96,24 @@ export class SpotSearch implements OnInit{
   }
 
   onSearchTriggered(searchValue: string) {
-    console.log('Search Term:', searchValue);
-    console.log('Form Value:', this.spotSearchForm.value);
+    this.spinner.showSectionSpinner()
+    this.spotService.findSpotsPaginated(0, 10, searchValue, this.selectedSortingMethod, this.selectedCategoryIds).subscribe({
+      next: (response : any) => {
+        this.spinner.hideSectionSpinner()
+        this.spotSearchResults = response['content']
+        this.cdr.detectChanges()
+      }
+    })
   }
 
-  onCategoryCheckboxChange(categoryID: number){
-    this.selectedCategoryIds.push(categoryID);
+  onCategoryCheckboxChange(categoryID: number) {
+    const index = this.selectedCategoryIds.indexOf(categoryID);
+    
+    if (index === -1) {
+      this.selectedCategoryIds.push(categoryID);
+    } else {
+      this.selectedCategoryIds.splice(index, 1);
+    }
   }
 
   toggleFilterPopup(){

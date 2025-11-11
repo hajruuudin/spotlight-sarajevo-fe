@@ -47,7 +47,7 @@
                             @for (category of this.spotCategories; track $index) {
                             <app-category-filter-selector
                                 [categoryName]="this.getCurrentLanguage() == 'en' ? category.spotCategoryNameEn : category.spotCategoryNameBs"
-                                [type]="'spot'" [isSelected]="false"
+                                [type]="'spot'" [isSelected]='this.selectedCategoryIds.indexOf(category.id) == -1 ? false : true'
                                 (selectionChange)="onCategoryCheckboxChange(category.id)"></app-category-filter-selector>
                             }
                         </div>
