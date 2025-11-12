@@ -82,7 +82,7 @@
         "searchFilters" : "Filters",
         "searchSorting" : "Sorting",
         "searchButton" : "Search",
-        "searchApply" : "Apply"
+        "searchReset" : "Remove filters"
     },
     "sorting" : {
         "ALPHABETICAL" : "Alphabetical",

@@ -18,10 +18,12 @@ import { SortOptions } from '../../../utils/enums/SortOptions';
 import { SpotService } from '../../../services/spot-service';
 import { Subscription } from 'rxjs';
 import { SpinnerSmallComponent } from "../../../components/spinner-small-component/spinner-small-component";
+import { PageResponseModel } from '../../../models/shared.model';
+import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
 
 @Component({
   selector: 'app-spot-search',
-  imports: [PageHeader, SearchBar, TranslocoPipe, ReactiveFormsModule, CategoryFilterSelector, ButtonSecondary, SortingSelector, SearchSpotCard, SpinnerSmallComponent],
+  imports: [PageHeader, SearchBar, TranslocoPipe, ReactiveFormsModule, CategoryFilterSelector, ButtonSecondary, SortingSelector, SearchSpotCard, SpinnerSmallComponent, NotFoundComponent],
   templateUrl: './spot-search.html',
   styleUrl: './spot-search.css',
   host: {
@@ -43,6 +45,11 @@ export class SpotSearch implements OnInit{
 
   protected isFilterPopupLoaded: boolean = false
   protected isSortingPopupLoaded: boolean = false
+
+  protected pageNumber: number = 0
+  protected pageSize: number = 4
+  protected totalElements: number = 0
+  protected totalPages: number = 0
 
   protected spotSearchResults: SpotShorthandModel[] = []
 
@@ -82,28 +89,11 @@ export class SpotSearch implements OnInit{
     })
 
     this.spinner.showSectionSpinner()
-    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.RATING.toString(), []).subscribe({
-      next: (response : any) => {
-        this.spinner.hideSectionSpinner()
-        this.spotSearchResults = response['content']
-        this.cdr.detectChanges()
-      },
-      error: (response : HttpErrorResponse) => {
-        this.spinner.hideSectionSpinner()
-        this.toastr.error(response.message)
-      }
-    })
+    this.fetchSpots(this.pageNumber, this.pageSize, '', this.selectedSortingMethod, this.selectedCategoryIds, true, false)
   }
 
-  onSearchTriggered(searchValue: string) {
-    this.spinner.showSectionSpinner()
-    this.spotService.findSpotsPaginated(0, 10, searchValue, this.selectedSortingMethod, this.selectedCategoryIds).subscribe({
-      next: (response : any) => {
-        this.spinner.hideSectionSpinner()
-        this.spotSearchResults = response['content']
-        this.cdr.detectChanges()
-      }
-    })
+  onSearchTriggered() {
+    this.fetchSpots(this.pageNumber, this.pageSize, this.spotSearchForm.get('searchTerm')?.value, this.selectedSortingMethod, this.selectedCategoryIds, true, false)
   }
 
   onCategoryCheckboxChange(categoryID: number) {
@@ -122,5 +112,50 @@ export class SpotSearch implements OnInit{
 
   toggleSortingPopup(){
     this.isSortingPopupLoaded = !this.isSortingPopupLoaded
+  }
+
+  resetCategoryFilters(){
+    this.selectedCategoryIds = []
+    this.fetchSpots(this.pageNumber, this.pageSize, this.spotSearchForm.get('searchTerm')?.value, this.selectedSortingMethod, this.selectedCategoryIds, true, false)
+  }
+
+  resetSortingFilters(){
+    this.selectedSortingMethod = SortOptions.ALPHABETICAL.toString()
+    this.fetchSpots(this.pageNumber, this.pageSize, this.spotSearchForm.get('searchTerm')?.value, this.selectedSortingMethod, this.selectedCategoryIds, true, false)
+  }
+
+  fetchSpots(pageNumber: number, pageSize: number, searchValue: string, sortingMethod: string, categoryIds: number[], resetPages: boolean, extendResultSet: boolean){
+    if(resetPages){
+      pageNumber = 0
+    }
+
+    this.spinner.showSectionSpinner()
+    this.spotService.findSpotsPaginated(pageNumber, pageSize, searchValue, sortingMethod, categoryIds).subscribe({
+      next: (response : PageResponseModel<SpotShorthandModel>) => {
+        this.spinner.hideSectionSpinner()
+
+        if(extendResultSet){
+          this.spotSearchResults = this.spotSearchResults.concat(response.content)
+        } else {
+          this.spotSearchResults = response.content
+        }
+
+        if(resetPages){
+          this.totalElements = response.totalElements
+          this.totalPages = response.totalPages
+          this.pageNumber = 0
+        }
+
+        this.cdr.detectChanges()
+      }
+    })
+  }
+
+  laodMore(){
+    if(this.totalElements <= (this.pageNumber + 1 * this.pageSize)){
+      return;
+    }
+    this.pageNumber++
+    this.fetchSpots(this.pageNumber, this.pageSize, this.spotSearchForm.get('searchTerm')?.value, this.selectedSortingMethod, this.selectedCategoryIds, false, true)
   }
 }

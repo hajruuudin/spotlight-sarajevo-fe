@@ -82,7 +82,7 @@
         "searchFilters" : "Filteri",
         "searchSorting" : "Sortiranje",
         "searchButton" : "Pretraži",
-        "searchApply" : "Učitaj"
+        "searchReset" : "Ukloni filtere"
     },
     "sorting" : {
         "ALPHABETICAL" : "Po Abecedi",

@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { SortOptions } from "../utils/enums/SortOptions";
 import { environment } from "../../environments/environment";
 import { SpotShorthandModel } from "../models/spot.model";
+import { PageResponseModel } from "../models/shared.model";
 
 /**
  * SpotService handles all available backend endpoints related to the spot object.
@@ -40,7 +41,7 @@ export class SpotService {
      * 
      */
     findSpotsPaginated(pageNumber: number, pageSize: number, searchTerm: string, sortOption: string, categoryIds: number[]){
-        return this.http.get(this.apiUrl + `/spot/find-spots?pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortOption=${sortOption}&categoryIds=${categoryIds}`, {
+        return this.http.get<PageResponseModel<SpotShorthandModel>>(this.apiUrl + `/spot/find-spots?pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortOption=${sortOption}&categoryIds=${categoryIds}`, {
             withCredentials: true
         })
     }
