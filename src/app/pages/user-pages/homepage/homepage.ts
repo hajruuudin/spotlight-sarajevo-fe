@@ -20,6 +20,8 @@ import { SpotService } from '../../../services/spot-service';
 import { SortOptions } from '../../../utils/enums/SortOptions';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { Subscription } from 'rxjs';
+import { EventService } from '../../../services/event-service';
+import { PageResponseModel } from '../../../models/shared.model';
 
 @Component({
   selector: 'app-homepage',
@@ -38,14 +40,17 @@ export class Homepage implements OnInit {
   public eventCalendarDays: any = []
 
   protected headlineSpot: SpotShorthandModel | null = null
+  protected headlineEvent: EventShorthandModel | null = null
   protected favouriteSpots: SpotShorthandModel[] = []
   protected popularSpots: SpotShorthandModel[] = []
+  protected upcomingEvents: EventShorthandModel[] = []
   protected landmarkSpots: SpotShorthandModel[] = []
   public spotCategories: SpotCategoryModel[] = []
   public eventCategories: EventCategoryModel[] = []
 
   constructor(
     public spotService: SpotService,
+    public eventService: EventService,
     public session: SessionService,
     public cdr: ChangeDetectorRef,
     private categoryService: CategoryService,
@@ -59,7 +64,7 @@ export class Homepage implements OnInit {
     this.loadHeadlineObjects()
     this.loadFavouriteSpots()
     this.loadPopularSpots()
-    // this.loadUpcomingEvents()
+    this.loadUpcomingEvents()
     this.loadHistoricalLandmarks()
     this.loadSpotAndEventCategories()
     this.loadQueryAndDisplayDays()
@@ -69,6 +74,16 @@ export class Homepage implements OnInit {
     this.spotService.findSpotsPaginated(0, 1, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
       next: (response: any) => {
         this.headlineSpot = response['content'][0]
+        this.cdr.detectChanges()
+      },
+      error: (response: HttpErrorResponse) => {
+        this.toastr.error(response.message)
+      }
+    })
+
+    this.eventService.findEventsPaginated(0, 1, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
+      next: (response: PageResponseModel<EventShorthandModel>) => {
+        this.headlineEvent = response.content[0]
         this.cdr.detectChanges()
       },
       error: (response: HttpErrorResponse) => {
@@ -101,6 +116,18 @@ export class Homepage implements OnInit {
     })
   }
 
+  loadUpcomingEvents() {
+    this.eventService.findEventsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
+      next: (response: PageResponseModel<EventShorthandModel>) => {
+        this.upcomingEvents = response.content
+        this.cdr.detectChanges()
+      },
+      error: (response: HttpErrorResponse) => {
+        this.toastr.error(response.message)
+      }
+    })
+  }
+
   loadHistoricalLandmarks() {
     this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
       next: (response: any) => {
@@ -113,16 +140,7 @@ export class Homepage implements OnInit {
     })
   }
 
-   public testEvent = new EventShorthandModel(
-      1,
-      "Zeljko Joksimovic",
-      "This is just a test event for the frotnend",
-      "Concert",
-      "https://i.ibb.co/q3TzQ4FH/Screenshot-2025-10-30-at-9-43-55-PM.png",
-      "2024 august 12",
-      ['Alcohol', 'Dance', 'Live']
-    )
-
+   
   loadQueryAndDisplayDays() {
     this.eventCalendarDays = [];
     let date = new Date();

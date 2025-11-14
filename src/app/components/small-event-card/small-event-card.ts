@@ -11,6 +11,7 @@ import { EventShorthandModel } from '../../models/event.model';
   }
 })
 export class SmallEventCard {
+  @Input() lang: string = 'en'
   @Input() classAddons: String = '';
-  @Input() eventShorthand!: EventShorthandModel;
+  @Input() event!: EventShorthandModel;
 }

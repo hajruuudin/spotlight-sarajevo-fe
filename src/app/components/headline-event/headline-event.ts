@@ -9,6 +9,7 @@ import { NgClass } from '@angular/common';
   styleUrl: './headline-event.css',
 })
 export class HeadlineEvent {
+  @Input() lang: String = 'en'
   @Input() classAddons: String = '';
-  @Input() eventShorthand!: EventShorthandModel; 
+  @Input() event!: EventShorthandModel; 
 }

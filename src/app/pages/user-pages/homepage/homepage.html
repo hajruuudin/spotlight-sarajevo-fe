@@ -9,7 +9,7 @@
         </div>
         <div class="w-full md:w-1/2 h-auto flex flex-col space-y-2 justify-start items-stretch">
             <span class="text-2xl w-full md:text-end font-semibold">{{ 'homepage.headlineSectionEvent' | transloco}}</span>
-            <app-headline-event classAddons="w-full" [eventShorthand]="this.testEvent"></app-headline-event>
+            <app-headline-event classAddons="w-full" [lang]="this.lang" [event]="this.headlineEvent!"></app-headline-event>
         </div>
     </div>
 
@@ -76,8 +76,8 @@
 
         <!-- CALENDAR EVENT RESULTS SECTION -->
          <div class="w-full h-auto flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 my-2">
-            <app-search-event-card [eventShorthand]="this.testEvent"></app-search-event-card>
-            <app-search-event-card [eventShorthand]="this.testEvent"></app-search-event-card>
+            <app-search-event-card [lang]="this.lang" [event]="this.upcomingEvents[0]"></app-search-event-card>
+            <app-search-event-card [lang]="this.lang" [event]="this.upcomingEvents[1]"></app-search-event-card>
         </div>
 
         <div class="w-full flex flex-row justify-center md:justify-end max-w-application my-4">

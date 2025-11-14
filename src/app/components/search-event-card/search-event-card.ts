@@ -11,5 +11,6 @@ import { EventShorthandModel } from '../../models/event.model';
   }
 })
 export class SearchEventCard {
-  @Input() eventShorthand!: EventShorthandModel
+  @Input() lang: string = ''
+  @Input() event!: EventShorthandModel
 }

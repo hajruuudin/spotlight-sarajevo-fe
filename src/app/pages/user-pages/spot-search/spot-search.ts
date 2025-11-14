@@ -151,7 +151,7 @@ export class SpotSearch implements OnInit{
     })
   }
 
-  laodMore(){
+  loadMore(){
     if(this.totalElements <= (this.pageNumber + 1 * this.pageSize)){
       return;
     }

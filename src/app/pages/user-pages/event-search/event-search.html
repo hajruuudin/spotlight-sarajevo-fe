@@ -57,13 +57,8 @@
                 </div>
                 <div class="w-full flex flex-col lg:flex-row justify-center items-center space-x-0 lg:space-x-4">
                     <div class="w-full flex flex-col jusitfy-start items-center space-y-4 mb-2 md:mt-2">
-                        @for (event of this.testEventArray; track $index) {
-                        <app-search-event-card [eventShorthand]="event"></app-search-event-card>
-                        }
-                    </div>
-                    <div class="w-full flex flex-col jusitfy-start items-center space-y-4 mt-2 md:mt-0">
-                        @for (event of this.testEventArray; track $index) {
-                        <app-search-event-card [eventShorthand]="event"></app-search-event-card>
+                        @for (event of this.eventSearchResults; track $index) {
+                        <app-search-event-card [event]="event"></app-search-event-card>
                         }
                     </div>
                 </div>

@@ -1,11 +1,16 @@
+import { TagModel } from "./category.model";
+
 export class EventShorthandModel {
     constructor(
-        public eventId: number,
-        public eventOfficialName: String,
-        public eventSmallDescription: String,
-        public eventCategory: String,
-        public eventThumbnailImage: String,
-        public eventDate: String,
-        public eventTags: String[]
-    ){}
+        public id: number,
+        public slug: string,
+        public officialName: string,
+        public smallDescriptionBs: string,
+        public smallDescriptionEn: string,
+        public categoryNameBs: string,
+        public categoryNameEn: string,
+        public eventTags: TagModel[],
+        public startDate: string,
+        public thumbnailImage: string
+    ) { }
 }

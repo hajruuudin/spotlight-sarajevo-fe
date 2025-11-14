@@ -13,6 +13,8 @@ import { SortOptions } from '../../../utils/enums/SortOptions';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { SessionService } from '../../../services/session-service';
+import { EventService } from '../../../services/event-service';
+import { PageResponseModel } from '../../../models/shared.model';
 
 @Component({
   selector: 'app-discover',
@@ -30,10 +32,12 @@ export class Discover implements OnInit{
   protected recentlyAddedSpots: SpotShorthandModel[] = []
   protected landmarkSpots: SpotShorthandModel[] = []
   protected popularSpots: SpotShorthandModel[] = []
+  protected upcomingEvents: EventShorthandModel[] = []
   protected favouriteSpots: SpotShorthandModel[] = []
 
   constructor(
     protected spotService: SpotService,
+    protected eventService: EventService,
     protected session: SessionService,
     protected cdr: ChangeDetectorRef,
     protected toastr: HotToastService
@@ -46,6 +50,7 @@ export class Discover implements OnInit{
     this.loadRecentlyAddedSpots()
     this.loadLandmarkSpots()
     this.loadPopularSpots()
+    this.loadUpcomingEvents()
     this.loadFavouriteSpots()
   }
 
@@ -85,6 +90,15 @@ export class Discover implements OnInit{
     })
   }
 
+  loadUpcomingEvents(){
+    this.eventService.findEventsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
+      next: (response : PageResponseModel<EventShorthandModel>) => {
+        this.upcomingEvents = response.content
+        this.cdr.detectChanges()
+      }
+    })
+  }
+
   loadFavouriteSpots(){
     this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
       next: (response: any) => {
@@ -97,15 +111,6 @@ export class Discover implements OnInit{
     })
   }
 
-  
-    public testEvent = new EventShorthandModel(
-      1,
-      "Zeljko Joksimovic",
-      "This is just a test event for the frotnend",
-      "Concert",
-      "https://i.ibb.co/q3TzQ4FH/Screenshot-2025-10-30-at-9-43-55-PM.png",
-      "2024 august 12",
-      ['Alcohol', 'Dance', 'Live']
-    )
+
   
 }
