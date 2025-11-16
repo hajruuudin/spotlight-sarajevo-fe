@@ -11,9 +11,9 @@
 
             <section id="filterAndResultContainer" class="w-full flex flex-col justify-start items-stretch space-y-4">
                 <div
-                    class="w-full relative bg-(--background-200) px-2 md:px-0 rounded-2xl h-auto flex flex-col md:flex-row justify-center items-stretch">
+                    class="w-full relative dark:bg-(--background-200) bg-(--background-400) px-2 md:px-0 rounded-2xl h-auto flex flex-col md:flex-row justify-center items-stretch">
                     <button (click)="this.toggleSortingPopup()"
-                        class="w-full rounded-2xl dark:bg-(--background-300) my-2 my md:m-4 py-2 md:py-3 font-bold text-xl md:text-2xl">{{
+                        class="w-full rounded-2xl dark:bg-(--background-300) my-2 my md:m-4 py-2 md:py-3 font-bold text-base md:text-2xl">{{
                         'search.searchSorting' | transloco }}</button>
                     <!-- SORTING POPUP SECTION -->
                     @if (this.isSortingPopupLoaded) {
@@ -34,7 +34,7 @@
                     }
 
                     <button (click)="toggleFilterPopup()"
-                        class="w-full rounded-2xl dark:bg-(--background-300) my-2 md:m-4 py-2 md:py-3 font-bold text-xl md:text-2xl">{{
+                        class="w-full rounded-2xl dark:bg-(--background-300) my-2 md:m-4 py-2 md:py-3 font-bold text-base md:text-2xl">{{
                         'search.searchFilters' | transloco }}</button>
                     <!-- FILTER POPUP SECTION -->
                     @if (this.isFilterPopupLoaded) {
@@ -74,15 +74,13 @@
 
                     @if (this.spotSearchResults.length != 0) {
                     <div class="w-full flex flex-col justify-center items-center space-y-4">
-                        <span class="text-xl">{{ 'search.searchPaginationOne' | transloco }} {{ this.pageNumber + 1 *
+                        <span class="text-base md:text-xl">{{ 'search.searchPaginationOne' | transloco }} {{ this.pageNumber + 1 *
                             this.pageSize }} {{ 'search.searchPagiationTwo' | transloco}} {{ this.totalElements}} {{
                             'search.searchSpotsPaginationThree' | transloco }}</span>
                         <app-button-secondary (click)="this.loadMore()" [buttonContent]="'Load more'"
-                            classAddons="px-6"></app-button-secondary>
+                            classAddons="px-3 md:px-6"></app-button-secondary>
                     </div>
                     }
-
-
                 </div>
             </section>
         </form>

@@ -38,7 +38,7 @@ export class NavbarUser {
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
     html.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
+    this.session.setStoredTheme(newTheme)
   }
 
   toggleLanguage() {

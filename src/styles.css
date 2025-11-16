@@ -146,7 +146,7 @@ body {
 
 /* MAXIMUM APPLICATION WIDTH, APPLIED TO EACH CONTIANER */
 .max-w-application {
-  max-width: 1366px;
+  max-width: 1200px;
 }
 
 /* ANIMATIONS */

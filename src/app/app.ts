@@ -1,8 +1,9 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { environment } from '../environments/environment';
 import { RouterOutlet } from '@angular/router';
 import { SpinnerComponent } from "./components/spinner-component/spinner-component";
 import { SpinnerService } from './services/spinner-service';
+import { SessionService } from './services/session-service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,10 @@ export class App {
   protected loading = false;
   protected apiUrl = environment.API_URL
 
-  constructor(private spinner: SpinnerService) {}
+  constructor(private spinner: SpinnerService, private session: SessionService) {}
 
-  isLoading = computed(() => this.spinner.loadingGlobal());
+  get isLoading() {
+    return this.spinner.loadingGlobal();
+  }
+
 }

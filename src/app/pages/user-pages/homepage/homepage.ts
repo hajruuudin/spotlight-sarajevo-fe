@@ -19,9 +19,10 @@ import { SessionService } from '../../../services/session-service';
 import { SpotService } from '../../../services/spot-service';
 import { SortOptions } from '../../../utils/enums/SortOptions';
 import { HotToastService } from '@ngxpert/hot-toast';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { EventService } from '../../../services/event-service';
 import { PageResponseModel } from '../../../models/shared.model';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-homepage',
@@ -69,6 +70,7 @@ export class Homepage implements OnInit {
     this.loadSpotAndEventCategories()
     this.loadQueryAndDisplayDays()
   }
+  
 
   loadHeadlineObjects() {
     this.spotService.findSpotsPaginated(0, 1, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({

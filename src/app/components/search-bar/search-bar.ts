@@ -9,7 +9,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModu
   templateUrl: './search-bar.html',
   styleUrl: './search-bar.css',
   host: {
-    class: 'w-full'
+    class: 'w-full mt-1'
   },
   providers: [
     {

@@ -1,4 +1,8 @@
-<section animate.enter="fade-in-animation" id="discoverHeaderAndFirstSectionContainer" class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4">
+<section 
+    animate.enter="fade-in-animation" 
+    id="discoverHeaderAndFirstSectionContainer" 
+    [style.backgroundImage]="this.session.getStoredThemeFallback() == 'dark' ? 'url(/assets/images/SECTION_BG_03.png)' : 'url(/assets/images/SECTION_BG_03_L.png)'"
+    class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4">
     <div id="discoverHeaderAndFirstSection" class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
         <app-page-header class="max-w-application py-4" [title]="'discover.headerTitle' | transloco" [subtitle]="'discover.headerSubtitle' | transloco"></app-page-header>
     
@@ -36,7 +40,10 @@
     </div>
 </section>
 
-<section animate.enter="fade-in-animation" id="discoverPopularUpcomingSectionContainer" class="w-full bg-(--background-100) h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4">
+<section 
+    animate.enter="fade-in-animation" 
+    id="discoverPopularUpcomingSectionContainer" 
+    class="w-full dark:bg-(--background-100) bg-(--background-800) h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4">
     <div id="discoverPopularUpcomingSection" class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
         <!-- POPULAR SECTION -->
         <div class="flex flex-col w-full justify-center items-center md:items-start h-auto pt-2">

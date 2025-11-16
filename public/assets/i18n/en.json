@@ -87,7 +87,7 @@
     "sorting" : {
         "ALPHABETICAL" : "Alphabetical",
         "POPULARITY" : "By Populariy",
-        "RATING" : "Top Rated",
-        "UPCOMING" : "Upcoming"
+        "DATE" : "Upcoming",
+        "RATING" : "Top Rated"
     }
 }

@@ -1,17 +1,24 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, NgZone, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class SpinnerService {
   loadingGlobal = signal(false);
   loadingSection = signal(false);
+
+  constructor(private zone: NgZone){}
   
-  showGlobalSpinner() { 
-    this.loadingGlobal.set(true); 
+  showGlobalSpinner() {
+    this.zone.run(() => {
+      this.loadingGlobal.set(true);
+    });
   }
 
-  hideGlobalSpinner() { 
-    this.loadingGlobal.set(false); 
+  hideGlobalSpinner() {
+    this.zone.run(() => {
+      this.loadingGlobal.set(false);
+    });
   }
+
 
   showSectionSpinner() {
     this.loadingSection.set(true)

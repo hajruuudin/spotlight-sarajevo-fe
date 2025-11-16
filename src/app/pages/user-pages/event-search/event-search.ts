@@ -18,10 +18,23 @@ import { Subscription } from 'rxjs';
 import { SortOptions } from '../../../utils/enums/SortOptions';
 import { EventService } from '../../../services/event-service';
 import { PageResponseModel } from '../../../models/shared.model';
+import { SpinnerSmallComponent } from "../../../components/spinner-small-component/spinner-small-component";
+import { NotFoundComponent } from "../../../components/not-found-component/not-found-component";
 
 @Component({
   selector: 'app-event-search',
-  imports: [PageHeader, ReactiveFormsModule, TranslocoPipe, SearchBar, SortingSelector, ButtonSecondary, CategoryFilterSelector, SearchEventCard],
+  imports: [
+    PageHeader,
+    ReactiveFormsModule,
+    TranslocoPipe,
+    SearchBar,
+    SortingSelector,
+    ButtonSecondary,
+    CategoryFilterSelector,
+    SearchEventCard,
+    SpinnerSmallComponent,
+    NotFoundComponent
+],
   templateUrl: './event-search.html',
   styleUrl: './event-search.css',
   host: {
@@ -45,7 +58,7 @@ export class EventSearch {
   protected isSortingPopupLoaded: boolean = false
 
   protected pageNumber: number = 0
-  protected pageSize: number = 4
+  protected pageSize: number = 2
   protected totalElements: number = 0
   protected totalPages: number = 0
   
@@ -92,12 +105,17 @@ export class EventSearch {
   }
 
   onSearchTriggered(searchValue: string) {
-    console.log('Search Term:', searchValue);
-    console.log('Form Value:', this.eventSearchForm.value);
+    this.fetchEvents(this.pageNumber, this.pageSize, searchValue, this.selectedSortingMethod, this.selectedCategoryIds, true, false)
   }
 
   onCategoryCheckboxChange(categoryID: number){
-    this.selectedCategoryIds.push(categoryID);
+    const index = this.selectedCategoryIds.indexOf(categoryID);
+    
+    if (index === -1) {
+      this.selectedCategoryIds.push(categoryID);
+    } else {
+      this.selectedCategoryIds.splice(index, 1);
+    }
   }
 
   toggleFilterPopup(){
@@ -106,6 +124,16 @@ export class EventSearch {
 
   toggleSortingPopup(){
     this.isSortingPopupLoaded = !this.isSortingPopupLoaded
+  }
+
+  resetCategoryFilters(){
+    this.selectedCategoryIds = []
+    this.fetchEvents(this.pageNumber, this.pageSize, this.eventSearchForm.get('searchTerm')?.value, this.selectedSortingMethod, this.selectedCategoryIds, true, false)
+  }
+
+  resetSortingFilters(){
+    this.selectedSortingMethod = SortOptions.ALPHABETICAL.toString()
+    this.fetchEvents(this.pageNumber, this.pageSize, this.eventSearchForm.get('searchTerm')?.value, this.selectedSortingMethod, this.selectedCategoryIds, true, false)
   }
 
   fetchEvents(pageNumber: number, pageSize: number, searchTerm: string, sortOption: string, categoryIds: number[], resetPages: boolean, extendResultSet: boolean){
