@@ -1,3 +1,6 @@
-export enum SortOptions{
-    ALPHABETICAL, RATING, DATE, CREATED
+export enum SortOptions {
+  ALPHABETICAL = 'ALPHABETICAL',
+  RATING = 'RATING',
+  DATE = 'DATE',
+  CREATED = 'CREATED'
 }

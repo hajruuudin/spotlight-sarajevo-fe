@@ -82,12 +82,12 @@
         "searchFilters" : "Filteri",
         "searchSorting" : "Sortiranje",
         "searchButton" : "Pretraži",
-        "searchApply" : "Učitaj"
+        "searchReset" : "Ukloni filtere"
     },
     "sorting" : {
         "ALPHABETICAL" : "Po Abecedi",
         "POPULARITY" : "Najpopularnije",
         "RATING" : "Najbolje ocjenjeno",
-        "UPCOMING" : "Nadolazeći"
+        "DATE" : "Nadolazeće"
     }
 }

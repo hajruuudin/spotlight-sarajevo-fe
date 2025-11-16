@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, OnInit } from '@angular/core';
 import { PageHeader } from "../../../components/page-header/page-header";
 import { SearchBar } from "../../../components/search-bar/search-bar";
 import { TranslocoPipe } from '@ngneat/transloco';
@@ -15,10 +15,15 @@ import { SortingSelector } from '../../../components/sorting-selector/sorting-se
 import { SpotShorthandModel } from '../../../models/spot.model';
 import { SearchSpotCard } from '../../../components/search-spot-card/search-spot-card';
 import { SortOptions } from '../../../utils/enums/SortOptions';
+import { SpotService } from '../../../services/spot-service';
+import { Subscription } from 'rxjs';
+import { SpinnerSmallComponent } from "../../../components/spinner-small-component/spinner-small-component";
+import { PageResponseModel } from '../../../models/shared.model';
+import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
 
 @Component({
   selector: 'app-spot-search',
-  imports: [PageHeader, SearchBar, TranslocoPipe, ReactiveFormsModule, CategoryFilterSelector, ButtonSecondary, SortingSelector, SearchSpotCard],
+  imports: [PageHeader, SearchBar, TranslocoPipe, ReactiveFormsModule, CategoryFilterSelector, ButtonSecondary, SortingSelector, SearchSpotCard, SpinnerSmallComponent, NotFoundComponent],
   templateUrl: './spot-search.html',
   styleUrl: './spot-search.css',
   host: {
@@ -26,6 +31,8 @@ import { SortOptions } from '../../../utils/enums/SortOptions';
   }
 })
 export class SpotSearch implements OnInit{
+  protected lang: String = 'en'
+  protected sub!: Subscription
   protected spotSearchForm: FormGroup
   protected spotCategories: SpotCategoryModel[] = []
   protected sortingMethods: string[] = [
@@ -39,10 +46,18 @@ export class SpotSearch implements OnInit{
   protected isFilterPopupLoaded: boolean = false
   protected isSortingPopupLoaded: boolean = false
 
+  protected pageNumber: number = 0
+  protected pageSize: number = 4
+  protected totalElements: number = 0
+  protected totalPages: number = 0
+
+  protected spotSearchResults: SpotShorthandModel[] = []
+
   constructor(
     private categoryService: CategoryService,
-    //====== COMMON NON-OBJECT SERVICES =====//
-    public session: SessionService,
+    private spotService: SpotService,
+    //====== COMMON SERVICES =====//
+    private session: SessionService,
     private fb: FormBuilder,
     private spinner: SpinnerService,
     private toastr: HotToastService,
@@ -50,44 +65,45 @@ export class SpotSearch implements OnInit{
   ){
     this.spotSearchForm = this.fb.group({
       'searchTerm' : ['', Validators.required],
-      'sortOption' : ['', Validators.required],
-      'filterCategoryIds' : [[], Validators.required]
+      'sortOption' : ['', Validators.required]
     })
   }
 
-  public testSpot = new SpotShorthandModel(
-      1,
-      "Kilim Ilidza",
-      "This is just a test spot for the frotnend",
-      "Cafe",
-      "https://i.ibb.co/7HWPLBJ/Screenshot-2025-10-30-at-9-13-33-PM.png",
-      "9.4",
-      ['Alcohol', 'Dance', 'Live']
-  )
+  protected isSectionLoading = computed(() => this.spinner.loadingSection())
 
-  public testSpotArray = [
-    this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot, this.testSpot
-  ]
+  getCurrentLanguage() : string {
+    return this.session.getStoredLanguage()
+  }
 
   ngOnInit(): void {
+    this.sub = this.session.language.subscribe(lang => {
+      this.lang = lang;
+    });
+
     this.categoryService.getAllSpotCategories().subscribe({
       next: (response : SpotCategoryModel[]) => {
         this.spotCategories = response
         this.cdr.detectChanges()
       },
-      error: (error : HttpErrorResponse) => {
-        // probably redirect to error
-      }
+      error: (error : HttpErrorResponse) => {}
     })
+
+    this.spinner.showSectionSpinner()
+    this.fetchSpots(this.pageNumber, this.pageSize, '', this.selectedSortingMethod, this.selectedCategoryIds, true, false)
   }
 
-  onSearchTriggered(searchValue: string) {
-    console.log('Search Term:', searchValue);
-    console.log('Form Value:', this.spotSearchForm.value);
+  onSearchTriggered() {
+    this.fetchSpots(this.pageNumber, this.pageSize, this.spotSearchForm.get('searchTerm')?.value, this.selectedSortingMethod, this.selectedCategoryIds, true, false)
   }
 
-  onCategoryCheckboxChange(categoryID: number){
-    this.selectedCategoryIds.push(categoryID);
+  onCategoryCheckboxChange(categoryID: number) {
+    const index = this.selectedCategoryIds.indexOf(categoryID);
+    
+    if (index === -1) {
+      this.selectedCategoryIds.push(categoryID);
+    } else {
+      this.selectedCategoryIds.splice(index, 1);
+    }
   }
 
   toggleFilterPopup(){
@@ -96,5 +112,50 @@ export class SpotSearch implements OnInit{
 
   toggleSortingPopup(){
     this.isSortingPopupLoaded = !this.isSortingPopupLoaded
+  }
+
+  resetCategoryFilters(){
+    this.selectedCategoryIds = []
+    this.fetchSpots(this.pageNumber, this.pageSize, this.spotSearchForm.get('searchTerm')?.value, this.selectedSortingMethod, this.selectedCategoryIds, true, false)
+  }
+
+  resetSortingFilters(){
+    this.selectedSortingMethod = SortOptions.ALPHABETICAL.toString()
+    this.fetchSpots(this.pageNumber, this.pageSize, this.spotSearchForm.get('searchTerm')?.value, this.selectedSortingMethod, this.selectedCategoryIds, true, false)
+  }
+
+  fetchSpots(pageNumber: number, pageSize: number, searchValue: string, sortingMethod: string, categoryIds: number[], resetPages: boolean, extendResultSet: boolean){
+    if(resetPages){
+      pageNumber = 0
+    }
+
+    this.spinner.showSectionSpinner()
+    this.spotService.findSpotsPaginated(pageNumber, pageSize, searchValue, sortingMethod, categoryIds).subscribe({
+      next: (response : PageResponseModel<SpotShorthandModel>) => {
+        this.spinner.hideSectionSpinner()
+
+        if(extendResultSet){
+          this.spotSearchResults = this.spotSearchResults.concat(response.content)
+        } else {
+          this.spotSearchResults = response.content
+        }
+
+        if(resetPages){
+          this.totalElements = response.totalElements
+          this.totalPages = response.totalPages
+          this.pageNumber = 0
+        }
+
+        this.cdr.detectChanges()
+      }
+    })
+  }
+
+  loadMore(){
+    if(this.totalElements <= (this.pageNumber + 1 * this.pageSize)){
+      return;
+    }
+    this.pageNumber++
+    this.fetchSpots(this.pageNumber, this.pageSize, this.spotSearchForm.get('searchTerm')?.value, this.selectedSortingMethod, this.selectedCategoryIds, false, true)
   }
 }

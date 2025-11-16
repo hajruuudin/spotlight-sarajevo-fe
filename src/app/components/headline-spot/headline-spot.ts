@@ -9,6 +9,7 @@ import { NgClass } from '@angular/common';
   styleUrl: './headline-spot.css'
 })
 export class HeadlineSpot {
+  @Input() lang: string = 'en'
   @Input() classAddons: String = '';
-  @Input() spotShorthand!: SpotShorthandModel
+  @Input() spot!: SpotShorthandModel
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, computed } from '@angular/core';
 import { PageHeader } from "../../../components/page-header/page-header";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EventCategoryModel } from '../../../models/category.model';
@@ -14,10 +14,27 @@ import { SortingSelector } from "../../../components/sorting-selector/sorting-se
 import { ButtonSecondary } from "../../../components/button-secondary/button-secondary";
 import { CategoryFilterSelector } from "../../../components/category-filter-selector/category-filter-selector";
 import { SearchEventCard } from "../../../components/search-event-card/search-event-card";
+import { Subscription } from 'rxjs';
+import { SortOptions } from '../../../utils/enums/SortOptions';
+import { EventService } from '../../../services/event-service';
+import { PageResponseModel } from '../../../models/shared.model';
+import { SpinnerSmallComponent } from "../../../components/spinner-small-component/spinner-small-component";
+import { NotFoundComponent } from "../../../components/not-found-component/not-found-component";
 
 @Component({
   selector: 'app-event-search',
-  imports: [PageHeader, ReactiveFormsModule, TranslocoPipe, SearchBar, SortingSelector, ButtonSecondary, CategoryFilterSelector, SearchEventCard],
+  imports: [
+    PageHeader,
+    ReactiveFormsModule,
+    TranslocoPipe,
+    SearchBar,
+    SortingSelector,
+    ButtonSecondary,
+    CategoryFilterSelector,
+    SearchEventCard,
+    SpinnerSmallComponent,
+    NotFoundComponent
+],
   templateUrl: './event-search.html',
   styleUrl: './event-search.css',
   host: {
@@ -25,18 +42,31 @@ import { SearchEventCard } from "../../../components/search-event-card/search-ev
   }
 })
 export class EventSearch {
+  protected lang!: string
+  protected sub!: Subscription
   protected eventSearchForm: FormGroup
   protected eventCategories: EventCategoryModel[] = []
-  protected sortingMethods: string[] = ['SORT_01', 'SORT_04', 'SORT_03']
+  protected sortingMethods: string[] = [
+    SortOptions.ALPHABETICAL.toString(),
+    SortOptions.DATE.toString()
+  ]
 
   protected selectedCategoryIds: number[] = []
-  protected selectedSortingMethod: string = 'SORT_01'
+  protected selectedSortingMethod: string = SortOptions.ALPHABETICAL.toString()
 
   protected isFilterPopupLoaded: boolean = false
   protected isSortingPopupLoaded: boolean = false
 
+  protected pageNumber: number = 0
+  protected pageSize: number = 2
+  protected totalElements: number = 0
+  protected totalPages: number = 0
+  
+  protected eventSearchResults: EventShorthandModel[] = []
+
   constructor(
     private categoryService: CategoryService,
+    private eventService: EventService,
     //====== COMMON NON-OBJECT SERVICES =====//
     public session: SessionService,
     private fb: FormBuilder,
@@ -46,26 +76,21 @@ export class EventSearch {
   ){
     this.eventSearchForm = this.fb.group({
       'searchTerm' : ['', Validators.required],
-      'sortOption' : ['', Validators.required],
-      'filterCategoryIds' : [[], Validators.required]
+      'sortOption' : ['', Validators.required]
     })
   }
 
-  public testEvent = new EventShorthandModel(
-      1,
-      "Zeljko Joksimovic",
-      "This is just a test event for the frotnend",
-      "Concert",
-      "https://i.ibb.co/q3TzQ4FH/Screenshot-2025-10-30-at-9-43-55-PM.png",
-      "2024 august 12",
-      ['Alcohol', 'Dance', 'Live']
-  )
+  protected isSectionLoading = computed(() => this.spinner.loadingSection())
 
-  public testEventArray = [
-    this.testEvent, this.testEvent, this.testEvent, this.testEvent, this.testEvent, this.testEvent, this.testEvent, this.testEvent, this.testEvent, this.testEvent, this.testEvent, 
-  ]
+  getCurrentLanguage() : string {
+    return this.session.getStoredLanguage()
+  }
 
   ngOnInit(): void {
+    this.sub = this.session.language.subscribe(lang => {
+      this.lang = lang;
+    });
+
     this.categoryService.getAllEventCategories().subscribe({
       next: (response : EventCategoryModel[]) => {
         this.eventCategories = response
@@ -75,15 +100,22 @@ export class EventSearch {
         // probably redirect to error
       }
     })
+
+    this.fetchEvents(this.pageNumber, this.pageSize, '', this.selectedSortingMethod, this.selectedCategoryIds, true, false)
   }
 
   onSearchTriggered(searchValue: string) {
-    console.log('Search Term:', searchValue);
-    console.log('Form Value:', this.eventSearchForm.value);
+    this.fetchEvents(this.pageNumber, this.pageSize, searchValue, this.selectedSortingMethod, this.selectedCategoryIds, true, false)
   }
 
   onCategoryCheckboxChange(categoryID: number){
-    this.selectedCategoryIds.push(categoryID);
+    const index = this.selectedCategoryIds.indexOf(categoryID);
+    
+    if (index === -1) {
+      this.selectedCategoryIds.push(categoryID);
+    } else {
+      this.selectedCategoryIds.splice(index, 1);
+    }
   }
 
   toggleFilterPopup(){
@@ -92,5 +124,50 @@ export class EventSearch {
 
   toggleSortingPopup(){
     this.isSortingPopupLoaded = !this.isSortingPopupLoaded
+  }
+
+  resetCategoryFilters(){
+    this.selectedCategoryIds = []
+    this.fetchEvents(this.pageNumber, this.pageSize, this.eventSearchForm.get('searchTerm')?.value, this.selectedSortingMethod, this.selectedCategoryIds, true, false)
+  }
+
+  resetSortingFilters(){
+    this.selectedSortingMethod = SortOptions.ALPHABETICAL.toString()
+    this.fetchEvents(this.pageNumber, this.pageSize, this.eventSearchForm.get('searchTerm')?.value, this.selectedSortingMethod, this.selectedCategoryIds, true, false)
+  }
+
+  fetchEvents(pageNumber: number, pageSize: number, searchTerm: string, sortOption: string, categoryIds: number[], resetPages: boolean, extendResultSet: boolean){
+    if(resetPages){
+      pageNumber = 0
+    }
+
+    this.spinner.showSectionSpinner()
+    this.eventService.findEventsPaginated(pageNumber, pageSize, searchTerm, sortOption, categoryIds).subscribe({
+      next: (response : PageResponseModel<EventShorthandModel>) => {
+        this.spinner.hideSectionSpinner()
+
+        if(extendResultSet){
+          this.eventSearchResults = this.eventSearchResults.concat(response.content)
+        } else {
+          this.eventSearchResults = response.content
+        }
+
+        if(resetPages){
+          this.totalElements = response.totalElements
+          this.totalPages = response.totalPages
+          this.pageNumber = 0
+        }
+
+        this.cdr.detectChanges()
+      }
+    })
+  }
+
+  loadMore(){
+    if(this.totalElements <= (this.pageNumber + 1 * this.pageSize)){
+      return;
+    }
+    this.pageNumber++
+    this.fetchEvents(this.pageNumber, this.pageSize, this.eventSearchForm.get('searchTerm')?.value, this.selectedSortingMethod, this.selectedCategoryIds, false, true)
   }
 }

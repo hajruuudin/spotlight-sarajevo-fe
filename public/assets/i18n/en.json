@@ -82,12 +82,12 @@
         "searchFilters" : "Filters",
         "searchSorting" : "Sorting",
         "searchButton" : "Search",
-        "searchApply" : "Apply"
+        "searchReset" : "Remove filters"
     },
     "sorting" : {
         "ALPHABETICAL" : "Alphabetical",
         "POPULARITY" : "By Populariy",
-        "RATING" : "Top Rated",
-        "UPCOMING" : "Upcoming"
+        "DATE" : "Upcoming",
+        "RATING" : "Top Rated"
     }
 }
