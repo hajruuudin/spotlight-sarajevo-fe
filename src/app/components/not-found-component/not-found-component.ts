@@ -6,10 +6,10 @@ import { Component, Input } from '@angular/core';
   templateUrl: './not-found-component.html',
   styleUrl: './not-found-component.css',
   host: {
-    class: 'flex flex-col justify-center'
-  }
+    class: 'flex flex-col justify-center',
+  },
 })
 export class NotFoundComponent {
-  @Input() headerMessage: string = 'Oops, there was an error'
-  @Input() messageDescription: string = 'There was an error while processing the request :('
+  @Input() headerMessage: string = 'Oops, there was an error';
+  @Input() messageDescription: string = 'There was an error while processing the request :(';
 }

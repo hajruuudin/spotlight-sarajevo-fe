@@ -1,7 +1,12 @@
 import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
-import { SearchIcon } from "../../resources/icons/search-icon/search-icon";
+import { SearchIcon } from '../../resources/icons/search-icon/search-icon';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-search-bar',
@@ -9,7 +14,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModu
   templateUrl: './search-bar.html',
   styleUrl: './search-bar.css',
   host: {
-    class: 'w-full mt-1'
+    class: 'w-full mt-1',
   },
   providers: [
     {

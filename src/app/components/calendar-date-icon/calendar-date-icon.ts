@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'app-calendar-date-icon',
   imports: [NgClass],
   templateUrl: './calendar-date-icon.html',
-  styleUrl: './calendar-date-icon.css'
+  styleUrl: './calendar-date-icon.css',
 })
 export class CalendarDateIcon {
   @Input() day: any = {};
@@ -13,7 +13,7 @@ export class CalendarDateIcon {
   @Output() daySelected: EventEmitter<string> = new EventEmitter<string>();
 
   onDayClicked() {
-    console.log("Day clicked:", this.day)
+    console.log('Day clicked:', this.day);
     this.daySelected.emit(this.day.queryDate);
   }
 }

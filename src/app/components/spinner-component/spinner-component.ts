@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-spinner-component',
   imports: [CommonModule],
   templateUrl: './spinner-component.html',
-  styleUrl: './spinner-component.css'
+  styleUrl: './spinner-component.css',
 })
 export class SpinnerComponent {
   @Input() visible = false;

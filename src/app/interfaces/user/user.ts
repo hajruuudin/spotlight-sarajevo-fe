@@ -3,7 +3,16 @@ import { NavbarUser } from "../../components/navbar-user/navbar-user";
 import { RouterOutlet } from '@angular/router';
 import { Footer } from "../../components/footer/footer";
 
-
+/**
+ * Regular User Interface: The largest container, encapsulating:
+ * - Homepage for a birds eye view of the application
+ * - Searching functions for Spots and Events
+ * - Discover page for sponsored and various spots / events
+ * - Personal Profile Page
+ * - Pages for tourist guides and their overview
+ * - Public transport page for information
+ * - Other miscelanneous pages.
+ */
 @Component({
   selector: 'app-user',
   imports: [NavbarUser, RouterOutlet, Footer],

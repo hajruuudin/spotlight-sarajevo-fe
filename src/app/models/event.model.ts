@@ -1,3 +1,6 @@
+/*====== EVENT MODELS ======*/
+/* Includes all DTO class models from the Event API on the backend */
+
 import { TagModel } from "./category.model";
 
 export class EventShorthandModel {

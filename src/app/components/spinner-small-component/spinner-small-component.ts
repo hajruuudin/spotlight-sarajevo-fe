@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-spinner-small-component',
   imports: [],
   templateUrl: './spinner-small-component.html',
-  styleUrl: './spinner-small-component.css'
+  styleUrl: './spinner-small-component.css',
 })
 export class SpinnerSmallComponent {
   @Input() visible = false;

@@ -1,13 +1,20 @@
 import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TranslocoService } from '@ngneat/transloco';
 import { SessionService } from '../../services/session-service';
 
+/**
+ * Authentication User Interface: Container for authentication related 
+ * pages. This intercace encapsulates:
+ * - The login process
+ * - The signup process
+ * - Two factor authentication (including email verification)
+ * - Password reset function
+ */
 @Component({
   selector: 'app-auth',
   imports: [RouterOutlet],
   templateUrl: './auth.html',
-  styleUrl: './auth.css'
+  styleUrl: './auth.css',
 })
 export class Auth implements OnInit {
   protected backgroundImage!: HTMLElement;
@@ -21,7 +28,7 @@ export class Auth implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.backgroundImage = this.el.nativeElement.querySelector("#backgroundImage")
+    this.backgroundImage = this.el.nativeElement.querySelector('#backgroundImage');
 
     const savedTheme = localStorage.getItem('theme');
     const html = document.documentElement;
