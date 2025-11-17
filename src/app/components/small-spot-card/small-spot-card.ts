@@ -5,10 +5,10 @@ import { SpotShorthandModel } from '../../models/spot.model';
   selector: 'app-small-spot-card',
   imports: [],
   templateUrl: './small-spot-card.html',
-  styleUrl: './small-spot-card.css'
+  styleUrl: './small-spot-card.css',
 })
 export class SmallSpotCard {
-  @Input() lang : String = 'en'
+  @Input() lang: String = 'en';
   @Input() classAddons: String = '';
   @Input() spot!: SpotShorthandModel;
 }

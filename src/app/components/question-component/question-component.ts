@@ -6,16 +6,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './question-component.html',
   styleUrl: './question-component.css',
   host: {
-    class: 'w-full'
-  }
+    class: 'w-full',
+  },
 })
 export class QuestionComponent {
   @Input() isSelectedA: boolean = false;
   @Input() isSelectedB: boolean = false;
-  @Input() question: string = "";
+  @Input() question: string = '';
   @Output() isSelectedAChanged = new EventEmitter<boolean>();
   @Output() isSelectedBChanged = new EventEmitter<boolean>();
-
 
   onYesClick() {
     this.isSelectedA = true;

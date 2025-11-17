@@ -1,39 +1,42 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { PageHeader } from "../../../components/page-header/page-header";
-import { TranslocoPipe, TranslocoService, TranslocoDirective } from '@ngneat/transloco';
+import { PageHeader } from '../../../components/page-header/page-header';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { HotToastService } from '@ngxpert/hot-toast';
-import { HistoricalSpotCard } from "../../../components/historical-spot-card/historical-spot-card";
+import { HistoricalSpotCard } from '../../../components/historical-spot-card/historical-spot-card';
 import { SpotShorthandModel } from '../../../models/spot.model';
 import { EventShorthandModel } from '../../../models/event.model';
-import { ButtonPrimary } from "../../../components/button-primary/button-primary";
-import { SmallSpotCard } from "../../../components/small-spot-card/small-spot-card";
-import { SmallEventCard } from "../../../components/small-event-card/small-event-card";
+import { ButtonPrimary } from '../../../components/button-primary/button-primary';
+import { SmallSpotCard } from '../../../components/small-spot-card/small-spot-card';
+import { SmallEventCard } from '../../../components/small-event-card/small-event-card';
 import { SpotService } from '../../../services/spot-service';
 import { SortOptions } from '../../../utils/enums/SortOptions';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { SessionService } from '../../../services/session-service';
 import { EventService } from '../../../services/event-service';
-import { PageResponseModel } from '../../../models/shared.model';
 
 @Component({
   selector: 'app-discover',
-  imports: [PageHeader, TranslocoPipe, ButtonPrimary, SmallSpotCard, HistoricalSpotCard, SmallEventCard],
+  imports: [
+    PageHeader,
+    TranslocoPipe,
+    ButtonPrimary,
+    SmallSpotCard,
+    HistoricalSpotCard,
+    SmallEventCard,
+  ],
   templateUrl: './discover.html',
   styleUrl: './discover.css',
   host: {
-    class: "flex flex-col w-full justify-start items-center"
-  }
+    class: 'flex flex-col w-full justify-start items-center',
+  },
 })
-export class Discover implements OnInit{
-  protected lang!: string
-  protected sub!: Subscription
-
-  protected recentlyAddedSpots: SpotShorthandModel[] = []
-  protected landmarkSpots: SpotShorthandModel[] = []
-  protected popularSpots: SpotShorthandModel[] = []
-  protected upcomingEvents: EventShorthandModel[] = []
-  protected favouriteSpots: SpotShorthandModel[] = []
+export class Discover implements OnInit {
+  protected recentlyAddedSpots: SpotShorthandModel[] = [];
+  protected landmarkSpots: SpotShorthandModel[] = [];
+  protected popularSpots: SpotShorthandModel[] = [];
+  protected upcomingEvents: EventShorthandModel[] = [];
+  protected favouriteSpots: SpotShorthandModel[] = [];
 
   constructor(
     protected spotService: SpotService,
@@ -41,76 +44,67 @@ export class Discover implements OnInit{
     protected session: SessionService,
     protected cdr: ChangeDetectorRef,
     protected toastr: HotToastService
-  ){}
+  ) {}
+
+  protected lang!: string;
+  protected sub!: Subscription;
 
   ngOnInit(): void {
-    this.sub = this.session.language.subscribe(lang => {
-      this.lang = lang
-    })
-    this.loadRecentlyAddedSpots()
-    this.loadLandmarkSpots()
-    this.loadPopularSpots()
-    this.loadUpcomingEvents()
-    this.loadFavouriteSpots()
+    this.sub = this.session.language.subscribe((lang) => {
+      this.lang = lang;
+    });
+    this.loadInitialData();
   }
 
-  loadRecentlyAddedSpots(){
-    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
-      next: (response: any) => {
-        this.recentlyAddedSpots = response['content']
-        this.cdr.detectChanges()
+  loadInitialData() {
+    forkJoin({
+      recentlyAddedSpots: this.spotService.findSpotsPaginated(
+        0,
+        10,
+        '',
+        SortOptions.ALPHABETICAL.toString(),
+        []
+      ),
+      landmarkSpots: this.spotService.findSpotsPaginated(
+        0,
+        10,
+        '',
+        SortOptions.ALPHABETICAL.toString(),
+        []
+      ),
+      popularSpots: this.spotService.findSpotsPaginated(
+        0,
+        10,
+        '',
+        SortOptions.ALPHABETICAL.toString(),
+        []
+      ),
+      upcomingEvents: this.eventService.findEventsPaginated(
+        0,
+        10,
+        '',
+        SortOptions.ALPHABETICAL.toString(),
+        []
+      ),
+      favouriteSpots: this.spotService.findSpotsPaginated(
+        0,
+        10,
+        '',
+        SortOptions.ALPHABETICAL.toString(),
+        []
+      ),
+    }).subscribe({
+      next: (result) => {
+        this.recentlyAddedSpots = result.recentlyAddedSpots.content;
+        this.landmarkSpots = result.landmarkSpots.content;
+        this.popularSpots = result.popularSpots.content;
+        this.upcomingEvents = result.upcomingEvents.content;
+        this.favouriteSpots = result.favouriteSpots.content;
+        this.cdr.detectChanges();
       },
-      error: (response: HttpErrorResponse) => {
-        this.toastr.error(response.message)
-      }
-    })
-  }
-
-  loadLandmarkSpots(){
-    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
-      next: (response: any) => {
-        this.landmarkSpots = response['content']
-        this.cdr.detectChanges()
+      error: (error: HttpErrorResponse) => {
+        this.toastr.error(error.message);
       },
-      error: (response: HttpErrorResponse) => {
-        this.toastr.error(response.message)
-      }
-    })
+    });
   }
-
-  loadPopularSpots(){
-    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
-      next: (response: any) => {
-        this.popularSpots = response['content']
-        this.cdr.detectChanges()
-      },
-      error: (response: HttpErrorResponse) => {
-        this.toastr.error(response.message)
-      }
-    })
-  }
-
-  loadUpcomingEvents(){
-    this.eventService.findEventsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
-      next: (response : PageResponseModel<EventShorthandModel>) => {
-        this.upcomingEvents = response.content
-        this.cdr.detectChanges()
-      }
-    })
-  }
-
-  loadFavouriteSpots(){
-    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
-      next: (response: any) => {
-        this.favouriteSpots = response['content']
-        this.cdr.detectChanges()
-      },
-      error: (response: HttpErrorResponse) => {
-        this.toastr.error(response.message)
-      }
-    })
-  }
-
-
-  
 }

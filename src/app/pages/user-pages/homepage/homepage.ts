@@ -1,53 +1,57 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit } from '@angular/core';
-import { PageHeader } from "../../../components/page-header/page-header";
-import { HeadlineEvent } from "../../../components/headline-event/headline-event";
+import { PageHeader } from '../../../components/page-header/page-header';
+import { HeadlineEvent } from '../../../components/headline-event/headline-event';
 import { EventShorthandModel } from '../../../models/event.model';
 import { SpotShorthandModel } from '../../../models/spot.model';
 import { HeadlineSpot } from '../../../components/headline-spot/headline-spot';
 import { SmallSpotCard } from '../../../components/small-spot-card/small-spot-card';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { SearchSpotCard } from "../../../components/search-spot-card/search-spot-card";
+import { TranslocoPipe } from '@ngneat/transloco';
+import { SearchSpotCard } from '../../../components/search-spot-card/search-spot-card';
 import { CalendarDateIcon } from '../../../components/calendar-date-icon/calendar-date-icon';
-import { SearchEventCard } from "../../../components/search-event-card/search-event-card";
-import { HistoricalSpotCard } from "../../../components/historical-spot-card/historical-spot-card";
+import { SearchEventCard } from '../../../components/search-event-card/search-event-card';
+import { HistoricalSpotCard } from '../../../components/historical-spot-card/historical-spot-card';
 import { EventCategoryModel, SpotCategoryModel } from '../../../models/category.model';
 import { CategoryService } from '../../../services/category-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CategoryCard } from '../../../components/category-card/category-card';
-import { ButtonPrimary } from "../../../components/button-primary/button-primary";
+import { ButtonPrimary } from '../../../components/button-primary/button-primary';
 import { SessionService } from '../../../services/session-service';
 import { SpotService } from '../../../services/spot-service';
 import { SortOptions } from '../../../utils/enums/SortOptions';
 import { HotToastService } from '@ngxpert/hot-toast';
-import { Observable, Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { EventService } from '../../../services/event-service';
-import { PageResponseModel } from '../../../models/shared.model';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-homepage',
-  imports: [PageHeader, HeadlineEvent, HeadlineSpot, SmallSpotCard, TranslocoPipe, SearchSpotCard, CalendarDateIcon, SearchEventCard, HistoricalSpotCard, CategoryCard, ButtonPrimary],
+  imports: [
+    PageHeader,
+    HeadlineEvent,
+    HeadlineSpot,
+    SmallSpotCard,
+    TranslocoPipe,
+    SearchSpotCard,
+    CalendarDateIcon,
+    SearchEventCard,
+    HistoricalSpotCard,
+    CategoryCard,
+    ButtonPrimary,
+  ],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
   host: {
-    class: "flex flex-col w-full justify-start items-center"
-  }
+    class: 'flex flex-col w-full justify-start items-center',
+  },
 })
 export class Homepage implements OnInit {
-  protected lang! : string
-  protected sub!: Subscription
-
-  protected selectedDate: string = ''
-  public eventCalendarDays: any = []
-
-  protected headlineSpot: SpotShorthandModel | null = null
-  protected headlineEvent: EventShorthandModel | null = null
-  protected favouriteSpots: SpotShorthandModel[] = []
-  protected popularSpots: SpotShorthandModel[] = []
-  protected upcomingEvents: EventShorthandModel[] = []
-  protected landmarkSpots: SpotShorthandModel[] = []
-  public spotCategories: SpotCategoryModel[] = []
-  public eventCategories: EventCategoryModel[] = []
+  protected headlineSpot: SpotShorthandModel | null = null;
+  protected headlineEvent: EventShorthandModel | null = null;
+  protected favouriteSpots: SpotShorthandModel[] = [];
+  protected popularSpots: SpotShorthandModel[] = [];
+  protected upcomingEvents: EventShorthandModel[] = [];
+  protected landmarkSpots: SpotShorthandModel[] = [];
+  public spotCategories: SpotCategoryModel[] = [];
+  public eventCategories: EventCategoryModel[] = [];
 
   constructor(
     public spotService: SpotService,
@@ -56,93 +60,88 @@ export class Homepage implements OnInit {
     public cdr: ChangeDetectorRef,
     private categoryService: CategoryService,
     private toastr: HotToastService
-  ) { }
+  ) {}
+
+  protected lang!: string;
+  protected sub!: Subscription;
+  protected selectedDate: string = '';
+  public eventCalendarDays: any = [];
 
   ngOnInit(): void {
-    this.sub = this.session.language.subscribe(lang => {
-      this.lang = lang
-    })
-    this.loadHeadlineObjects()
-    this.loadFavouriteSpots()
-    this.loadPopularSpots()
-    this.loadUpcomingEvents()
-    this.loadHistoricalLandmarks()
-    this.loadSpotAndEventCategories()
-    this.loadQueryAndDisplayDays()
-  }
-  
-
-  loadHeadlineObjects() {
-    this.spotService.findSpotsPaginated(0, 1, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
-      next: (response: any) => {
-        this.headlineSpot = response['content'][0]
-        this.cdr.detectChanges()
-      },
-      error: (response: HttpErrorResponse) => {
-        this.toastr.error(response.message)
-      }
-    })
-
-    this.eventService.findEventsPaginated(0, 1, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
-      next: (response: PageResponseModel<EventShorthandModel>) => {
-        this.headlineEvent = response.content[0]
-        this.cdr.detectChanges()
-      },
-      error: (response: HttpErrorResponse) => {
-        this.toastr.error(response.message)
-      }
-    })
+    this.sub = this.session.language.subscribe((lang) => {
+      this.lang = lang;
+    });
+    this.loadInitialData();
+    this.loadQueryAndDisplayDays();
   }
 
-  loadFavouriteSpots() {
-    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
-      next: (response: any) => {
-        this.favouriteSpots = response['content']
-        this.cdr.detectChanges()
+  loadInitialData() {
+    forkJoin({
+      headlineSpot: this.spotService.findSpotsPaginated(
+        0,
+        1,
+        '',
+        SortOptions.ALPHABETICAL.toString(),
+        []
+      ),
+      headlineEvent: this.eventService.findEventsPaginated(
+        0,
+        1,
+        '',
+        SortOptions.ALPHABETICAL.toString(),
+        []
+      ),
+      favouriteSpots: this.spotService.findSpotsPaginated(
+        0,
+        10,
+        '',
+        SortOptions.ALPHABETICAL.toString(),
+        []
+      ),
+      popularSpots: this.spotService.findSpotsPaginated(
+        0,
+        10,
+        '',
+        SortOptions.ALPHABETICAL.toString(),
+        []
+      ),
+      upcomingEvents: this.eventService.findEventsPaginated(
+        0,
+        10,
+        '',
+        SortOptions.ALPHABETICAL.toString(),
+        []
+      ),
+      landmarkSpots: this.spotService.findSpotsPaginated(
+        0,
+        10,
+        '',
+        SortOptions.ALPHABETICAL.toString(),
+        []
+      ),
+      spotCategories: this.categoryService.getAllSpotCategories(),
+      eventCategories: this.categoryService.getAllEventCategories(),
+    }).subscribe({
+      next: (result) => {
+        this.headlineSpot = result.headlineSpot.content[0];
+        this.headlineEvent = result.headlineEvent.content[0];
+
+        this.favouriteSpots = result.favouriteSpots.content;
+        this.popularSpots = result.popularSpots.content;
+        this.upcomingEvents = result.upcomingEvents.content;
+        this.landmarkSpots = result.landmarkSpots.content;
+
+        this.spotCategories = result.spotCategories;
+        this.eventCategories = result.eventCategories;
+
+        this.cdr.detectChanges();
       },
-      error: (response: HttpErrorResponse) => {
-        this.toastr.error(response.message)
-      }
-    })
+      error: (err: HttpErrorResponse) => {
+        this.toastr.error(err.message);
+      },
+    });
   }
 
-  loadPopularSpots() {
-    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
-      next: (response: any) => {
-        this.popularSpots = response['content']
-        this.cdr.detectChanges()
-      },
-      error: (response: HttpErrorResponse) => {
-        this.toastr.error(response.message)
-      }
-    })
-  }
-
-  loadUpcomingEvents() {
-    this.eventService.findEventsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
-      next: (response: PageResponseModel<EventShorthandModel>) => {
-        this.upcomingEvents = response.content
-        this.cdr.detectChanges()
-      },
-      error: (response: HttpErrorResponse) => {
-        this.toastr.error(response.message)
-      }
-    })
-  }
-
-  loadHistoricalLandmarks() {
-    this.spotService.findSpotsPaginated(0, 10, '', SortOptions.ALPHABETICAL.toString(), []).subscribe({
-      next: (response: any) => {
-        this.landmarkSpots = response['content']
-        this.cdr.detectChanges()
-      },
-      error: (response: HttpErrorResponse) => {
-        this.toastr.error(response.message)
-      }
-    })
-  }
-
-   
   loadQueryAndDisplayDays() {
     this.eventCalendarDays = [];
     let date = new Date();
@@ -166,34 +165,12 @@ export class Homepage implements OnInit {
       date.setDate(date.getDate() + 1);
     }
 
-    this.selectedDate = this.eventCalendarDays[0].queryDate
-    // this.loadEventsForDate(selectedQueryDate);
+    this.selectedDate = this.eventCalendarDays[0].queryDate;
+    // this.loadEventsForDate(selectedQueryDate); // Handle this after inserting events into the system
   }
 
   handleDaySelection(selectedQueryDate: string) {
     this.selectedDate = selectedQueryDate;
-    // this.loadEventsForDate(selectedQueryDate);
-  }
-
-  loadSpotAndEventCategories() {
-    this.categoryService.getAllSpotCategories().subscribe({
-      next: (response: SpotCategoryModel[]) => {
-        this.spotCategories = response
-        this.cdr.detectChanges();
-      },
-      error: (response: HttpErrorResponse) => {
-        console.error(response)
-      }
-    })
-
-    this.categoryService.getAllEventCategories().subscribe({
-      next: (response: EventCategoryModel[]) => {
-        this.eventCategories = response
-        this.cdr.detectChanges();
-      },
-      error: (response: HttpErrorResponse) => {
-        console.error(response)
-      }
-    })
+    // this.loadEventsForDate(selectedQueryDate); // Handle this after inserting events into the system (possibly after admin panel is made)
   }
 }

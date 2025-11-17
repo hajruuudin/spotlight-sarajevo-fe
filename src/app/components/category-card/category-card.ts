@@ -6,21 +6,21 @@ import { NgClass } from '@angular/common';
   selector: 'app-category-card',
   imports: [NgClass],
   templateUrl: './category-card.html',
-  styleUrl: './category-card.css'
+  styleUrl: './category-card.css',
 })
 export class CategoryCard {
-  protected isDescriptionShown: Boolean = false
+  protected isDescriptionShown: Boolean = false;
 
-  @Input() spotCategoryModel: SpotCategoryModel | null = null
-  @Input() eventCategoryModel: EventCategoryModel | null = null
+  @Input() spotCategoryModel: SpotCategoryModel | null = null;
+  @Input() eventCategoryModel: EventCategoryModel | null = null;
 
   @HostListener('mouseenter')
-  onEnter(){
-    this.isDescriptionShown = true
+  onEnter() {
+    this.isDescriptionShown = true;
   }
 
   @HostListener('mouseleave')
-  onLeave(){
-    this.isDescriptionShown = false
+  onLeave() {
+    this.isDescriptionShown = false;
   }
 }

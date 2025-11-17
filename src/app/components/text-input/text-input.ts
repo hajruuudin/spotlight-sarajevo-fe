@@ -9,7 +9,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   styleUrl: './text-input.css',
   standalone: true,
   host: {
-    class: "w-full flex flex-row justify-center items-center"
+    class: 'w-full flex flex-row justify-center items-center',
   },
   providers: [
     {
@@ -19,12 +19,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     },
   ],
 })
-export class TextInput implements ControlValueAccessor{
-  @Input() public placeholder: String = 'Enter...'
-  @Input() public id: String = 'defaultId'
-  @Input() public value: String = 'defautValue'
-  @Input() public type: String = 'text'
-  @Input() public classAddons: String = ''
+export class TextInput implements ControlValueAccessor {
+  @Input() public placeholder: String = 'Enter...';
+  @Input() public id: String = 'defaultId';
+  @Input() public value: String = 'defautValue';
+  @Input() public type: String = 'text';
+  @Input() public classAddons: String = '';
 
   onChange = (value: string) => {};
   onTouched = () => {};

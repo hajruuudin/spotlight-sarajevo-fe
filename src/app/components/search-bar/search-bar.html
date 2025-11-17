@@ -1,4 +1,6 @@
-<div class="relative flex w-full items-center rounded-2xl bg-[var(--background-400)] dark:bg-[var(--background-200)]">
+<div
+  class="relative flex w-full items-center rounded-2xl bg-(--secondary-600) dark:bg-(--background-200)"
+>
   <input
     type="text"
     [value]="value"
@@ -9,10 +11,11 @@
   <button
     type="button"
     (click)="onSearchPressed()"
-    class="absolute right-0 h-full w-1/4 rounded-2xl flex items-center justify-center bg-[var(--background-700)] dark:bg-[var(--background-300)] hover:dark:bg-[var(--background-400)] transition-all"
+    class="absolute right-0 h-full w-1/4 rounded-2xl flex items-center justify-center bg-(--secondary-700) dark:bg-[var(--background-300)] hover:dark:bg-[var(--background-400)] transition-all"
   >
     <app-search-icon></app-search-icon>
-    <span class="hidden md:inline text-xl md:text-2xl font-bold">{{ 'search.searchButton' | transloco }}</span>
+    <span class="hidden md:inline text-xl md:text-2xl font-bold">{{
+      'search.searchButton' | transloco
+    }}</span>
   </button>
 </div>
-
