@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, isDevMode, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, isDevMode, importProvidersFrom, APP_INITIALIZER, provideAppInitializer, inject } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { routes } from './app.routes';
@@ -6,9 +6,14 @@ import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { provideHttpClient } from '@angular/common/http';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@ngneat/transloco';
+import { SessionService } from './core/services/session.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAppInitializer(() => {
+      const session = inject(SessionService)
+      return session.restoreSession()
+    }),
     provideHttpClient(),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),

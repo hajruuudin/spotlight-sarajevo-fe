@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { LoginModel, PreferencesModel, SystemUserModel } from '../models/auth.model';
+import { LoggedUserModel, LoginModel, PreferencesModel, SystemUserModel } from '../../shared/models/auth.model';
 
 /**
  * AuthService handles all authentication-related operations in the application.
@@ -27,7 +27,9 @@ export class AuthService {
   /** Base API URL from environment configuration */
   private apiUrl: string = environment.API_URL;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient
+  ) {}
 
   /**
    * Registers a user using Google OAuth credentials.
@@ -71,7 +73,7 @@ export class AuthService {
    * @returns Observable<any> - The response from the API.
    */
   loginWithGoogle(idToken: string) {
-    return this.http.post(`${this.apiUrl}/auth/login/google`, JSON.stringify({ idToken }), {
+    return this.http.post<LoggedUserModel>(`${this.apiUrl}/auth/login/google`, JSON.stringify({ idToken }), {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true
     });
@@ -83,10 +85,23 @@ export class AuthService {
    * @returns Observable<any> - The response from the API.
    */
   loginWithSystem(request: LoginModel) {
-    return this.http.post(`${this.apiUrl}/auth/login/system`, request, {
+    return this.http.post<LoggedUserModel>(`${this.apiUrl}/auth/login/system`, request, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true
     });
+  }
+
+  /**
+   * Checks weather a user is authenticated on the system and returns the 
+   * user data if required for the local storage.
+   * @returns  Observable<LoggedUserModel | null> - The response from the backend. Null if the 
+   * session is not present and LoggedUserModel if the session is present.
+   */
+  isAuthenticated(){
+    return this.http.post<LoggedUserModel | null>(`${this.apiUrl}/auth/me`, null, {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true
+    })
   }
 
   /**

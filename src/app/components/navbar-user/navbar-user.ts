@@ -10,8 +10,8 @@ import { GuidesIcon } from '../../resources/icons/guides-icon/guides-icon';
 import { RequestIcon } from '../../resources/icons/request-icon/request-icon';
 import { TransportIcon } from '../../resources/icons/transport-icon/transport-icon';
 import { HamburgerIcon } from '../../resources/icons/hamburger-icon/hamburger-icon';
-import { Profile } from '../../pages/user-pages/profile/profile';
-import { SessionService } from '../../services/session-service';
+import { Profile } from '../../pages/home/profile/profile';
+import { SessionService } from '../../core/services/session.service';
 
 @Component({
   selector: 'app-navbar-user',

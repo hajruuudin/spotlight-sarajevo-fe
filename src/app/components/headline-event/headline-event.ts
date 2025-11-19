@@ -1,5 +1,5 @@
 import { Component, input, Input } from '@angular/core';
-import { EventShorthandModel } from '../../models/event.model';
+import { EventShorthandModel } from '../../shared/models/event.model';
 import { NgClass } from '@angular/common';
 
 @Component({

@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { PageHeader } from '../../../components/page-header/page-header';
 import { HeadlineEvent } from '../../../components/headline-event/headline-event';
-import { EventShorthandModel } from '../../../models/event.model';
-import { SpotShorthandModel } from '../../../models/spot.model';
+import { EventShorthandModel } from '../../../shared/models/event.model';
+import { SpotShorthandModel } from '../../../shared/models/spot.model';
 import { HeadlineSpot } from '../../../components/headline-spot/headline-spot';
 import { SmallSpotCard } from '../../../components/small-spot-card/small-spot-card';
 import { TranslocoPipe } from '@ngneat/transloco';
@@ -10,17 +10,17 @@ import { SearchSpotCard } from '../../../components/search-spot-card/search-spot
 import { CalendarDateIcon } from '../../../components/calendar-date-icon/calendar-date-icon';
 import { SearchEventCard } from '../../../components/search-event-card/search-event-card';
 import { HistoricalSpotCard } from '../../../components/historical-spot-card/historical-spot-card';
-import { EventCategoryModel, SpotCategoryModel } from '../../../models/category.model';
-import { CategoryService } from '../../../services/category-service';
+import { EventCategoryModel, SpotCategoryModel } from '../../../shared/models/category.model';
+import { CategoryService } from '../../../services/category.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CategoryCard } from '../../../components/category-card/category-card';
 import { ButtonPrimary } from '../../../components/button-primary/button-primary';
-import { SessionService } from '../../../services/session-service';
-import { SpotService } from '../../../services/spot-service';
-import { SortOptions } from '../../../utils/enums/SortOptions';
+import { SessionService } from '../../../core/services/session.service';
+import { SpotService } from '../../../services/spot.service';
+import { SortOptions } from '../../../shared/constants/SortOptions';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { forkJoin, Subscription } from 'rxjs';
-import { EventService } from '../../../services/event-service';
+import { EventService } from '../../../services/event.service';
 
 @Component({
   selector: 'app-homepage',

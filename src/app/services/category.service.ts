@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { env } from 'process';
 import { environment } from '../../environments/environment';
-import { EventCategoryModel, SpotCategoryModel } from '../models/category.model';
+import { EventCategoryModel, SpotCategoryModel } from '../shared/models/category.model';
 
 @Injectable({
   providedIn: 'root'

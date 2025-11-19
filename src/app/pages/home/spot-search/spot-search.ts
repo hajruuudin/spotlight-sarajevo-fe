@@ -1,54 +1,54 @@
-import { ChangeDetectorRef, Component, computed } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, OnInit } from '@angular/core';
 import { PageHeader } from '../../../components/page-header/page-header';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { EventCategoryModel } from '../../../models/category.model';
-import { CategoryService } from '../../../services/category-service';
-import { SessionService } from '../../../services/session-service';
-import { SpinnerService } from '../../../services/spinner-service';
-import { HotToastService } from '@ngxpert/hot-toast';
-import { EventShorthandModel } from '../../../models/event.model';
-import { HttpErrorResponse } from '@angular/common/http';
-import { TranslocoPipe } from '@ngneat/transloco';
 import { SearchBar } from '../../../components/search-bar/search-bar';
-import { SortingSelector } from '../../../components/sorting-selector/sorting-selector';
-import { ButtonSecondary } from '../../../components/button-secondary/button-secondary';
+import { TranslocoPipe } from '@ngneat/transloco';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SessionService } from '../../../core/services/session.service';
+import { SpinnerService } from '../../../core/services/spinner.service';
+import { HotToastService } from '@ngxpert/hot-toast';
+import { CategoryService } from '../../../services/category.service';
+import { SpotCategoryModel } from '../../../shared/models/category.model';
+import { HttpErrorResponse } from '@angular/common/http';
 import { CategoryFilterSelector } from '../../../components/category-filter-selector/category-filter-selector';
-import { SearchEventCard } from '../../../components/search-event-card/search-event-card';
+import { ButtonSecondary } from '../../../components/button-secondary/button-secondary';
+import { SortingSelector } from '../../../components/sorting-selector/sorting-selector';
+import { SpotShorthandModel } from '../../../shared/models/spot.model';
+import { SearchSpotCard } from '../../../components/search-spot-card/search-spot-card';
+import { SortOptions } from '../../../shared/constants/SortOptions';
+import { SpotService } from '../../../services/spot.service';
 import { Subscription } from 'rxjs';
-import { SortOptions } from '../../../utils/enums/SortOptions';
-import { EventService } from '../../../services/event-service';
-import { PageResponseModel } from '../../../models/shared.model';
 import { SpinnerSmallComponent } from '../../../components/spinner-small-component/spinner-small-component';
+import { PageResponseModel } from '../../../shared/models/shared.model';
 import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
 
 @Component({
-  selector: 'app-event-search',
+  selector: 'app-spot-search',
   imports: [
     PageHeader,
-    ReactiveFormsModule,
-    TranslocoPipe,
     SearchBar,
-    SortingSelector,
-    ButtonSecondary,
+    TranslocoPipe,
+    ReactiveFormsModule,
     CategoryFilterSelector,
-    SearchEventCard,
+    ButtonSecondary,
+    SortingSelector,
+    SearchSpotCard,
     SpinnerSmallComponent,
     NotFoundComponent,
   ],
-  templateUrl: './event-search.html',
-  styleUrl: './event-search.css',
+  templateUrl: './spot-search.html',
+  styleUrl: './spot-search.css',
   host: {
     class: 'flex flex-col w-full justify-start items-center',
   },
 })
-export class EventSearch {
-  protected lang!: string;
+export class SpotSearch implements OnInit {
+  protected lang: String = 'en';
   protected sub!: Subscription;
-  protected eventSearchForm: FormGroup;
-  protected eventCategories: EventCategoryModel[] = [];
+  protected spotSearchForm: FormGroup;
+  protected spotCategories: SpotCategoryModel[] = [];
   protected sortingMethods: string[] = [
     SortOptions.ALPHABETICAL.toString(),
-    SortOptions.DATE.toString(),
+    SortOptions.RATING.toString(),
   ];
 
   protected selectedCategoryIds: number[] = [];
@@ -58,23 +58,23 @@ export class EventSearch {
   protected isSortingPopupLoaded: boolean = false;
 
   protected pageNumber: number = 0;
-  protected pageSize: number = 2;
+  protected pageSize: number = 4;
   protected totalElements: number = 0;
   protected totalPages: number = 0;
 
-  protected eventSearchResults: EventShorthandModel[] = [];
+  protected spotSearchResults: SpotShorthandModel[] = [];
 
   constructor(
     private categoryService: CategoryService,
-    private eventService: EventService,
-    //====== COMMON NON-OBJECT SERVICES =====//
-    public session: SessionService,
+    private spotService: SpotService,
+    //====== COMMON SERVICES =====//
+    private session: SessionService,
     private fb: FormBuilder,
     private spinner: SpinnerService,
     private toastr: HotToastService,
     private cdr: ChangeDetectorRef
   ) {
-    this.eventSearchForm = this.fb.group({
+    this.spotSearchForm = this.fb.group({
       searchTerm: ['', Validators.required],
       sortOption: ['', Validators.required],
     });
@@ -91,17 +91,16 @@ export class EventSearch {
       this.lang = lang;
     });
 
-    this.categoryService.getAllEventCategories().subscribe({
-      next: (response: EventCategoryModel[]) => {
-        this.eventCategories = response;
+    this.categoryService.getAllSpotCategories().subscribe({
+      next: (response: SpotCategoryModel[]) => {
+        this.spotCategories = response;
         this.cdr.detectChanges();
       },
-      error: (error: HttpErrorResponse) => {
-        // probably redirect to error
-      },
+      error: (error: HttpErrorResponse) => {},
     });
 
-    this.fetchEvents(
+    this.spinner.showSectionSpinner();
+    this.fetchSpots(
       this.pageNumber,
       this.pageSize,
       '',
@@ -112,11 +111,11 @@ export class EventSearch {
     );
   }
 
-  onSearchTriggered(searchValue: string) {
-    this.fetchEvents(
+  onSearchTriggered() {
+    this.fetchSpots(
       this.pageNumber,
       this.pageSize,
-      searchValue,
+      this.spotSearchForm.get('searchTerm')?.value,
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       true,
@@ -144,10 +143,10 @@ export class EventSearch {
 
   resetCategoryFilters() {
     this.selectedCategoryIds = [];
-    this.fetchEvents(
+    this.fetchSpots(
       this.pageNumber,
       this.pageSize,
-      this.eventSearchForm.get('searchTerm')?.value,
+      this.spotSearchForm.get('searchTerm')?.value,
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       true,
@@ -157,10 +156,10 @@ export class EventSearch {
 
   resetSortingFilters() {
     this.selectedSortingMethod = SortOptions.ALPHABETICAL.toString();
-    this.fetchEvents(
+    this.fetchSpots(
       this.pageNumber,
       this.pageSize,
-      this.eventSearchForm.get('searchTerm')?.value,
+      this.spotSearchForm.get('searchTerm')?.value,
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       true,
@@ -168,11 +167,11 @@ export class EventSearch {
     );
   }
 
-  fetchEvents(
+  fetchSpots(
     pageNumber: number,
     pageSize: number,
-    searchTerm: string,
-    sortOption: string,
+    searchValue: string,
+    sortingMethod: string,
     categoryIds: number[],
     resetPages: boolean,
     extendResultSet: boolean
@@ -182,16 +181,16 @@ export class EventSearch {
     }
 
     this.spinner.showSectionSpinner();
-    this.eventService
-      .findEventsPaginated(pageNumber, pageSize, searchTerm, sortOption, categoryIds)
+    this.spotService
+      .findSpotsPaginated(pageNumber, pageSize, searchValue, sortingMethod, categoryIds)
       .subscribe({
-        next: (response: PageResponseModel<EventShorthandModel>) => {
+        next: (response: PageResponseModel<SpotShorthandModel>) => {
           this.spinner.hideSectionSpinner();
 
           if (extendResultSet) {
-            this.eventSearchResults = this.eventSearchResults.concat(response.content);
+            this.spotSearchResults = this.spotSearchResults.concat(response.content);
           } else {
-            this.eventSearchResults = response.content;
+            this.spotSearchResults = response.content;
           }
 
           if (resetPages) {
@@ -210,10 +209,10 @@ export class EventSearch {
       return;
     }
     this.pageNumber++;
-    this.fetchEvents(
+    this.fetchSpots(
       this.pageNumber,
       this.pageSize,
-      this.eventSearchForm.get('searchTerm')?.value,
+      this.spotSearchForm.get('searchTerm')?.value,
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       false,

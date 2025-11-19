@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HotToastService } from '@ngxpert/hot-toast';
-import { SpinnerService } from '../../../services/spinner-service';
-import { CategoryService } from '../../../services/category-service';
-import { EventCategoryModel, SpotCategoryModel } from '../../../models/category.model';
+import { SpinnerService } from '../../../core/services/spinner.service';
+import { CategoryService } from '../../../services/category.service';
+import { EventCategoryModel, SpotCategoryModel } from '../../../shared/models/category.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgClass } from '@angular/common';
 import { TextInput } from "../../../components/text-input/text-input";
@@ -12,9 +12,9 @@ import { RouterLink } from "@angular/router";
 import { CategorySelector } from '../../../components/category-selector/category-selector';
 import { QuestionComponent } from "../../../components/question-component/question-component";
 import { TranslocoPipe } from '@ngneat/transloco';
-import { AuthService } from '../../../services/auth-service';
-import { PreferencesModel, SystemUserModel } from '../../../models/auth.model';
-import { SessionService } from '../../../services/session-service';
+import { AuthService } from '../../../core/services/auth.service';
+import { PreferencesModel, SystemUserModel } from '../../../shared/models/auth.model';
+import { SessionService } from '../../../core/services/session.service';
 
 declare global {
   interface Window {

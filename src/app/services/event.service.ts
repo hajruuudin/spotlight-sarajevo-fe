@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { PageResponseModel } from '../models/shared.model';
-import { EventShorthandModel } from '../models/event.model';
+import { PageResponseModel } from '../shared/models/shared.model';
+import { EventShorthandModel } from '../shared/models/event.model';
 
 @Injectable({
   providedIn: 'root'

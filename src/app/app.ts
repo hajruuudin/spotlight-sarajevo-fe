@@ -2,8 +2,8 @@ import { Component, computed, OnInit, signal } from '@angular/core';
 import { environment } from '../environments/environment';
 import { RouterOutlet } from '@angular/router';
 import { SpinnerComponent } from "./components/spinner-component/spinner-component";
-import { SpinnerService } from './services/spinner-service';
-import { SessionService } from './services/session-service';
+import { SpinnerService } from './core/services/spinner.service';
+import { SessionService } from './core/services/session.service';
 
 @Component({
   selector: 'app-root',

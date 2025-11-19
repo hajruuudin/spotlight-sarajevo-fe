@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { TextInput } from "../../../components/text-input/text-input";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms"
-import { LoginModel } from '../../../models/auth.model';
+import { LoggedUserModel, LoginModel } from '../../../shared/models/auth.model';
 import { ButtonRegular } from "../../../components/button-regular/button-regular";
 import { HotToastService } from '@ngxpert/hot-toast';
-import { SpinnerService } from '../../../services/spinner-service';
+import { SpinnerService } from '../../../core/services/spinner.service';
 import { Router, RouterLink } from "@angular/router";
 import { TranslocoPipe } from '@ngneat/transloco';
-import { AuthService } from '../../../services/auth-service';
+import { AuthService } from '../../../core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SessionService } from '../../../services/session-service';
+import { SessionService } from '../../../core/services/session.service';
 
 @Component({
   selector: 'app-login',
@@ -54,11 +54,15 @@ export class Login implements OnInit {
         this.loginForm.get('password')?.value
       )
 
+      this.spinner.showGlobalSpinner()
       this.authService.loginWithSystem(loginObject).subscribe({
-        next: (response: any) => {
-          this.router.navigate(['/'])
+        next: (response: LoggedUserModel) => {
+          this.spinner.hideGlobalSpinner()
+          this.session.setUser(response)
+          this.router.navigate(['/homepage'])
         },
         error: (error: HttpErrorResponse) => {
+          this.spinner.hideGlobalSpinner()
           this.toast.error(error.error.message)
         }
       })
@@ -72,8 +76,9 @@ export class Login implements OnInit {
         const idToken = credentialResponse?.credential;
         if (idToken) {
           this.authService.loginWithGoogle(idToken).subscribe({
-            next: (response: any) => {
+            next: (response: LoggedUserModel) => {
               this.spinner.hideGlobalSpinner()
+              this.session.setUser(response)
               this.router.navigate(['/homepage'])
             },
             error: (error: HttpErrorResponse) => {

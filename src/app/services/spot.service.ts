@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { SortOptions } from "../utils/enums/SortOptions";
+import { SortOptions } from "../shared/constants/SortOptions";
 import { environment } from "../../environments/environment";
-import { SpotShorthandModel } from "../models/spot.model";
-import { PageResponseModel } from "../models/shared.model";
+import { SpotShorthandModel } from "../shared/models/spot.model";
+import { PageResponseModel } from "../shared/models/shared.model";
 
 /**
  * SpotService handles all available backend endpoints related to the spot object.

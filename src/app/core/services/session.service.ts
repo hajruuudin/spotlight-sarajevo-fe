@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { LoggedUserModel } from '../models/auth.model';
+import { BehaviorSubject, catchError, map, of, tap } from 'rxjs';
+import { LoggedUserModel } from '../../shared/models/auth.model';
 import { TranslocoService } from '@ngneat/transloco';
+import { AuthService } from './auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +22,11 @@ export class SessionService {
   user = this.userSubject.asObservable();
   theme = this.themeSubject.asObservable();
 
-  constructor( private transloco: TranslocoService) {
+  constructor( 
+    private transloco: TranslocoService,
+    private auth: AuthService,
+    private router: Router
+  ) {
     this.transloco.setActiveLang(this.languageSubject.value);
     this.applyTheme(this.getStoredThemeFallback())
   }
@@ -76,11 +83,22 @@ export class SessionService {
     this.userSubject.next(null);
   }
 
-  private getStoredUser(): LoggedUserModel | null {
+  getStoredUser(): LoggedUserModel | null {
     const data = localStorage.getItem(this.APP_USER_KEY);
     return data ? JSON.parse(data) : null;
   }
 
+  restoreSession() {
+  return this.auth.isAuthenticated().pipe(
+    tap((response: LoggedUserModel | null) => {
+      if (response != null && !localStorage.getItem(this.APP_USER_KEY)) {
+        this.setUser(response);
+      }
+    }),
+    map((response) => response != null),
+    catchError(() => of(false))
+  );
+}
 
   //========== CLEARING THE SESSION ==========//
   clearSession() : void {

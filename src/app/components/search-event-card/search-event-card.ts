@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { EventShorthandModel } from '../../models/event.model';
+import { EventShorthandModel } from '../../shared/models/event.model';
 import { DatePipe } from '@angular/common';
 
 @Component({

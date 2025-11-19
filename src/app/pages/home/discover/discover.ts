@@ -3,17 +3,17 @@ import { PageHeader } from '../../../components/page-header/page-header';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { HistoricalSpotCard } from '../../../components/historical-spot-card/historical-spot-card';
-import { SpotShorthandModel } from '../../../models/spot.model';
-import { EventShorthandModel } from '../../../models/event.model';
+import { SpotShorthandModel } from '../../../shared/models/spot.model';
+import { EventShorthandModel } from '../../../shared/models/event.model';
 import { ButtonPrimary } from '../../../components/button-primary/button-primary';
 import { SmallSpotCard } from '../../../components/small-spot-card/small-spot-card';
 import { SmallEventCard } from '../../../components/small-event-card/small-event-card';
-import { SpotService } from '../../../services/spot-service';
-import { SortOptions } from '../../../utils/enums/SortOptions';
+import { SpotService } from '../../../services/spot.service';
+import { SortOptions } from '../../../shared/constants/SortOptions';
 import { HttpErrorResponse } from '@angular/common/http';
 import { forkJoin, Subscription } from 'rxjs';
-import { SessionService } from '../../../services/session-service';
-import { EventService } from '../../../services/event-service';
+import { SessionService } from '../../../core/services/session.service';
+import { EventService } from '../../../services/event.service';
 
 @Component({
   selector: 'app-discover',
