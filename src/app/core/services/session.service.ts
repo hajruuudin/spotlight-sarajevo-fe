@@ -3,7 +3,6 @@ import { BehaviorSubject, catchError, map, of, tap } from 'rxjs';
 import { LoggedUserModel } from '../../shared/models/auth.model';
 import { TranslocoService } from '@ngneat/transloco';
 import { AuthService } from './auth.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Injectable({

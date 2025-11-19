@@ -5,7 +5,7 @@ import { EventShorthandModel } from '../../../shared/models/event.model';
 import { SpotShorthandModel } from '../../../shared/models/spot.model';
 import { HeadlineSpot } from '../../../components/headline-spot/headline-spot';
 import { SmallSpotCard } from '../../../components/small-spot-card/small-spot-card';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { SearchSpotCard } from '../../../components/search-spot-card/search-spot-card';
 import { CalendarDateIcon } from '../../../components/calendar-date-icon/calendar-date-icon';
 import { SearchEventCard } from '../../../components/search-event-card/search-event-card';
@@ -59,7 +59,8 @@ export class Homepage implements OnInit {
     public session: SessionService,
     public cdr: ChangeDetectorRef,
     private categoryService: CategoryService,
-    private toastr: HotToastService
+    private toastr: HotToastService,
+    private transloco: TranslocoService
   ) {}
 
   protected lang!: string;
@@ -137,7 +138,7 @@ export class Homepage implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err: HttpErrorResponse) => {
-        this.toastr.error(err.message);
+        this.toastr.error(this.lang == 'en' ? 'There was an error' : 'Doslo je do greske :(');
       },
     });
   }

@@ -11,7 +11,7 @@ import { ButtonRegular } from "../../../components/button-regular/button-regular
 import { RouterLink } from "@angular/router";
 import { CategorySelector } from '../../../components/category-selector/category-selector';
 import { QuestionComponent } from "../../../components/question-component/question-component";
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { AuthService } from '../../../core/services/auth.service';
 import { PreferencesModel, SystemUserModel } from '../../../shared/models/auth.model';
 import { SessionService } from '../../../core/services/session.service';
@@ -88,6 +88,7 @@ export class Signup implements OnInit {
     private categoryService: CategoryService,
     private authService: AuthService,
     public session: SessionService,
+    private transloco: TranslocoService,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private spinner: SpinnerService,
@@ -322,7 +323,7 @@ export class Signup implements OnInit {
 
   moveToSurveySection(selectedEventCategories: number[]) {
     if(selectedEventCategories.length < 3){
-      this.toastr.info("Please select exactly three categories.")
+      this.toastr.info(this.transloco.translate('info.CATEGORY_SELECTION'))
     } else {
       this.isEventCategoriesSectionLoaded = false
       this.isSurveySectionLoaded = true
@@ -344,8 +345,6 @@ export class Signup implements OnInit {
         surveyAnswers['question4']
       )
 
-      console.log(preferencesModel)
-
       this.authService.registerToSystem(preferencesModel).subscribe({
         next: (response : any) => {
           this.isSurveySectionLoaded = false
@@ -354,7 +353,7 @@ export class Signup implements OnInit {
           this.cdr.detectChanges();
         },
         error: (error : HttpErrorResponse) => {
-          this.toastr.error("Oops, something went wrong. Sorry, try again later!")
+          this.toastr.error(this.transloco.translate('error.LOGIN_ERROR'))
         }
       })
     } else {

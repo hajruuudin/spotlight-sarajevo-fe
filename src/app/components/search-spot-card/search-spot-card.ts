@@ -15,5 +15,5 @@ import { TranslocoPipe } from '@ngneat/transloco';
 export class SearchSpotCard {
   @Input() lang: String = 'en';
   @Input() classAddons: String = '';
-  @Input() spotShorthand!: SpotShorthandModel;
+  @Input() spot!: SpotShorthandModel;
 }

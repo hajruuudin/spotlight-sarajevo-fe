@@ -11,6 +11,7 @@ import { NgClass } from '@angular/common';
 export class CategoryCard {
   protected isDescriptionShown: Boolean = false;
 
+  @Input() lang: String = 'en';
   @Input() spotCategoryModel: SpotCategoryModel | null = null;
   @Input() eventCategoryModel: EventCategoryModel | null = null;
 

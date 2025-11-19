@@ -7,7 +7,8 @@ export class EventShorthandModel {
     constructor(
         public id: number,
         public slug: string,
-        public officialName: string,
+        public officialNameBs: string,
+        public officialNameEn: string,
         public smallDescriptionBs: string,
         public smallDescriptionEn: string,
         public categoryNameBs: string,

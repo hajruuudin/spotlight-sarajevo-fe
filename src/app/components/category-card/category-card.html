@@ -8,13 +8,24 @@
 >
   @if (this.spotCategoryModel == null) { @if (!this.isDescriptionShown) {
   <span class="uppercase font-semibold px-2">{{
-    this.eventCategoryModel?.eventCategoryNameEn
+    this.lang == 'en' ? this.eventCategoryModel?.eventCategoryNameEn : this.eventCategoryModel?.eventCategoryNameBs
   }}</span>
   } @else {
-  <span class="font-normal px-2">{{ this.eventCategoryModel?.eventCategoryDescriptionEn }}</span>
+    <div class="flex flex-col justify-center items-center">
+      <span class="uppercase font-semibold px-2">{{
+        this.lang == 'en' ? this.eventCategoryModel?.eventCategoryNameEn : this.eventCategoryModel?.eventCategoryNameBs
+      }}</span>
+      <span class="font-normal px-2">{{ this.lang == 'en' ? this.eventCategoryModel?.eventCategoryDescriptionEn : this.eventCategoryModel?.eventCategoryDescriptionBs }}</span>
+    </div>
   } } @else { @if (!this.isDescriptionShown) {
-  <span class="uppercase font-semibold px-2">{{ this.spotCategoryModel.spotCategoryNameEn }}</span>
+  <span class="uppercase font-semibold px-2">{{ this.lang == 'en' ? this.spotCategoryModel.spotCategoryNameEn : this.spotCategoryModel.spotCategoryNameBs }}</span>
   } @else {
-  <span class="font-normal px-2">{{ this.spotCategoryModel.spotCategoryDescriptionEn }}</span>
+    <div class="flex flex-col justify-center items-center">
+      <span class="uppercase font-semibold px-2">{{ this.lang == 'en' ? this.spotCategoryModel.spotCategoryNameEn : this.spotCategoryModel.spotCategoryNameBs }}</span>
+      <span class="font-normal px-2">
+        {{ this.lang == 'en' ? this.spotCategoryModel.spotCategoryDescriptionEn : this.spotCategoryModel.spotCategoryDescriptionBs }}
+      </span>
+    </div>
+  
   } }
 </div>
