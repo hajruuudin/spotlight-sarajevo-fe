@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SpotShorthandModel } from '../../models/spot.model';
+import { SpotShorthandModel } from '../../shared/models/spot.model';
 
 @Component({
   selector: 'app-historical-spot-card',

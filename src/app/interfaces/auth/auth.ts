@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SessionService } from '../../services/session-service';
+import { SessionService } from '../../core/services/session.service';
 
 /**
  * Authentication User Interface: Container for authentication related 

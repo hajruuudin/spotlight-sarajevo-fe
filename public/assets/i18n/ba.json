@@ -1,10 +1,6 @@
 {
-    "navbar" : {
-
-    },
-    "footer" : {
-        
-    },
+    "navbar" : {},
+    "footer" : {},
     "register" : {
         "title" : "Dobrodošli u SpotlightSarajevo!",
         "sectionDescription" : "Gdje su sva dešavanja, aktuelnosti i lokali sadržani na jednom mjestu! Kreirajte račun kako biste nastavili koristiti aplikaciju.",

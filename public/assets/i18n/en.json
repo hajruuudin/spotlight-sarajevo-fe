@@ -1,10 +1,6 @@
 {
-    "navbar" : {
-
-    },
-    "footer" : {
-
-    },
+    "navbar" : {},
+    "footer" : {},
     "register" : {
         "title" : "Welcome to SpotlightSarajevo!",
         "sectionDescription" : "Where all events, spots and iconic moments are collected together! Please register Your account to use the Application",

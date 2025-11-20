@@ -21,7 +21,7 @@
       <div class="w-full bg-white h-0.5 rounded-full"></div>
     </div>
     <h3 class="text-base md:text-2xl font-bold mt-1 whitespace-nowrap">
-      {{ this.event.officialName }}
+      {{ this.lang == 'en' ? this.event.officialNameEn : this.event.officialNameBs }}
     </h3>
     <span class="text-sm md:text-base whitespace-nowrap">{{
       this.lang == 'en' ? this.event.smallDescriptionEn : this.event.smallDescriptionBs
