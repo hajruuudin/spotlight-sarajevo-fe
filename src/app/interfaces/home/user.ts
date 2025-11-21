@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavbarUser } from "../../components/navbar-user/navbar-user";
 import { RouterOutlet } from '@angular/router';
 import { Footer } from "../../components/footer/footer";
+import { SpinnerNavigate } from "../../components/spinner-navigate/spinner-navigate";
+import { SpinnerService } from '../../core/services/spinner.service';
 
 /**
  * Regular User Interface: The largest container, encapsulating:
@@ -15,7 +17,7 @@ import { Footer } from "../../components/footer/footer";
  */
 @Component({
   selector: 'app-user',
-  imports: [NavbarUser, RouterOutlet, Footer],
+  imports: [NavbarUser, RouterOutlet, Footer, SpinnerNavigate],
   templateUrl: './user.html',
   styleUrl: './user.css',
   host: {
@@ -23,5 +25,11 @@ import { Footer } from "../../components/footer/footer";
   }
 })
 export class User {
-
+  protected loading = false;
+  
+  constructor(private spinner: SpinnerService) {}
+  
+  get isLoading() {
+    return this.spinner.loadingNavigate();
+  }
 }

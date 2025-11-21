@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { SortOptions } from "../shared/constants/SortOptions";
 import { environment } from "../../environments/environment";
-import { SpotShorthandModel } from "../shared/models/spot.model";
+import { SpotOverviewModel, SpotShorthandModel } from "../shared/models/spot.model";
 import { PageResponseModel } from "../shared/models/shared.model";
 
 /**
@@ -42,6 +42,12 @@ export class SpotService {
      */
     findSpotsPaginated(pageNumber: number, pageSize: number, searchTerm: string, sortOption: string, categoryIds: number[]){
         return this.http.get<PageResponseModel<SpotShorthandModel>>(this.apiUrl + `/spot/find-spots?pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortOption=${sortOption}&categoryIds=${categoryIds}`, {
+            withCredentials: true
+        })
+    }
+
+    findSpotOverview(spotSlug: string){
+        return this.http.get<SpotOverviewModel>(this.apiUrl + `/spot/find-spot-overview?spotSlug=${spotSlug}`, {
             withCredentials: true
         })
     }

@@ -110,7 +110,7 @@
           @if (this.spotSearchResults.length != 0) {
           <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mb-2 md:mt-2">
             @for (spot of this.spotSearchResults; track $index) {
-            <app-search-spot-card [lang]="this.lang" [spot]="spot"></app-search-spot-card>
+            <app-search-spot-card (click)="this.navigateToSpotOverview(spot.slug)" [lang]="this.lang" [spot]="spot"></app-search-spot-card>
             }
           </div>
           } @else {

@@ -20,6 +20,7 @@ import { Subscription } from 'rxjs';
 import { SpinnerSmallComponent } from '../../../components/spinner-small-component/spinner-small-component';
 import { PageResponseModel } from '../../../shared/models/shared.model';
 import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-spot-search',
@@ -69,6 +70,7 @@ export class SpotSearch implements OnInit {
     private spotService: SpotService,
     //====== COMMON SERVICES =====//
     private session: SessionService,
+    private router: Router,
     private fb: FormBuilder,
     private spinner: SpinnerService,
     private toastr: HotToastService,
@@ -218,5 +220,11 @@ export class SpotSearch implements OnInit {
       false,
       true
     );
+  }
+
+  navigateToSpotOverview(spotSlug: string){
+    this.spinner.showNavigateSpinner()
+    this.router.navigate(['/spots/' + spotSlug])
+    this.spinner.hideNavigateSpinner()
   }
 }

@@ -27,6 +27,7 @@ import { AdminAddGuides } from './pages/admin/admin-add-guides/admin-add-guides'
 import { NotFound } from './interfaces/error/not-found';
 import { CommunityRequests } from './pages/home/community-requests/community-requests';
 import { authGuard } from './core/guards/auth-guard.guard';
+import { spotResolver } from './core/resolvers/spot.resolver';
 
 export const routes: Routes = [
   {
@@ -45,7 +46,7 @@ export const routes: Routes = [
       { path: 'homepage', canActivate: [authGuard], component: Homepage, title: 'Homepage - SpotlightSarajevo' },
 
       { path: 'spots', canActivate: [authGuard], component: SpotSearch, title: 'Browse Spots - SpotlightSarajevo' },
-      { path: 'spots/:slug', canActivate: [authGuard], component: SpotOverview, title: 'Spot Overview - SpotlightSarajevo' },
+      { path: 'spots/:spotSlug', canActivate: [authGuard], resolve: [spotResolver], component: SpotOverview, title: 'Spot Overview - SpotlightSarajevo' },
 
       { path: 'events', canActivate: [authGuard], component: EventSearch, title: 'Browse Events - SpotlightSarajevo' },
       { path: 'events/:slug', canActivate: [authGuard], component: EventOverview, title: 'Event - SpotlightSarajevo' },

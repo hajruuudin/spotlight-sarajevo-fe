@@ -1,1 +1,11 @@
-<p>spot-overview works!</p>
+<section
+  animate.enter="fade-in-animation"
+  id="spotOverviewHeadersSectionContainer"
+  class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4"
+>
+  <app-page-header
+    class="max-w-application pt-4"
+    [title]="this.lang == 'en' ? this.spotOverview.officialNameEn : this.spotOverview.officialNameBs"
+    [subtitle]="this.lang == 'en' ? this.spotOverview.smallDescriptionEn : this.spotOverview.smallDescriptionBs"
+  ></app-page-header>
+</section>
