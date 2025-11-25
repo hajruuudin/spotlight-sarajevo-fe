@@ -30,11 +30,12 @@ export class SpotOverviewModel {
         public fullDescriptionBs: string,
         public fullDescriptionEn: string,
         public address: string,
-        public categoryName: String,
+        public categoryNameEn: String,
+        public categoryNameBs: String,
         public spotTags: TagModel[],
         public latitude: number,
         public longitude: number,
-        public combinedOverallRating: number,
+        public combinedRating: number,
         public combinedAtmosphere: number,
         public combinedAccessibility: number,
         public combinedStaffKindness: number,
@@ -42,7 +43,9 @@ export class SpotOverviewModel {
         public combinedCleanliness: number,
         public combinedLocaleQuality: number,
         public reviews: SpotReviewModel[],
-        public workHours: SpotWorkHoursModel[]
+        public workHours: SpotWorkHoursModel[],
+        public thumbnailImage: string,
+        public images: string[]
     ){}
 }
 
