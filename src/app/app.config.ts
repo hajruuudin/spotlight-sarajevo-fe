@@ -8,6 +8,12 @@ import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@ngneat/transloco';
 import { SessionService } from './core/services/session.service';
 import { AuthInterceptor } from './core/interceptors/auth-interceptor.interceptor';
+import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts';
+import * as echarts from 'echarts/core';
+import { BarChart, RadarChart } from 'echarts/charts';
+import { GridComponent } from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
+echarts.use([RadarChart, CanvasRenderer]);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -49,5 +55,6 @@ export const appConfig: ApplicationConfig = {
         },
         loader: TranslocoHttpLoader
     }),
+    provideEchartsCore({ echarts }),
   ]
 };

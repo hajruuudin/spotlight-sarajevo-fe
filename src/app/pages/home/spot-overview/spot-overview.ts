@@ -4,15 +4,18 @@ import { HotToastService } from '@ngxpert/hot-toast';
 import { SpinnerService } from '../../../core/services/spinner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { SpotOverviewModel } from '../../../shared/models/spot.model';
+import { SpotOverviewModel, SpotWorkHoursModel } from '../../../shared/models/spot.model';
 import { PageHeader } from '../../../components/page-header/page-header';
 import { SessionService } from '../../../core/services/session.service';
 import { Subscription } from 'rxjs';
+import { Subheading } from '../../../components/subheading/subheading';
 import { ImageCarousel } from '../../../components/image-carousel/image-carousel';
+import { NgxEchartsDirective } from 'ngx-echarts';
+import { size } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-spot-overview',
-  imports: [PageHeader, ImageCarousel],
+  imports: [PageHeader, ImageCarousel, Subheading, NgxEchartsDirective],
   templateUrl: './spot-overview.html',
   styleUrl: './spot-overview.css',
   host: {
@@ -26,6 +29,8 @@ export class SpotOverview implements OnInit {
   protected images: string[] = [];
 
   protected headerContainer!: HTMLElement;
+
+  protected formattedSpotWorkHours: SpotWorkHoursModel[] = []
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,6 +51,7 @@ export class SpotOverview implements OnInit {
     this.activatedRoute.data.subscribe({
       next: (data: any) => {
         this.spotOverview = data['0'];
+        this.formatSpotWorkHours(this.spotOverview.workHours)
         this.images.push(this.spotOverview.thumbnailImage);
         this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');
         this.images.push(this.spotOverview.thumbnailImage);
@@ -70,4 +76,76 @@ export class SpotOverview implements OnInit {
 
     this.headerContainer.style.transform = `translateY(${parallaxOffset}px)`;
   }
+
+  formatSpotWorkHours(hours: SpotWorkHoursModel[]) {
+  // Days 1 → 7 (or 0 → 6 depending on your system)
+  const DAYS = [
+    { index: 1, name: "Monday" },
+    { index: 2, name: "Tuesday" },
+    { index: 3, name: "Wednesday" },
+    { index: 4, name: "Thursday" },
+    { index: 5, name: "Friday" },
+    { index: 6, name: "Saturday" },
+    { index: 7, name: "Sunday" }
+  ];
+
+  const map = new Map(hours.map(h => [h.dayIndex, h]));
+
+  const result: SpotWorkHoursModel[] = DAYS.map(d => {
+    const found = map.get(d.index);
+    return found
+      ? found
+      : new SpotWorkHoursModel(
+          d.index,
+          d.name,
+          "Closed",
+          "Closed",
+          hours[0]?.spotId ?? 0
+        );
+  });
+
+  this.formattedSpotWorkHours = result;
+}
+
+// CHART SETUP
+chartOptions = {
+  tooltip: {},
+  radar: {
+    indicator: [
+      { name: 'Cleanliness', max: 100 },
+      { name: 'Atmosphere', max: 100 },
+      { name: 'Quality', max: 100 },
+      { name: 'Affordability', max: 100 },
+      { name: 'Staff Kindness', max: 100 },
+      { name: 'Accessibility', max: 100 },
+    ],
+    splitNumber: 5,
+    shape: 'polygon',
+    axisName: {
+      color: '#fff',
+      fontSize: 20,
+      FontFace: 'Kumbh Sans'
+    },
+    splitLine: {
+      lineStyle: { color: '#999' }
+    },
+    splitArea: {
+      areaStyle: { color: 'rgba(255,255,255,0.04)' }
+    }
+  },
+  series: [{
+    type: 'radar',
+    areaStyle: { opacity: 0.3 },
+    lineStyle: { width: 3 },
+    symbol: 'circle',
+    symbolSize: 8,
+    data: [
+      {
+        value: [70, 60, 95, 80, 50, 70],
+        name: 'Review Score'
+      }
+    ]
+  }]
+};
+
 }

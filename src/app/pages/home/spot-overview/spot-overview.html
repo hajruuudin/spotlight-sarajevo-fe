@@ -70,7 +70,7 @@
       </div>
 
       <div class="w-full h-auto flex flex-col jusitfy-center items-center">
-        <span class="text-center font-bold text-base tracking-wider">DESCRITPION</span>
+        <app-subheading [subheading]="'DESCRIPTION'"></app-subheading>
         <p class="text-base">
           {{
             this.lang == 'en'
@@ -83,9 +83,41 @@
       </div>
 
       <div class="w-full h-auto flex flex-col jusitfy-center items-center">
-        <span class="text-center font-bold text-base tracking-wider">SPOT IMAGES</span>
+        <app-subheading [subheading]="'SPOT IMAGES'"></app-subheading>
         <app-image-carousel [images]="this.images"></app-image-carousel>
       </div>
+    </div>
+  </div>
+
+  <div
+    id="workHoursAndRatingContainer"
+    class="w-full h-auto pt-4 pb-4 flex flex-col justify-center items-center dark:bg-(--background-100) bg-(--background-800)"
+  >
+    <div
+      id="workHoursAndRatingContainer"
+      class="max-w-application px-2 md:px-4 w-full md:w-3/4 flex flex-col md:flex-row jusitfy-center items-center space-y-4"
+    >
+      <!-- WORK HOURS SECTION -->
+      <div class="w-full md:w-1/2 flex flex-col jusitfy-center items-center space-y-4">
+        <app-subheading subheading="WORK HOURS"></app-subheading>
+        @for (workDay of this.formattedSpotWorkHours; track workDay.dayIndex) {
+        <div class="w-full h-auto flex flex-row justify-center items-center space-x-2">
+            <span class="w-auto uppercase text-lg text-start font-semibold">{{ workDay.day }}</span>
+            <div class="w-full rounded-2xl h-0.5 dark:bg-white bg-(--primary-200)"></div>
+            @if (workDay.startTime == "Closed" && workDay.endTime == "Closed") {
+              <span class="w-auto uppercase text-lg text-end font-semibold">Closed</span>
+            } @else {
+              <span class="w-auto uppercase text-lg whitespace-nowrap font-semibold">{{ workDay.startTime.slice(0, 5) }} - {{ workDay.endTime.slice(0, 5) }}</span>
+            }
+        </div>
+      }
+      </div>
+
+      <!-- RATING GRAPH SECTION -->
+      <div class="w-full md:w-1/2 flex flex-col jusitfy-center items-center space-y-4">
+        <app-subheading subheading="RATINGS"></app-subheading>
+      </div>
+
     </div>
   </div>
 </section>
