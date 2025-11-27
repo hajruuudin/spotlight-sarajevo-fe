@@ -95,10 +95,10 @@
   >
     <div
       id="workHoursAndRatingContainer"
-      class="max-w-application px-2 md:px-4 w-full md:w-3/4 flex flex-col md:flex-row jusitfy-center items-center space-y-4"
+      class="max-w-application px-2 md:px-4 w-full md:w-3/4 flex flex-col md:flex-row jusitfy-center items-center gap-6"
     >
       <!-- WORK HOURS SECTION -->
-      <div class="w-full md:w-1/2 flex flex-col jusitfy-center items-center space-y-4">
+      <div class="w-full md:w-1/3 flex flex-col jusitfy-center items-center space-y-4">
         <app-subheading subheading="WORK HOURS"></app-subheading>
         @for (workDay of this.formattedSpotWorkHours; track workDay.dayIndex) {
         <div class="w-full h-auto flex flex-row justify-center items-center space-x-2">
@@ -114,10 +114,16 @@
       </div>
 
       <!-- RATING GRAPH SECTION -->
-      <div class="w-full md:w-1/2 flex flex-col jusitfy-center items-center space-y-4">
+      <div style="height: 400px;" class="w-full md:w-2/3 flex flex-col jusitfy-center items-center space-y-4">
         <app-subheading subheading="RATINGS"></app-subheading>
+        <canvas
+          baseChart
+          class="w-full h-full mb-16"
+          [data]="barChartData"
+          [type]="'bar'"
+          [options]="barChartOptions">
+        </canvas>
       </div>
-
     </div>
   </div>
 </section>
