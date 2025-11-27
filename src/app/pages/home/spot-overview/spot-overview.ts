@@ -139,7 +139,7 @@ export class SpotOverview implements OnInit {
       {
         label: 'Stats',
         data: [8.0, 9.5, 6.0, 7.0, 8.8, 7.5],
-        backgroundColor: ['#088891', '#00BFA6', '#F5A623', '#FF6B6B', '#9B59B6', '#3498DB'],
+        backgroundColor: ['#056766', '#07777B', '#088891', '#0AA1A0', '#1BB7B5', '#33CDCB'],
         borderColor: '#e7fcfe',
         borderWidth: 1,
         borderRadius: 8,
@@ -155,7 +155,7 @@ export class SpotOverview implements OnInit {
         x: {
           min: 0,
           max: 10,
-          grid: { color: '#EEEEEE' },
+          grid: { color: textColor },
           ticks: {
             color: textColor,
             font: { size: 14 },
