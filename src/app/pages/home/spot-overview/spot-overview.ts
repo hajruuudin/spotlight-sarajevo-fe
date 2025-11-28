@@ -11,11 +11,11 @@ import { Subheading } from '../../../components/subheading/subheading';
 import { ImageCarousel } from '../../../components/image-carousel/image-carousel';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { text } from 'stream/consumers';
+import { MapRegular } from "../../../components/map-regular/map-regular";
 
 @Component({
   selector: 'app-spot-overview',
-  imports: [PageHeader, ImageCarousel, Subheading, BaseChartDirective],
+  imports: [PageHeader, ImageCarousel, Subheading, BaseChartDirective, MapRegular],
   templateUrl: './spot-overview.html',
   styleUrl: './spot-overview.css',
   host: {
@@ -90,7 +90,6 @@ export class SpotOverview implements OnInit {
   }
 
   formatSpotWorkHours(hours: SpotWorkHoursModel[]) {
-    // Days 1 → 7 (or 0 → 6 depending on your system)
     const DAYS = [
       { index: 1, name: 'Monday' },
       { index: 2, name: 'Tuesday' },

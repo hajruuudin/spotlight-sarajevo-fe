@@ -143,4 +143,23 @@
       </div>
     </div>
   </div>
+
+  <div
+    id="workHoursAndRatingContainer"
+    class="w-full h-auto pt-4 pb-4 flex flex-col justify-center items-center"
+  >
+    <div
+      id="workHoursAndRatingContainer"
+      class="max-w-application px-2 md:px-4 w-full md:w-3/4 flex flex-col jusitfy-center items-center"
+    >
+      <app-subheading subheading="SPOT LOCATION"></app-subheading>
+      <app-map-regular 
+      class="z-10 border-2 border-(--primary-400)"
+      [objectLat]="this.spotOverview.latitude" 
+      [objectLong]="this.spotOverview.longitude"
+      [objectCategoryEn]="this.spotOverview.categoryNameEn"
+      [objectCategoryBs]="this.spotOverview.categoryNameBs"
+      ></app-map-regular>
+    </div>
+  </div>
 </section>
