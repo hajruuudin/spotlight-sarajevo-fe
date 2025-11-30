@@ -3,10 +3,12 @@ import { provideRouter } from '@angular/router';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { routes } from './app.routes';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
-import { provideHttpClient } from '@angular/common/http';
+import { HttpHandler, HttpHandlerFn, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@ngneat/transloco';
 import { SessionService } from './core/services/session.service';
+import { AuthInterceptor } from './core/interceptors/auth-interceptor.interceptor';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,7 +16,11 @@ export const appConfig: ApplicationConfig = {
       const session = inject(SessionService)
       return session.restoreSession()
     }),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([
+      (req, next: HttpHandlerFn) => inject(AuthInterceptor).intercept(req, {
+        handle: (internalReq) => next(internalReq)
+      })
+    ])),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes), 
@@ -44,5 +50,6 @@ export const appConfig: ApplicationConfig = {
         },
         loader: TranslocoHttpLoader
     }),
+    provideCharts(withDefaultRegisterables())
   ]
 };

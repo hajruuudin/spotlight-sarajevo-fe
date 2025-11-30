@@ -4,6 +4,7 @@ import { Injectable, NgZone, signal } from '@angular/core';
 export class SpinnerService {
   loadingGlobal = signal(false);
   loadingSection = signal(false);
+  loadingNavigate = signal(false);
 
   constructor(private zone: NgZone){}
   
@@ -19,12 +20,19 @@ export class SpinnerService {
     });
   }
 
-
   showSectionSpinner() {
     this.loadingSection.set(true)
   }
 
   hideSectionSpinner(){
     this.loadingSection.set(false)
+  }
+
+  showNavigateSpinner(){
+    this.loadingNavigate.set(true)
+  }
+
+  hideNavigateSpinner(){
+    this.loadingNavigate.set(false)
   }
 }
