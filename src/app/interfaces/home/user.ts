@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { Footer } from "../../components/footer/footer";
 import { SpinnerNavigate } from "../../components/spinner-navigate/spinner-navigate";
 import { SpinnerService } from '../../core/services/spinner.service';
+import { ModalHost } from "../../components/modals/modal-host/modal-host";
 
 /**
  * Regular User Interface: The largest container, encapsulating:
@@ -17,7 +18,7 @@ import { SpinnerService } from '../../core/services/spinner.service';
  */
 @Component({
   selector: 'app-user',
-  imports: [NavbarUser, RouterOutlet, Footer, SpinnerNavigate],
+  imports: [NavbarUser, RouterOutlet, Footer, SpinnerNavigate, ModalHost],
   templateUrl: './user.html',
   styleUrl: './user.css',
   host: {

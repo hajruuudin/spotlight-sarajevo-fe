@@ -1,9 +1,14 @@
-import { Component, computed, ElementRef, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, ElementRef, HostListener, OnInit } from '@angular/core';
 import { SpotService } from '../../../services/spot.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpinnerService } from '../../../core/services/spinner.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SpotOverviewModel, SpotWorkHoursModel } from '../../../shared/models/spot.model';
+import {
+  SpotOverviewModel,
+  SpotReviewCreateModel,
+  SpotReviewModel,
+  SpotWorkHoursModel,
+} from '../../../shared/models/spot.model';
 import { PageHeader } from '../../../components/page-header/page-header';
 import { SessionService } from '../../../core/services/session.service';
 import { Subscription } from 'rxjs';
@@ -11,11 +16,27 @@ import { Subheading } from '../../../components/subheading/subheading';
 import { ImageCarousel } from '../../../components/image-carousel/image-carousel';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { MapRegular } from "../../../components/map-regular/map-regular";
+import { MapRegular } from '../../../components/map-regular/map-regular';
+import { SpotReviewCard } from '../../../components/spot-review-card/spot-review-card';
+import { ButtonPrimary } from '../../../components/button-primary/button-primary';
+import { ModalService } from '../../../core/services/modal.service';
+import { AddReviewModal } from '../../../components/modals/add-review-modal/add-review-modal';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
+import { DeleteReviewModal } from '../../../components/modals/delete-review-modal/delete-review-modal';
 
 @Component({
   selector: 'app-spot-overview',
-  imports: [PageHeader, ImageCarousel, Subheading, BaseChartDirective, MapRegular],
+  imports: [
+    PageHeader,
+    ImageCarousel,
+    Subheading,
+    BaseChartDirective,
+    MapRegular,
+    SpotReviewCard,
+    ButtonPrimary,
+    NotFoundComponent,
+  ],
   templateUrl: './spot-overview.html',
   styleUrl: './spot-overview.css',
   host: {
@@ -31,20 +52,23 @@ export class SpotOverview implements OnInit {
   protected images: string[] = [];
 
   protected headerContainer!: HTMLElement;
-
   protected formattedSpotWorkHours: SpotWorkHoursModel[] = [];
 
   protected barChartData: ChartConfiguration<'bar'>['data'] = { labels: [], datasets: [] };
-
   protected barChartOptions: ChartConfiguration<'bar'>['options'] = {};
+
+  protected userReview: SpotReviewModel | null = null;
+  protected spotReviews: SpotReviewModel[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private spotService: SpotService,
     private el: ElementRef,
     private toastr: HotToastService,
+    private modal: ModalService,
     private spinner: SpinnerService,
-    private session: SessionService
+    private session: SessionService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +87,7 @@ export class SpotOverview implements OnInit {
         this.spotOverview = data['0'];
         this.formatSpotWorkHours(this.spotOverview.workHours);
         this.initialiseRadarChart(this.lang, this.theme);
+        this.loadUserSpotReview(this.spotOverview.id);
 
         this.images.push(this.spotOverview.thumbnailImage);
         this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');
@@ -112,6 +137,81 @@ export class SpotOverview implements OnInit {
     this.formattedSpotWorkHours = result;
   }
 
+  loadUserSpotReview(spotId: number) {
+    this.spotService.findUserSpotReview(spotId).subscribe({
+      next: (response: SpotReviewModel) => {
+        this.userReview = response;
+      },
+      error: (response: HttpErrorResponse) => {
+        // do something
+      },
+    });
+  }
+
+  async openAddModal() {
+    const result = await this.modal.openAsync<{ type: string; data?: any }>(AddReviewModal, {
+      spotId: this.spotOverview.id,
+    });
+
+    if (result?.type === 'cancel') return;
+    if (result?.type === 'invalid') {
+      this.toastr.info('All fields are required!');
+      return;
+    }
+
+    if (result.type === 'add') {
+      this.handleAddReview(result.data);
+    }
+  }
+
+  private handleAddReview(formData: any) {
+    const reviewAdd = new SpotReviewCreateModel(
+      formData.spotId,
+      formData.header,
+      formData.body,
+      formData.overallRating,
+      formData.atmosphere,
+      formData.accessibility,
+      formData.staffKindness,
+      formData.affordability,
+      formData.cleanliness,
+      formData.localeQuality
+    );
+
+    this.spotService.addSpotReview(reviewAdd).subscribe({
+      next: (review: SpotReviewModel) => {
+        this.toastr.success('Review Added!');
+        this.cdr.detectChanges()
+        queueMicrotask(() => {
+          this.userReview = review;
+        })
+      },
+      error: () => {
+        this.toastr.error('There was an error :(');
+      },
+    });
+  }
+
+  async openDeleteReviewModal() {
+    const result = await this.modal.openAsync<{ confirmed: boolean }>(DeleteReviewModal, {});
+
+    if (!result.confirmed) return;
+
+    await this.spotService.deleteSpotReview(this.spotOverview.id, this.userReview!.id).subscribe({
+      next: (response: SpotReviewModel) => {
+        this.toastr.success('Review deleted');
+        this.cdr.detectChanges()
+        queueMicrotask(() => {
+          this.userReview = null;
+        })
+        
+      },
+      error: (response: HttpErrorResponse) => {
+        this.toastr.error('Something went wrong, try again later!');
+      },
+    });
+  }
+
   initialiseRadarChart(lang: string, theme: string) {
     console.log(theme);
     let textColor = theme == 'light' ? '#000000' : '#ffffff';
@@ -133,7 +233,7 @@ export class SpotOverview implements OnInit {
             'Kvalitet Prostorije 💯',
             'Čistoća ✨',
           ];
-    this.barChartData.labels = labels
+    this.barChartData.labels = labels;
     this.barChartData.datasets = [
       {
         label: 'Stats',

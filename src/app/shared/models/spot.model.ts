@@ -53,15 +53,58 @@ export class SpotReviewModel{
     constructor(
         public id: number,
         public userId: number,
+        public username: string,
+        public spotId: number,
         public header: string,
         public body: string,
-        public reviewRating: number,
-        public reviewAtmosphere: number,
-        public reviewAccessibility: number,
-        public reviewStaffKindness: number,
-        public reviewAffordability: number,
-        public reviewCleanliness: number,
-        public reviewQuality: number
+        public userOverallRating: number,
+        public userAtmosphere: number,
+        public userAccessibility: number,
+        public userStaffKindness: number,
+        public userAffordability: number,
+        public userCleanliness: number,
+        public userLocaleQuality: number,
+        public modified: string
+    ){}
+}
+
+export class SpotReviewCreateModel{
+    constructor(
+        public spotId: number,
+        public header: string,
+        public body: string,
+        public userOverallRating: number,
+        public userAtmosphere: number,
+        public userAccessibility: number,
+        public userStaffKindness: number,
+        public userAffordability: number,
+        public userCleanliness: number,
+        public userLocaleQuality: number
+    ){}
+}
+
+export class SpotReviewUpdateModel{
+    constructor(
+        public id: number,
+        public userId: number,
+        public spotId: number,
+        public header: string,
+        public body: string,
+        public userOverallRating: number,
+        public userAtmosphere: number,
+        public userAccessibility: number,
+        public userStaffKindness: number,
+        public userAffordability: number,
+        public userCleanliness: number,
+        public userLocaleQuality: number
+    ){}
+}
+
+export class SpotReviewDeleteModel{
+    constructor(
+        public id: number,
+        public userId: number,
+        public spotId: number
     ){}
 }
 
