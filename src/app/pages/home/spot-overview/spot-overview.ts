@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, computed, ElementRef, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, ElementRef, HostListener, NgZone, OnInit } from '@angular/core';
 import { SpotService } from '../../../services/spot.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpinnerService } from '../../../core/services/spinner.service';
@@ -68,7 +68,8 @@ export class SpotOverview implements OnInit {
     private modal: ModalService,
     private spinner: SpinnerService,
     private session: SessionService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone,
   ) {}
 
   ngOnInit(): void {
@@ -181,10 +182,10 @@ export class SpotOverview implements OnInit {
     this.spotService.addSpotReview(reviewAdd).subscribe({
       next: (review: SpotReviewModel) => {
         this.toastr.success('Review Added!');
-        this.cdr.detectChanges()
-        queueMicrotask(() => {
+        this.ngZone.run(() => {
           this.userReview = review;
-        })
+        });
+        this.cdr.markForCheck()
       },
       error: () => {
         this.toastr.error('There was an error :(');
@@ -200,10 +201,10 @@ export class SpotOverview implements OnInit {
     await this.spotService.deleteSpotReview(this.spotOverview.id, this.userReview!.id).subscribe({
       next: (response: SpotReviewModel) => {
         this.toastr.success('Review deleted');
-        this.cdr.detectChanges()
-        queueMicrotask(() => {
+        this.ngZone.run(() => {
           this.userReview = null;
-        })
+        });
+        this.cdr.markForCheck()
         
       },
       error: (response: HttpErrorResponse) => {
