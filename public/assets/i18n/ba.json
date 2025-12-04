@@ -1,6 +1,65 @@
 {
-    "navbar" : {},
-    "footer" : {},
+    "navbar" : {
+        "homepage" : "Početna",
+        "browseSpots" : "Traži Loakle",
+        "browseEvents" : "Traži Događaje",
+        "discover" : "Istraži razno",
+        "touristGuides" : "Vodići za Turiste",
+        "collections" : "Vaše kolekcije",
+        "communityRequests" : "Kolektivni zahtjevi",
+        "publicTransport" : "Javni Prevoz",
+        "profile" : "Vaš Profil"
+    },
+    "footer" : {
+        "features" : {
+            "title" : "Funkcije",
+            "home" : "Početna",
+            "events" : "Događaji",
+            "spots" : "Loakli",
+            "tourist" : "Vodići za Turiste",
+            "discover" : "Istraži",
+            "about" : "O aplikaciji"
+        },
+        "community" : {
+            "title" : "Zajednica",
+            "requests" : "Vaši Zahtjevi",
+            "organiser" : "Za organizatore događaja",
+            "owners" : "Za vlasnike lokala"
+        },
+        "contact" : {
+            "title" : "Kontakt",
+            "landing" : "Glavna Stranica",
+            "instagram" : "Instagram",
+            "facebook" : "Facebook",
+            "linkedin" : "LinkedIn",
+            "email" : "Email"
+        },
+        "important" : {
+            "title" : "Važno",
+            "hotlines" : "Hitni Pozivi",
+            "transport" : "Javni Prevoz",
+            "weatherInfo" : "Vremenske Prilike",
+            "holidays" : "Nacionalni Praznici",
+            "traditions" : "Tradicije Sarajeva"
+        },
+        "legal" : {
+            "title" : "Pravila",
+            "terms" : "Uslovi Korištenja",
+            "community" : "Dodavanja Lokala / Događaja",
+            "location" : "Korištenje Lokacije",
+            "report" : "Prijave grešku / bug"
+        },
+        "account" : {
+            "title" : "Profil",
+            "register" : "Registruj račun",
+            "login" : "Prijavi se",
+            "stats" : "Lične statistike",
+            "collections" : "Tvoje kolekcije"
+        },
+        "subheading" : {
+            "text" : "Mjesto da se istraže novi lokali, saznaju novi događaji, prisvoji kultura i postanje dio Sarajeva."
+        }
+    },
     "register" : {
         "title" : "Dobrodošli u SpotlightSarajevo!",
         "sectionDescription" : "Gdje su sva dešavanja, aktuelnosti i lokali sadržani na jednom mjestu! Kreirajte račun kako biste nastavili koristiti aplikaciju.",

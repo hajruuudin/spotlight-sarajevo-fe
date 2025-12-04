@@ -1,6 +1,65 @@
 {
-    "navbar" : {},
-    "footer" : {},
+    "navbar" : {
+        "homepage" : "Homepage",
+        "browseSpots" : "Browse Spots",
+        "browseEvents" : "Browse Events",
+        "discover" : "Discover",
+        "touristGuides" : "Tourist Guides",
+        "collections" : "Your Collections",
+        "communityRequests" : "Community Requests",
+        "publicTransport" : "Public Transport",
+        "profile" : "Your Profile"
+    },
+    "footer" : {
+        "features" : {
+            "title" : "Features",
+            "home" : "Homepage",
+            "events" : "Events",
+            "spots" : "Spots",
+            "tourist" : "Tourist Guides",
+            "discover" : "Discover",
+            "about" : "About"
+        },
+        "community" : {
+            "title" : "Community",
+            "requests" : "Community Requests",
+            "organiser" : "Event Organisers",
+            "owners" : "Local Owners"
+        },
+        "contact" : {
+            "title" : "Contact",
+            "landing" : "Landing Page",
+            "instagram" : "Instagram",
+            "facebook" : "Facebook",
+            "linkedin" : "LinkedIn",
+            "email" : "Email"
+        },
+        "important" : {
+            "title" : "Important",
+            "hotlines" : "Emergency Numbers",
+            "transport" : "Public Transport",
+            "weatherInfo" : "Weather Info",
+            "holidays" : "National Holidays",
+            "traditions" : "Sarajevo Traditions"
+        },
+        "legal" : {
+            "title" : "Legal",
+            "terms" : "Terms of Service",
+            "community" : "Adding Events & Spots",
+            "location" : "Location Consent",
+            "report" : "Report an Error / Bug"
+        },
+        "account" : {
+            "title" : "Profile",
+            "register" : "Register account",
+            "login" : "Login",
+            "stats" : "Your Statistics",
+            "collections" : "Your Collections"
+        },
+        "subheading" : {
+            "text" : "A place to discover events, visit spots, learn about the culture and contribute to the community. Made in Sarajevo <3"
+        }
+    },
     "register" : {
         "title" : "Welcome to SpotlightSarajevo!",
         "sectionDescription" : "Where all events, spots and iconic moments are collected together! Please register Your account to use the Application",
