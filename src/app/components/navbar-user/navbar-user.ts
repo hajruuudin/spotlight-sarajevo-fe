@@ -12,6 +12,7 @@ import { TransportIcon } from '../../resources/icons/transport-icon/transport-ic
 import { HamburgerIcon } from '../../resources/icons/hamburger-icon/hamburger-icon';
 import { Profile } from '../../pages/home/profile/profile';
 import { SessionService } from '../../core/services/session.service';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-navbar-user',
@@ -28,6 +29,7 @@ import { SessionService } from '../../core/services/session.service';
     TransportIcon,
     HamburgerIcon,
     RouterLinkActive,
+    TranslocoPipe
   ],
   templateUrl: './navbar-user.html',
   styleUrl: './navbar-user.css',
