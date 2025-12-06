@@ -26,6 +26,7 @@ export class SessionService {
     private auth: AuthService,
     private router: Router
   ) {
+  
     this.transloco.setActiveLang(this.languageSubject.value);
     this.applyTheme(this.getStoredThemeFallback())
   }
@@ -64,10 +65,11 @@ export class SessionService {
   }
 
   //========== USER MANAGEMENT ==========//
-  setUser(user: LoggedUserModel): void {
-    localStorage.setItem(this.APP_USER_KEY, JSON.stringify(user));
-    this.userSubject.next(user);
-  }
+  setUser(userResponse: any): void {
+  const actualUser = userResponse.user ?? userResponse;
+  localStorage.setItem(this.APP_USER_KEY, JSON.stringify(actualUser));
+  this.userSubject.next(actualUser);
+}
 
   getUser(): LoggedUserModel | null {
     return this.userSubject.value;
@@ -88,16 +90,17 @@ export class SessionService {
   }
 
   restoreSession() {
-  return this.auth.isAuthenticated().pipe(
-    tap((response: LoggedUserModel | null) => {
-      if (response != null && !localStorage.getItem(this.APP_USER_KEY)) {
-        this.setUser(response);
-      }
-    }),
-    map((response) => response != null),
-    catchError(() => of(false))
-  );
-}
+    return this.auth.isAuthenticated().pipe(
+      tap((response: any) => {
+        if (response) {
+          const actualUser = response.user ?? response;
+          this.setUser(actualUser);
+        }
+      }),
+      map(response => response != null),
+      catchError(() => of(false))
+    );
+  }
 
   //========== CLEARING THE SESSION ==========//
   clearSession() : void {

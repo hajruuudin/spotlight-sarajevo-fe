@@ -7,6 +7,7 @@ import {
   SpotOverviewModel,
   SpotReviewCreateModel,
   SpotReviewModel,
+  SpotReviewUpdateModel,
   SpotWorkHoursModel,
 } from '../../../shared/models/spot.model';
 import { PageHeader } from '../../../components/page-header/page-header';
@@ -24,6 +25,9 @@ import { AddReviewModal } from '../../../components/modals/add-review-modal/add-
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
 import { DeleteReviewModal } from '../../../components/modals/delete-review-modal/delete-review-modal';
+import { EditReviewModal } from '../../../components/modals/edit-review-modal/edit-review-modal';
+import { PageResponseModel } from '../../../shared/models/shared.model';
+import { error } from 'console';
 
 @Component({
   selector: 'app-spot-overview',
@@ -60,6 +64,9 @@ export class SpotOverview implements OnInit {
   protected userReview: SpotReviewModel | null = null;
   protected spotReviews: SpotReviewModel[] = [];
 
+  protected reviewPageNumber: number = 0;
+  protected reviewPageSize: number = 20;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private spotService: SpotService,
@@ -89,6 +96,7 @@ export class SpotOverview implements OnInit {
         this.formatSpotWorkHours(this.spotOverview.workHours);
         this.initialiseRadarChart(this.lang, this.theme);
         this.loadUserSpotReview(this.spotOverview.id);
+        this.loadOtherSpotReviews(this.spotOverview.id)
 
         this.images.push(this.spotOverview.thumbnailImage);
         this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');
@@ -149,6 +157,21 @@ export class SpotOverview implements OnInit {
     });
   }
 
+  loadOtherSpotReviews(spotId: number) {
+    this.spotService.findAllSpotReviews(this.reviewPageNumber, this.reviewPageSize, spotId, 'ALPHABETICAL').subscribe({
+      next: (response : PageResponseModel<SpotReviewModel>) => {
+        console.log(this.session.getUserId())
+        console.log(response.content[0].userId)
+        const filteredResult = response.content.filter(review => review.userId != this.session.getUserId())
+        console.log(filteredResult)
+        this.spotReviews = filteredResult
+      },
+      error: (error : HttpErrorResponse) => {
+        // do something
+      }
+    })
+  }
+
   async openAddModal() {
     const result = await this.modal.openAsync<{ type: string; data?: any }>(AddReviewModal, {
       spotId: this.spotOverview.id,
@@ -161,36 +184,84 @@ export class SpotOverview implements OnInit {
     }
 
     if (result.type === 'add') {
-      this.handleAddReview(result.data);
+      this.handleAddEditReview(result.data, false);
     }
   }
 
-  private handleAddReview(formData: any) {
-    const reviewAdd = new SpotReviewCreateModel(
-      formData.spotId,
-      formData.header,
-      formData.body,
-      formData.overallRating,
-      formData.atmosphere,
-      formData.accessibility,
-      formData.staffKindness,
-      formData.affordability,
-      formData.cleanliness,
-      formData.localeQuality
-    );
+  async openEditModal(){
+    const result = await this.modal.openAsync<{type: string; data?: any}>(EditReviewModal, {
+      spotId: this.spotOverview.id,
+      reviewModel: this.userReview
+    })
 
-    this.spotService.addSpotReview(reviewAdd).subscribe({
-      next: (review: SpotReviewModel) => {
-        this.toastr.success('Review Added!');
-        this.ngZone.run(() => {
-          this.userReview = review;
-        });
-        this.cdr.markForCheck()
-      },
-      error: () => {
-        this.toastr.error('There was an error :(');
-      },
-    });
+    if (result?.type === 'cancel') return;
+    if (result?.type === 'invalid') {
+      this.toastr.info('All fields are required!');
+      return;
+    }
+
+    if (result.type === 'add') {
+      this.handleAddEditReview(result.data, true);
+    }
+  }
+
+  private handleAddEditReview(formData: any, isEdit: boolean) {
+    if(!isEdit){
+      const reviewAdd = new SpotReviewCreateModel(
+        formData.spotId,
+        formData.header,
+        formData.body,
+        formData.overallRating,
+        formData.atmosphere,
+        formData.accessibility,
+        formData.staffKindness,
+        formData.affordability,
+        formData.cleanliness,
+        formData.localeQuality
+      );
+
+      this.spotService.addSpotReview(reviewAdd).subscribe({
+        next: (review: SpotReviewModel) => {
+          this.toastr.success('Review Added!');
+          this.ngZone.run(() => {
+            this.userReview = review;
+          });
+          this.cdr.markForCheck()
+        },
+        error: () => {
+          this.toastr.error('There was an error :(');
+        },
+      });
+    } else {
+      const reviewEdit = new SpotReviewUpdateModel(
+        this.userReview!.id,
+        this.userReview!.userId,
+        formData.spotId,
+        formData.header,
+        formData.body,
+        formData.overallRating,
+        formData.atmosphere,
+        formData.accessibility,
+        formData.staffKindness,
+        formData.affordability,
+        formData.cleanliness,
+        formData.localeQuality
+      )
+
+      this.spotService.updateSpotReview(reviewEdit).subscribe({
+        next: (review: SpotReviewModel) => {
+          this.toastr.success('Review Edited!');
+          this.ngZone.run(() => {
+            this.userReview = review;
+          });
+          this.cdr.markForCheck()
+        },
+        error: () => {
+          this.toastr.error('There was an error :(');
+        },
+      })
+    }
+    
   }
 
   async openDeleteReviewModal() {

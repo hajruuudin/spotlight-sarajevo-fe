@@ -178,7 +178,7 @@
           <app-button-primary class="col-span-2" (click)="this.openAddModal()" [classAddons]="'w-1/2'" [buttonType]="'DEFAULT'" [buttonContent]="'Add Review'"></app-button-primary>
         } @else {
           <app-spot-review-card [review]="this.userReview" class="col-span-2"></app-spot-review-card>
-          <app-button-primary (click)="this.openAddModal()" [classAddons]="'w-full'" [buttonType]="'DEFAULT'" [buttonContent]="'Edit Review'"></app-button-primary>
+          <app-button-primary (click)="this.openEditModal()" [classAddons]="'w-full'" [buttonType]="'DEFAULT'" [buttonContent]="'Edit Review'"></app-button-primary>
           <app-button-primary (click)="this.openDeleteReviewModal()" [classAddons]="'w-full'" [buttonType]="'DANGER'" [buttonContent]="'Delete Review'"></app-button-primary>
         }
       </div>
