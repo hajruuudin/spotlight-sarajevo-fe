@@ -7,7 +7,7 @@
     
     <div class="w-full flex flex-row justify-between items-center gap-8">
         <span class="italic text-sm md:text-base">{{ this.review.username }}</span>
-        <span class="italic text-sm md:text-base">{{ this.review.modified }}</span>
+        <span class="italic text-sm md:text-base">Last Edited: {{ this.review.modified | date }}</span>
     </div>
 </div>
 <div class="w-full h-0.5 my-2 rounded-full dark:bg-(--primary-900) bg-black"></div>
@@ -24,11 +24,11 @@
 
 <!-- REVIEW FOOTER: RATINGS OF THE REVIEW -->
 <div class="w-full grid grid-cols-2">
-    <span class="font-bold text-base md:text-lg">Accessibility: <span class="font-normal">{{ this.review.userAccessibility }}</span></span>
-    <span class="font-bold text-base md:text-lg">Staff Kindness: <span class="font-normal">{{ this.review.userStaffKindness }}</span></span>
-    <span class="font-bold text-base md:text-lg">Atmosphere: <span class="font-normal">{{ this.review.userAtmosphere }}</span></span>
-    <span class="font-bold text-base md:text-lg">Affordability: <span class="font-normal">{{ this.review.userAffordability }}</span></span>
-    <span class="font-bold text-base md:text-lg">Cleanliness: <span class="font-normal">{{ this.review.userCleanliness }}</span></span>
-    <span class="font-bold text-base md:text-lg">Locale Quality: <span class="font-normal">{{ this.review.userLocaleQuality }}</span></span>
+    <span class="font-bold text-base md:text-lg">{{ 'spotReview.accessibility' | transloco }}: <span class="font-normal">{{ this.review.userAccessibility }}</span></span>
+    <span class="font-bold text-base md:text-lg">{{ 'spotReview.staffKindness' | transloco }}: <span class="font-normal">{{ this.review.userStaffKindness }}</span></span>
+    <span class="font-bold text-base md:text-lg">{{ 'spotReview.atmosphere' | transloco }}: <span class="font-normal">{{ this.review.userAtmosphere }}</span></span>
+    <span class="font-bold text-base md:text-lg">{{ 'spotReview.affordability' | transloco }}: <span class="font-normal">{{ this.review.userAffordability }}</span></span>
+    <span class="font-bold text-base md:text-lg">{{ 'spotReview.cleanliness' | transloco }}: <span class="font-normal">{{ this.review.userCleanliness }}</span></span>
+    <span class="font-bold text-base md:text-lg">{{ 'spotReview.localeQuality' | transloco }}: <span class="font-normal">{{ this.review.userLocaleQuality }}</span></span>
 </div>
  <!-- REVIEW FOOTER: RATINGS OF THE REVIEW -->

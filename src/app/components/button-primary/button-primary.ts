@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './button-primary.html',
   styleUrl: './button-primary.css',
   host: {
-    class: 'w-full'
+    class: 'w-auto'
   }
 })
 export class ButtonPrimary {
@@ -21,7 +21,7 @@ export class ButtonPrimary {
   }
   getBaseClasses(): string {
   return `
-    h-12 rounded-2xl
+    h-10 rounded-2xl
     transition-all font-semibold text-xl
   `;
 }

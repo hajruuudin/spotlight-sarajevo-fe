@@ -8,7 +8,7 @@
       class="bg-white self-start w-auto mt-2 px-2 md:px-5 py-0.5 flex flex-col justify-center items-center rounded-full"
     >
       <span class="text-xs md:text-base text-black font-semibold"
-        >{{ this.spot.combinedRating }} / 10</span
+        >{{ this.spot.combinedRating | number:'1.1-1' }} / 10</span
       >
     </div>
   </div>

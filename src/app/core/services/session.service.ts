@@ -66,10 +66,10 @@ export class SessionService {
 
   //========== USER MANAGEMENT ==========//
   setUser(userResponse: any): void {
-  const actualUser = userResponse.user ?? userResponse;
-  localStorage.setItem(this.APP_USER_KEY, JSON.stringify(actualUser));
-  this.userSubject.next(actualUser);
-}
+    const actualUser = userResponse.user ?? userResponse;
+    localStorage.setItem(this.APP_USER_KEY, JSON.stringify(actualUser));
+    this.userSubject.next(actualUser);
+  }
 
   getUser(): LoggedUserModel | null {
     return this.userSubject.value;

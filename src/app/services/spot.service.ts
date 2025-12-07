@@ -71,41 +71,4 @@ export class SpotService {
       }
     );
   }
-
-  findAllSpotReviews(pageNumber: number, pageSize: number, spotId: number, sortOption: string) {
-    return this.http.get<PageResponseModel<SpotReviewModel>>(
-      this.apiUrl +
-        `/spot/find-spot-reviews?pageNumber=${pageNumber}&pageSize=${pageSize}&spotId=${spotId}&sortOption=${sortOption}`,
-      {
-        withCredentials: true,
-      }
-    );
-  }
-
-  findUserSpotReview(spotId: number) {
-    return this.http.get<SpotReviewModel>(this.apiUrl + `/spot/find-user-review?spotId=${spotId}`, {
-      withCredentials: true,
-    });
-  }
-
-  addSpotReview(spotReviewCreate: SpotReviewCreateModel) {
-    return this.http.post<SpotReviewModel>(this.apiUrl + `/spot/add-review`, spotReviewCreate, {
-      withCredentials: true,
-    });
-  }
-
-  updateSpotReview(spotReviewUpdate: SpotReviewUpdateModel) {
-    return this.http.put<SpotReviewModel>(this.apiUrl + `/spot/update-review`, spotReviewUpdate, {
-      withCredentials: true,
-    });
-  }
-
-  deleteSpotReview(spotId: number, reviewId: number) {
-    return this.http.delete<SpotReviewModel>(
-      this.apiUrl + `/spot/remove-review?spotId=${spotId}&reviewId=${reviewId}`,
-      {
-        withCredentials: true,
-      }
-    );
-  }
 }

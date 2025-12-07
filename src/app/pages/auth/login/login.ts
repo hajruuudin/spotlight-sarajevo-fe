@@ -5,7 +5,7 @@ import { LoggedUserModel, LoginModel } from '../../../shared/models/auth.model';
 import { ButtonRegular } from "../../../components/button-regular/button-regular";
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpinnerService } from '../../../core/services/spinner.service';
-import { Router, RouterLink } from "@angular/router";
+import { ActivatedRoute, Route, Router, RouterLink } from "@angular/router";
 import { TranslocoPipe } from '@ngneat/transloco';
 import { AuthService } from '../../../core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -28,6 +28,7 @@ export class Login implements OnInit {
     public session: SessionService,
     public spinner: SpinnerService,
     private router: Router,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
     private toast: HotToastService
   ) { }
@@ -79,7 +80,10 @@ export class Login implements OnInit {
             next: (response: LoggedUserModel) => {
               this.spinner.hideGlobalSpinner()
               this.session.setUser(response)
-              this.router.navigate(['/homepage'])
+
+              const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+              this.router.navigateByUrl(returnUrl);
+              
             },
             error: (error: HttpErrorResponse) => {
               this.spinner.hideGlobalSpinner()

@@ -9,10 +9,11 @@ import { SessionService } from '../../../core/services/session.service';
 import { SpotReviewCreateModel, SpotReviewModel } from '../../../shared/models/spot.model';
 import { SpotService } from '../../../services/spot.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-add-review-modal',
-  imports: [ButtonPrimary, ReactiveFormsModule, TextInput, TextArea, SliderInput],
+  imports: [ButtonPrimary, ReactiveFormsModule, TextInput, TextArea, SliderInput, TranslocoPipe],
   templateUrl: './add-review-modal.html',
   styleUrl: './add-review-modal.css',
   host: {

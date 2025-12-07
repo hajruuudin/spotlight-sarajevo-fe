@@ -12,10 +12,6 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAppInitializer(() => {
-      const session = inject(SessionService)
-      return session.restoreSession()
-    }),
     provideHttpClient(withInterceptors([
       (req, next: HttpHandlerFn) => inject(AuthInterceptor).intercept(req, {
         handle: (internalReq) => next(internalReq)

@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { SpotReviewModel } from '../../shared/models/spot.model';
-import { NgClass } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-spot-review-card',
-  imports: [NgClass],
+  imports: [NgClass, DatePipe, TranslocoPipe],
   templateUrl: './spot-review-card.html',
   styleUrl: './spot-review-card.css',
   host: {

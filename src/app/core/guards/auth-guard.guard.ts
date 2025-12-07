@@ -11,7 +11,13 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (session.getStoredUser()) return true;
 
   return session.restoreSession().pipe(
-    map(isValid => isValid ? true : router.createUrlTree(['/auth/login']))
+    map(isValid => {
+      if (isValid) return true;
+      return router.createUrlTree(['/auth/login'], {
+        queryParams: { returnUrl: state.url }
+      });
+    })
   );
 };
+
 

@@ -28,6 +28,9 @@ import { DeleteReviewModal } from '../../../components/modals/delete-review-moda
 import { EditReviewModal } from '../../../components/modals/edit-review-modal/edit-review-modal';
 import { PageResponseModel } from '../../../shared/models/shared.model';
 import { error } from 'console';
+import { ReviewService } from '../../../services/review.service';
+import { DecimalPipe } from '@angular/common';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-spot-overview',
@@ -40,6 +43,8 @@ import { error } from 'console';
     SpotReviewCard,
     ButtonPrimary,
     NotFoundComponent,
+    DecimalPipe,
+    TranslocoPipe
   ],
   templateUrl: './spot-overview.html',
   styleUrl: './spot-overview.css',
@@ -69,12 +74,14 @@ export class SpotOverview implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private spotService: SpotService,
+    private reviewService: ReviewService,
     private el: ElementRef,
     private toastr: HotToastService,
     private modal: ModalService,
     private spinner: SpinnerService,
-    private session: SessionService,
+    protected session: SessionService,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
   ) {}
@@ -147,7 +154,10 @@ export class SpotOverview implements OnInit {
   }
 
   loadUserSpotReview(spotId: number) {
-    this.spotService.findUserSpotReview(spotId).subscribe({
+    if(this.session.getUser() == null){
+      return
+    } else {
+      this.reviewService.findUserSpotReview(spotId).subscribe({
       next: (response: SpotReviewModel) => {
         this.userReview = response;
       },
@@ -155,15 +165,14 @@ export class SpotOverview implements OnInit {
         // do something
       },
     });
+    }
+    
   }
 
   loadOtherSpotReviews(spotId: number) {
-    this.spotService.findAllSpotReviews(this.reviewPageNumber, this.reviewPageSize, spotId, 'ALPHABETICAL').subscribe({
+    this.reviewService.findAllSpotReviews(this.reviewPageNumber, this.reviewPageSize, spotId, 'ALPHABETICAL').subscribe({
       next: (response : PageResponseModel<SpotReviewModel>) => {
-        console.log(this.session.getUserId())
-        console.log(response.content[0].userId)
         const filteredResult = response.content.filter(review => review.userId != this.session.getUserId())
-        console.log(filteredResult)
         this.spotReviews = filteredResult
       },
       error: (error : HttpErrorResponse) => {
@@ -220,8 +229,10 @@ export class SpotOverview implements OnInit {
         formData.localeQuality
       );
 
-      this.spotService.addSpotReview(reviewAdd).subscribe({
+      this.spinner.showNavigateSpinner()
+      this.reviewService.addSpotReview(reviewAdd).subscribe({
         next: (review: SpotReviewModel) => {
+          this.spinner.hideNavigateSpinner()
           this.toastr.success('Review Added!');
           this.ngZone.run(() => {
             this.userReview = review;
@@ -248,8 +259,10 @@ export class SpotOverview implements OnInit {
         formData.localeQuality
       )
 
-      this.spotService.updateSpotReview(reviewEdit).subscribe({
+      this.spinner.showNavigateSpinner()
+      this.reviewService.updateSpotReview(reviewEdit).subscribe({
         next: (review: SpotReviewModel) => {
+          this.spinner.hideNavigateSpinner()
           this.toastr.success('Review Edited!');
           this.ngZone.run(() => {
             this.userReview = review;
@@ -269,8 +282,10 @@ export class SpotOverview implements OnInit {
 
     if (!result.confirmed) return;
 
-    await this.spotService.deleteSpotReview(this.spotOverview.id, this.userReview!.id).subscribe({
+    this.spinner.showNavigateSpinner()
+    await this.reviewService.deleteSpotReview(this.spotOverview.id, this.userReview!.id).subscribe({
       next: (response: SpotReviewModel) => {
+        this.spinner.hideNavigateSpinner()
         this.toastr.success('Review deleted');
         this.ngZone.run(() => {
           this.userReview = null;
@@ -281,6 +296,14 @@ export class SpotOverview implements OnInit {
       error: (response: HttpErrorResponse) => {
         this.toastr.error('Something went wrong, try again later!');
       },
+    });
+  }
+
+  redirectToLogin() {
+    this.router.navigate(['/auth/login'], {
+      queryParams: {
+        returnUrl: `/spots/${this.spotOverview.slug}`
+      }
     });
   }
 

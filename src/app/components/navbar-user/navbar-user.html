@@ -121,7 +121,7 @@
       </li>
     </ul>
   </div>
-  
+
   <div id="navProfileContainer" class="w-1/6 flex flex-row justify-end items-center mr-4">
     <div
       class="w-auto h-10 rounded-full left-auto mr-4 dark:bg-(--primary-200) bg-(--primary-500) transition-all flex flex-row justify-center items-center"
@@ -157,11 +157,20 @@
         />
       </button>
     </div>
+    @if (this.session.getUser() != null) {
     <a routerLink="/profile"
       ><app-profile-icon
         classes="w-8 dark:text-white text-(--primary-100) opacity-75 hover:opacity-100 hover:w-9 transition-all"
       ></app-profile-icon
     ></a>
+    } @else {
+    <app-button-primary
+      (click)="this.navigateToLogin()"
+      classAddons="px-4"
+      [buttonType]="'DEFAULT'"
+      [buttonContent]="'Login'"
+    ></app-button-primary>
+    }
   </div>
 </nav>
 
@@ -173,6 +182,14 @@
 >
   <div id="navIconContainerMobile" class="w-1/5 flex flex-row justify-start items-center ml-2">
     <img src="/assets/images/LogoSolo.png" class="h-14" />
+    @if (this.session.getUser() == null) {
+    <app-button-primary
+      (click)="this.navigateToLogin()"
+      classAddons="self-start w-full px-4"
+      [buttonType]="'DEFAULT'"
+      [buttonContent]="'Login'"
+    ></app-button-primary>
+    }
   </div>
   <div id="navProfileContainerMobile" class="w-3/5 flex flex-row justify-end items-center">
     <div
@@ -341,6 +358,9 @@
       ></a>
       <span routerLinkActive="font-bold" class="font-light text-lg">Public Transport</span>
     </li>
+    @if (this.session.getUser() == null) {
+    <!-- Skip this segment -->
+    } @else {
     <li
       routerLink="/profile"
       (click)="this.toggleMobileNavbar()"
@@ -353,6 +373,7 @@
       ></a>
       <span routerLinkActive="font-bold" class="font-light text-lg">Your Profile</span>
     </li>
+    }
   </ul>
 </section>
 }

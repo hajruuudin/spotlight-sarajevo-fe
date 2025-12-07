@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ButtonPrimary } from "../../button-primary/button-primary";
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-delete-review-modal',
-  imports: [ButtonPrimary],
+  imports: [ButtonPrimary, TranslocoPipe],
   templateUrl: './delete-review-modal.html',
   styleUrl: './delete-review-modal.css',
   host: {

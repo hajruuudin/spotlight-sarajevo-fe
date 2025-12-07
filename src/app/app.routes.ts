@@ -43,37 +43,35 @@ export const routes: Routes = [
     component: User,
     children: [
       { path: '', redirectTo: 'homepage', pathMatch: 'full' },
-      { path: 'homepage', canActivate: [authGuard], component: Homepage, title: 'Homepage - SpotlightSarajevo' },
+      { path: 'homepage', component: Homepage, title: 'Homepage - SpotlightSarajevo' },
 
-      { path: 'spots', canActivate: [authGuard], component: SpotSearch, title: 'Browse Spots - SpotlightSarajevo' },
-      { path: 'spots/:spotSlug', canActivate: [authGuard], resolve: [spotResolver], component: SpotOverview, title: 'Spot Overview - SpotlightSarajevo' },
+      { path: 'spots', component: SpotSearch, title: 'Browse Spots - SpotlightSarajevo' },
+      { path: 'spots/:spotSlug', resolve: [spotResolver], component: SpotOverview, title: 'Spot Overview - SpotlightSarajevo' },
 
-      { path: 'events', canActivate: [authGuard], component: EventSearch, title: 'Browse Events - SpotlightSarajevo' },
-      { path: 'events/:slug', canActivate: [authGuard], component: EventOverview, title: 'Event - SpotlightSarajevo' },
+      { path: 'events', component: EventSearch, title: 'Browse Events - SpotlightSarajevo' },
+      { path: 'events/:slug', component: EventOverview, title: 'Event - SpotlightSarajevo' },
 
-      { path: 'discover', canActivate: [authGuard], component: Discover, title: 'Discover - SpotlightSarajevo' },
-      { path: 'profile', canActivate: [authGuard], component: Profile, title: 'Profile - SpotlightSarajevo' },
+      { path: 'discover', component: Discover, title: 'Discover - SpotlightSarajevo' },
+      { path: 'profile', component: Profile, title: 'Profile - SpotlightSarajevo' },
 
-      { path: 'guide', canActivate: [authGuard], component: TouristGuide, title: 'Browse Guides - SpotlightSarajevo' },
+      { path: 'guide', component: TouristGuide, title: 'Browse Guides - SpotlightSarajevo' },
       {
         path: 'guide/slug',
-        canActivate: [authGuard],
+       
         component: TouristGuideOverview,
         title: 'Guide Overview - SpotlightSarajevo',
       },
 
-      { path: 'transport', canActivate: [authGuard], component: Transport, title: 'Public Transport - SpotlightSarajevo' },
+      { path: 'transport', component: Transport, title: 'Public Transport - SpotlightSarajevo' },
 
       {
         path: 'collections',
-        canActivate: [authGuard],
         component: Collections,
         title: 'Your Collections - SpotlightSarajevo',
       },
 
       {
         path: 'requests',
-        canActivate: [authGuard],
         component: CommunityRequests,
         title: 'Community Requests - SpotlightSarajevo',
       },

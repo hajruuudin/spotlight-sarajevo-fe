@@ -11,23 +11,16 @@ import { SessionService } from './core/services/session.service';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit{
+export class App {
   protected readonly title = signal('spotlight-sarajevo-fe');
   protected loading = false;
   protected apiUrl = environment.API_URL
 
-  constructor(private spinner: SpinnerService, private session: SessionService) {
+  constructor(private spinner: SpinnerService) {
   }
 
-  ngOnInit(): void {
-    this.session.restoreSession().subscribe(isLogged => {
-    console.log("Restore session successful:", isLogged);
-    console.log("Stored user:", this.session.getUser());
-  });
-  }
 
   get isLoading() {
     return this.spinner.loadingGlobal();
   }
-
 }
