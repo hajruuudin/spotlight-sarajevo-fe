@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, ElementRef, HostListener, OnInit } from '@angular/core';
 import { PageHeader } from '../../../components/page-header/page-header';
 import { HeadlineEvent } from '../../../components/headline-event/headline-event';
 import { EventShorthandModel } from '../../../shared/models/event.model';
@@ -21,6 +21,8 @@ import { SortOptions } from '../../../shared/constants/SortOptions';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { forkJoin, Subscription } from 'rxjs';
 import { EventService } from '../../../services/event.service';
+import { SpinnerService } from '../../../core/services/spinner.service';
+import { SpinnerSmallComponent } from "../../../components/spinner-small-component/spinner-small-component";
 
 @Component({
   selector: 'app-homepage',
@@ -35,8 +37,8 @@ import { EventService } from '../../../services/event.service';
     SearchEventCard,
     HistoricalSpotCard,
     CategoryCard,
-    ButtonPrimary,
-  ],
+    ButtonPrimary
+],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
   host: {
@@ -60,7 +62,7 @@ export class Homepage implements OnInit {
     public cdr: ChangeDetectorRef,
     private categoryService: CategoryService,
     private toastr: HotToastService,
-    private transloco: TranslocoService
+    private spinner: SpinnerService
   ) {}
 
   protected lang!: string;

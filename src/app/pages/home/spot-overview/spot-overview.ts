@@ -309,7 +309,8 @@ export class SpotOverview implements OnInit {
 
   initialiseRadarChart(lang: string, theme: string) {
     console.log(theme);
-    let textColor = theme == 'light' ? '#000000' : '#ffffff';
+    let textColor = theme == 'light' ? '#111111' : '#ffffff';
+    let gridColor = theme == 'light' ? '#111111AA' : '#ffffff66';
     let labels =
       lang == 'en'
         ? [
@@ -335,29 +336,30 @@ export class SpotOverview implements OnInit {
         data: [8.0, 9.5, 6.0, 7.0, 8.8, 7.5],
         backgroundColor: ['#056766', '#07777B', '#088891', '#0AA1A0', '#1BB7B5', '#33CDCB'],
         borderColor: '#e7fcfe',
-        borderWidth: 1,
-        borderRadius: 8,
-        barThickness: 20,
+        borderWidth: 0,
+        borderRadius: 100,
+        barThickness: 40,
       },
     ];
 
     this.barChartOptions = {
       responsive: true,
       maintainAspectRatio: false,
-      indexAxis: 'y',
+      indexAxis: 'x',
       scales: {
         x: {
           min: 0,
           max: 10,
-          grid: { color: textColor },
+          grid: { 
+            display: false,},
           ticks: {
             color: textColor,
-            font: { size: 14 },
+            font: { size: 12, family: "Kumbh Sans" },
             stepSize: 2,
           },
         },
         y: {
-          grid: { display: false },
+          grid: { color: gridColor },
           ticks: {
             color: textColor,
             font: {
@@ -370,7 +372,7 @@ export class SpotOverview implements OnInit {
       },
       plugins: {
         legend: { display: false },
-        tooltip: { enabled: true },
+        tooltip: { enabled: false },
       },
     };
   }
