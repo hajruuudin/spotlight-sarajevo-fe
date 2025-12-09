@@ -31,6 +31,9 @@ import { error } from 'console';
 import { ReviewService } from '../../../services/review.service';
 import { DecimalPipe } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
+import { BnwRatingIcon } from "../../../resources/icons/bnw-rating-icon/bnw-rating-icon";
+import { BnwLocationIcon } from "../../../resources/icons/bnw-location-icon/bnw-location-icon";
+import { BnwCategoryIcon } from "../../../resources/icons/bnw-category-icon/bnw-category-icon";
 
 @Component({
   selector: 'app-spot-overview',
@@ -44,8 +47,11 @@ import { TranslocoPipe } from '@ngneat/transloco';
     ButtonPrimary,
     NotFoundComponent,
     DecimalPipe,
-    TranslocoPipe
-  ],
+    TranslocoPipe,
+    BnwRatingIcon,
+    BnwLocationIcon,
+    BnwCategoryIcon
+],
   templateUrl: './spot-overview.html',
   styleUrl: './spot-overview.css',
   host: {
@@ -333,7 +339,14 @@ export class SpotOverview implements OnInit {
     this.barChartData.datasets = [
       {
         label: 'Stats',
-        data: [8.0, 9.5, 6.0, 7.0, 8.8, 7.5],
+        data: [
+          this.spotOverview.combinedAffordability,
+          this.spotOverview.combinedAccessibility,
+          this.spotOverview.combinedAtmosphere,
+          this.spotOverview.combinedLocaleQuality,
+          this.spotOverview.combinedStaffKindness,
+          this.spotOverview.combinedCleanliness
+        ],
         backgroundColor: ['#056766', '#07777B', '#088891', '#0AA1A0', '#1BB7B5', '#33CDCB'],
         borderColor: '#e7fcfe',
         borderWidth: 0,
@@ -359,6 +372,8 @@ export class SpotOverview implements OnInit {
           },
         },
         y: {
+          min: 0,
+          max: 10,
           grid: { color: gridColor },
           ticks: {
             color: textColor,
