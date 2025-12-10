@@ -16,10 +16,11 @@ export class App {
   protected loading = false;
   protected apiUrl = environment.API_URL
 
-  constructor(private spinner: SpinnerService, private session: SessionService) {}
+  constructor(private spinner: SpinnerService) {
+  }
+
 
   get isLoading() {
     return this.spinner.loadingGlobal();
   }
-
 }

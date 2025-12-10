@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddReviewModal } from './add-review-modal';
+import { BnwCategoryIcon } from './bnw-category-icon';
 
-describe('AddReviewModal', () => {
-  let component: AddReviewModal;
-  let fixture: ComponentFixture<AddReviewModal>;
+describe('BnwCategoryIcon', () => {
+  let component: BnwCategoryIcon;
+  let fixture: ComponentFixture<BnwCategoryIcon>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddReviewModal]
+      imports: [BnwCategoryIcon]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddReviewModal);
+    fixture = TestBed.createComponent(BnwCategoryIcon);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

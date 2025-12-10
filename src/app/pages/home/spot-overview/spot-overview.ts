@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, computed, ElementRef, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, ElementRef, HostListener, NgZone, OnInit } from '@angular/core';
 import { SpotService } from '../../../services/spot.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpinnerService } from '../../../core/services/spinner.service';
@@ -7,6 +7,7 @@ import {
   SpotOverviewModel,
   SpotReviewCreateModel,
   SpotReviewModel,
+  SpotReviewUpdateModel,
   SpotWorkHoursModel,
 } from '../../../shared/models/spot.model';
 import { PageHeader } from '../../../components/page-header/page-header';
@@ -24,6 +25,15 @@ import { AddReviewModal } from '../../../components/modals/add-review-modal/add-
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
 import { DeleteReviewModal } from '../../../components/modals/delete-review-modal/delete-review-modal';
+import { EditReviewModal } from '../../../components/modals/edit-review-modal/edit-review-modal';
+import { PageResponseModel } from '../../../shared/models/shared.model';
+import { error } from 'console';
+import { ReviewService } from '../../../services/review.service';
+import { DecimalPipe } from '@angular/common';
+import { TranslocoPipe } from '@ngneat/transloco';
+import { BnwRatingIcon } from "../../../resources/icons/bnw-rating-icon/bnw-rating-icon";
+import { BnwLocationIcon } from "../../../resources/icons/bnw-location-icon/bnw-location-icon";
+import { BnwCategoryIcon } from "../../../resources/icons/bnw-category-icon/bnw-category-icon";
 
 @Component({
   selector: 'app-spot-overview',
@@ -36,7 +46,12 @@ import { DeleteReviewModal } from '../../../components/modals/delete-review-moda
     SpotReviewCard,
     ButtonPrimary,
     NotFoundComponent,
-  ],
+    DecimalPipe,
+    TranslocoPipe,
+    BnwRatingIcon,
+    BnwLocationIcon,
+    BnwCategoryIcon
+],
   templateUrl: './spot-overview.html',
   styleUrl: './spot-overview.css',
   host: {
@@ -60,15 +75,21 @@ export class SpotOverview implements OnInit {
   protected userReview: SpotReviewModel | null = null;
   protected spotReviews: SpotReviewModel[] = [];
 
+  protected reviewPageNumber: number = 0;
+  protected reviewPageSize: number = 20;
+
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private spotService: SpotService,
+    private reviewService: ReviewService,
     private el: ElementRef,
     private toastr: HotToastService,
     private modal: ModalService,
     private spinner: SpinnerService,
-    private session: SessionService,
-    private cdr: ChangeDetectorRef
+    protected session: SessionService,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone,
   ) {}
 
   ngOnInit(): void {
@@ -88,6 +109,7 @@ export class SpotOverview implements OnInit {
         this.formatSpotWorkHours(this.spotOverview.workHours);
         this.initialiseRadarChart(this.lang, this.theme);
         this.loadUserSpotReview(this.spotOverview.id);
+        this.loadOtherSpotReviews(this.spotOverview.id)
 
         this.images.push(this.spotOverview.thumbnailImage);
         this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');
@@ -138,7 +160,10 @@ export class SpotOverview implements OnInit {
   }
 
   loadUserSpotReview(spotId: number) {
-    this.spotService.findUserSpotReview(spotId).subscribe({
+    if(this.session.getUser() == null){
+      return
+    } else {
+      this.reviewService.findUserSpotReview(spotId).subscribe({
       next: (response: SpotReviewModel) => {
         this.userReview = response;
       },
@@ -146,6 +171,20 @@ export class SpotOverview implements OnInit {
         // do something
       },
     });
+    }
+    
+  }
+
+  loadOtherSpotReviews(spotId: number) {
+    this.reviewService.findAllSpotReviews(this.reviewPageNumber, this.reviewPageSize, spotId, 'ALPHABETICAL').subscribe({
+      next: (response : PageResponseModel<SpotReviewModel>) => {
+        const filteredResult = response.content.filter(review => review.userId != this.session.getUserId())
+        this.spotReviews = filteredResult
+      },
+      error: (error : HttpErrorResponse) => {
+        // do something
+      }
+    })
   }
 
   async openAddModal() {
@@ -160,36 +199,88 @@ export class SpotOverview implements OnInit {
     }
 
     if (result.type === 'add') {
-      this.handleAddReview(result.data);
+      this.handleAddEditReview(result.data, false);
     }
   }
 
-  private handleAddReview(formData: any) {
-    const reviewAdd = new SpotReviewCreateModel(
-      formData.spotId,
-      formData.header,
-      formData.body,
-      formData.overallRating,
-      formData.atmosphere,
-      formData.accessibility,
-      formData.staffKindness,
-      formData.affordability,
-      formData.cleanliness,
-      formData.localeQuality
-    );
+  async openEditModal(){
+    const result = await this.modal.openAsync<{type: string; data?: any}>(EditReviewModal, {
+      spotId: this.spotOverview.id,
+      reviewModel: this.userReview
+    })
 
-    this.spotService.addSpotReview(reviewAdd).subscribe({
-      next: (review: SpotReviewModel) => {
-        this.toastr.success('Review Added!');
-        this.cdr.detectChanges()
-        queueMicrotask(() => {
-          this.userReview = review;
-        })
-      },
-      error: () => {
-        this.toastr.error('There was an error :(');
-      },
-    });
+    if (result?.type === 'cancel') return;
+    if (result?.type === 'invalid') {
+      this.toastr.info('All fields are required!');
+      return;
+    }
+
+    if (result.type === 'add') {
+      this.handleAddEditReview(result.data, true);
+    }
+  }
+
+  private handleAddEditReview(formData: any, isEdit: boolean) {
+    if(!isEdit){
+      const reviewAdd = new SpotReviewCreateModel(
+        formData.spotId,
+        formData.header,
+        formData.body,
+        formData.overallRating,
+        formData.atmosphere,
+        formData.accessibility,
+        formData.staffKindness,
+        formData.affordability,
+        formData.cleanliness,
+        formData.localeQuality
+      );
+
+      this.spinner.showNavigateSpinner()
+      this.reviewService.addSpotReview(reviewAdd).subscribe({
+        next: (review: SpotReviewModel) => {
+          this.spinner.hideNavigateSpinner()
+          this.toastr.success('Review Added!');
+          this.ngZone.run(() => {
+            this.userReview = review;
+          });
+          this.cdr.markForCheck()
+        },
+        error: () => {
+          this.toastr.error('There was an error :(');
+        },
+      });
+    } else {
+      const reviewEdit = new SpotReviewUpdateModel(
+        this.userReview!.id,
+        this.userReview!.userId,
+        formData.spotId,
+        formData.header,
+        formData.body,
+        formData.overallRating,
+        formData.atmosphere,
+        formData.accessibility,
+        formData.staffKindness,
+        formData.affordability,
+        formData.cleanliness,
+        formData.localeQuality
+      )
+
+      this.spinner.showNavigateSpinner()
+      this.reviewService.updateSpotReview(reviewEdit).subscribe({
+        next: (review: SpotReviewModel) => {
+          this.spinner.hideNavigateSpinner()
+          this.toastr.success('Review Edited!');
+          this.ngZone.run(() => {
+            this.userReview = review;
+          });
+          this.cdr.markForCheck()
+        },
+        error: () => {
+          this.toastr.error('There was an error :(');
+        },
+      })
+    }
+    
   }
 
   async openDeleteReviewModal() {
@@ -197,13 +288,15 @@ export class SpotOverview implements OnInit {
 
     if (!result.confirmed) return;
 
-    await this.spotService.deleteSpotReview(this.spotOverview.id, this.userReview!.id).subscribe({
+    this.spinner.showNavigateSpinner()
+    await this.reviewService.deleteSpotReview(this.spotOverview.id, this.userReview!.id).subscribe({
       next: (response: SpotReviewModel) => {
+        this.spinner.hideNavigateSpinner()
         this.toastr.success('Review deleted');
-        this.cdr.detectChanges()
-        queueMicrotask(() => {
+        this.ngZone.run(() => {
           this.userReview = null;
-        })
+        });
+        this.cdr.markForCheck()
         
       },
       error: (response: HttpErrorResponse) => {
@@ -212,9 +305,18 @@ export class SpotOverview implements OnInit {
     });
   }
 
+  redirectToLogin() {
+    this.router.navigate(['/auth/login'], {
+      queryParams: {
+        returnUrl: `/spots/${this.spotOverview.slug}`
+      }
+    });
+  }
+
   initialiseRadarChart(lang: string, theme: string) {
     console.log(theme);
-    let textColor = theme == 'light' ? '#000000' : '#ffffff';
+    let textColor = theme == 'light' ? '#111111' : '#ffffff';
+    let gridColor = theme == 'light' ? '#111111AA' : '#ffffff66';
     let labels =
       lang == 'en'
         ? [
@@ -237,32 +339,42 @@ export class SpotOverview implements OnInit {
     this.barChartData.datasets = [
       {
         label: 'Stats',
-        data: [8.0, 9.5, 6.0, 7.0, 8.8, 7.5],
+        data: [
+          this.spotOverview.combinedAffordability,
+          this.spotOverview.combinedAccessibility,
+          this.spotOverview.combinedAtmosphere,
+          this.spotOverview.combinedLocaleQuality,
+          this.spotOverview.combinedStaffKindness,
+          this.spotOverview.combinedCleanliness
+        ],
         backgroundColor: ['#056766', '#07777B', '#088891', '#0AA1A0', '#1BB7B5', '#33CDCB'],
         borderColor: '#e7fcfe',
-        borderWidth: 1,
-        borderRadius: 8,
-        barThickness: 20,
+        borderWidth: 0,
+        borderRadius: 100,
+        barThickness: 40,
       },
     ];
 
     this.barChartOptions = {
       responsive: true,
       maintainAspectRatio: false,
-      indexAxis: 'y',
+      indexAxis: 'x',
       scales: {
         x: {
           min: 0,
           max: 10,
-          grid: { color: textColor },
+          grid: { 
+            display: false,},
           ticks: {
             color: textColor,
-            font: { size: 14 },
+            font: { size: 12, family: "Kumbh Sans" },
             stepSize: 2,
           },
         },
         y: {
-          grid: { display: false },
+          min: 0,
+          max: 10,
+          grid: { color: gridColor },
           ticks: {
             color: textColor,
             font: {
@@ -275,7 +387,7 @@ export class SpotOverview implements OnInit {
       },
       plugins: {
         legend: { display: false },
-        tooltip: { enabled: true },
+        tooltip: { enabled: false },
       },
     };
   }

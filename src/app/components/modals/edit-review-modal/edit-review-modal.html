@@ -3,7 +3,7 @@
   animate.exit="fade-out-animation"
   class="w-5/6 md:w-1/2 h-auto dark:bg-(--background-200) bg-(--background-900) rounded-xl p-6 flex flex-col justify-between items-center"
 >
-  <header class="w-full h-auto text-center font-bold text-xl md:text-2xl">{{ 'spotReview.create' | transloco }}</header>
+  <header class="w-full h-auto text-center font-bold text-xl md:text-2xl">{{ 'spotReview.update' | transloco }}</header>
 
   <div class="w-full h-0.5 rounded-full dark:bg-white bg-black mt-2"></div>
 
@@ -87,7 +87,7 @@
     <app-button-primary
       (click)="this.onFormSubmit()"
       [buttonType]="'DEFAULT'"
-      [buttonContent]="'spotReview.create' | transloco"
+      [buttonContent]="'spotReview.update' | transloco"
       [classAddons]="'w-full'"
       class="w-full"
     ></app-button-primary>

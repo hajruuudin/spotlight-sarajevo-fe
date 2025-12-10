@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -12,4 +13,13 @@ import { Component, Input } from '@angular/core';
 export class PageHeader {
   @Input() public title: string = 'DEFAULT';
   @Input() public subtitle: string = 'DEFAULT_SUBTITLE';
+  @Input() public theme: string = 'DYNAMIC'
+
+  get themeColors(){
+    return this.theme == 'DYNAMIC' ? 'dark:text-white' : 'text-white text-(--text-900)'
+  }
+
+  get dividerColor(){
+    return this.theme == 'DYNAMIC' ? 'dark:bg-white bg-(--background-50)' : 'bg-white bg-(--text-900)'
+  }
 }

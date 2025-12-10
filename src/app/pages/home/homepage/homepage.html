@@ -14,7 +14,6 @@
     [title]="'homepage.headerTitle' | transloco"
     [subtitle]="'homepage.headerSubtitle' | transloco"
   ></app-page-header>
-
   <div
     id="homepageHeadersSection"
     class="max-w-application w-full flex flex-col md:flex-row justify-start md:justify-between items-center md:items-start px-4 md:px-8 space-y-4 md:space-y-0 md:space-x-4"
@@ -68,13 +67,13 @@
         }
       </div>
     </div>
-  </div>
 
-  <div class="w-full flex flex-row justify-center md:justify-end max-w-application px-4 md:px-8">
-    <app-button-primary
-      classAddons="px-4"
-      [buttonContent]="'homepage.viewAllButton' | transloco"
-    ></app-button-primary>
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application">
+      <app-button-primary
+        classAddons="px-4"
+        [buttonContent]="'homepage.viewAllButton' | transloco"
+      ></app-button-primary>
+    </div>
   </div>
 </section>
 
@@ -172,7 +171,7 @@
       ></app-search-event-card>
     </div>
 
-    <div class="w-full flex flex-row justify-center md:justify-end max-w-application my-4">
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application my-4">
       <app-button-primary
         classAddons="px-4"
         [buttonContent]="'homepage.viewAllButton' | transloco"
@@ -214,7 +213,7 @@
       }
     </div>
 
-    <div class="w-full flex flex-row justify-center md:justify-end max-w-application">
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application">
       <app-button-primary
         classAddons="px-4"
         [buttonContent]="'homepage.viewAllButton' | transloco"
@@ -276,7 +275,7 @@
       </div>
     </div>
 
-    <div class="w-full flex flex-row justify-center md:justify-end max-w-application mt-2">
+    <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application mt-2">
       <app-button-primary
         classAddons="px-4"
         [buttonContent]="'homepage.viewAllButton' | transloco"
