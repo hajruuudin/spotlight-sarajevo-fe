@@ -43,7 +43,7 @@ export class EventOverviewModel {
             public eventLanguage: string,
             public ageLimit: number,
             public reservation: boolean,
-            public organiser: EventOrganiserModel[],
+            public organiser: EventOrganiserModel,
             public thumbnailImage: string,
             public images: string[]
         ){}
@@ -53,12 +53,13 @@ export class EventOrganiserModel{
     constructor(
         public id: number,
         public organiserName: string,
-        public creationDate: string,
-        public categoryNameBs: string,
-        public categoryNameEn: string,
-        public contactPhone: string,
-        public contactEmail: string,
-        public contactWebsite: string
+        public organiserCreationDate: string,
+        public organiserCategoryNameBs: string,
+        public organiserCategoryNameEn: string,
+        public organiserPhone: string,
+        public organiserEmail: string,
+        public organiserWebsite: string,
+        public thumbnailImage: string
     ){}
 }
 

@@ -183,7 +183,7 @@
           : 'url(/assets/images/SECTION_BG_03_L.png)'
       "
       style="background-size: cover; background-position: center"
-      class="w-full h-auto flex flex-col justify-center items-center"
+      class="w-full h-auto pb-10 flex flex-col justify-center items-center"
     >
       <div id="location" class="w-full h-auto flex flex-col justify-center items-center">
         <app-subheading
@@ -206,8 +206,29 @@
     >
       <div
         id="organiserAndReview"
-        class="max-w-application w-full pb-16 md:w-full flex flex-col jusitfy-center items-center"
-      ></div>
+        class="max-w-application w-full px-4 lg:w-2/3 flex flex-col jusitfy-center items-center"
+      >
+        <app-subheading [subheading]="'eventOverview.organiser' | transloco"></app-subheading>
+      
+        <div
+          class="w-full h-auto flex flex-col bg-(--primary-200) rounded-2xl p-4 md:p-0 md:flex-row justify-between items-center"
+        >
+          <img [src]="this.eventOverview.organiser.thumbnailImage" alt="Organiser thumbnail" class="w-80 aspect-square h-full rounded-2xl">
+
+          <div class="w-full md:w-2/3 py-4 flex flex-col items-center lg:items-center justify-center">
+            <span class="text-base md:text-lg lg:text-xl"><span class="font-semibold">{{ 'eventOverview.organiserName' | transloco }}</span> {{this.eventOverview.organiser.organiserName}}</span>
+            <span class="text-base md:text-lg lg:text-xl"><span class="font-semibold">{{ 'eventOverview.organiserCreation' | transloco }}</span> {{this.eventOverview.organiser.organiserCreationDate | date}}</span>
+            <span class="text-base md:text-lg lg:text-xl"><span class="font-semibold">{{ 'eventOverview.organiserCategory' | transloco }}</span> {{this.lang == 'en' ? this.eventOverview.organiser.organiserCategoryNameEn : this.eventOverview.organiser.organiserCategoryNameBs}}</span>
+            <div class="w-1/2 h-0.5 my-2 rounded-full dark:bg-white bg-black"></div>
+            <div class="w-full h-auto flex flex-col justify-start items-center gap-4">
+              <span class="text-base md:text-lg lg:text-xl rounded-2xl py-2 px-4 dark:bg-(--primary-300) bg-(--primary-700)"><span class="font-semibold">{{ 'eventOverview.contactPhone' | transloco }}</span> {{this.eventOverview.organiser.organiserPhone}}</span>
+              <span class="text-base md:text-lg lg:text-xl rounded-2xl py-2 px-4 dark:bg-(--primary-300) bg-(--primary-700)"><span class="font-semibold">{{ 'eventOverview.contactEmail' | transloco }}</span> {{this.eventOverview.organiser.organiserEmail}}</span>
+              <span class="text-base md:text-lg lg:text-xl rounded-2xl py-2 px-4 dark:bg-(--primary-300) bg-(--primary-700)"><span class="font-semibold">{{ 'eventOverview.contactWebsite' | transloco }}</span> {{this.eventOverview.organiser.organiserWebsite}}</span>
+            </div>
+            
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
