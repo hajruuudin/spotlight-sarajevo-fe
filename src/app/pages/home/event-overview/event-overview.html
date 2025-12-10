@@ -131,46 +131,46 @@
         class="w-full lg:w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 px-4 pb-4 pt-2"
       >
         <app-event-info-card
-            [iconType]="'DATE'"
-            [iconSize]="'w-12 h-12'"
-            [iconTheme]="this.session.getStoredThemeFallback()"
-            [startDate]="this.eventOverview.startDate"
-            [endDate]="this.eventOverview.endDate"
+          [iconType]="'DATE'"
+          [iconSize]="'w-12 h-12'"
+          [iconTheme]="this.session.getStoredThemeFallback()"
+          [startDate]="this.eventOverview.startDate"
+          [endDate]="this.eventOverview.endDate"
         ></app-event-info-card>
 
         <app-event-info-card
-            [iconType]="'AGE'"
-            [iconSize]="'w-12 h-12'"
-            [iconTheme]="this.session.getStoredThemeFallback()"
-            [ageRequirement]="this.eventOverview.ageLimit"
+          [iconType]="'AGE'"
+          [iconSize]="'w-12 h-12'"
+          [iconTheme]="this.session.getStoredThemeFallback()"
+          [ageRequirement]="this.eventOverview.ageLimit"
         ></app-event-info-card>
 
         <app-event-info-card
-            [iconType]="'REFUND'"
-            [iconSize]="'w-12 h-12'"
-            [iconTheme]="this.session.getStoredThemeFallback()"
-            [cancelRefund]="this.eventOverview.cancelRefund"
+          [iconType]="'REFUND'"
+          [iconSize]="'w-12 h-12'"
+          [iconTheme]="this.session.getStoredThemeFallback()"
+          [cancelRefund]="this.eventOverview.cancelRefund"
         ></app-event-info-card>
 
         <app-event-info-card
-            [iconType]="'LANG'"
-            [iconSize]="'w-12 h-12'"
-            [iconTheme]="this.session.getStoredThemeFallback()"
-            [language]="this.eventOverview.eventLanguage"
+          [iconType]="'LANG'"
+          [iconSize]="'w-12 h-12'"
+          [iconTheme]="this.session.getStoredThemeFallback()"
+          [language]="this.eventOverview.eventLanguage"
         ></app-event-info-card>
 
         <app-event-info-card
-            [iconType]="'RESERVATION'"
-            [iconSize]="'w-12 h-12'"
-            [iconTheme]="this.session.getStoredThemeFallback()"
-            [reservation]="this.eventOverview.reservation"
+          [iconType]="'RESERVATION'"
+          [iconSize]="'w-12 h-12'"
+          [iconTheme]="this.session.getStoredThemeFallback()"
+          [reservation]="this.eventOverview.reservation"
         ></app-event-info-card>
 
         <app-event-info-card
-            [iconType]="'PRICE'"
-            [iconSize]="'w-12 h-12'"
-            [iconTheme]="this.session.getStoredThemeFallback()"
-            [entryPrice]="this.eventOverview.entryPrice"
+          [iconType]="'PRICE'"
+          [iconSize]="'w-12 h-12'"
+          [iconTheme]="this.session.getStoredThemeFallback()"
+          [entryPrice]="this.eventOverview.entryPrice"
         ></app-event-info-card>
       </div>
     </div>
@@ -206,27 +206,125 @@
     >
       <div
         id="organiserAndReview"
-        class="max-w-application w-full px-4 lg:w-2/3 flex flex-col jusitfy-center items-center"
+        class="max-w-application w-full px-4 lg:w-2/3 flex flex-col jusitfy-center items-center space-y-8"
       >
         <app-subheading [subheading]="'eventOverview.organiser' | transloco"></app-subheading>
-      
+
         <div
           class="w-full h-auto flex flex-col bg-(--primary-200) rounded-2xl p-4 md:p-0 md:flex-row justify-between items-center"
         >
-          <img [src]="this.eventOverview.organiser.thumbnailImage" alt="Organiser thumbnail" class="w-80 aspect-square h-full rounded-2xl">
+          <img
+            [src]="this.eventOverview.organiser.thumbnailImage"
+            alt="Organiser thumbnail"
+            class="w-80 aspect-square h-full rounded-2xl"
+          />
 
-          <div class="w-full md:w-2/3 py-4 flex flex-col items-center lg:items-center justify-center">
-            <span class="text-base md:text-lg lg:text-xl"><span class="font-semibold">{{ 'eventOverview.organiserName' | transloco }}</span> {{this.eventOverview.organiser.organiserName}}</span>
-            <span class="text-base md:text-lg lg:text-xl"><span class="font-semibold">{{ 'eventOverview.organiserCreation' | transloco }}</span> {{this.eventOverview.organiser.organiserCreationDate | date}}</span>
-            <span class="text-base md:text-lg lg:text-xl"><span class="font-semibold">{{ 'eventOverview.organiserCategory' | transloco }}</span> {{this.lang == 'en' ? this.eventOverview.organiser.organiserCategoryNameEn : this.eventOverview.organiser.organiserCategoryNameBs}}</span>
+          <div
+            class="w-full md:w-2/3 py-4 flex flex-col items-center lg:items-center justify-center"
+          >
+            <span class="text-base md:text-lg lg:text-xl"
+              ><span class="font-semibold">{{ 'eventOverview.organiserName' | transloco }}</span>
+              {{ this.eventOverview.organiser.organiserName }}</span
+            >
+            <span class="text-base md:text-lg lg:text-xl"
+              ><span class="font-semibold">{{
+                'eventOverview.organiserCreation' | transloco
+              }}</span>
+              {{ this.eventOverview.organiser.organiserCreationDate | date }}</span
+            >
+            <span class="text-base md:text-lg lg:text-xl"
+              ><span class="font-semibold">{{
+                'eventOverview.organiserCategory' | transloco
+              }}</span>
+              {{
+                this.lang == 'en'
+                  ? this.eventOverview.organiser.organiserCategoryNameEn
+                  : this.eventOverview.organiser.organiserCategoryNameBs
+              }}</span
+            >
             <div class="w-1/2 h-0.5 my-2 rounded-full dark:bg-white bg-black"></div>
             <div class="w-full h-auto flex flex-col justify-start items-center gap-4">
-              <span class="text-base md:text-lg lg:text-xl rounded-2xl py-2 px-4 dark:bg-(--primary-300) bg-(--primary-700)"><span class="font-semibold">{{ 'eventOverview.contactPhone' | transloco }}</span> {{this.eventOverview.organiser.organiserPhone}}</span>
-              <span class="text-base md:text-lg lg:text-xl rounded-2xl py-2 px-4 dark:bg-(--primary-300) bg-(--primary-700)"><span class="font-semibold">{{ 'eventOverview.contactEmail' | transloco }}</span> {{this.eventOverview.organiser.organiserEmail}}</span>
-              <span class="text-base md:text-lg lg:text-xl rounded-2xl py-2 px-4 dark:bg-(--primary-300) bg-(--primary-700)"><span class="font-semibold">{{ 'eventOverview.contactWebsite' | transloco }}</span> {{this.eventOverview.organiser.organiserWebsite}}</span>
+              <span
+                class="text-base md:text-lg lg:text-xl rounded-2xl py-2 px-4 dark:bg-(--primary-300) bg-(--primary-700)"
+                ><span class="font-semibold">{{ 'eventOverview.contactPhone' | transloco }}</span>
+                {{ this.eventOverview.organiser.organiserPhone }}</span
+              >
+              <span
+                class="text-base md:text-lg lg:text-xl rounded-2xl py-2 px-4 dark:bg-(--primary-300) bg-(--primary-700)"
+                ><span class="font-semibold">{{ 'eventOverview.contactEmail' | transloco }}</span>
+                {{ this.eventOverview.organiser.organiserEmail }}</span
+              >
+              <span
+                class="text-base md:text-lg lg:text-xl rounded-2xl py-2 px-4 dark:bg-(--primary-300) bg-(--primary-700)"
+                ><span class="font-semibold">{{ 'eventOverview.contactWebsite' | transloco }}</span>
+                {{ this.eventOverview.organiser.organiserWebsite }}</span
+              >
             </div>
-            
           </div>
+        </div>
+
+        <app-subheading [subheading]="'eventOverview.reviews' | transloco"></app-subheading>
+        <div class="dark:bg-(--primary-200) bg-(--primary-800) p-10 rounded-2xl w-full">
+          @if (this.session.getUser() == null) {
+          <app-not-found-component
+            class="col-span-2"
+            [headerMessage]="'eventOverview.noAuthReviewHeader' | transloco"
+            [messageDescription]="'eventOverview.noAuthReviewSubheading' | transloco"
+          ></app-not-found-component>
+          <app-button-primary
+            class="col-span-2 w-full"
+            (click)="this.redirectToLogin()"
+            [classAddons]="'w-1/2'"
+            [buttonType]="'DEFAULT'"
+            [buttonContent]="'Log in'"
+          ></app-button-primary>
+          } @else {
+          <!-- <div class="w-full grid grid-cols-2 gap-2">
+                @if (this.userEventOrganiserReview == null) {
+                <app-not-found-component
+                  class="col-span-2"
+                  [headerMessage]="'spotOverview.noUserReviewHeader' | transloco"
+                  [messageDescription]="'spotOverview.noUserReviewSubheading' | transloco"
+                ></app-not-found-component>
+                <app-button-primary
+                  class="col-span-2"
+                  
+                  [classAddons]="'w-1/2'"
+                  [buttonType]="'DEFAULT'"
+                  [buttonContent]="'spotReview.create' | transloco"
+                ></app-button-primary>
+                } @else {
+                <app-spot-review-card
+                  [review]="this.userReview"
+                  class="col-span-2"
+                ></app-spot-review-card>
+                <app-button-primary
+                  (click)="this.openEditModal()"
+                  [classAddons]="'w-full'"
+                  [buttonType]="'DEFAULT'"
+                  [buttonContent]="'spotReview.update' | transloco"
+                ></app-button-primary>
+                <app-button-primary
+                  (click)="this.openDeleteReviewModal()"
+                  [classAddons]="'w-full'"
+                  [buttonType]="'DANGER'"
+                  [buttonContent]="'spotReview.delete' | transloco"
+                ></app-button-primary>
+                } -->
+          <!-- </div> -->
+          }
+        </div>
+
+        <div class="w-full items-start grid grid-cols-1 lg:grid-cols-2 gap-6">
+          @if(this.eventOrganiserReviews.length == 0){
+          <app-not-found-component
+            class="col-span-2"
+            [headerMessage]="'eventOverview.noOtherReviewHeading' | transloco"
+            [messageDescription]="'eventOverview.noOtherReviewSubheading' | transloco"
+          ></app-not-found-component>
+          } @else { @for (review of this.eventOrganiserReviews; track $index) {
+          <!-- <app-spot-review-card [review]="review"></app-spot-review-card> -->
+          } }
         </div>
       </div>
     </div>

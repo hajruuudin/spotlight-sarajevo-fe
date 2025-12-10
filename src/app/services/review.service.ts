@@ -7,6 +7,7 @@ import {
 } from '../shared/models/spot.model';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { EventOrganiserModel, EventOrganiserReviewCreateModel, EventOrganiserReviewModel, EventOrganiserReviewUpdateModel } from '../shared/models/event.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,10 @@ export class ReviewService {
   private apiUrl = environment.API_URL;
 
   constructor(private http: HttpClient) {}
+
+  /* ============================================================= */
+  /* ==================== SPOT REVIEWS CRUD ====================== */
+  /* ============================================================= */
 
   findAllSpotReviews(pageNumber: number, pageSize: number, spotId: number, sortOption: string) {
     return this.http.get<PageResponseModel<SpotReviewModel>>(
@@ -47,6 +52,58 @@ export class ReviewService {
   deleteSpotReview(spotId: number, reviewId: number) {
     return this.http.delete<SpotReviewModel>(
       this.apiUrl + `/review/spot/remove-review?spotId=${spotId}&reviewId=${reviewId}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /* ======================================================================== */
+  /* ==================== EVENT ORGANISER REVIEWS CRUD ====================== */
+  /* ======================================================================== */
+
+  findAllEventOrganiserReviews(pageNumber: number, pageSize: number, organiserId: number, sortOption: string) {
+    return this.http.get<PageResponseModel<EventOrganiserReviewModel>>(
+      this.apiUrl +
+        `/review/organiser/find-organiser-reviews?pageNumber=${pageNumber}&pageSize=${pageSize}&organiserId=${organiserId}&sortOption=${sortOption}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  findUserEventOrganiserReview(organiserId: number) {
+    return this.http.get<EventOrganiserReviewModel>(
+      this.apiUrl + `/review/event-organiser/find-user-review?organiserId=${organiserId}`, 
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  addEventOrganiserReview(reviewCreate: EventOrganiserReviewCreateModel) {
+    return this.http.post<EventOrganiserReviewModel>(
+      this.apiUrl + `/review/event-organiser/add-review`, 
+      reviewCreate, 
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  updateEventOrganiserReview(reviewUpdate: EventOrganiserReviewUpdateModel) {
+    return this.http.put<EventOrganiserReviewModel>(
+      this.apiUrl + `/review/event-organiser/update-review`, 
+      reviewUpdate, 
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  deleteEventOrganiserReview(organiserId: number, reviewId: number) {
+    return this.http.delete<EventOrganiserReviewModel>(
+      this.apiUrl + `/review/event-organiser/remove-review?organiserId=${organiserId}&reviewId=${reviewId}`,
       {
         withCredentials: true,
       }

@@ -211,6 +211,29 @@
         "organiserContact" : "Contact options",
         "contactPhone" : "Phone: ",
         "contactEmail" : "Email: ",
-        "contactWebsite" : "Website: "
+        "contactWebsite" : "Website: ",
+        "reviews" : "ORGANISER REVIEWS",
+        "noAuthReviewHeader" : "Log in to leave reviews and see Your reviews!",
+        "noAuthReviewSubheading" : "Its only a quick step! Create an account if You dont have one already!",
+        "noUserReviewHeader" : "You havent reviewed this organiser.",
+        "noUserReviewSubheading" : "Leave a review if You have attended this organisers events. It helps them and other users of SpotlightSarajevo.",
+        "noOtherReviewHeading" : "No other users have left reviews for this organiser yet!",
+        "noOtherReviewSubheading" : "Seems empty and lonely. Leave a review and become the first!"
+    },
+    "eventReview" : {
+        "create" : "Add Review",
+        "update" : "Edit Review",
+        "delete" : "Delete Review",
+        "cancel" : "Cancel",
+        "atmosphere" : "Atmosphere",
+        "atmosphereDesc" : "What was the atmosphere of the event? Lively, good, welcome, warm? A higher rating indicates better feeling!",
+        "enjoyability" : "Enjoyability",
+        "enjoyabilityDesc" : "How enjoyabel was the event for its purpose? Did You have a good time with the organisation and activities?",
+        "quality" : "Quality",
+        "qualityDesc" : "What was the quality of the organisation? Infrastructure, time-value, staff, performance?",
+        "rating" : "Overall Rating",
+        "ratingDesc" : "Your final overall rating of the organiser, including all of the above mentioned statistics and Your own personal experiences (This carries the most weight in calculating the Organiser review).",
+        "deleteConfirm" : "Are You sure You want to delete Your current review for this Organiser?",
+        "deleteConfirmMessage" : "Yes, delete review"
     }
 }

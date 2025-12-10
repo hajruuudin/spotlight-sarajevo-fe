@@ -63,7 +63,7 @@ export class EventOrganiserModel{
     ){}
 }
 
-export class EventOgraniserReviewModel{
+export class EventOrganiserReviewModel{
     constructor(
         public id: number,
         public organiserId: number,
@@ -71,6 +71,32 @@ export class EventOgraniserReviewModel{
         public username: number,
         public created: string,
         public modified: string,
+        public header: string,
+        public body: string,
+        public userOrganiserQuality: number,
+        public userOrganiserAtmosphere: number,
+        public userOrganiserEnjoyability: number,
+    ){}
+}
+
+export class EventOrganiserReviewCreateModel{
+    constructor(
+        public organiserId: number,
+        public username: number,
+        public header: string,
+        public body: string,
+        public userOrganiserQuality: number,
+        public userOrganiserAtmosphere: number,
+        public userOrganiserEnjoyability: number,
+    ){}
+}
+
+export class EventOrganiserReviewUpdateModel{
+    constructor(
+        public id: number,
+        public organiserId: number,
+        public userId: number,
+        public username: number,
         public header: string,
         public body: string,
         public userOrganiserQuality: number,

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, NgZone } from '@angular/core';
-import { EventOgraniserReviewModel, EventOverviewModel } from '../../../shared/models/event.model';
+import { EventOrganiserReviewModel, EventOverviewModel } from '../../../shared/models/event.model';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../../../services/event.service';
@@ -19,6 +19,11 @@ import { MapRegular } from '../../../components/map-regular/map-regular';
 import { DatePipe } from '@angular/common';
 import { BnwDateIcon } from "../../../resources/icons/bnw-date-icon/bnw-date-icon";
 import { EventInfoCard } from "../../../components/event-info-card/event-info-card";
+import { HttpErrorResponse } from '@angular/common/http';
+import { PageResponseModel } from '../../../shared/models/shared.model';
+import { NotFoundComponent } from "../../../components/not-found-component/not-found-component";
+import { ButtonPrimary } from "../../../components/button-primary/button-primary";
+import { SpotReviewCard } from "../../../components/spot-review-card/spot-review-card";
 
 @Component({
   selector: 'app-event-overview',
@@ -32,7 +37,10 @@ import { EventInfoCard } from "../../../components/event-info-card/event-info-ca
     MapRegular,
     DatePipe,
     BnwDateIcon,
-    EventInfoCard
+    EventInfoCard,
+    NotFoundComponent,
+    ButtonPrimary,
+    SpotReviewCard
 ],
   templateUrl: './event-overview.html',
   styleUrl: './event-overview.css',
@@ -50,8 +58,8 @@ export class EventOverview {
 
   protected headerContainer!: HTMLElement;
 
-  protected userEventOrganiserReview: EventOgraniserReviewModel | null = null;
-  protected eventOrganiserReviews: EventOgraniserReviewModel[] = [];
+  protected userEventOrganiserReview: EventOrganiserReviewModel | null = null;
+  protected eventOrganiserReviews: EventOrganiserReviewModel[] = [];
 
   protected reviewPageNumber: number = 0;
   protected reviewPageSize: number = 20;
@@ -84,6 +92,8 @@ export class EventOverview {
     this.activatedRoute.data.subscribe({
       next: (data: any) => {
         this.eventOverview = data['0'];
+        this.loadUserOrganiserReview(this.eventOverview.organiser.id)
+        this.loadOtherOrganiserReviews(this.eventOverview.organiser.id)
 
         this.images.push(this.eventOverview.thumbnailImage);
         this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');
@@ -108,6 +118,33 @@ export class EventOverview {
     const parallaxOffset = scrollY * 0.3;
 
     this.headerContainer.style.transform = `translateY(${parallaxOffset}px)`;
+  }
+
+  loadUserOrganiserReview(organiserId: number) {
+    if(this.session.getUser() == null){
+      return
+    } else {
+      this.reviewService.findUserEventOrganiserReview(organiserId).subscribe({
+      next: (response: EventOrganiserReviewModel) => {
+        this.userEventOrganiserReview = response;
+      },
+      error: (response: HttpErrorResponse) => {
+        // do something
+      },
+    });
+    }
+  }
+
+  loadOtherOrganiserReviews(organiserId: number) {
+    this.reviewService.findAllEventOrganiserReviews(this.reviewPageNumber, this.reviewPageSize, organiserId, 'ALPHABETICAL').subscribe({
+      next: (response : PageResponseModel<EventOrganiserReviewModel>) => {
+        const filteredResult = response.content.filter(review => review.userId != this.session.getUserId())
+        this.eventOrganiserReviews = filteredResult
+      },
+      error: (error : HttpErrorResponse) => {
+        // do something
+      }
+    })
   }
 
   // REPLACE WITH ADDING ORGANISER
