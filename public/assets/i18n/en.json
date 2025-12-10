@@ -185,5 +185,32 @@
         "ratingDesc" : "Your final overall rating of the spot, including all of the above mentioned statistics and Your own personal experiences (This carries the most weight in calculating the Spot review).",
         "deleteConfirm" : "Are You sure You want to delete Your current review for this Spot?",
         "deleteConfirmMessage" : "Yes, delete review"
+    },
+    "eventOverview" : {
+        "startDate" : "START DATE",
+        "location" : "LOCATION",
+        "category" : "CATEGORY",
+        "description" : "DESCRIPTION",
+        "images" : "EVENT IMAGES",
+        "eventStart" : "Event starts at:",
+        "eventEnd" : "Event ends at:",
+        "eventInfoAgeYes" : "You have to be at least the required age to enter this event: ",
+        "eventInfoAgeNo" : "There is no age limit for this event. Everyone is welcome!",
+        "eventInfoReservationYes" : "You have to reserve a spot to enter this event. Contant the organisers.",
+        "eventInfoReservationNo" : "There is no reservation required for this event. Come as You are!",
+        "eventInfoPriceYes" : "This events lowest entry price ticket is: ",
+        "eventInfoPriceNo" : "This event is free and carries to entry cost.",
+        "eventInfoCancelYes" : "The organisers offer refunds for lat cancellations. Contact them for more info!",
+        "eventInfoCancelNo" : "The organisers do NOT offer refunds for late cancellations.",
+        "eventInfoLangYes" : "The predominant language of this event is: ",
+        "eventInfoLangNo" : "There is no predominant langauge for this event. A multilingual atmosphere is welcome!",
+        "organiser" : "ORGANISER INFO",
+        "organiserName" : "Organiser Name: ",
+        "organiserCreation" : "Organisation formed / founded on: ",
+        "organiserCategory" : "Predominantly makinng events in this category: ",
+        "organiserContact" : "Contact options",
+        "contactPhone" : "Phone: ",
+        "contactEmail" : "Email: ",
+        "contactWebsite" : "Website: "
     }
 }

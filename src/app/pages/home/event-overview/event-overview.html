@@ -1,1 +1,213 @@
-<p>event-overview works!</p>
+<section
+  animate.enter="fade-in-animation"
+  id="eventOverviewHeadersSectionContainer"
+  class="w-full h-auto flex flex-col justify-start items-center"
+>
+  <div
+    #headerContainer
+    id="headerContainer"
+    class="relative flex flex-col justify-end items-center w-full h-96 bg-black"
+  >
+    <div
+      class="absolute inset-0 bg-gradient-to-r dark:from-black/100 via-transparent dark:to-black/100"
+    ></div>
+    <img
+      [src]="this.eventOverview.thumbnailImage"
+      style="mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent)"
+      class="absolute inset-0 left-auto right-auto w-3/4 h-full object-cover opacity-20"
+    />
+    <app-page-header
+      class="max-w-application relative bottom-2"
+      [title]="
+        this.lang == 'en' ? this.eventOverview.officialNameEn : this.eventOverview.officialNameBs
+      "
+      [subtitle]="
+        this.lang == 'en'
+          ? this.eventOverview.smallDescriptionEn
+          : this.eventOverview.smallDescriptionBs
+      "
+      [theme]="'STATIC'"
+    ></app-page-header>
+
+    <div
+      id="tagContainer"
+      class="flex flex-row flex-wrap gap-2 items-center justify-center pb-4 z-20"
+    >
+      @for (tag of this.eventOverview.eventTags; track $index) {
+      <div
+        class="category-label-medium bg-fuchsia-50 w-auto mt-2 px-2 md:px-5 py-0.5 flex flex-row justify-center items-center rounded-full"
+      >
+        <span class="text-sm md:text-base text-black font-semibold">{{
+          this.lang == 'en' ? tag.tagNameEn : tag.tagNameBs
+        }}</span>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div
+    id="descriptionAndImageContainer"
+    [style.backgroundImage]="
+      this.session.getStoredThemeFallback() == 'dark'
+        ? 'url(/assets/images/SECTION_BG_03.png)'
+        : 'url(/assets/images/SECTION_BG_03_L.png)'
+    "
+    style="background-size: cover; background-position: center"
+    class="w-full h-auto pt-4 pb-4 flex flex-col justify-center items-center z-30 dark:bg-(--background-50) bg-(--background-900)"
+  >
+    <div
+      id="descriptionAndImage"
+      class="max-w-application px-2 md:px-4 w-full md:w-3/4 flex flex-col jusitfy-start items-center space-y-4"
+    >
+      <div class="w-full flex flex-row justify-around items-start gap-1 md:gap-4">
+        <div class="w-2/6 flex flex-col justify-center items-center">
+          <app-bnw-date-icon
+            [theme]="this.session.getStoredTheme().toUpperCase()"
+            [classes]="'w-10 h-10'"
+          ></app-bnw-date-icon>
+          <span class="font-bold text-sm md:text-xl tracking-wider">{{
+            'eventOverview.startDate' | transloco
+          }}</span>
+          <span class="text-base md:text-2xl font-semibold">{{
+            this.eventOverview.startDate | date
+          }}</span>
+        </div>
+
+        <div class="w-2/6 md:w-3/6 flex flex-col justify-center items-center">
+          <app-bnw-location-icon
+            [theme]="this.session.getStoredTheme().toUpperCase()"
+          ></app-bnw-location-icon>
+          <span class="font-bold text-sm md:text-xl tracking-wider">{{
+            'eventOverview.location' | transloco
+          }}</span>
+          <span class="text-base md:text-2xl font-semibold">{{ this.eventOverview.location }}</span>
+        </div>
+
+        <div class="w-2/6 flex flex-col justify-center items-center">
+          <app-bnw-category-icon
+            [theme]="this.session.getStoredTheme().toUpperCase()"
+          ></app-bnw-category-icon>
+          <span class="font-bold text-sm md:text-xl tracking-wider">{{
+            'eventOverview.category' | transloco
+          }}</span>
+          <span class="text-base md:text-2xl font-semibold">{{
+            this.lang == 'en'
+              ? this.eventOverview.categoryNameEn
+              : this.eventOverview.categoryNameBs
+          }}</span>
+        </div>
+      </div>
+
+      <div class="w-full h-auto flex flex-col jusitfy-center items-center">
+        <app-subheading [subheading]="'eventOverview.description' | transloco"></app-subheading>
+        <p class="text-base">
+          {{
+            this.lang == 'en'
+              ? this.eventOverview.fullDescriptionEn
+              : this.eventOverview.fullDescriptionBs
+          }}. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus ipsa impedit quidem,
+          voluptates illo quisquam consequatur sapiente dolorem rem, et provident reprehenderit
+          labore nobis fugit maiores autem error, inventore necessitatibus!
+        </p>
+      </div>
+
+      <div class="w-full h-auto flex flex-col jusitfy-center items-center">
+        <app-subheading [subheading]="'eventOverview.images' | transloco"></app-subheading>
+        <app-image-carousel [images]="this.images"></app-image-carousel>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="eventDetailsAndInformationContainer"
+    class="w-full h-auto pt-4 pb-4 flex flex-col justify-center items-center dark:bg-(--background-100) bg-(--primary-900)"
+  >
+    <div
+      id="eventDetailsAndInformation"
+      class="max-w-application px-2 md:px-4 w-full md:w-5/6 lg:w-3/4 flex flex-col jusitfy-center items-center gap-6"
+    >
+      <!-- START AND END DATE CONTAINER -->
+      <div
+        class="w-full lg:w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 px-4 pb-4 pt-2"
+      >
+        <app-event-info-card
+            [iconType]="'DATE'"
+            [iconSize]="'w-12 h-12'"
+            [iconTheme]="this.session.getStoredThemeFallback()"
+            [startDate]="this.eventOverview.startDate"
+            [endDate]="this.eventOverview.endDate"
+        ></app-event-info-card>
+
+        <app-event-info-card
+            [iconType]="'AGE'"
+            [iconSize]="'w-12 h-12'"
+            [iconTheme]="this.session.getStoredThemeFallback()"
+            [ageRequirement]="this.eventOverview.ageLimit"
+        ></app-event-info-card>
+
+        <app-event-info-card
+            [iconType]="'REFUND'"
+            [iconSize]="'w-12 h-12'"
+            [iconTheme]="this.session.getStoredThemeFallback()"
+            [cancelRefund]="this.eventOverview.cancelRefund"
+        ></app-event-info-card>
+
+        <app-event-info-card
+            [iconType]="'LANG'"
+            [iconSize]="'w-12 h-12'"
+            [iconTheme]="this.session.getStoredThemeFallback()"
+            [language]="this.eventOverview.eventLanguage"
+        ></app-event-info-card>
+
+        <app-event-info-card
+            [iconType]="'RESERVATION'"
+            [iconSize]="'w-12 h-12'"
+            [iconTheme]="this.session.getStoredThemeFallback()"
+            [reservation]="this.eventOverview.reservation"
+        ></app-event-info-card>
+
+        <app-event-info-card
+            [iconType]="'PRICE'"
+            [iconSize]="'w-12 h-12'"
+            [iconTheme]="this.session.getStoredThemeFallback()"
+            [entryPrice]="this.eventOverview.entryPrice"
+        ></app-event-info-card>
+      </div>
+    </div>
+
+    <div
+      id="locationContainer"
+      [style.backgroundImage]="
+        this.session.getStoredThemeFallback() == 'dark'
+          ? 'url(/assets/images/SECTION_BG_03.png)'
+          : 'url(/assets/images/SECTION_BG_03_L.png)'
+      "
+      style="background-size: cover; background-position: center"
+      class="w-full h-auto flex flex-col justify-center items-center"
+    >
+      <div id="location" class="w-full h-auto flex flex-col justify-center items-center">
+        <app-subheading
+          class="max-w-application"
+          [subheading]="'eventOverview.location' | transloco"
+        ></app-subheading>
+        <app-map-regular
+          class="z-10"
+          [objectLat]="this.eventOverview.eventLat"
+          [objectLong]="this.eventOverview.eventLon"
+          [objectCategoryEn]="this.eventOverview.categoryNameEn"
+          [objectCategoryBs]="this.eventOverview.categoryNameBs"
+        ></app-map-regular>
+      </div>
+    </div>
+
+    <div
+      id="organiserAndReviewContainer"
+      class="w-full pb-16 md:w-full flex flex-col jusitfy-center items-center"
+    >
+      <div
+        id="organiserAndReview"
+        class="max-w-application w-full pb-16 md:w-full flex flex-col jusitfy-center items-center"
+      ></div>
+    </div>
+  </div>
+</section>

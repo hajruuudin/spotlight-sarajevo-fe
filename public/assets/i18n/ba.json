@@ -184,5 +184,32 @@
     "ratingDesc": "Vaša konačna ukupna ocjena lokacije, uzimajući u obzir sve navedene kriterije i lično iskustvo (ova ocjena nosi najveću težinu u proračunu ukupne ocjene).",
     "deleteConfirm": "Jeste li sigurni da želite obrisati svoju trenutnu recenziju za ovu lokaciju?",
     "deleteConfirmMessage": "Da, izbriši recenziju"
+  },
+  "eventOverview" : {
+    "startDate" : "DATUM POČETKA",
+    "location" : "LOKACIJA",
+    "category" : "KATEGORIJA",
+    "description" : "OPIS",
+    "images" : "SLIKE DOGAĐAJA",
+    "eventStart" : "Događaj počinje u:",
+    "eventEnd" : "Događaj završava u:",
+    "eventInfoAgeYes" : "Morate imati barem potrebnu dob za ulazak na ovaj događaj: ",
+    "eventInfoAgeNo" : "Nema starosne granice za ovaj događaj. Svi su dobrodošli!",
+    "eventInfoReservationYes" : "Morate rezervisati mjesto za ulazak na ovaj događaj. Kontaktirajte organizatore.",
+    "eventInfoReservationNo" : "Nije potrebna rezervacija za ovaj događaj. Dođite takvi kakvi jeste!",
+    "eventInfoPriceYes" : "Najniža cijena ulaznice za ovaj događaj je: ",
+    "eventInfoPriceNo" : "Ovaj događaj je besplatan i nema troškova ulaska.",
+    "eventInfoCancelYes" : "Organizatori nude povrat novca za kasna otkazivanja. Kontaktirajte ih za više informacija!",
+    "eventInfoCancelNo" : "Organizatori NE nude povrat novca za kasna otkazivanja.",
+    "eventInfoLangYes" : "Preovlađujući jezik ovog događaja je: ",
+    "eventInfoLangNo" : "Nema preovlađujućeg jezika za ovaj događaj. Višejezična atmosfera je dobrodošla!",
+    "organiser" : "INFORMACIJE O ORGANIZATORU",
+    "organiserName" : "Ime organizatora: ",
+    "organiserCreation" : "Organizacija osnovana / formirana: ",
+    "organiserCategory" : "Pretežno organizuju događaje u ovoj kategoriji: ",
+    "organiserContact" : "Opcije kontakta",
+    "contactPhone" : "Telefon: ",
+    "contactEmail" : "Email: ",
+    "contactWebsite" : "Web stranica: "
   }
 }
