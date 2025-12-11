@@ -13,6 +13,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
 })
 export class DeleteReviewModal {
   protected close!: (result: {confirmed: boolean}) => void;
+  protected reviewType: boolean = true
 
   confirm() {
     this.close({ confirmed: true });

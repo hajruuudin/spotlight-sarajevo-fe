@@ -279,7 +279,7 @@
             [buttonContent]="'Log in'"
           ></app-button-primary>
           } @else {
-          <!-- <div class="w-full grid grid-cols-2 gap-2">
+          <div class="w-full grid grid-cols-2 gap-2">
                 @if (this.userEventOrganiserReview == null) {
                 <app-not-found-component
                   class="col-span-2"
@@ -288,30 +288,30 @@
                 ></app-not-found-component>
                 <app-button-primary
                   class="col-span-2"
-                  
+                  (click)="this.openAddModal()"
                   [classAddons]="'w-1/2'"
                   [buttonType]="'DEFAULT'"
                   [buttonContent]="'spotReview.create' | transloco"
                 ></app-button-primary>
                 } @else {
-                <app-spot-review-card
-                  [review]="this.userReview"
+                <app-organiser-reiew-card
+                  [review]="this.userEventOrganiserReview"
                   class="col-span-2"
-                ></app-spot-review-card>
+                ></app-organiser-reiew-card>
                 <app-button-primary
                   (click)="this.openEditModal()"
                   [classAddons]="'w-full'"
                   [buttonType]="'DEFAULT'"
-                  [buttonContent]="'spotReview.update' | transloco"
+                  [buttonContent]="'eventReview.update' | transloco"
                 ></app-button-primary>
                 <app-button-primary
                   (click)="this.openDeleteReviewModal()"
                   [classAddons]="'w-full'"
                   [buttonType]="'DANGER'"
-                  [buttonContent]="'spotReview.delete' | transloco"
+                  [buttonContent]="'eventReview.delete' | transloco"
                 ></app-button-primary>
-                } -->
-          <!-- </div> -->
+                }
+          </div>
           }
         </div>
 
@@ -323,7 +323,7 @@
             [messageDescription]="'eventOverview.noOtherReviewSubheading' | transloco"
           ></app-not-found-component>
           } @else { @for (review of this.eventOrganiserReviews; track $index) {
-          <!-- <app-spot-review-card [review]="review"></app-spot-review-card> -->
+          <app-organiser-reiew-card [review]="review"></app-organiser-reiew-card>
           } }
         </div>
       </div>

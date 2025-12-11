@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, NgZone } from '@angular/core';
-import { EventOrganiserReviewModel, EventOverviewModel } from '../../../shared/models/event.model';
+import { EventOrganiserReviewCreateModel, EventOrganiserReviewModel, EventOrganiserReviewUpdateModel, EventOverviewModel } from '../../../shared/models/event.model';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../../../services/event.service';
@@ -24,6 +24,10 @@ import { PageResponseModel } from '../../../shared/models/shared.model';
 import { NotFoundComponent } from "../../../components/not-found-component/not-found-component";
 import { ButtonPrimary } from "../../../components/button-primary/button-primary";
 import { SpotReviewCard } from "../../../components/spot-review-card/spot-review-card";
+import { EditReviewModal } from '../../../components/modals/edit-review-modal/edit-review-modal';
+import { DeleteReviewModal } from '../../../components/modals/delete-review-modal/delete-review-modal';
+import { AddReviewModal } from '../../../components/modals/add-review-modal/add-review-modal';
+import { OrganiserReiewCard } from "../../../components/organiser-reiew-card/organiser-reiew-card";
 
 @Component({
   selector: 'app-event-overview',
@@ -40,7 +44,7 @@ import { SpotReviewCard } from "../../../components/spot-review-card/spot-review
     EventInfoCard,
     NotFoundComponent,
     ButtonPrimary,
-    SpotReviewCard
+    OrganiserReiewCard
 ],
   templateUrl: './event-overview.html',
   styleUrl: './event-overview.css',
@@ -147,123 +151,118 @@ export class EventOverview {
     })
   }
 
-  // REPLACE WITH ADDING ORGANISER
-  // async openAddModal() {
-  //   const result = await this.modal.openAsync<{ type: string; data?: any }>(AddReviewModal, {
-  //     spotId: this.spotOverview.id,
-  //   });
+  async openAddModal() {
+    const result = await this.modal.openAsync<{ type: string; data?: any }>(AddReviewModal, {
+      organiserId: this.eventOverview.organiser.id,
+      reviewType: false
+    });
 
-  //   if (result?.type === 'cancel') return;
-  //   if (result?.type === 'invalid') {
-  //     this.toastr.info('All fields are required!');
-  //     return;
-  //   }
+    if (result?.type === 'cancel') return;
+    if (result?.type === 'invalid') {
+      this.toastr.info('All fields are required!');
+      return;
+    }
 
-  //   if (result.type === 'add') {
-  //     this.handleAddEditReview(result.data, false);
-  //   }
-  // }
+    if (result.type === 'add') {
+      this.handleAddEditReview(result.data, false);
+    }
+  }
 
-  // async openEditModal(){
-  //   const result = await this.modal.openAsync<{type: string; data?: any}>(EditReviewModal, {
-  //     spotId: this.spotOverview.id,
-  //     reviewModel: this.userReview
-  //   })
+  async openEditModal(){
+    const result = await this.modal.openAsync<{type: string; data?: any}>(EditReviewModal, {
+      organiserId: this.eventOverview.organiser.id,
+      reviewModel: this.userEventOrganiserReview
+    })
 
-  //   if (result?.type === 'cancel') return;
-  //   if (result?.type === 'invalid') {
-  //     this.toastr.info('All fields are required!');
-  //     return;
-  //   }
+    if (result?.type === 'cancel') return;
+    if (result?.type === 'invalid') {
+      this.toastr.info('All fields are required!');
+      return;
+    }
 
-  //   if (result.type === 'add') {
-  //     this.handleAddEditReview(result.data, true);
-  //   }
-  // }
+    if (result.type === 'edit') {
+      this.handleAddEditReview(result.data, true);
+    }
+  }
 
-  // private handleAddEditReview(formData: any, isEdit: boolean) {
-  //   if(!isEdit){
-  //     const reviewAdd = new SpotReviewCreateModel(
-  //       formData.spotId,
-  //       formData.header,
-  //       formData.body,
-  //       formData.overallRating,
-  //       formData.atmosphere,
-  //       formData.accessibility,
-  //       formData.staffKindness,
-  //       formData.affordability,
-  //       formData.cleanliness,
-  //       formData.localeQuality
-  //     );
+  private handleAddEditReview(formData: any, isEdit: boolean) {
+    if(!isEdit){
+      const reviewAdd = new EventOrganiserReviewCreateModel(
+        formData.organiserId,
+        formData.header,
+        formData.body,
+        // formData.overallRating,
+        formData.quality,
+        formData.atmosphere,
+        formData.enjoyability,
+      );
 
-  //     this.spinner.showNavigateSpinner()
-  //     this.reviewService.addSpotReview(reviewAdd).subscribe({
-  //       next: (review: SpotReviewModel) => {
-  //         this.spinner.hideNavigateSpinner()
-  //         this.toastr.success('Review Added!');
-  //         this.ngZone.run(() => {
-  //           this.userReview = review;
-  //         });
-  //         this.cdr.markForCheck()
-  //       },
-  //       error: () => {
-  //         this.toastr.error('There was an error :(');
-  //       },
-  //     });
-  //   } else {
-  //     const reviewEdit = new SpotReviewUpdateModel(
-  //       this.userReview!.id,
-  //       this.userReview!.userId,
-  //       formData.spotId,
-  //       formData.header,
-  //       formData.body,
-  //       formData.overallRating,
-  //       formData.atmosphere,
-  //       formData.accessibility,
-  //       formData.staffKindness,
-  //       formData.affordability,
-  //       formData.cleanliness,
-  //       formData.localeQuality
-  //     )
+      this.spinner.showNavigateSpinner()
+      this.reviewService.addEventOrganiserReview(reviewAdd).subscribe({
+        next: (review: EventOrganiserReviewModel) => {
+          this.spinner.hideNavigateSpinner()
+          this.toastr.success('Review Added!');
+          this.ngZone.run(() => {
+            this.userEventOrganiserReview = review;
+          });
+          this.cdr.markForCheck()
+        },
+        error: () => {
+          this.toastr.error('There was an error :(');
+        },
+      });
+    } else {
+      const reviewEdit = new EventOrganiserReviewUpdateModel(
+        this.userEventOrganiserReview!.id,
+        formData.organiserId,
+        this.userEventOrganiserReview!.userId,
+        formData.header,
+        formData.body,
+        formData.quality,
+        formData.atmosphere,
+        formData.enjoyability
+      )
 
-  //     this.spinner.showNavigateSpinner()
-  //     this.reviewService.updateSpotReview(reviewEdit).subscribe({
-  //       next: (review: SpotReviewModel) => {
-  //         this.spinner.hideNavigateSpinner()
-  //         this.toastr.success('Review Edited!');
-  //         this.ngZone.run(() => {
-  //           this.userReview = review;
-  //         });
-  //         this.cdr.markForCheck()
-  //       },
-  //       error: () => {
-  //         this.toastr.error('There was an error :(');
-  //       },
-  //     })
-  //   }
-  // }
+      this.spinner.showNavigateSpinner()
+      this.reviewService.updateEventOrganiserReview(reviewEdit).subscribe({
+        next: (review: EventOrganiserReviewModel) => {
+          this.spinner.hideNavigateSpinner()
+          this.toastr.success('Review Edited!');
+          this.ngZone.run(() => {
+            this.userEventOrganiserReview = review;
+          });
+          this.cdr.markForCheck()
+        },
+        error: () => {
+          this.toastr.error('There was an error :(');
+        },
+      })
+    }
+  }
 
-  // async openDeleteReviewModal() {
-  //   const result = await this.modal.openAsync<{ confirmed: boolean }>(DeleteReviewModal, {});
+  async openDeleteReviewModal() {
+    const result = await this.modal.openAsync<{ confirmed: boolean }>(DeleteReviewModal, {
+      reviewType: false
+    });
 
-  //   if (!result.confirmed) return;
+    if (!result.confirmed) return;
 
-  //   this.spinner.showNavigateSpinner()
-  //   await this.reviewService.deleteSpotReview(this.spotOverview.id, this.userReview!.id).subscribe({
-  //     next: (response: SpotReviewModel) => {
-  //       this.spinner.hideNavigateSpinner()
-  //       this.toastr.success('Review deleted');
-  //       this.ngZone.run(() => {
-  //         this.userReview = null;
-  //       });
-  //       this.cdr.markForCheck()
+    this.spinner.showNavigateSpinner()
+    await this.reviewService.deleteEventOrganiserReview(this.eventOverview.organiser.id, this.userEventOrganiserReview!.id).subscribe({
+      next: (response: EventOrganiserReviewModel) => {
+        this.spinner.hideNavigateSpinner()
+        this.toastr.success('Review deleted');
+        this.ngZone.run(() => {
+          this.userEventOrganiserReview = null;
+        });
+        this.cdr.markForCheck()
 
-  //     },
-  //     error: (response: HttpErrorResponse) => {
-  //       this.toastr.error('Something went wrong, try again later!');
-  //     },
-  //   });
-  // }
+      },
+      error: (response: HttpErrorResponse) => {
+        this.toastr.error('Something went wrong, try again later!');
+      },
+    });
+  }
 
   redirectToLogin() {
     this.router.navigate(['/auth/login'], {

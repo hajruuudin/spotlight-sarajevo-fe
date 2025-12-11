@@ -82,7 +82,6 @@ export class EventOrganiserReviewModel{
 export class EventOrganiserReviewCreateModel{
     constructor(
         public organiserId: number,
-        public username: number,
         public header: string,
         public body: string,
         public userOrganiserQuality: number,
@@ -96,7 +95,6 @@ export class EventOrganiserReviewUpdateModel{
         public id: number,
         public organiserId: number,
         public userId: number,
-        public username: number,
         public header: string,
         public body: string,
         public userOrganiserQuality: number,

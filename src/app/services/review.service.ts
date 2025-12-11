@@ -74,7 +74,7 @@ export class ReviewService {
 
   findUserEventOrganiserReview(organiserId: number) {
     return this.http.get<EventOrganiserReviewModel>(
-      this.apiUrl + `/review/event-organiser/find-user-review?organiserId=${organiserId}`, 
+      this.apiUrl + `/review/organiser/find-user-review?organiserId=${organiserId}`, 
       {
         withCredentials: true,
       }
@@ -83,7 +83,7 @@ export class ReviewService {
 
   addEventOrganiserReview(reviewCreate: EventOrganiserReviewCreateModel) {
     return this.http.post<EventOrganiserReviewModel>(
-      this.apiUrl + `/review/event-organiser/add-review`, 
+      this.apiUrl + `/review/organiser/add-review`, 
       reviewCreate, 
       {
         withCredentials: true,
@@ -93,7 +93,7 @@ export class ReviewService {
 
   updateEventOrganiserReview(reviewUpdate: EventOrganiserReviewUpdateModel) {
     return this.http.put<EventOrganiserReviewModel>(
-      this.apiUrl + `/review/event-organiser/update-review`, 
+      this.apiUrl + `/review/organiser/update-review`, 
       reviewUpdate, 
       {
         withCredentials: true,
@@ -103,7 +103,7 @@ export class ReviewService {
 
   deleteEventOrganiserReview(organiserId: number, reviewId: number) {
     return this.http.delete<EventOrganiserReviewModel>(
-      this.apiUrl + `/review/event-organiser/remove-review?organiserId=${organiserId}&reviewId=${reviewId}`,
+      this.apiUrl + `/review/organiser/remove-review?organiserId=${organiserId}&reviewId=${reviewId}`,
       {
         withCredentials: true,
       }
