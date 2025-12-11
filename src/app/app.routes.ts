@@ -28,6 +28,7 @@ import { NotFound } from './interfaces/error/not-found';
 import { CommunityRequests } from './pages/home/community-requests/community-requests';
 import { authGuard } from './core/guards/auth-guard.guard';
 import { spotResolver } from './core/resolvers/spot.resolver';
+import { eventResolver } from './core/resolvers/event.resolver';
 
 export const routes: Routes = [
   {
@@ -49,7 +50,7 @@ export const routes: Routes = [
       { path: 'spots/:spotSlug', resolve: [spotResolver], component: SpotOverview, title: 'Spot Overview - SpotlightSarajevo' },
 
       { path: 'events', component: EventSearch, title: 'Browse Events - SpotlightSarajevo' },
-      { path: 'events/:slug', component: EventOverview, title: 'Event - SpotlightSarajevo' },
+      { path: 'events/:eventSlug', resolve: [eventResolver], component: EventOverview, title: 'Event - SpotlightSarajevo' },
 
       { path: 'discover', component: Discover, title: 'Discover - SpotlightSarajevo' },
       { path: 'profile', component: Profile, title: 'Profile - SpotlightSarajevo' },

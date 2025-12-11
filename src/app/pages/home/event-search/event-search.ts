@@ -20,6 +20,7 @@ import { EventService } from '../../../services/event.service';
 import { PageResponseModel } from '../../../shared/models/shared.model';
 import { SpinnerSmallComponent } from '../../../components/spinner-small-component/spinner-small-component';
 import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-event-search',
@@ -71,6 +72,7 @@ export class EventSearch {
     public session: SessionService,
     private fb: FormBuilder,
     private spinner: SpinnerService,
+    private router: Router,
     private toastr: HotToastService,
     private cdr: ChangeDetectorRef
   ) {
@@ -219,5 +221,11 @@ export class EventSearch {
       false,
       true
     );
+  }
+
+  navigateToEventOverview(eventSlug: string){
+    this.spinner.showNavigateSpinner()
+    this.router.navigate(['/events/' + eventSlug])
+    this.spinner.hideNavigateSpinner()
   }
 }

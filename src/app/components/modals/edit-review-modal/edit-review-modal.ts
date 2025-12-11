@@ -1,15 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ButtonPrimary } from "../../button-primary/button-primary";
+import { ButtonPrimary } from '../../button-primary/button-primary';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HotToastService } from '@ngxpert/hot-toast';
-import { TextInput } from "../../text-input/text-input";
-import { TextArea } from "../../text-area/text-area";
-import { SliderInput } from "../../slider-input/slider-input";
+import { TextInput } from '../../text-input/text-input';
+import { TextArea } from '../../text-area/text-area';
+import { SliderInput } from '../../slider-input/slider-input';
 import { SessionService } from '../../../core/services/session.service';
-import { SpotOverviewModel, SpotReviewCreateModel, SpotReviewModel } from '../../../shared/models/spot.model';
+import {
+  SpotOverviewModel,
+  SpotReviewCreateModel,
+  SpotReviewModel,
+} from '../../../shared/models/spot.model';
 import { SpotService } from '../../../services/spot.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslocoPipe } from '@ngneat/transloco';
+import { EventOrganiserReviewModel } from '../../../shared/models/event.model';
 
 @Component({
   selector: 'app-add-review-modal',
@@ -17,12 +22,13 @@ import { TranslocoPipe } from '@ngneat/transloco';
   templateUrl: './edit-review-modal.html',
   styleUrl: './edit-review-modal.css',
   host: {
-    class: `fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]`
-  }
+    class: `fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]`,
+  },
 })
 export class EditReviewModal implements OnInit {
-  @Input() protected reviewModel!: SpotReviewModel
-  @Input() protected spotId!: number;
+  @Input() protected reviewModel!: SpotReviewModel | EventOrganiserReviewModel;
+  @Input() protected spotId: number = 0;
+  @Input() protected organiserId: number = 0;
 
   protected close!: (result?: any) => void;
 
@@ -31,17 +37,28 @@ export class EditReviewModal implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      header: [this.reviewModel.header, Validators.required],
-      body: [this.reviewModel.body, Validators.required],
-      overallRating: [this.reviewModel.userOverallRating, Validators.required],
-      affordability: [this.reviewModel.userAffordability, Validators.required],
-      accessibility: [this.reviewModel.userAccessibility, Validators.required],
-      atmosphere: [this.reviewModel.userAtmosphere, Validators.required],
-      localeQuality: [this.reviewModel.userLocaleQuality, Validators.required],
-      staffKindness: [this.reviewModel.userStaffKindness, Validators.required],
-      cleanliness: [this.reviewModel.userCleanliness, Validators.required]
-    });
+    if (this.isSpotReview(this.reviewModel)) {
+      this.form = this.fb.group({
+        header: [this.reviewModel.header, Validators.required],
+        body: [this.reviewModel.body, Validators.required],
+        overallRating: [this.reviewModel.userOverallRating, Validators.required],
+        affordability: [this.reviewModel.userAffordability, Validators.required],
+        accessibility: [this.reviewModel.userAccessibility, Validators.required],
+        atmosphere: [this.reviewModel.userAtmosphere, Validators.required],
+        localeQuality: [this.reviewModel.userLocaleQuality, Validators.required],
+        staffKindness: [this.reviewModel.userStaffKindness, Validators.required],
+        cleanliness: [this.reviewModel.userCleanliness, Validators.required],
+      });
+    } else if (this.isOrganiserReview(this.reviewModel)) {
+      this.form = this.fb.group({
+        header: [this.reviewModel.header, Validators.required],
+        body: [this.reviewModel.body, Validators.required],
+        // overallRating: [this.reviewModel.userOverallRating, Validators.required], FIX LATER, ADD ORGANISER COMBINED REVIEW
+        atmosphere: [this.reviewModel.userOrganiserAtmosphere, Validators.required],
+        quality: [this.reviewModel.userOrganiserQuality, Validators.required],
+        enjoyability: [this.reviewModel.userOrganiserEnjoyability, Validators.required],
+      });
+    }
   }
 
   onFormSubmit() {
@@ -49,19 +66,42 @@ export class EditReviewModal implements OnInit {
       return this.close({ type: 'invalid' });
     }
 
-    const reviewData = {
-      spotId: this.spotId,
-      ...this.form.value
-    };
+    if (this.isSpotReview(this.reviewModel)) {
+      const reviewData = {
+        spotId: this.spotId,
+        ...this.form.value,
+      };
 
-    this.close({
-      type: 'add',
-      data: reviewData
-    });
+      this.close({
+        type: 'edit',
+        data: reviewData,
+      });
+    } else if (this.isOrganiserReview(this.reviewModel)) {
+      const reviewData = {
+        organiserId: this.organiserId,
+        ...this.form.value,
+      };
+
+      this.close({
+        type: 'edit',
+        data: reviewData,
+      });
+    }
   }
 
   onClose() {
     this.close({ type: 'cancel' });
   }
-}
 
+  get reviewType(){
+    return this.isSpotReview(this.reviewModel)
+  }
+
+  private isSpotReview(model: any): model is SpotReviewModel {
+    return model && 'userOverallRating' in model;
+  }
+
+  private isOrganiserReview(model: any): model is EventOrganiserReviewModel {
+    return model && 'userOrganiserAtmosphere' in model;
+  }
+}
