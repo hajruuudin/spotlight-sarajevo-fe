@@ -1,1 +1,52 @@
-<app-page-header class="max-w-application pt-4" title="Collections" subtitle="Take a look at what You've saved!"></app-page-header>
+<section
+  animate.enter="fade-in-animation"
+  id="collectionHeaderContainer"
+  class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4"
+>
+  <div
+    id="collectionHeader"
+    class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full"
+  >
+    <app-page-header
+      class="max-w-application py-4"
+      [title]="'collection.headerTitle' | transloco"
+      [subtitle]="'collection.headerSubtitle' | transloco"
+    ></app-page-header>
+  </div>
+
+  <div
+    id="mainContainer"
+    class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4"
+  >
+    <div
+      id="main"
+      class="max-w-application w-full px-4 md:px-8 flex flex-col md:flex-row justify-center items-start space-y-8 md:space-x-8 md:space-y-0"
+    >
+      <div id="collectionSelector" class="w-full md:w-1/3 flex flex-col rounded-2xl h-10">
+        <section
+          class="w-full rounded-t-2xl dark:bg-(--background-300) bg-(--background-700) h-auto py-2"
+        >
+          <span class="text-xl md:text-2xl font-bold">{{
+            'collection.headerTitle' | transloco
+          }}</span>
+        </section>
+
+        <form
+          [formGroup]="this.collectionSelectForm"
+          class="w-full rounded-b-2xl flex-grow dark:bg-(--background-200) bg-(--background-800) h-auto py-2"
+        >
+          @for (collection of this.userCollections; track collection.id) {
+          <!-- PLACEHOLDER FOR RADIO BUTTONS -->
+          }
+        </form>
+
+        <app-button-primary
+          classAddons="w-full rounded-2xl my-4"
+          [buttonContent]="'Add Collection'"
+          [buttonType]="'DEFAULT'"
+        ></app-button-primary>
+      </div>
+      <div id="itemsContainer" class="w-full md:w-2/3 bg-amber-300 rounded-2xl h-64"></div>
+    </div>
+  </div>
+</section>

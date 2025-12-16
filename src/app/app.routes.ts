@@ -29,6 +29,7 @@ import { CommunityRequests } from './pages/home/community-requests/community-req
 import { authGuard } from './core/guards/auth-guard.guard';
 import { spotResolver } from './core/resolvers/spot.resolver';
 import { eventResolver } from './core/resolvers/event.resolver';
+import { collectionsResolver } from './core/resolvers/collection.resolver';
 
 export const routes: Routes = [
   {
@@ -67,6 +68,9 @@ export const routes: Routes = [
 
       {
         path: 'collections',
+        resolve: {
+          collectionData: collectionsResolver
+        },
         component: Collections,
         title: 'Your Collections - SpotlightSarajevo',
       },

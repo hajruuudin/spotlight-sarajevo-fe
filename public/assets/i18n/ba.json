@@ -235,5 +235,10 @@
     "ratingDesc": "Vaša konačna ukupna ocjena organizatora, uključujući sve gore navedene statistike i vaša lična iskustva (Ovo nosi najveću težinu u izračunavanju ocjene organizatora).",
     "deleteConfirm": "Jeste li sigurni da želite obrisati svoju trenutnu recenziju za ovog organizatora?",
     "deleteConfirmMessage": "Da, obriši recenziju"
+  },
+  "collection" : {
+    "headerTitle" : "Kolekcije",
+    "headerSubtitle" : "Pregled lokacija / događaja koje ste spasili.",
+    "addCollection" : "Kreiraj Kolekciju"
   }
 }
