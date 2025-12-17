@@ -239,6 +239,12 @@
   "collection": {
     "headerTitle": "Collections",
     "headerSubtitle": "A view of the spots / events You saved.",
-    "addCollection" : "Add Collection"
+    "addCollection" : "Add Collection",
+    "create" : "Create collection",
+    "addToCollection": "Add to collections",
+    "cancel" : "Cancel",
+    "noCollectionItemsHeading" : "No items in this collection",
+    "noCollectionItemsSubheading" : "Add spots or events to this collection to view them here",
+    "finishAdd" : "Finalise"
   }
 }

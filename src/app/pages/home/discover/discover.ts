@@ -46,13 +46,7 @@ export class Discover implements OnInit {
     protected toastr: HotToastService
   ) {}
 
-  protected lang!: string;
-  protected sub!: Subscription;
-
   ngOnInit(): void {
-    this.sub = this.session.language.subscribe((lang) => {
-      this.lang = lang;
-    });
     this.loadInitialData();
   }
 

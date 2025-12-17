@@ -34,6 +34,8 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { BnwRatingIcon } from "../../../resources/icons/bnw-rating-icon/bnw-rating-icon";
 import { BnwLocationIcon } from "../../../resources/icons/bnw-location-icon/bnw-location-icon";
 import { BnwCategoryIcon } from "../../../resources/icons/bnw-category-icon/bnw-category-icon";
+import { AddToCollectionModal } from '../../../components/modals/add-to-collection-modal/add-to-collection-modal';
+import { ButtonRegular } from "../../../components/button-regular/button-regular";
 
 @Component({
   selector: 'app-spot-overview',
@@ -50,7 +52,8 @@ import { BnwCategoryIcon } from "../../../resources/icons/bnw-category-icon/bnw-
     TranslocoPipe,
     BnwRatingIcon,
     BnwLocationIcon,
-    BnwCategoryIcon
+    BnwCategoryIcon,
+    ButtonRegular
 ],
   templateUrl: './spot-overview.html',
   styleUrl: './spot-overview.css',
@@ -60,10 +63,6 @@ import { BnwCategoryIcon } from "../../../resources/icons/bnw-category-icon/bnw-
 })
 export class SpotOverview implements OnInit {
   protected spotOverview!: SpotOverviewModel;
-  protected lang: string = 'en';
-  protected theme: string = 'light';
-  protected langSub!: Subscription;
-  protected themeSub!: Subscription;
   protected images: string[] = [];
 
   protected headerContainer!: HTMLElement;
@@ -95,19 +94,11 @@ export class SpotOverview implements OnInit {
   ngOnInit(): void {
     this.headerContainer = this.el.nativeElement.querySelector('#headerContainer');
 
-    this.langSub = this.session.language.subscribe((lang) => {
-      this.lang = lang;
-    });
-
-    this.themeSub = this.session.theme.subscribe((theme) => {
-      this.theme = theme;
-    });
-
     this.activatedRoute.data.subscribe({
       next: (data: any) => {
         this.spotOverview = data['0'];
         this.formatSpotWorkHours(this.spotOverview.workHours);
-        this.initialiseRadarChart(this.lang, this.theme);
+        this.initialiseRadarChart(this.session.language()!, this.session.theme()!);
         this.loadUserSpotReview(this.spotOverview.id);
         this.loadOtherSpotReviews(this.spotOverview.id)
 
@@ -391,4 +382,21 @@ export class SpotOverview implements OnInit {
       },
     };
   }
+
+  async openAddCollectionModal(){
+      const result = await this.modal.openAsync<{type: string, data: any, confirmed: boolean }>(AddToCollectionModal, {
+        objectId: this.spotOverview.id,
+        objectType: 'SPOT'
+      });
+  
+      if (result.type == 'exit') return;
+  
+      if (result.type == 'success-remove'){
+        this.toastr.success('Items removed!')
+      } else if (result.type == 'success-add'){
+        this.toastr.success('Items added!')
+      } else if (result.type == 'success-both'){
+        this.toastr.success('Changes made!')
+      }
+    }
 }

@@ -65,15 +65,10 @@ export class Homepage implements OnInit {
     private spinner: SpinnerService
   ) {}
 
-  protected lang!: string;
-  protected sub!: Subscription;
   protected selectedDate: string = '';
   public eventCalendarDays: any = [];
 
   ngOnInit(): void {
-    this.sub = this.session.language.subscribe((lang) => {
-      this.lang = lang;
-    });
     this.loadInitialData();
     this.loadQueryAndDisplayDays();
   }
@@ -140,7 +135,7 @@ export class Homepage implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err: HttpErrorResponse) => {
-        this.toastr.error(this.lang == 'en' ? 'There was an error' : 'Doslo je do greske :(');
+        this.toastr.error(this.session.language() == 'en' ? 'There was an error' : 'Doslo je do greske :(');
       },
     });
   }

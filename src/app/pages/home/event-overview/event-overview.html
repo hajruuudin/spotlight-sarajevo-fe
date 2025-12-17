@@ -19,10 +19,10 @@
     <app-page-header
       class="max-w-application relative bottom-2"
       [title]="
-        this.lang == 'en' ? this.eventOverview.officialNameEn : this.eventOverview.officialNameBs
+        this.session.language() == 'en' ? this.eventOverview.officialNameEn : this.eventOverview.officialNameBs
       "
       [subtitle]="
-        this.lang == 'en'
+        this.session.language() == 'en'
           ? this.eventOverview.smallDescriptionEn
           : this.eventOverview.smallDescriptionBs
       "
@@ -38,7 +38,7 @@
         class="category-label-medium bg-fuchsia-50 w-auto mt-2 px-2 md:px-5 py-0.5 flex flex-row justify-center items-center rounded-full"
       >
         <span class="text-sm md:text-base text-black font-semibold">{{
-          this.lang == 'en' ? tag.tagNameEn : tag.tagNameBs
+          this.session.language() == 'en' ? tag.tagNameEn : tag.tagNameBs
         }}</span>
       </div>
       }
@@ -91,18 +91,24 @@
             'eventOverview.category' | transloco
           }}</span>
           <span class="text-base md:text-2xl font-semibold">{{
-            this.lang == 'en'
+            this.session.language() == 'en'
               ? this.eventOverview.categoryNameEn
               : this.eventOverview.categoryNameBs
           }}</span>
         </div>
       </div>
 
+      <div class="w-full md:w-1/2 flex flex-row justify-around items-center">
+        <app-button-regular (click)="this.openAddCollectionModal()" classAddons="px-4" [buttonIcon]="'COLLECTION_ADD_EDIT'" [buttonContent]="'Add to Collection'"></app-button-regular>
+        <app-button-regular classAddons="px-4" [buttonIcon]="'MARK_WILL_ATTEND'" [buttonContent]="'Mark as will attend'"></app-button-regular>
+      </div>
+      
+
       <div class="w-full h-auto flex flex-col jusitfy-center items-center">
         <app-subheading [subheading]="'eventOverview.description' | transloco"></app-subheading>
         <p class="text-base">
           {{
-            this.lang == 'en'
+            this.session.language() == 'en'
               ? this.eventOverview.fullDescriptionEn
               : this.eventOverview.fullDescriptionBs
           }}. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus ipsa impedit quidem,
@@ -237,7 +243,7 @@
                 'eventOverview.organiserCategory' | transloco
               }}</span>
               {{
-                this.lang == 'en'
+                this.session.language() == 'en'
                   ? this.eventOverview.organiser.organiserCategoryNameEn
                   : this.eventOverview.organiser.organiserCategoryNameBs
               }}</span

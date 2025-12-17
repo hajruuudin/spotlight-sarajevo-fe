@@ -24,7 +24,7 @@
       }}</span>
       <app-headline-spot
         classAddons="w-full"
-        [lang]="this.lang"
+        [lang]="this.session.language()!"
         [spot]="this.headlineSpot!"
       ></app-headline-spot>
     </div>
@@ -34,7 +34,7 @@
       }}</span>
       <app-headline-event
         classAddons="w-full"
-        [lang]="this.lang"
+        [lang]="this.session.language()!"
         [event]="this.headlineEvent!"
       ></app-headline-event>
     </div>
@@ -61,9 +61,9 @@
     >
       <div class="scroll-container-slow flex flex-row justify-center items-center space-x-4">
         @for (spot of this.favouriteSpots; track spot.id) {
-        <app-small-spot-card [lang]="this.lang" [spot]="spot" classAddons=""></app-small-spot-card>
+        <app-small-spot-card [lang]="this.session.language()!" [spot]="spot" classAddons=""></app-small-spot-card>
         } @for (spot of this.favouriteSpots; track spot.id) {
-        <app-small-spot-card [lang]="this.lang" [spot]="spot" classAddons=""></app-small-spot-card>
+        <app-small-spot-card [lang]="this.session.language()!" [spot]="spot" classAddons=""></app-small-spot-card>
         }
       </div>
     </div>
@@ -102,11 +102,11 @@
       class="w-full h-auto flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 space-x-4 my-2 items-stretch"
     >
       <app-search-spot-card
-        [lang]="this.lang"
+        [lang]="this.session.language()!"
         [spot]="this.popularSpots[0]"
       ></app-search-spot-card>
       <app-search-spot-card
-        [lang]="this.lang"
+        [lang]="this.session.language()!"
         [spot]="this.popularSpots[1]"
       ></app-search-spot-card>
     </div>
@@ -116,11 +116,11 @@
       class="w-full h-auto flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 space-x-4 my-2 items-stretch"
     >
       <app-search-spot-card
-        [lang]="this.lang"
+        [lang]="this.session.language()!"
         [spot]="this.popularSpots[3]"
       ></app-search-spot-card>
       <app-search-spot-card
-        [lang]="this.lang"
+        [lang]="this.session.language()!"
         [spot]="this.popularSpots[4]"
       ></app-search-spot-card>
     </div>
@@ -162,11 +162,11 @@
       class="w-full h-auto flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 my-2"
     >
       <app-search-event-card
-        [lang]="this.lang"
+        [lang]="this.session.language()!"
         [event]="this.upcomingEvents[0]"
       ></app-search-event-card>
       <app-search-event-card
-        [lang]="this.lang"
+        [lang]="this.session.language()!"
         [event]="this.upcomingEvents[1]"
       ></app-search-event-card>
     </div>
@@ -209,7 +209,7 @@
       class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4"
     >
       @for (spot of this.landmarkSpots; track spot.id) {
-      <app-historical-spot-card [lang]="this.lang" [spot]="spot"></app-historical-spot-card>
+      <app-historical-spot-card [lang]="this.session.language()!" [spot]="spot"></app-historical-spot-card>
       }
     </div>
 
@@ -240,13 +240,13 @@
       <div class="scroll-container-fast flex flex-row justify-start items-center space-x-2">
         @for (cat of this.spotCategories; track $index) {
         <app-category-card
-          [lang]="this.lang"
+          [lang]="this.session.language()!"
           [spotCategoryModel]="cat"
           [eventCategoryModel]="null"
         ></app-category-card>
         } @for (cat of this.spotCategories; track $index) {
         <app-category-card
-          [lang]="this.lang"
+          [lang]="this.session.language()!"
           [spotCategoryModel]="cat"
           [eventCategoryModel]="null"
         ></app-category-card>
@@ -261,13 +261,13 @@
       >
         @for (cat of this.eventCategories; track $index) {
         <app-category-card
-          [lang]="this.lang"
+          [lang]="this.session.language()!"
           [spotCategoryModel]="null"
           [eventCategoryModel]="cat"
         ></app-category-card>
         } @for (cat of this.eventCategories; track $index) {
         <app-category-card
-          [lang]="this.lang"
+          [lang]="this.session.language()!"
           [spotCategoryModel]="null"
           [eventCategoryModel]="cat"
         ></app-category-card>

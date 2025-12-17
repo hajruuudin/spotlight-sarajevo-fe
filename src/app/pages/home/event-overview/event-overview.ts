@@ -28,6 +28,8 @@ import { EditReviewModal } from '../../../components/modals/edit-review-modal/ed
 import { DeleteReviewModal } from '../../../components/modals/delete-review-modal/delete-review-modal';
 import { AddReviewModal } from '../../../components/modals/add-review-modal/add-review-modal';
 import { OrganiserReiewCard } from "../../../components/organiser-reiew-card/organiser-reiew-card";
+import { ButtonRegular } from "../../../components/button-regular/button-regular";
+import { AddToCollectionModal } from '../../../components/modals/add-to-collection-modal/add-to-collection-modal';
 
 @Component({
   selector: 'app-event-overview',
@@ -44,7 +46,8 @@ import { OrganiserReiewCard } from "../../../components/organiser-reiew-card/org
     EventInfoCard,
     NotFoundComponent,
     ButtonPrimary,
-    OrganiserReiewCard
+    OrganiserReiewCard,
+    ButtonRegular
 ],
   templateUrl: './event-overview.html',
   styleUrl: './event-overview.css',
@@ -54,10 +57,6 @@ import { OrganiserReiewCard } from "../../../components/organiser-reiew-card/org
 })
 export class EventOverview {
   protected eventOverview!: EventOverviewModel;
-  protected lang: string = 'en';
-  protected theme: string = 'light';
-  protected langSub!: Subscription;
-  protected themeSub!: Subscription;
   protected images: string[] = []; // TEMPORARY FOR DEMONSTRATION
 
   protected headerContainer!: HTMLElement;
@@ -84,14 +83,6 @@ export class EventOverview {
 
   ngOnInit(): void {
     this.headerContainer = this.el.nativeElement.querySelector('#headerContainer');
-
-    this.langSub = this.session.language.subscribe((lang) => {
-      this.lang = lang;
-    });
-
-    this.themeSub = this.session.theme.subscribe((theme) => {
-      this.theme = theme;
-    });
 
     this.activatedRoute.data.subscribe({
       next: (data: any) => {
@@ -270,5 +261,22 @@ export class EventOverview {
         returnUrl: `/spots/${this.eventOverview.slug}`,
       },
     });
+  }
+
+  async openAddCollectionModal(){
+    const result = await this.modal.openAsync<{type: string, data: any, confirmed: boolean }>(AddToCollectionModal, {
+      objectId: this.eventOverview.id,
+      objectType: 'EVENT'
+    });
+
+    if (result.type == 'exit') return;
+
+    if (result.type == 'success-remove'){
+      this.toastr.success('Items removed!')
+    } else if (result.type == 'success-add'){
+      this.toastr.success('Items added!')
+    } else if (result.type == 'success-both'){
+      this.toastr.success('Changes made!')
+    }
   }
 }

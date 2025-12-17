@@ -239,6 +239,12 @@
   "collection" : {
     "headerTitle" : "Kolekcije",
     "headerSubtitle" : "Pregled lokacija / događaja koje ste spasili.",
-    "addCollection" : "Kreiraj Kolekciju"
+    "addCollection" : "Kreiraj Kolekciju",
+    "create" : "Dodaj Kolekciju",
+    "addToCollection": "Dodaj u kolekciju",
+    "cancel" : "Odustani",
+    "noCollectionItemsHeading" : "Kolekcija je prazna",
+    "noCollectionItemsSubheading" : "Dodajte lokcaije ili događaje u kolekciju da bi ih pregledali ovdje!",
+    "finishAdd" : "Završi"
   }
 }

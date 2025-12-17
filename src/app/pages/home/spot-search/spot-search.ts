@@ -43,8 +43,6 @@ import { Router } from '@angular/router';
   },
 })
 export class SpotSearch implements OnInit {
-  protected lang: String = 'en';
-  protected sub!: Subscription;
   protected spotSearchForm: FormGroup;
   protected spotCategories: SpotCategoryModel[] = [];
   protected sortingMethods: string[] = [
@@ -69,7 +67,7 @@ export class SpotSearch implements OnInit {
     private categoryService: CategoryService,
     private spotService: SpotService,
     //====== COMMON SERVICES =====//
-    private session: SessionService,
+    protected session: SessionService,
     private router: Router,
     private fb: FormBuilder,
     private spinner: SpinnerService,
@@ -89,10 +87,6 @@ export class SpotSearch implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sub = this.session.language.subscribe((lang) => {
-      this.lang = lang;
-    });
-
     this.categoryService.getAllSpotCategories().subscribe({
       next: (response: SpotCategoryModel[]) => {
         this.spotCategories = response;

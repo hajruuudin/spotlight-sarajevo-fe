@@ -58,4 +58,26 @@ export class CollectionEventModel implements CollectionItem{
   ) {}
 }
 
+export class AddCollectionItemsModel{
+  constructor(
+    public ids: number[],
+    public collectionType: string,
+    public objectId: number
+  ){}
+}
+
+export class SpotInCollectionsModel implements CollectionItems{
+    constructor(
+        public ids: number[]
+    ){}
+}
+
+
+export class EventInCollectionModel implements CollectionItems{
+    constructor(
+        public ids: number[]
+    ){}
+}
+
+export interface CollectionItems{}
 export interface CollectionItem{}
