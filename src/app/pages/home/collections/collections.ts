@@ -7,11 +7,12 @@ import {
   CollectionCreateModel,
   CollectionItemsModel,
   CollectionModel,
+  CollectionUpdateModel,
 } from '../../../shared/models/collection.model';
 import { CollectionService } from '../../../services/collection.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HotToastService } from '@ngxpert/hot-toast';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CollectionPageData } from '../../../core/resolvers/collection.resolver';
 import { ButtonPrimary } from '../../../components/button-primary/button-primary';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -20,11 +21,27 @@ import { ModalService } from '../../../core/services/modal.service';
 import { AddCollectionModal } from '../../../components/modals/add-collection-modal/add-collection-modal';
 import { SpinnerService } from '../../../core/services/spinner.service';
 import { NgClass } from '@angular/common';
-import { TeleportOutletDirective } from "@ngneat/overview";
+import { TeleportOutletDirective } from '@ngneat/overview';
+import { SpotSearch } from '../spot-search/spot-search';
+import { SearchSpotCard } from '../../../components/search-spot-card/search-spot-card';
+import { SpotShorthandModel } from '../../../shared/models/spot.model';
+import { EventShorthandModel } from '../../../shared/models/event.model';
+import { SearchEventCard } from "../../../components/search-event-card/search-event-card";
+import { EditCollectionModal } from '../../../components/modals/edit-collection-modal/edit-collection-modal';
+import { eventNames } from 'process';
 
 @Component({
   selector: 'app-collections',
-  imports: [ReactiveFormsModule, PageHeader, TranslocoPipe, ButtonPrimary, NotFoundComponent, NgClass],
+  imports: [
+    ReactiveFormsModule,
+    PageHeader,
+    TranslocoPipe,
+    ButtonPrimary,
+    NotFoundComponent,
+    NgClass,
+    SearchSpotCard,
+    SearchEventCard
+],
   templateUrl: './collections.html',
   styleUrl: './collections.css',
   host: {
@@ -40,7 +57,8 @@ export class Collections implements OnInit {
   protected collectionSelectForm: FormGroup;
 
   constructor(
-    private session: SessionService,
+    protected session: SessionService,
+    private router: Router,
     private route: ActivatedRoute,
     private collectionService: CollectionService,
     private toastr: HotToastService,
@@ -71,7 +89,7 @@ export class Collections implements OnInit {
     this.collectionService.findCollectionItems(collectionId).subscribe({
       next: (response: CollectionItemsModel) => {
         this.selectedCollection = response;
-        this.cdr.detectChanges()
+        this.cdr.detectChanges();
       },
       error: (response: HttpErrorResponse) => {
         this.toastr.error(
@@ -95,10 +113,6 @@ export class Collections implements OnInit {
     const result = await this.modal.openAsync<{ type: string; data?: any }>(AddCollectionModal, {});
 
     if (result?.type === 'cancel') return;
-    if (result?.type === 'invalid') {
-      this.toastr.info('All fields are required!');
-      return;
-    }
 
     if (result.type === 'add') {
       this.addNewCollection(
@@ -111,6 +125,26 @@ export class Collections implements OnInit {
     }
   }
 
+  async openEditCollectionModal(){
+    const collectionModel = this.userCollections.find(c => c.id === this.selectedCollection.collectionId)
+    const result = await this.modal.openAsync<{ type: string, data?: any}>(EditCollectionModal, {
+      collectionModel: collectionModel
+    })
+
+    if (result?.type === 'cancel') return;
+   
+    if (result.type === 'edit') {
+      this.editCollection(
+        new CollectionUpdateModel(
+          collectionModel!.id,
+          result.data.collectionName,
+          result.data.collectionDescription,
+        )
+      );
+    }
+
+  }
+
   addNewCollection(request: CollectionCreateModel) {
     this.spinner.showNavigateSpinner();
     this.collectionService.addCollection(request).subscribe({
@@ -120,24 +154,62 @@ export class Collections implements OnInit {
           this.session.language() == 'en' ? 'New collection created!' : 'Nova kolekcija napravljena'
         );
         this.reloadCollections();
-        
       },
-      error: (response : HttpErrorResponse) => {
+      error: (response: HttpErrorResponse) => {
         this.spinner.hideNavigateSpinner();
         this.toastr.error(
           this.session.language() == 'en' ? 'Something went wrong!' : 'Nesto je krenulo po zlu'
-        )
-      }
+        );
+      },
+    });
+  }
+
+  editCollection(request: CollectionUpdateModel){
+    this.spinner.showNavigateSpinner();
+    this.collectionService.updateCollection(request).subscribe({
+      next: (response: CollectionModel) => {
+        this.spinner.hideNavigateSpinner();
+        this.toastr.success(
+          this.session.language() == 'en' ? 'Collection edited!' : 'Kolekcija izmjenjena'
+        );
+        this.reloadCollections();
+      },
+      error: (response: HttpErrorResponse) => {
+        this.spinner.hideNavigateSpinner();
+        this.toastr.error(
+          this.session.language() == 'en' ? 'Something went wrong!' : 'Nesto je krenulo po zlu'
+        );
+      },
     });
   }
 
   reloadCollections() {
     this.collectionService.findUserCollections().subscribe({
-      next: (response : CollectionModel[]) => {
-        this.userCollections = response
-        this.divideUserCollection()
-        this.cdr.detectChanges()
-      }
-    })
+      next: (response: CollectionModel[]) => {
+        this.userCollections = response;
+        this.divideUserCollection();
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  isSpot(item: SpotShorthandModel | EventShorthandModel): item is SpotShorthandModel {
+    return this.selectedCollection.collectionType === 'SPOT';
+  }
+
+  isEvent(item: SpotShorthandModel | EventShorthandModel): item is EventShorthandModel {
+    return this.selectedCollection.collectionType === 'EVENT';
+  }
+
+  navigateToSpotOverview(spotSlug: string){
+    this.spinner.showNavigateSpinner()
+    this.router.navigate(['/spots/' + spotSlug])
+    this.spinner.hideNavigateSpinner()
+  }
+
+  navigateToEventOverview(eventSlug: string){
+    this.spinner.showNavigateSpinner()
+    this.router.navigate(['/events/' + eventSlug])
+    this.spinner.hideNavigateSpinner()
   }
 }

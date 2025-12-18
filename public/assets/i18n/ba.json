@@ -241,6 +241,7 @@
     "headerSubtitle" : "Pregled lokacija / događaja koje ste spasili.",
     "addCollection" : "Kreiraj Kolekciju",
     "create" : "Dodaj Kolekciju",
+    "edit" : "Uredi Kolekciju",
     "addToCollection": "Dodaj u kolekciju",
     "cancel" : "Odustani",
     "noCollectionItemsHeading" : "Kolekcija je prazna",

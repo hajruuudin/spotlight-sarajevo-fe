@@ -1,3 +1,6 @@
+import { EventShorthandModel } from "./event.model";
+import { SpotShorthandModel } from "./spot.model";
+
 export class CollectionModel {
   constructor(
     public id: number,
@@ -13,8 +16,8 @@ export class CollectionModel {
 export class CollectionItemsModel {
   constructor(
     public collectionId: number,
-    public collectionType: string,
-    public collectionItems: CollectionItem[]
+    public collectionType: 'SPOT' | 'EVENT',
+    public collectionItems: (SpotShorthandModel | EventShorthandModel)[]
   ) {}
 }
 
