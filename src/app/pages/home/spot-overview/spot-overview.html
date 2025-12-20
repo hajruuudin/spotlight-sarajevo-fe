@@ -47,7 +47,7 @@
 
   <div
     id="descriptionAndImageContainer"
-    [style.backgroundImage]="this.session.getStoredThemeFallback() == 'dark' ? 'url(/assets/images/SECTION_BG_03.png)' : 'url(/assets/images/SECTION_BG_03_L.png)'"
+    [style.backgroundImage]="this.session.theme() == 'dark' ? 'url(/assets/images/SECTION_BG_03.png)' : 'url(/assets/images/SECTION_BG_03_L.png)'"
     style="
       background-size: cover;
       background-position: center;
@@ -60,7 +60,7 @@
     >
       <div class="w-full flex flex-row justify-around items-start gap-1 md:gap-4">
         <div class="w-2/6 flex flex-col justify-center items-center">
-          <app-bnw-rating-icon [theme]="this.session.getStoredTheme().toUpperCase()"></app-bnw-rating-icon>
+          <app-bnw-rating-icon [theme]="this.session.theme().toUpperCase()"></app-bnw-rating-icon>
           <span class="font-bold text-sm md:text-xl tracking-wider">{{
             'spotOverview.rating' | transloco
           }}</span>
@@ -70,7 +70,7 @@
         </div>
 
         <div class="w-2/6 md:w-3/6 flex flex-col justify-center items-center">
-          <app-bnw-location-icon [theme]="this.session.getStoredTheme().toUpperCase()"></app-bnw-location-icon>
+          <app-bnw-location-icon [theme]="this.session.theme().toUpperCase()"></app-bnw-location-icon>
           <span class="font-bold text-sm md:text-xl tracking-wider">{{
             'spotOverview.address' | transloco
           }}</span>
@@ -78,7 +78,7 @@
         </div>
 
         <div class="w-2/6 flex flex-col justify-center items-center">
-          <app-bnw-category-icon [theme]="this.session.getStoredTheme().toUpperCase()"></app-bnw-category-icon>
+          <app-bnw-category-icon [theme]="this.session.theme().toUpperCase()"></app-bnw-category-icon>
           <span class="font-bold text-sm md:text-xl tracking-wider">{{
             'spotOverview.category' | transloco
           }}</span>
@@ -164,7 +164,7 @@
 
   <div
     id="locationReviewContainer"
-    [style.backgroundImage]="this.session.getStoredThemeFallback() == 'dark' ? 'url(/assets/images/SECTION_BG_03.png)' : 'url(/assets/images/SECTION_BG_03_L.png)'"
+    [style.backgroundImage]="this.session.theme() == 'dark' ? 'url(/assets/images/SECTION_BG_03.png)' : 'url(/assets/images/SECTION_BG_03_L.png)'"
     style="
       background-size: cover;
       background-position: center;

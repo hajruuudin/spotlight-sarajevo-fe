@@ -2,7 +2,7 @@
 <nav
   id="navbarUserMain"
   [style]="
-    this.session.getStoredThemeFallback() == 'dark' ? 'box-shadow: 0px -5px 100px #00000055;' : ''
+    this.session.theme() == 'dark' ? 'box-shadow: 0px -5px 100px #00000055;' : ''
   "
   class="whitespace-nowrap hidden md:flex w-full h-14 dark:bg-(--background-200) bg-(--background-800) flex-row justify-between items-center"
 >
@@ -18,7 +18,7 @@
           ></app-discover-icon>
         </span>
         <div
-          class="absolute top-9 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-auto transition-all duration-200"
+          class="absolute top-8.5 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-auto transition-all duration-200"
         >
           <span
             routerLink="/discover"
@@ -35,7 +35,7 @@
         ></app-spots-icon>
         <!-- SEARCH RELATED FUNCTIONS -->
         <div
-          class="absolute top-9 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-48 transition-all duration-200"
+          class="absolute top-8.5 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-48 transition-all duration-200"
         >
           <span
             routerLink="/spots"
@@ -60,7 +60,7 @@
           ></app-homepage-icon
         ></span>
         <div
-          class="absolute top-9 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-auto transition-all duration-200"
+          class="absolute top-8.5 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-auto transition-all duration-200"
         >
           <span
             routerLink="/homepage"
@@ -78,7 +78,7 @@
           ></app-guides-icon
         ></span>
         <div
-          class="absolute top-9 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-auto transition-all duration-200"
+          class="absolute top-8.5 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-auto transition-all duration-200"
         >
           <span
             routerLink="/guide"
@@ -94,7 +94,7 @@
           classes="w-8 dark:text-white text-(--primary-100) opacity-75 hover:opacity-100 hover:w-9 transition-all"
         ></app-collection-icon>
         <div
-          class="absolute top-10 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-64 text-center transition-all duration-200"
+          class="absolute top-8.5 left-1/2 -translate-x-1/2 mt-0 hidden group-hover:flex flex-col items-center bg-white dark:bg-(--background-200) shadow-lg rounded-lg p-2 w-64 text-center transition-all duration-200"
         >
           <span
             routerLink="/collections"
@@ -133,7 +133,7 @@
       >
         <img
           [src]="
-            this.session.getStoredTheme() === 'dark'
+            this.session.theme() === 'dark'
               ? '/assets/icons/DARK.svg'
               : '/assets/icons/LIGHT.svg'
           "
@@ -149,7 +149,7 @@
       >
         <img
           [src]="
-            this.session.getStoredLanguage() === 'en'
+            this.session.language() === 'en'
               ? '/assets/icons/EN.svg'
               : '/assets/icons/BA.svg'
           "
@@ -202,7 +202,7 @@
       >
         <img
           [src]="
-            this.session.getStoredTheme() === 'dark'
+            this.session.theme() === 'dark'
               ? '/assets/icons/DARK.svg'
               : '/assets/icons/LIGHT.svg'
           "
@@ -218,7 +218,7 @@
       >
         <img
           [src]="
-            this.session.getStoredLanguage() === 'en'
+            this.session.language() === 'en'
               ? '/assets/icons/EN.svg'
               : '/assets/icons/BA.svg'
           "

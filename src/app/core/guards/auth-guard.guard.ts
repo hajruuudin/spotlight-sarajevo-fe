@@ -8,7 +8,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const session = inject(SessionService);
   const router = inject(Router);
 
-  if (session.getStoredUser()) return true;
+  if (session.user()) return true;
 
   return session.restoreSession().pipe(
     map(isValid => {

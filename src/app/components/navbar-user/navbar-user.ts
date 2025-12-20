@@ -49,17 +49,11 @@ export class NavbarUser {
   }
 
   toggleTheme(): void {
-    const html = document.documentElement;
-    const currentTheme = html.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-    html.setAttribute('data-theme', newTheme);
-    this.session.setStoredTheme(newTheme);
+    this.session.setTheme(this.session.theme() === 'dark' ? 'light' : 'dark');
   }
 
   toggleLanguage() {
-    const newLang = this.session.getStoredLanguage() === 'en' ? 'ba' : 'en';
-    this.session.setStoredLanguage(newLang);
+    this.session.setLanguage(this.session.language() === 'en' ? 'ba' : 'en')
   }
 
   navigateToLogin(){

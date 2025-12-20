@@ -1,5 +1,12 @@
 <div class="auth-container w-full h-screen flex flex-col justify-center items-center">
-  <img id="backgroundImage" src="/assets/images/SS_BACKGROUND_AUTH.jpg" />
+  <img
+    id="backgroundImage"
+    [src]="
+      this.session.theme() === 'dark'
+        ? '/assets/images/SS_BACKGROUND_AUTH_D.jpg'
+        : '/assets/images/SS_BACKGROUND_AUTH_L.jpg'
+    "
+  />
   <router-outlet></router-outlet>
 
   <div
@@ -12,9 +19,7 @@
     >
       <img
         [src]="
-          this.session.getStoredTheme() === 'dark'
-            ? '/assets/icons/DARK.svg'
-            : '/assets/icons/LIGHT.svg'
+          this.session.theme() === 'dark' ? '/assets/icons/DARK.svg' : '/assets/icons/LIGHT.svg'
         "
         alt="Toggle Theme"
         class="w-8 h-8 mx-2"
@@ -27,11 +32,7 @@
       (click)="toggleLanguage()"
     >
       <img
-        [src]="
-          this.session.getStoredLanguage() === 'en'
-            ? '/assets/icons/EN.svg'
-            : '/assets/icons/BA.svg'
-        "
+        [src]="this.session.language() === 'en' ? '/assets/icons/EN.svg' : '/assets/icons/BA.svg'"
         class="w-10 h-8"
       />
     </button>

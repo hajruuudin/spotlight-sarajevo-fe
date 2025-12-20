@@ -83,7 +83,7 @@ export class EventSearch {
   protected isSectionLoading = computed(() => this.spinner.loadingSection());
 
   getCurrentLanguage(): string {
-    return this.session.getStoredLanguage();
+    return this.session.language();
   }
 
   ngOnInit(): void {

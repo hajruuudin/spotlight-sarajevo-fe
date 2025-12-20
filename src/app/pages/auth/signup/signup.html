@@ -75,8 +75,8 @@
         <div id="spotCategoryOptions" class="flex flex-row flex-wrap justify-center items-center space-x-2">
             @for (category of this.allSpotCategories; track category.id) {
                 <app-category-selector 
-                    [categoryName]="this.session.getStoredLanguage() == 'en' ? category.spotCategoryNameEn : category.spotCategoryNameBs"
-                    [categoryDescription]="this.session.getStoredLanguage() == 'en' ? category.spotCategoryDescriptionEn : category.spotCategoryDescriptionBs"
+                    [categoryName]="this.session.language() == 'en' ? category.spotCategoryNameEn : category.spotCategoryNameBs"
+                    [categoryDescription]="this.session.language() == 'en' ? category.spotCategoryDescriptionEn : category.spotCategoryDescriptionBs"
                     [type]="'spot'"
                     [isDisabled]="selectedSpotCategories.length >= 3 && !selectedSpotCategories.includes(category.id)"
                     (hoverChange)="onCategoryHover($event)"
@@ -100,8 +100,8 @@
         <div id="eventCategoryOptions" class="flex flex-row flex-wrap justify-center items-center space-x-2">
             @for (category of this.allEventCategories; track category.id) {
                 <app-category-selector 
-                    [categoryName]="this.session.getStoredLanguage() == 'en' ? category.eventCategoryNameEn : category.eventCategoryNameBs"
-                    [categoryDescription]="this.session.getStoredLanguage() == 'en' ? category.eventCategoryDescriptionEn : category.eventCategoryDescriptionBs"
+                    [categoryName]="this.session.language() == 'en' ? category.eventCategoryNameEn : category.eventCategoryNameBs"
+                    [categoryDescription]="this.session.language() == 'en' ? category.eventCategoryDescriptionEn : category.eventCategoryDescriptionBs"
                     [type]="'event'"
                     [isDisabled]="selectedEventCategories.length >= 3 && !selectedEventCategories.includes(category.id)"
                     (hoverChange)="onCategoryHover($event)"
@@ -125,7 +125,7 @@
         <div id="questionsContainer" class="w-full flex flex-col justify-around h-96 overflow-auto p-5 mb-2">
             @for (question of this.questions; track question.id) {
                 <app-question-component
-                    [question]="this.session.getStoredLanguage() == 'en' ? question.questionEn! : question.questionBa!"
+                    [question]="this.session.language() == 'en' ? question.questionEn! : question.questionBa!"
                     [isSelectedA]="question.isASelected"
                     [isSelectedB]="question.isBSelected"
                     (isSelectedAChanged)="questionASelected(question, $event)"

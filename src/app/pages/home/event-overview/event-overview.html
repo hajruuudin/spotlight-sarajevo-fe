@@ -48,7 +48,7 @@
   <div
     id="descriptionAndImageContainer"
     [style.backgroundImage]="
-      this.session.getStoredThemeFallback() == 'dark'
+      this.session.theme() == 'dark'
         ? 'url(/assets/images/SECTION_BG_03.png)'
         : 'url(/assets/images/SECTION_BG_03_L.png)'
     "
@@ -62,7 +62,7 @@
       <div class="w-full flex flex-row justify-around items-start gap-1 md:gap-4">
         <div class="w-2/6 flex flex-col justify-center items-center">
           <app-bnw-date-icon
-            [theme]="this.session.getStoredTheme().toUpperCase()"
+            [theme]="this.session.theme().toUpperCase()"
             [classes]="'w-10 h-10'"
           ></app-bnw-date-icon>
           <span class="font-bold text-sm md:text-xl tracking-wider">{{
@@ -75,7 +75,7 @@
 
         <div class="w-2/6 md:w-3/6 flex flex-col justify-center items-center">
           <app-bnw-location-icon
-            [theme]="this.session.getStoredTheme().toUpperCase()"
+            [theme]="this.session.theme().toUpperCase()"
           ></app-bnw-location-icon>
           <span class="font-bold text-sm md:text-xl tracking-wider">{{
             'eventOverview.location' | transloco
@@ -85,7 +85,7 @@
 
         <div class="w-2/6 flex flex-col justify-center items-center">
           <app-bnw-category-icon
-            [theme]="this.session.getStoredTheme().toUpperCase()"
+            [theme]="this.session.theme().toUpperCase()"
           ></app-bnw-category-icon>
           <span class="font-bold text-sm md:text-xl tracking-wider">{{
             'eventOverview.category' | transloco
@@ -139,7 +139,7 @@
         <app-event-info-card
           [iconType]="'DATE'"
           [iconSize]="'w-12 h-12'"
-          [iconTheme]="this.session.getStoredThemeFallback()"
+          [iconTheme]="this.session.theme()"
           [startDate]="this.eventOverview.startDate"
           [endDate]="this.eventOverview.endDate"
         ></app-event-info-card>
@@ -147,35 +147,35 @@
         <app-event-info-card
           [iconType]="'AGE'"
           [iconSize]="'w-12 h-12'"
-          [iconTheme]="this.session.getStoredThemeFallback()"
+          [iconTheme]="this.session.theme()"
           [ageRequirement]="this.eventOverview.ageLimit"
         ></app-event-info-card>
 
         <app-event-info-card
           [iconType]="'REFUND'"
           [iconSize]="'w-12 h-12'"
-          [iconTheme]="this.session.getStoredThemeFallback()"
+          [iconTheme]="this.session.theme()"
           [cancelRefund]="this.eventOverview.cancelRefund"
         ></app-event-info-card>
 
         <app-event-info-card
           [iconType]="'LANG'"
           [iconSize]="'w-12 h-12'"
-          [iconTheme]="this.session.getStoredThemeFallback()"
+          [iconTheme]="this.session.theme()"
           [language]="this.eventOverview.eventLanguage"
         ></app-event-info-card>
 
         <app-event-info-card
           [iconType]="'RESERVATION'"
           [iconSize]="'w-12 h-12'"
-          [iconTheme]="this.session.getStoredThemeFallback()"
+          [iconTheme]="this.session.theme()"
           [reservation]="this.eventOverview.reservation"
         ></app-event-info-card>
 
         <app-event-info-card
           [iconType]="'PRICE'"
           [iconSize]="'w-12 h-12'"
-          [iconTheme]="this.session.getStoredThemeFallback()"
+          [iconTheme]="this.session.theme()"
           [entryPrice]="this.eventOverview.entryPrice"
         ></app-event-info-card>
       </div>
@@ -184,7 +184,7 @@
     <div
       id="locationContainer"
       [style.backgroundImage]="
-        this.session.getStoredThemeFallback() == 'dark'
+        this.session.theme() == 'dark'
           ? 'url(/assets/images/SECTION_BG_03.png)'
           : 'url(/assets/images/SECTION_BG_03_L.png)'
       "

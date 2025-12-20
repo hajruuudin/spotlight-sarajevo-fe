@@ -2,7 +2,7 @@
   animate.enter="fade-in-animation"
   id="homepageHeadersSectionContainer"
   [style.backgroundImage]="
-    this.session.getStoredThemeFallback() == 'dark'
+    this.session.theme() == 'dark'
       ? 'url(/assets/images/SECTION_BG_01.jpg)'
       : 'url(/assets/images/SECTION_BG_01_L.jpg)'
   "
@@ -184,7 +184,7 @@
   animate.enter="fade-in-animation"
   id="homepageDiscoverSectionContainer"
   [style.backgroundImage]="
-    this.session.getStoredThemeFallback() == 'dark'
+    this.session.theme() == 'dark'
       ? 'url(/assets/images/SECTION_BG_03.png)'
       : 'url(/assets/images/SECTION_BG_03_L.png)'
   "
