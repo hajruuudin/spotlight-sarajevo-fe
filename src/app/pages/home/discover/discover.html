@@ -2,7 +2,7 @@
   animate.enter="fade-in-animation"
   id="discoverHeaderAndFirstSectionContainer"
   [style.backgroundImage]="
-    this.session.getStoredThemeFallback() == 'dark'
+    this.session.theme() == 'dark'
       ? 'url(/assets/images/SECTION_BG_03.png)'
       : 'url(/assets/images/SECTION_BG_03_L.png)'
   "
@@ -30,7 +30,7 @@
       class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
     >
       @for (spot of recentlyAddedSpots; track spot.id) {
-      <app-small-spot-card [lang]="this.lang" [spot]="spot"></app-small-spot-card>
+      <app-small-spot-card [lang]="this.session.language()!" [spot]="spot"></app-small-spot-card>
       }
     </div>
 
@@ -53,7 +53,7 @@
       class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
     >
       @for (spot of landmarkSpots; track spot.id) {
-      <app-historical-spot-card [lang]="this.lang" [spot]="spot"></app-historical-spot-card>
+      <app-historical-spot-card [lang]="this.session.language()!" [spot]="spot"></app-historical-spot-card>
       }
     </div>
 
@@ -87,7 +87,7 @@
       class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
     >
       @for (spot of popularSpots; track spot.id) {
-      <app-small-spot-card [lang]="this.lang" [spot]="spot"></app-small-spot-card>
+      <app-small-spot-card [lang]="this.session.language()!" [spot]="spot"></app-small-spot-card>
       }
     </div>
 
@@ -109,7 +109,7 @@
       class="w-full max-w-application h-auto flex flex-row justify-start space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
     >
       @for (event of this.upcomingEvents; track event.id) {
-      <app-small-event-card [lang]="this.lang" [event]="event"></app-small-event-card>
+      <app-small-event-card [lang]="this.session.language()!" [event]="event"></app-small-event-card>
       }
     </div>
     <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application">
@@ -142,7 +142,7 @@
       class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
     >
       @for (spot of favouriteSpots; track spot.id) {
-      <app-small-spot-card [lang]="this.lang" [spot]="spot"></app-small-spot-card>
+      <app-small-spot-card [lang]="this.session.language()!" [spot]="spot"></app-small-spot-card>
       }
     </div>
 
@@ -164,7 +164,7 @@
       class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
     >
       @for (event of this.upcomingEvents; track event.id) {
-      <app-small-event-card [lang]="this.lang" [event]="event"></app-small-event-card>
+      <app-small-event-card [lang]="this.session.language()!" [event]="event"></app-small-event-card>
       }
     </div>
     <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application">

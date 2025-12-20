@@ -43,8 +43,6 @@ import { Router } from '@angular/router';
   },
 })
 export class EventSearch {
-  protected lang!: string;
-  protected sub!: Subscription;
   protected eventSearchForm: FormGroup;
   protected eventCategories: EventCategoryModel[] = [];
   protected sortingMethods: string[] = [
@@ -89,10 +87,6 @@ export class EventSearch {
   }
 
   ngOnInit(): void {
-    this.sub = this.session.language.subscribe((lang) => {
-      this.lang = lang;
-    });
-
     this.categoryService.getAllEventCategories().subscribe({
       next: (response: EventCategoryModel[]) => {
         this.eventCategories = response;

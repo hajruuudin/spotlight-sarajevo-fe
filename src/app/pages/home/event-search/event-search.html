@@ -83,7 +83,7 @@
               @for (category of this.eventCategories; track $index) {
               <app-category-filter-selector
                 [categoryName]="
-                  this.session.getStoredLanguage() == 'en'
+                  this.session.language() == 'en'
                     ? category.eventCategoryNameEn
                     : category.eventCategoryNameBs
                 "
@@ -110,7 +110,11 @@
           @if (this.eventSearchResults.length != 0) {
           <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mb-2 md:mt-2">
             @for (event of this.eventSearchResults; track $index) {
-            <app-search-event-card (click)="this.navigateToEventOverview(event.slug)" [lang]="this.lang" [event]="event"></app-search-event-card>
+            <app-search-event-card
+              (click)="this.navigateToEventOverview(event.slug)"
+              [lang]="this.session.language()!"
+              [event]="event"
+            ></app-search-event-card>
             }
           </div>
           } @else {

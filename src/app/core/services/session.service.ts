@@ -4,46 +4,51 @@ import { LoggedUserModel } from '../../shared/models/auth.model';
 import { TranslocoService } from '@ngneat/transloco';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SessionService {
-  private readonly APP_LANG_KEY = "app_language"
-  private readonly APP_USER_KEY = "app_user"
-  private readonly APP_THEME_KEY = "app_theme"
+  private readonly APP_LANG_KEY = 'app_language';
+  private readonly APP_USER_KEY = 'app_user';
+  private readonly APP_THEME_KEY = 'app_theme';
 
-  private languageSubject = new BehaviorSubject<string>(this.getStoredLanguageFallback())
-  private userSubject = new BehaviorSubject<LoggedUserModel | null>(this.getStoredUser())
-  private themeSubject = new BehaviorSubject<string>(this.getStoredThemeFallback())
+  private languageSubject = new BehaviorSubject<string>(this.getStoredLanguageFallback());
+  private userSubject = new BehaviorSubject<LoggedUserModel | null>(this.getStoredUser());
+  private themeSubject = new BehaviorSubject<string>(this.getStoredThemeFallback());
 
-  language = this.languageSubject.asObservable();
-  user = this.userSubject.asObservable();
-  theme = this.themeSubject.asObservable();
+  readonly language$ = this.languageSubject.asObservable();
+  readonly user$ = this.userSubject.asObservable();
+  readonly theme$ = this.themeSubject.asObservable();
 
-  constructor( 
+  readonly language = toSignal(this.language$);
+  readonly user = toSignal(this.user$);
+  readonly theme = toSignal(this.theme$);
+
+  constructor(
     private transloco: TranslocoService,
     private auth: AuthService,
     private router: Router
   ) {
-  
     this.transloco.setActiveLang(this.languageSubject.value);
-    this.applyTheme(this.getStoredThemeFallback())
+    this.applyTheme(this.getStoredThemeFallback());
   }
 
   // ======== LANGUAGE MANAGEMENT ======== //
-  setStoredLanguage(lang: string) : void {
-    this.transloco.setActiveLang(lang)
-    localStorage.setItem(this.APP_LANG_KEY, lang)
-    this.languageSubject.next(lang)
+  setStoredLanguage(lang: string): void {
+    this.transloco.setActiveLang(lang);
+    localStorage.setItem(this.APP_LANG_KEY, lang);
+    this.languageSubject.next(lang);
   }
 
-  getStoredLanguage() : string{
-    return this.languageSubject.value
+  getStoredLanguage(): string {
+    return this.languageSubject.value;
   }
 
-  getStoredLanguageFallback() : string {
-    return localStorage.getItem(this.APP_LANG_KEY) || 'en'
+  getStoredLanguageFallback(): string {
+    return localStorage.getItem(this.APP_LANG_KEY) || 'en';
   }
 
   private applyTheme(theme: string) {
@@ -51,17 +56,18 @@ export class SessionService {
   }
 
   // ======== THEME MANAGEMENT ======== //
-  setStoredTheme(newTheme: string) : void {
-    localStorage.setItem(this.APP_THEME_KEY, newTheme)
-    this.themeSubject.next(newTheme)
+  setStoredTheme(newTheme: string): void {
+    localStorage.setItem(this.APP_THEME_KEY, newTheme);
+    this.themeSubject.next(newTheme);
+    this.applyTheme(newTheme);
   }
 
-  getStoredTheme() : string{
-    return this.themeSubject.value
+  getStoredTheme(): string {
+    return this.themeSubject.value;
   }
 
-  getStoredThemeFallback() : string {
-    return localStorage.getItem(this.APP_THEME_KEY) || 'dark'
+  getStoredThemeFallback(): string {
+    return localStorage.getItem(this.APP_THEME_KEY) || 'dark';
   }
 
   //========== USER MANAGEMENT ==========//
@@ -97,17 +103,17 @@ export class SessionService {
           this.setUser(actualUser);
         }
       }),
-      map(response => response != null),
+      map((response) => response != null),
       catchError(() => of(false))
     );
   }
 
   //========== CLEARING THE SESSION ==========//
-  clearSession() : void {
-    localStorage.removeItem(this.APP_LANG_KEY)
-    localStorage.removeItem(this.APP_USER_KEY)
-    this.languageSubject.next('en')
-    this.userSubject.next(null)
-    this.transloco.setActiveLang('en')
+  clearSession(): void {
+    localStorage.removeItem(this.APP_LANG_KEY);
+    localStorage.removeItem(this.APP_USER_KEY);
+    this.languageSubject.next('en');
+    this.userSubject.next(null);
+    this.transloco.setActiveLang('en');
   }
 }

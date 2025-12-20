@@ -235,5 +235,17 @@
     "ratingDesc": "Vaša konačna ukupna ocjena organizatora, uključujući sve gore navedene statistike i vaša lična iskustva (Ovo nosi najveću težinu u izračunavanju ocjene organizatora).",
     "deleteConfirm": "Jeste li sigurni da želite obrisati svoju trenutnu recenziju za ovog organizatora?",
     "deleteConfirmMessage": "Da, obriši recenziju"
+  },
+  "collection" : {
+    "headerTitle" : "Kolekcije",
+    "headerSubtitle" : "Pregled lokacija / događaja koje ste spasili.",
+    "addCollection" : "Kreiraj Kolekciju",
+    "create" : "Dodaj Kolekciju",
+    "edit" : "Uredi Kolekciju",
+    "addToCollection": "Dodaj u kolekciju",
+    "cancel" : "Odustani",
+    "noCollectionItemsHeading" : "Kolekcija je prazna",
+    "noCollectionItemsSubheading" : "Dodajte lokcaije ili događaje u kolekciju da bi ih pregledali ovdje!",
+    "finishAdd" : "Završi"
   }
 }
