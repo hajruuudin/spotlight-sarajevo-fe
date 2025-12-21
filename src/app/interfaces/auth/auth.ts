@@ -2,6 +2,9 @@ import { Component, computed, ElementRef, HostListener, OnInit, Renderer2 } from
 import { RouterOutlet } from '@angular/router';
 import { SessionService } from '../../core/services/session.service';
 import { AsyncPipe } from '@angular/common';
+import { SpinnerComponent } from "../../components/spinner-component/spinner-component";
+import { SpinnerService } from '../../core/services/spinner.service';
+import { SpinnerNavigate } from "../../components/spinner-navigate/spinner-navigate";
 
 /**
  * Authentication User Interface: Container for authentication related
@@ -13,7 +16,7 @@ import { AsyncPipe } from '@angular/common';
  */
 @Component({
   selector: 'app-auth',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, SpinnerNavigate],
   templateUrl: './auth.html',
   styleUrl: './auth.css',
 })
@@ -24,6 +27,7 @@ export class Auth implements OnInit {
 
   constructor(
     public session: SessionService,
+    public spinner: SpinnerService,
     private el: ElementRef,
     private renderer: Renderer2
   ) {}

@@ -3,7 +3,7 @@
   (click)="this.handleClick()"
   [ngClass]="
     this.classAddons +
-    ' dark:bg-(--secondary-400) h-12 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-4 hover:dark:border-(--secondary-400)'
+    ' dark:bg-(--secondary-400) bg-(--primary-900) h-12 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-2 hover:dark:border-(--secondary-400)'
   "
 >
   <span>{{ this.buttonContent }}</span>
@@ -13,11 +13,11 @@
   (click)="this.handleClick()"
   [ngClass]="
     this.classAddons +
-    ' dark:bg-(--secondary-400) h-12 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-4 hover:dark:border-(--secondary-400)'
+    ' dark:bg-(--secondary-400) bg-(--primary-900) h-12 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-2 hover:dark:border-(--secondary-400)'
   "
 >
   <span class="w-full h-full flex flex-row justify-center items-center">
-    <app-google-icon></app-google-icon>
+    <app-google-icon [theme]="this.buttonTheme"></app-google-icon>
   </span>
 </button>
 } @else if (this.buttonIcon == "GOOGLE_REGISTER") {
@@ -25,11 +25,11 @@
   (click)="this.handleClick()"
   [ngClass]="
     this.classAddons +
-    ' dark:bg-(--secondary-400) h-12 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-4 hover:dark:border-(--secondary-400)'
+    ' dark:bg-(--secondary-400) bg-(--primary-900) h-12 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-2 hover:dark:border-(--secondary-400)'
   "
 >
   <span class="w-full h-full flex flex-row justify-center items-center">
-    <app-google-icon></app-google-icon>
+    <app-google-icon [theme]="this.buttonTheme"></app-google-icon>
     <span>oogle Register</span>
   </span>
 </button>
@@ -38,7 +38,7 @@
   (click)="this.handleClick()"
   [ngClass]="
     this.classAddons +
-    ' dark:bg-(--secondary-400) h-12 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-4 hover:dark:border-(--secondary-400)'
+    ' dark:bg-(--secondary-400) bg-(--primary-900) h-12 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-2 hover:dark:border-(--secondary-400)'
   "
 >
   <span class="w-full h-full flex flex-row justify-center items-center space-x-2">
@@ -50,7 +50,7 @@
   (click)="this.handleClick()"
   [ngClass]="
     this.classAddons +
-    ' dark:bg-(--secondary-400) h-12 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-4 hover:dark:border-(--secondary-400)'
+    ' dark:bg-(--secondary-400) bg-(--primary-900) h-12 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-2 hover:dark:border-(--secondary-400)'
   "
 >
   <span class="w-full h-full flex flex-row justify-center items-center">
@@ -62,7 +62,7 @@
   (click)="this.handleClick()"
   [ngClass]="
     this.classAddons +
-    ' dark:bg-(--secondary-400) h-12 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-4 hover:dark:border-(--secondary-400)'
+    ' dark:bg-(--secondary-400) bg-(--primary-900) h-12 rounded-2xl hover:dark:bg-(--secondary-500) transition-all font-semibold text-xl hover:border-2 hover:dark:border-(--secondary-400)'
   "
 >
   <span class="w-full h-full flex flex-row justify-center items-center">

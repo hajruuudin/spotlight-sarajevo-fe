@@ -157,7 +157,7 @@
         />
       </button>
     </div>
-    @if (this.session.getUser() != null) {
+    @if (this.session.user()) {
     <a routerLink="/profile"
       ><app-profile-icon
         classes="w-8 dark:text-white text-(--primary-100) opacity-75 hover:opacity-100 hover:w-9 transition-all"

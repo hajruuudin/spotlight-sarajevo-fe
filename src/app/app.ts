@@ -18,8 +18,9 @@ export class App implements OnInit{
 
   constructor(private spinner: SpinnerService, private session: SessionService) {
   }
+  
   ngOnInit(): void {
-    this.session.checkSession()
+    this.session.restoreSession()
   }
 
   get isLoading() {

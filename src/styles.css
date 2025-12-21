@@ -86,6 +86,7 @@
   --background-500: #1be4e4;
   --background-600: #48eaea;
   --background-700: #76efef;
+  --background-750: #7Df7f7;
   --background-800: #a4f4f4;
   --background-900: #d1fafa;
   --background-950: #e8fcfc;
@@ -234,4 +235,13 @@ body {
   animation-play-state: paused;
 }
 
-
+.feathered {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  -webkit-mask-composite: intersect;
+}

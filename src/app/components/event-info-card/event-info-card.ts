@@ -14,7 +14,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './event-info-card.html',
   styleUrl: './event-info-card.css',
   host: {
-    class: "w-auto h-auto dark:bg-(--primary-200) dark:hover:bg-(--background-300) bg-(--primary-800) flex flex-col justify-center items-center rounded-2xl p-3 font-semibold text-base md:text-xl"
+    class: "w-auto h-auto dark:bg-(--primary-200) dark:hover:bg-(--background-300) bg-white flex flex-col justify-center items-center rounded-2xl p-3 font-semibold text-base md:text-xl"
   }
 })
 export class EventInfoCard {

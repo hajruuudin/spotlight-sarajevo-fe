@@ -31,7 +31,7 @@ export class ButtonRegular {
   @Input() public buttonContent: String = '';
   @Input() public classAddons: String = '';
   @Input() public buttonIcon: String = 'DEFAULT';
-  @Input() public buttonTheme: String = 'dark'
+  @Input() public buttonTheme: string = 'DARK'
 
   @Output() pressed: EventEmitter<void> = new EventEmitter<void>();
   handleClick() {

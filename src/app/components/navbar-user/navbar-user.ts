@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { HomepageIcon } from '../../resources/icons/homepage-icon/homepage-icon';
 import { ProfileIcon } from '../../resources/icons/profile-icon/profile-icon';
 import { DiscoverIcon } from '../../resources/icons/discover-icon/discover-icon';
@@ -41,6 +41,7 @@ import { ButtonPrimary } from "../button-primary/button-primary";
 export class NavbarUser {
   protected isMobileNavbarLoaded: Boolean = true;
   protected isMobileNavbarOpen = false;
+  protected loggedUser = computed(() => this.session.user() !== null)
 
   constructor(protected session: SessionService, protected router: Router) {}
 

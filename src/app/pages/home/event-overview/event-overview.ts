@@ -258,7 +258,7 @@ export class EventOverview {
   redirectToLogin() {
     this.router.navigate(['/auth/login'], {
       queryParams: {
-        returnUrl: `/spots/${this.eventOverview.slug}`,
+        returnUrl: `/events/${this.eventOverview.slug}`,
       },
     });
   }

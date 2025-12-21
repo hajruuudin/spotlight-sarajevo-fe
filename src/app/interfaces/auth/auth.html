@@ -10,11 +10,11 @@
   <router-outlet></router-outlet>
 
   <div
-    class="absolute bottom-10 w-auto h-10 rounded-full left-auto md:left-10 bg-(--primary-200) outline-2 hover:outline-4 transition-all outline-(--primary-400) flex flex-row justify-center items-center"
+    class="absolute z-50 bottom-10 w-10 h-auto md:w-auto md:h-10 rounded-full right-10 md:left-10 md:right-auto bg-(--primary-200) outline-2 hover:outline-4 transition-all outline-(--primary-400) flex flex-col md:flex-row justify-center items-center"
   >
     <button
       id="themer"
-      class="bg-(--primary-300) text-dark w-auto h-full rounded-l-full flex justify-center items-center px-2"
+      class="bg-(--primary-300) text-dark w-auto h-full rounded-t-full md:rounded-l-full md:rounded-t-none flex justify-center items-center py-2 md:px-2"
       (click)="toggleTheme()"
     >
       <img
@@ -28,13 +28,14 @@
 
     <button
       id="language"
-      class="bg-(--primary-300) text-dark w-auto h-full rounded-r-full flex justify-center items-center px-2"
+      class="bg-(--primary-300) text-dark w-auto h-full rounded-bl-full rounded-br-full md:rounded-bl-none md:rounded-br-full md:rounded-tr-full flex justify-center items-center py-2 md:px-2"
       (click)="toggleLanguage()"
     >
       <img
         [src]="this.session.language() === 'en' ? '/assets/icons/EN.svg' : '/assets/icons/BA.svg'"
-        class="w-10 h-8"
+        class="w-8 h-8 mx-2"
       />
     </button>
   </div>
 </div>
+<app-spinner-navigate [visible]="this.spinner.loadingNavigate()"></app-spinner-navigate>

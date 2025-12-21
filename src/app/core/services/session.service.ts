@@ -98,6 +98,7 @@ export class SessionService {
     return this.auth.isAuthenticated().pipe(
       tap((response: any) => {
         if (response) {
+          console.log("Logged user is:", response)
           this.setUser(response);
         }
       }),

@@ -21,14 +21,11 @@ import { ModalService } from '../../../core/services/modal.service';
 import { AddCollectionModal } from '../../../components/modals/add-collection-modal/add-collection-modal';
 import { SpinnerService } from '../../../core/services/spinner.service';
 import { NgClass } from '@angular/common';
-import { TeleportOutletDirective } from '@ngneat/overview';
-import { SpotSearch } from '../spot-search/spot-search';
 import { SearchSpotCard } from '../../../components/search-spot-card/search-spot-card';
 import { SpotShorthandModel } from '../../../shared/models/spot.model';
 import { EventShorthandModel } from '../../../shared/models/event.model';
 import { SearchEventCard } from "../../../components/search-event-card/search-event-card";
 import { EditCollectionModal } from '../../../components/modals/edit-collection-modal/edit-collection-modal';
-import { eventNames } from 'process';
 
 @Component({
   selector: 'app-collections',

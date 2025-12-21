@@ -49,6 +49,20 @@ export class MapRegular implements OnInit {
           ),
         ],
       };
+    } else if (this.layoutMode == 'light'){
+      this.mapOptions = {
+        zoom: 16,
+        center: [this.objectLat, this.objectLong],
+        layers: [
+          L.tileLayer(
+            'https://tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token=BKxt3zjFvSaHNF8hQyr8M8hn0dDlQH0Bwr8leZvo1lYS4kDzzXggeLp5fa9sypKQ',
+            {
+              attribution: '&copy; <a href="https://www.jawg.io">Jawg</a>',
+              maxZoom: 22,
+            }
+          ),
+        ],
+      };
     }
   }
 

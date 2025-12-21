@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpinnerService } from '../../../core/services/spinner.service';
@@ -13,7 +13,7 @@ import { CategorySelector } from '../../../components/category-selector/category
 import { QuestionComponent } from "../../../components/question-component/question-component";
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { AuthService } from '../../../core/services/auth.service';
-import { PreferencesModel, SystemUserModel } from '../../../shared/models/auth.model';
+import { LoggedUserModel, PreferencesModel, SystemUserModel } from '../../../shared/models/auth.model';
 import { SessionService } from '../../../core/services/session.service';
 
 declare global {
@@ -28,7 +28,7 @@ declare global {
   templateUrl: './signup.html',
   styleUrl: './signup.css',
   host: {
-    class: "dark:bg-(--primary-200) bg-(--primary-700) md:rounded-2xl md:w-3/5 w-full max-w-5xl h-full md:h-auto md:max-h-6/7 hover:outline-4 dark:hover:outline-(--primary-600) hover:outline-(--primary-600) transition-all flex flex-col justify-start items-center space-y-2 shadow-xl relative overflow-auto"
+    class: "dark:bg-(--primary-200) bg-(--primary-800) md:rounded-2xl md:w-3/5 w-full max-w-5xl h-full md:h-auto md:max-h-6/7 hover:outline-4 dark:hover:outline-(--primary-600) hover:outline-(--primary-600) transition-all flex flex-col justify-start items-center space-y-2 shadow-xl relative overflow-auto"
   }
 })
 export class Signup implements OnInit {
@@ -87,11 +87,11 @@ export class Signup implements OnInit {
   constructor(
     private categoryService: CategoryService,
     private authService: AuthService,
-    public session: SessionService,
+    protected session: SessionService,
     private transloco: TranslocoService,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
-    private spinner: SpinnerService,
+    protected spinner: SpinnerService,
     private toastr: HotToastService
   ) { }
 
@@ -232,6 +232,7 @@ export class Signup implements OnInit {
 
   /* Methods for communicating with the backend */
   signInWithGoogleCustom(): void {
+    this.spinner.showNavigateSpinner()
     console.log(this.authService.googleClientId)
     window.google.accounts.id.prompt();
   }
@@ -245,14 +246,12 @@ export class Signup implements OnInit {
         if (idToken) {
           this.authService.storeGoogleCredentials(idToken).subscribe({
             next: (response: any) => {
+              this.spinner.hideNavigateSpinner()
               this.moveToSpotCategoriesSection(response)
             },
             error: (error: HttpErrorResponse) => {
-              this.toastr.error('Oops, there was an error registering... Try again later :(', {
-                style: {
-                  border: '2px red'
-                }
-              })
+              this.spinner.hideNavigateSpinner()
+              this.toastr.error('Oops, there was an error registering... Try again later :(')
             }
           });
         } else {
@@ -286,11 +285,14 @@ export class Signup implements OnInit {
           this.systemCredentialsForm.get('password')?.value,
         )
 
+        this.spinner.showNavigateSpinner()
         this.authService.storeSystemCredentials(userCredentials).subscribe({
           next: (response: any) => {
+            this.spinner.hideNavigateSpinner()
             this.moveToSpotCategoriesSection(response)
           },
           error: (error: HttpErrorResponse) => {
+            this.spinner.hideNavigateSpinner()
             this.toastr.error(
               'Oops, there was an error registering:' + error.error.message,
               { style: { border: '2px red' } }
@@ -303,21 +305,25 @@ export class Signup implements OnInit {
   }
 
   moveToSpotCategoriesSection(response: any) {
+    this.spinner.showNavigateSpinner()
     this.isCredentialsSectionLoaded = false;
     this.isSpotCategoriesSectionLoaded = true;
     this.progressBarWidth = 'w-2/5'
     this.registeredFirstName = response['firstName']
     this.cdr.detectChanges();
+    this.spinner.hideNavigateSpinner()
   }
 
   moveToEventCategoriesSection(selectedSpotCategories: number[]) {
     if(selectedSpotCategories.length < 3){
       this.toastr.info("Please select exactly three categories.")
     } else {
+      this.spinner.showNavigateSpinner()
       this.isSpotCategoriesSectionLoaded = false;
       this.isEventCategoriesSectionLoaded = true
       this.progressBarWidth = 'w-3/5'
       this.cdr.detectChanges();
+      this.spinner.hideNavigateSpinner()
     }
   }
 
@@ -325,10 +331,12 @@ export class Signup implements OnInit {
     if(selectedEventCategories.length < 3){
       this.toastr.info(this.transloco.translate('info.CATEGORY_SELECTION'))
     } else {
+      this.spinner.showNavigateSpinner()
       this.isEventCategoriesSectionLoaded = false
       this.isSurveySectionLoaded = true
       this.progressBarWidth = 'w-4/5'
       this.cdr.detectChanges();
+      this.spinner.hideNavigateSpinner()
     }
    }
 
@@ -345,14 +353,18 @@ export class Signup implements OnInit {
         surveyAnswers['question4']
       )
 
+      this.spinner.showNavigateSpinner()
       this.authService.registerToSystem(preferencesModel).subscribe({
-        next: (response : any) => {
+        next: (response : LoggedUserModel) => {
+          this.spinner.hideNavigateSpinner()
           this.isSurveySectionLoaded = false
           this.isCompleteSectionLoaded = true
           this.progressBarWidth = 'w-4/5'
+          this.session.setUser(response)
           this.cdr.detectChanges();
         },
         error: (error : HttpErrorResponse) => {
+          this.spinner.hideNavigateSpinner()
           this.toastr.error(this.transloco.translate('error.LOGIN_ERROR'))
         }
       })
