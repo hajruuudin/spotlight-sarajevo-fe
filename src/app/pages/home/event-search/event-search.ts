@@ -218,8 +218,6 @@ export class EventSearch {
   }
 
   navigateToEventOverview(eventSlug: string){
-    this.spinner.showNavigateSpinner()
     this.router.navigate(['/events/' + eventSlug])
-    this.spinner.hideNavigateSpinner()
   }
 }

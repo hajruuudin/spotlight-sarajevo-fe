@@ -120,17 +120,17 @@
           ></app-not-found-component>
           } @if (this.spotSearchResults.length != 0) {
           <div class="w-full flex flex-col justify-center items-center space-y-4">
-            <span class="text-base md:text-xl"
+            <span class="text-base md:text-xl dark:bg-(--primary-200) bg-white rounded-2xl py-2 px-4 mt-4"
               >{{ 'search.searchPaginationOne' | transloco }}
               {{ this.pageNumber + 1 * this.pageSize }}
               {{ 'search.searchPagiationTwo' | transloco }} {{ this.totalElements }}
               {{ 'search.searchSpotsPaginationThree' | transloco }}</span
             >
-            <app-button-secondary
+            <app-button-primary
               (click)="this.loadMore()"
               [buttonContent]="'Load more'"
               classAddons="px-3 md:px-6"
-            ></app-button-secondary>
+            ></app-button-primary>
           </div>
           }
         </div>

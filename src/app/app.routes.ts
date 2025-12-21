@@ -31,6 +31,8 @@ import { eventResolver } from './core/resolvers/event.resolver';
 import { collectionsResolver } from './core/resolvers/collection.resolver';
 import { AuthBenefits } from './pages/home/auth-benefits/auth-benefits';
 import { authGuard } from './core/guards/auth.guard';
+import {discoverResolver} from './core/resolvers/discover.resolver';
+import { homepageResolver } from './core/resolvers/homepage.resolver';
 
 export const routes: Routes = [
   {
@@ -46,7 +48,7 @@ export const routes: Routes = [
     component: User,
     children: [
       { path: '', redirectTo: 'homepage', pathMatch: 'full' },
-      { path: 'homepage', component: Homepage, title: 'Homepage - SpotlightSarajevo' },
+      { path: 'homepage', resolve: {homepageData: homepageResolver}, component: Homepage, title: 'Homepage - SpotlightSarajevo' },
 
       { path: 'spots', component: SpotSearch, title: 'Browse Spots - SpotlightSarajevo' },
       {
@@ -64,7 +66,7 @@ export const routes: Routes = [
         title: 'Event - SpotlightSarajevo',
       },
 
-      { path: 'discover', component: Discover, title: 'Discover - SpotlightSarajevo' },
+      { path: 'discover', resolve: { discoverData: discoverResolver }, component: Discover, title: 'Discover - SpotlightSarajevo' },
       { path: 'profile', component: Profile, title: 'Profile - SpotlightSarajevo' },
       { path: 'guide', component: TouristGuide, title: 'Browse Guides - SpotlightSarajevo' },
       {

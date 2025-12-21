@@ -21,6 +21,7 @@ import { SpinnerSmallComponent } from '../../../components/spinner-small-compone
 import { PageResponseModel } from '../../../shared/models/shared.model';
 import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
 import { Router } from '@angular/router';
+import { ButtonPrimary } from "../../../components/button-primary/button-primary";
 
 @Component({
   selector: 'app-spot-search',
@@ -35,7 +36,8 @@ import { Router } from '@angular/router';
     SearchSpotCard,
     SpinnerSmallComponent,
     NotFoundComponent,
-  ],
+    ButtonPrimary
+],
   templateUrl: './spot-search.html',
   styleUrl: './spot-search.css',
   host: {
@@ -217,8 +219,6 @@ export class SpotSearch implements OnInit {
   }
 
   navigateToSpotOverview(spotSlug: string){
-    this.spinner.showNavigateSpinner()
     this.router.navigate(['/spots/' + spotSlug])
-    this.spinner.hideNavigateSpinner()
   }
 }

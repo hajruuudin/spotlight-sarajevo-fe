@@ -3,6 +3,8 @@ import { CollectionItemsModel, CollectionModel } from "../../shared/models/colle
 import { inject } from "@angular/core";
 import { CollectionService } from "../../services/collection.service";
 import { map, of, switchMap } from "rxjs";
+import { error } from "console";
+import { HttpErrorResponse } from "@angular/common/http";
 
 export interface CollectionPageData {
   userCollections: CollectionModel[];

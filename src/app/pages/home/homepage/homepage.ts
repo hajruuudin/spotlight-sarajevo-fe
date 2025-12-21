@@ -1,28 +1,34 @@
-import { ChangeDetectorRef, Component, computed, ElementRef, HostListener, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  computed,
+  ElementRef,
+  HostListener,
+  OnInit,
+} from '@angular/core';
 import { PageHeader } from '../../../components/page-header/page-header';
 import { HeadlineEvent } from '../../../components/headline-event/headline-event';
 import { EventShorthandModel } from '../../../shared/models/event.model';
 import { SpotShorthandModel } from '../../../shared/models/spot.model';
 import { HeadlineSpot } from '../../../components/headline-spot/headline-spot';
 import { SmallSpotCard } from '../../../components/small-spot-card/small-spot-card';
-import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { SearchSpotCard } from '../../../components/search-spot-card/search-spot-card';
 import { CalendarDateIcon } from '../../../components/calendar-date-icon/calendar-date-icon';
 import { SearchEventCard } from '../../../components/search-event-card/search-event-card';
 import { HistoricalSpotCard } from '../../../components/historical-spot-card/historical-spot-card';
 import { EventCategoryModel, SpotCategoryModel } from '../../../shared/models/category.model';
 import { CategoryService } from '../../../services/category.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { CategoryCard } from '../../../components/category-card/category-card';
 import { ButtonPrimary } from '../../../components/button-primary/button-primary';
 import { SessionService } from '../../../core/services/session.service';
 import { SpotService } from '../../../services/spot.service';
 import { SortOptions } from '../../../shared/constants/SortOptions';
 import { HotToastService } from '@ngxpert/hot-toast';
-import { forkJoin, Subscription } from 'rxjs';
 import { EventService } from '../../../services/event.service';
 import { SpinnerService } from '../../../core/services/spinner.service';
-import { SpinnerSmallComponent } from "../../../components/spinner-small-component/spinner-small-component";
+import { ActivatedRoute } from '@angular/router';
+import { HomepagePageData } from '../../../core/resolvers/homepage.resolver';
 
 @Component({
   selector: 'app-homepage',
@@ -37,8 +43,8 @@ import { SpinnerSmallComponent } from "../../../components/spinner-small-compone
     SearchEventCard,
     HistoricalSpotCard,
     CategoryCard,
-    ButtonPrimary
-],
+    ButtonPrimary,
+  ],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
   host: {
@@ -60,6 +66,7 @@ export class Homepage implements OnInit {
     public eventService: EventService,
     public session: SessionService,
     public cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
     private categoryService: CategoryService,
     private toastr: HotToastService,
     private spinner: SpinnerService
@@ -69,75 +76,18 @@ export class Homepage implements OnInit {
   public eventCalendarDays: any = [];
 
   ngOnInit(): void {
-    this.loadInitialData();
+    const data = this.route.snapshot.data['homepageData'] as HomepagePageData;
+
+    this.headlineSpot = data.headlineSpot;
+    this.headlineEvent = data.headlineEvent;
+    this.favouriteSpots = data.favouriteSpots;
+    this.popularSpots = data.popularSpots;
+    this.upcomingEvents = data.upcomingEvents;
+    this.landmarkSpots = data.landmarkSpots;
+    this.spotCategories = data.spotCategories;
+    this.eventCategories = data.eventCategories;
+
     this.loadQueryAndDisplayDays();
-  }
-
-  loadInitialData() {
-    forkJoin({
-      headlineSpot: this.spotService.findSpotsPaginated(
-        0,
-        1,
-        '',
-        SortOptions.ALPHABETICAL.toString(),
-        []
-      ),
-      headlineEvent: this.eventService.findEventsPaginated(
-        0,
-        1,
-        '',
-        SortOptions.ALPHABETICAL.toString(),
-        []
-      ),
-      favouriteSpots: this.spotService.findSpotsPaginated(
-        0,
-        10,
-        '',
-        SortOptions.ALPHABETICAL.toString(),
-        []
-      ),
-      popularSpots: this.spotService.findSpotsPaginated(
-        0,
-        10,
-        '',
-        SortOptions.ALPHABETICAL.toString(),
-        []
-      ),
-      upcomingEvents: this.eventService.findEventsPaginated(
-        0,
-        10,
-        '',
-        SortOptions.ALPHABETICAL.toString(),
-        []
-      ),
-      landmarkSpots: this.spotService.findSpotsPaginated(
-        0,
-        10,
-        '',
-        SortOptions.ALPHABETICAL.toString(),
-        []
-      ),
-      spotCategories: this.categoryService.getAllSpotCategories(),
-      eventCategories: this.categoryService.getAllEventCategories(),
-    }).subscribe({
-      next: (result) => {
-        this.headlineSpot = result.headlineSpot.content[0];
-        this.headlineEvent = result.headlineEvent.content[0];
-
-        this.favouriteSpots = result.favouriteSpots.content;
-        this.popularSpots = result.popularSpots.content;
-        this.upcomingEvents = result.upcomingEvents.content;
-        this.landmarkSpots = result.landmarkSpots.content;
-
-        this.spotCategories = result.spotCategories;
-        this.eventCategories = result.eventCategories;
-
-        this.cdr.detectChanges();
-      },
-      error: (err: HttpErrorResponse) => {
-        this.toastr.error(this.session.language() == 'en' ? 'There was an error' : 'Doslo je do greske :(');
-      },
-    });
   }
 
   loadQueryAndDisplayDays() {
