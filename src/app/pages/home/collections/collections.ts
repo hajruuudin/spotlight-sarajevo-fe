@@ -26,6 +26,8 @@ import { SpotShorthandModel } from '../../../shared/models/spot.model';
 import { EventShorthandModel } from '../../../shared/models/event.model';
 import { SearchEventCard } from "../../../components/search-event-card/search-event-card";
 import { EditCollectionModal } from '../../../components/modals/edit-collection-modal/edit-collection-modal';
+import { DeleteCollectionModal } from '../../../components/modals/delete-collection-modal/delete-collection-modal';
+import { CollectionHeader } from "../../../components/collection-header/collection-header";
 
 @Component({
   selector: 'app-collections',
@@ -37,7 +39,8 @@ import { EditCollectionModal } from '../../../components/modals/edit-collection-
     NotFoundComponent,
     NgClass,
     SearchSpotCard,
-    SearchEventCard
+    SearchEventCard,
+    CollectionHeader
 ],
   templateUrl: './collections.html',
   styleUrl: './collections.css',
@@ -139,7 +142,29 @@ export class Collections implements OnInit {
         )
       );
     }
+  }
 
+  async openDeleteCollectionModal(){
+    const result = await this.modal.openAsync<{ confirmed: boolean }>(DeleteCollectionModal, {})
+
+    if (!result.confirmed) return;
+
+    if (result.confirmed) {
+      this.collectionService.deleteCollection(
+        this.selectedCollection.collectionId
+      ).subscribe({
+        next: (result : CollectionModel) => {
+          this.toastr.success("Collection Deleted")
+
+          // REMOVE COLLECTION FROM FROTNEND UI
+          this.fetchSelectedCollection(this.userCollections[0].id)
+          this.cdr.detectChanges()
+        },
+        error: (error : HttpErrorResponse) => {
+          this.toastr.error('There was an error. Replace this later.')
+        }
+      })
+    }
   }
 
   addNewCollection(request: CollectionCreateModel) {

@@ -18,7 +18,7 @@ import { ModalHost } from "../../components/modals/modal-host/modal-host";
  */
 @Component({
   selector: 'app-user',
-  imports: [NavbarUser, RouterOutlet, Footer, SpinnerNavigate, ModalHost],
+  imports: [NavbarUser, RouterOutlet, Footer, ModalHost],
   templateUrl: './user.html',
   styleUrl: './user.css',
   host: {

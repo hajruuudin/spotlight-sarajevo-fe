@@ -16,7 +16,7 @@ import { SpinnerNavigate } from "../../components/spinner-navigate/spinner-navig
  */
 @Component({
   selector: 'app-auth',
-  imports: [RouterOutlet, SpinnerNavigate],
+  imports: [RouterOutlet],
   templateUrl: './auth.html',
   styleUrl: './auth.css',
 })

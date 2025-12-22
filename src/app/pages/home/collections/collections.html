@@ -36,17 +36,25 @@
           </div>
         </div>
 
-        <div class="w-full h-auto dark:bg-(--background-200) bg-white flex flex-row justify-between items-start p-4 rounded-b-2xl">
+        <div
+          class="w-full h-auto dark:bg-(--background-200) bg-white flex flex-row justify-between items-start p-4 rounded-b-2xl"
+        >
           <!-- SPOT COLLECTION CONTAINER -->
           <div class="w-1/2 h-auto flex flex-col justify-start items-center">
             @for (collection of this.userSpotCollections; track collection.id) {
             <div
               (click)="this.fetchSelectedCollection(collection.id)"
               [ngClass]="[
-                this.selectedCollection.collectionId == collection.id ? 'dark:bg-(--background-400) bg-(--primary-700)': 'dark:bg-(--background-100) bg-(--background-900) hover:bg-(--accent-500)',
-                this.userSpotCollections.length <= this.userEventCollections.length ? 'first:rounded-tl-2xl last:rounded-bl-2xl' : '',
-                this.userSpotCollections.length > this.userEventCollections.length ? 'first:rounded-tl-2xl last:rounded-b-2xl' : '',
-            ]"
+                this.selectedCollection.collectionId == collection.id
+                  ? 'dark:bg-(--background-400) bg-(--primary-700)'
+                  : 'dark:bg-(--background-100) bg-(--background-900) hover:bg-(--accent-500)',
+                this.userSpotCollections.length <= this.userEventCollections.length
+                  ? 'first:rounded-tl-2xl last:rounded-bl-2xl'
+                  : '',
+                this.userSpotCollections.length > this.userEventCollections.length
+                  ? 'first:rounded-tl-2xl last:rounded-b-2xl'
+                  : ''
+              ]"
               class="first:rounded-tl-2xl last:rounded-bl-2xl w-full h-auto py-2"
             >
               <span class="text-lg font-normal">{{ collection.collectionName }}</span>
@@ -60,10 +68,16 @@
             <div
               (click)="this.fetchSelectedCollection(collection.id)"
               [ngClass]="[
-                this.selectedCollection.collectionId == collection.id ? 'dark:bg-(--background-400) bg-(--primary-700)' : 'dark:bg-(--background-100) bg-(--background-900) hover:bg-(--accent-500)', 
-                this.userEventCollections.length <= this.userSpotCollections.length ? 'first:rounded-tr-2xl last:rounded-br-2xl' : '',
-                this.userEventCollections.length > this.userSpotCollections.length ? 'first:rounded-tr-2xl last:rounded-b-2xl' : '',
-                ]"
+                this.selectedCollection.collectionId == collection.id
+                  ? 'dark:bg-(--background-400) bg-(--primary-700)'
+                  : 'dark:bg-(--background-100) bg-(--background-900) hover:bg-(--accent-500)',
+                this.userEventCollections.length <= this.userSpotCollections.length
+                  ? 'first:rounded-tr-2xl last:rounded-br-2xl'
+                  : '',
+                this.userEventCollections.length > this.userSpotCollections.length
+                  ? 'first:rounded-tr-2xl last:rounded-b-2xl'
+                  : ''
+              ]"
               class="first:rounded-tr-2xl last:rounded-br-2xl w-full h-auto py-2"
             >
               <span class="text-lg font-normal">{{ collection.collectionName }}</span>
@@ -91,8 +105,15 @@
           [headerMessage]="'collection.noCollectionItemsHeading' | transloco"
           [messageDescription]="'collection.noCollectionItemsSubheading' | transloco"
         ></app-not-found-component>
+         <app-button-primary
+            (click)="this.openDeleteCollectionModal()"
+            classAddons="rounded-2xl mt-2 px-2"
+            [buttonContent]="'Delete Collection'"
+            [buttonType]="'DANGER'"
+          ></app-button-primary>
         } @else if (this.selectedCollection.collectionType == 'SPOT'){
         <div class="flex flex-col w-full justify-start items-center space-y-4">
+          <app-collection-header></app-collection-header>
           @for (item of this.selectedCollection.collectionItems; track item.id) { @if
           (this.isSpot(item)) {
           <app-search-spot-card
@@ -100,7 +121,14 @@
             [spot]="item"
             [lang]="this.session.language()!"
           ></app-search-spot-card>
-          } }
+          }
+          }
+          <app-button-primary
+            (click)="this.openDeleteCollectionModal()"
+            classAddons="w-full rounded-2xl mt-2 px-2"
+            [buttonContent]="'Delete Collection'"
+            [buttonType]="'DANGER'"
+          ></app-button-primary>
         </div>
         } @else if (this.selectedCollection.collectionType == 'EVENT'){
         <div class="flex flex-col w-full justify-start items-center space-y-4">
