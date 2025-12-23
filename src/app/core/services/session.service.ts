@@ -98,7 +98,7 @@ export class SessionService {
     return this.auth.isAuthenticated().pipe(
       tap((response: any) => {
         if (response) {
-          console.log("Logged user is:", response)
+          console.log('Logged user is:', response);
           this.setUser(response);
         }
       }),
@@ -107,16 +107,18 @@ export class SessionService {
     );
   }
 
-  checkSession() {
-    return this.auth.isAuthenticated().pipe(
-      tap((response: any) => {
-        if (!response) {
-          this.clearSession();
-          this.router.navigate(['/auth']);
-        }
-      }),
-      catchError(() => of(false))
-    );
+  checkSession(): void {
+    this.auth
+      .isAuthenticated()
+      .pipe(
+        catchError((error) => {
+          if (error.status === 401) {
+            this.clearSession();
+          }
+          return of(false);
+        })
+      )
+      .subscribe();
   }
 
   // ===== CLEAR ALL =====

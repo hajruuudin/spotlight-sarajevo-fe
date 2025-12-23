@@ -59,6 +59,18 @@ export class CollectionService {
     });
   }
 
+  findAllSpotsCollection(){
+    return this.http.get<CollectionItemsModel>(this.apiUrl + `/collection/all-spots`, {
+      withCredentials: true
+    })
+  }
+
+  findAllEventsCollection(){
+    return this.http.get<CollectionItemsModel>(this.apiUrl + `/collection/all-events`, {
+      withCredentials: true
+    })
+  }
+
   addItemToCollection(itemAdd: CollectionAddItemModel) {
     return this.http.post<CollectionItemsModel>(this.apiUrl + `/collection/add-item`, itemAdd, {
       withCredentials: true,

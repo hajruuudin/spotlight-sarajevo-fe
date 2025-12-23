@@ -246,6 +246,20 @@
     "cancel" : "Cancel",
     "noCollectionItemsHeading" : "No items in this collection",
     "noCollectionItemsSubheading" : "Add spots or events to this collection to view them here",
-    "finishAdd" : "Finalise"
+    "finishAdd" : "Finalise",
+    "collectionEmpty" : " is empty!",
+    "collectionEmptyDesc" : "Browse and add spots to make it less lonely!",
+    "allSpotsEmptyHeader" : "You havent saved any spots yet!",
+    "allEventsEmptyHeader" : "You havent saved any events yet!",
+    "allSpotsHeader" : "All Spots",
+    "allEventsHeader" : "All Events",
+    "allSpotsDesc" : "Spots You've saved to Your collections",
+    "allEventsDesc" : "Events You've saved to Your collections",
+    "allSpotsEmptyDesc" : "All spots You save will show up here.",
+    "allEventsEmptyDesc" : "All events You save will show up here",
+    "deleteConfirm" : "Are You sure You want to delete this collection?",
+    "deleteConfirmMessage" : "Yes, delete collection",
+    "noCollectionsHeader" : "No collections",
+    "noCollectionsDesc" : "Create collections on Your profile and then add to them!"
   }
 }

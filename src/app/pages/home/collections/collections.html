@@ -41,48 +41,77 @@
         >
           <!-- SPOT COLLECTION CONTAINER -->
           <div class="w-1/2 h-auto flex flex-col justify-start items-center">
-            @for (collection of this.userSpotCollections; track collection.id) {
             <div
-              (click)="this.fetchSelectedCollection(collection.id)"
+              (click)="this.fetchSystemCollection(true)"
               [ngClass]="[
-                this.selectedCollection.collectionId == collection.id
+                this.selectedCollection.isSystem && this.selectedCollection.collectionType == 'SPOT'
                   ? 'dark:bg-(--background-400) bg-(--primary-700)'
-                  : 'dark:bg-(--background-100) bg-(--background-900) hover:bg-(--accent-500)',
-                this.userSpotCollections.length <= this.userEventCollections.length
-                  ? 'first:rounded-tl-2xl last:rounded-bl-2xl'
-                  : '',
-                this.userSpotCollections.length > this.userEventCollections.length
-                  ? 'first:rounded-tl-2xl last:rounded-b-2xl'
-                  : ''
+                  : 'dark:bg-(--background-100) bg-(--background-900) hover:bg-(--accent-500)'
               ]"
-              class="first:rounded-tl-2xl last:rounded-bl-2xl w-full h-auto py-2"
+              class="rounded-l-2xl w-full h-auto py-2 mb-4"
             >
-              <span class="text-lg font-normal">{{ collection.collectionName }}</span>
+              <span class="text-lg font-normal">All Spots</span>
             </div>
-            }
+            <div class="w-full h-auto flex flex-col justify-start items-center">
+              @if (this.userSpotCollections.length != 0) { @for (collection of
+              this.userSpotCollections; track collection.id) {
+              <div
+                (click)="this.fetchSelectedCollection(collection.id)"
+                [ngClass]="[
+                  this.selectedCollection.collectionId == collection.id
+                    ? 'dark:bg-(--background-400) bg-(--primary-700)'
+                    : 'dark:bg-(--background-100) bg-(--background-900) hover:bg-(--accent-500)',
+                  this.userSpotCollections.length <= this.userEventCollections.length
+                    ? 'first:rounded-tl-2xl last:rounded-bl-2xl'
+                    : '',
+                  this.userSpotCollections.length > this.userEventCollections.length
+                    ? 'first:rounded-tl-2xl last:rounded-b-2xl'
+                    : ''
+                ]"
+                class="w-full h-auto py-2"
+              >
+                <span class="text-lg font-normal">{{ collection.collectionName }}</span>
+              </div>
+              } }
+            </div>
           </div>
 
           <!-- EVENT COLLECTION CONTAINER -->
           <div class="w-1/2 h-auto flex flex-col justify-start items-center">
-            @for (collection of this.userEventCollections; track collection.id) {
             <div
-              (click)="this.fetchSelectedCollection(collection.id)"
+              (click)="this.fetchSystemCollection(false)"
               [ngClass]="[
-                this.selectedCollection.collectionId == collection.id
+                this.selectedCollection.isSystem &&
+                this.selectedCollection.collectionType == 'EVENT'
                   ? 'dark:bg-(--background-400) bg-(--primary-700)'
-                  : 'dark:bg-(--background-100) bg-(--background-900) hover:bg-(--accent-500)',
-                this.userEventCollections.length <= this.userSpotCollections.length
-                  ? 'first:rounded-tr-2xl last:rounded-br-2xl'
-                  : '',
-                this.userEventCollections.length > this.userSpotCollections.length
-                  ? 'first:rounded-tr-2xl last:rounded-b-2xl'
-                  : ''
+                  : 'dark:bg-(--background-100) bg-(--background-900) hover:bg-(--accent-500)'
               ]"
-              class="first:rounded-tr-2xl last:rounded-br-2xl w-full h-auto py-2"
+              class="rounded-r-2xl w-full h-auto py-2 mb-4"
             >
-              <span class="text-lg font-normal">{{ collection.collectionName }}</span>
+              <span class="text-lg font-normal">All Events</span>
             </div>
-            }
+            <div class="w-full h-auto flex flex-col justify-start items-center">
+              @if (this.userEventCollections.length != 0) { @for (collection of
+              this.userEventCollections; track collection.id) {
+              <div
+                (click)="this.fetchSelectedCollection(collection.id)"
+                [ngClass]="[
+                  this.selectedCollection.collectionId == collection.id
+                    ? 'dark:bg-(--background-400) bg-(--primary-700)'
+                    : 'dark:bg-(--background-100) bg-(--background-900) hover:bg-(--accent-500)',
+                  this.userEventCollections.length <= this.userSpotCollections.length
+                    ? 'first:rounded-tr-2xl last:rounded-br-2xl'
+                    : '',
+                  this.userEventCollections.length > this.userSpotCollections.length
+                    ? 'first:rounded-tr-2xl last:rounded-b-2xl'
+                    : ''
+                ]"
+                class="w-full h-auto py-2"
+              >
+                <span class="text-lg font-normal">{{ collection.collectionName }}</span>
+              </div>
+              } }
+            </div>
           </div>
         </div>
 
@@ -92,54 +121,129 @@
           [buttonContent]="'Add Collection'"
           [buttonType]="'DEFAULT'"
         ></app-button-primary>
-        <app-button-primary
+        @if (!this.selectedCollection.isSystem) {
+          <app-button-primary
           (click)="this.openEditCollectionModal()"
           classAddons="w-full rounded-2xl mt-2"
-          [buttonContent]="'Edit Collection'"
+          [buttonContent]="'Edit Selected Collection'"
           [buttonType]="'DEFAULT'"
         ></app-button-primary>
+        }
+      
       </div>
       <div id="itemsContainer" class="w-full md:w-2/3 rounded-2xl h-auto">
-        @if (this.selectedCollection.collectionItems.length == 0) {
+        <!-- CASE 1: System collection with NO items -->
+        @if (this.selectedCollection.isSystem && this.selectedCollection.collectionItems.length ===
+        0) {
         <app-not-found-component
-          [headerMessage]="'collection.noCollectionItemsHeading' | transloco"
-          [messageDescription]="'collection.noCollectionItemsSubheading' | transloco"
-        ></app-not-found-component>
-         <app-button-primary
-            (click)="this.openDeleteCollectionModal()"
-            classAddons="rounded-2xl mt-2 px-2"
-            [buttonContent]="'Delete Collection'"
-            [buttonType]="'DANGER'"
-          ></app-button-primary>
-        } @else if (this.selectedCollection.collectionType == 'SPOT'){
+          [headerMessage]="
+            this.selectedCollection.collectionType === 'SPOT'
+              ? ('collection.allSpotsEmptyHeader' | transloco)
+              : ('collection.allEventsEmptyHeader' | transloco)
+          "
+          [messageDescription]="
+            this.selectedCollection.collectionType === 'SPOT'
+              ? ('collection.allSpotsEmptyDesc' | transloco)
+              : ('collection.allEventsEmptyDesc' | transloco)
+          "
+        >
+        </app-not-found-component>
+        }
+        <!-- CASE 2: System collection WITH items -->
+        @else if (this.selectedCollection.isSystem && this.selectedCollection.collectionItems.length
+        > 0) {
         <div class="flex flex-col w-full justify-start items-center space-y-4">
-          <app-collection-header></app-collection-header>
+          <app-collection-header
+            [collectionHeader]="
+              this.selectedCollection.collectionType === 'SPOT'
+                ? ('collection.allSpotsHeader' | transloco)
+                : ('collection.allEventsHeader' | transloco)
+            "
+            [collectionDescription]="
+              this.selectedCollection.collectionType === 'SPOT'
+                ? ('collection.allSpotsDesc' | transloco)
+                : ('collection.allEventsDesc' | transloco)
+            "
+          >
+          </app-collection-header>
+
           @for (item of this.selectedCollection.collectionItems; track item.id) { @if
-          (this.isSpot(item)) {
+          (this.selectedCollection.collectionType === 'SPOT' && this.isSpot(item)) {
           <app-search-spot-card
             (click)="this.navigateToSpotOverview(item.slug)"
             [spot]="item"
             [lang]="this.session.language()!"
-          ></app-search-spot-card>
-          }
-          }
+          >
+          </app-search-spot-card>
+          } @if (this.selectedCollection.collectionType === 'EVENT' && this.isEvent(item)) {
+          <app-search-event-card
+            (click)="this.navigateToEventOverview(item.slug)"
+            [event]="item"
+            [lang]="this.session.language()!"
+          >
+          </app-search-event-card>
+          } }
+        </div>
+        }
+        <!-- CASE 3: Custom collection with NO items -->
+        @else if (!this.selectedCollection.isSystem &&
+        this.selectedCollection.collectionItems.length === 0) {
+        <app-not-found-component
+          [headerMessage]="
+            this.selectedCollection.collectionName +
+            ' ' +
+            ('collection.collectionEmpty' | transloco)
+          "
+          [messageDescription]="
+            ('collection.collectionEmptyDesc' | transloco)
+          "
+        >
+        </app-not-found-component>
+
+        <app-button-primary
+          (click)="this.openDeleteCollectionModal()"
+          classAddons="rounded-2xl mt-2 px-2"
+          [buttonContent]="'Delete Collection'"
+          [buttonType]="'DANGER'"
+        >
+        </app-button-primary>
+        }
+        <!-- CASE 4: Custom collection WITH items -->
+        @else {
+        <div class="flex flex-col w-full justify-start items-center space-y-4">
+          <app-collection-header
+            [collectionHeader]="this.selectedCollection.collectionName"
+            [collectionDescription]="
+              this.selectedCollection.collectionDescription ||
+              ('collection.defaultDescription' | transloco)
+            "
+          >
+          </app-collection-header>
+
+          @for (item of this.selectedCollection.collectionItems; track item.id) { @if
+          (this.selectedCollection.collectionType === 'SPOT' && this.isSpot(item)) {
+          <app-search-spot-card
+            (click)="this.navigateToSpotOverview(item.slug)"
+            [spot]="item"
+            [lang]="this.session.language()!"
+          >
+          </app-search-spot-card>
+          } @if (this.selectedCollection.collectionType === 'EVENT' && this.isEvent(item)) {
+          <app-search-event-card
+            (click)="this.navigateToEventOverview(item.slug)"
+            [event]="item"
+            [lang]="this.session.language()!"
+          >
+          </app-search-event-card>
+          } }
+
           <app-button-primary
             (click)="this.openDeleteCollectionModal()"
             classAddons="w-full rounded-2xl mt-2 px-2"
             [buttonContent]="'Delete Collection'"
             [buttonType]="'DANGER'"
-          ></app-button-primary>
-        </div>
-        } @else if (this.selectedCollection.collectionType == 'EVENT'){
-        <div class="flex flex-col w-full justify-start items-center space-y-4">
-          @for (item of this.selectedCollection.collectionItems; track item.id) { @if
-          (this.isEvent(item)) {
-          <app-search-event-card
-            (click)="this.navigateToEventOverview(item.slug)"
-            [event]="item"
-            [lang]="this.session.language()!"
-          ></app-search-event-card>
-          } }
+          >
+          </app-button-primary>
         </div>
         }
       </div>

@@ -13,7 +13,7 @@ import { SpinnerNavigate } from "./components/spinner-navigate/spinner-navigate"
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App implements OnInit {
+export class App {
   protected readonly title = signal('spotlight-sarajevo-fe');
   protected loading = false;
   protected apiUrl = environment.API_URL;
@@ -23,6 +23,8 @@ export class App implements OnInit {
     protected session: SessionService,
     protected router: Router
   ) {
+    console.log("Check sesion is running in the constructor")
+    this.session.checkSession();
     this.router.events.pipe(
       filter(event => 
         event instanceof NavigationStart || 
@@ -37,9 +39,5 @@ export class App implements OnInit {
         this.spinner.hideNavigateSpinner()
       }
     })
-  }
-
-  ngOnInit(): void {
-    this.session.restoreSession();
   }
 }

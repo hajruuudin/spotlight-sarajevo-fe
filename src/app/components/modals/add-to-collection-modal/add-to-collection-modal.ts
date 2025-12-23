@@ -16,10 +16,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { EventInCollectionModel } from '../../../shared/models/collection.model';
 import { CollectionService } from '../../../services/collection.service';
 import { CollectionModel } from '../../../shared/models/collection.model';
+import { NotFound } from "../../../interfaces/error/not-found";
+import { NotFoundComponent } from "../../not-found-component/not-found-component";
 
 @Component({
   selector: 'app-add-to-collection-modal',
-  imports: [TranslocoPipe, ReactiveFormsModule, ButtonPrimary, CollectionCheckboxGroupComponent],
+  imports: [TranslocoPipe, ReactiveFormsModule, ButtonPrimary, CollectionCheckboxGroupComponent, NotFoundComponent],
   templateUrl: './add-to-collection-modal.html',
   styleUrl: './add-to-collection-modal.css',
   host: {

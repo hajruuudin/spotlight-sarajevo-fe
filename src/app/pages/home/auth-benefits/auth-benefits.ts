@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class AuthBenefits {
   constructor(private router: Router){}
 
-  navigateToLogin(){
-    this.router.navigate(['/auth/login'])
+  navigateToRegister(){
+    this.router.navigate(['/auth/register'])
   }
 }

@@ -236,16 +236,30 @@
     "deleteConfirm": "Jeste li sigurni da želite obrisati svoju trenutnu recenziju za ovog organizatora?",
     "deleteConfirmMessage": "Da, obriši recenziju"
   },
-  "collection" : {
-    "headerTitle" : "Kolekcije",
-    "headerSubtitle" : "Pregled lokacija / događaja koje ste spasili.",
-    "addCollection" : "Kreiraj Kolekciju",
-    "create" : "Dodaj Kolekciju",
-    "edit" : "Uredi Kolekciju",
+  "collection": {
+    "headerTitle": "Kolekcije",
+    "headerSubtitle": "Pregled lokacija / događaja koje ste spasili.",
+    "addCollection": "Kreiraj Kolekciju",
+    "create": "Dodaj Kolekciju",
+    "edit": "Uredi Kolekciju",
     "addToCollection": "Dodaj u kolekciju",
-    "cancel" : "Odustani",
-    "noCollectionItemsHeading" : "Kolekcija je prazna",
-    "noCollectionItemsSubheading" : "Dodajte lokcaije ili događaje u kolekciju da bi ih pregledali ovdje!",
-    "finishAdd" : "Završi"
+    "cancel": "Odustani",
+    "noCollectionItemsHeading": "Kolekcija je prazna",
+    "noCollectionItemsSubheading": "Dodajte lokcaije ili događaje u kolekciju da bi ih pregledali ovdje!",
+    "finishAdd": "Završi",
+    "collectionEmpty": " je prazna!",
+    "collectionEmptyDesc": "Pretražuj i dodaj lokacije da je učiniš manje praznom!",
+    "allSpotsEmptyHeader": "Još nisi sačuvao/la nijednu lokaciju!",
+    "allEventsEmptyHeader": "Još nisi sačuvao/la nijedan događaj!",
+    "allSpotsHeader": "Sve lokacije",
+    "allEventsHeader": "Svi događaji",
+    "allSpotsDesc": "Lokacije koje si sačuvao/la u svojim kolekcijama",
+    "allEventsDesc": "Događaji koje si sačuvao/la u svojim kolekcijama",
+    "allSpotsEmptyDesc": "Sve lokacije koje sačuvaš će se prikazati ovdje.",
+    "allEventsEmptyDesc": "Svi događaji koje sačuvaš će se prikazati ovdje.",
+    "deleteConfirm": "Da li si siguran/na da želiš obrisati ovu kolekciju?",
+    "deleteConfirmMessage": "Da, obriši kolekciju",
+    "noCollectionsHeader": "Nema kolekcija",
+    "noCollectionsDesc": "Kreirajte kolekcije na svom profilu i dodajte stavke u njih!"
   }
 }

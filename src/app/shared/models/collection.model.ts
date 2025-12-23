@@ -9,6 +9,7 @@ export class CollectionModel {
     public collectionType: 'SPOT' | 'EVENT' | string,
     public created: string,
     public createdBy: string,
+    public isSystem: boolean,
     public userId: number
   ) {}
 }
@@ -16,7 +17,10 @@ export class CollectionModel {
 export class CollectionItemsModel {
   constructor(
     public collectionId: number,
+    public collectionName: string,
+    public collectionDescription: string,
     public collectionType: 'SPOT' | 'EVENT',
+    public isSystem: boolean,
     public collectionItems: (SpotShorthandModel | EventShorthandModel)[]
   ) {}
 }
