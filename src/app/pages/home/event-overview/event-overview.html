@@ -232,8 +232,16 @@
         <app-subheading [subheading]="'eventOverview.organiser' | transloco"></app-subheading>
 
         <div
-          class="w-full h-auto flex flex-col rounded-2xl p-4 md:p-0 md:flex-row justify-between items-center dark:bg-(--background-200) bg-(--background-900)"
+          class="relative w-full h-auto flex flex-col rounded-2xl p-4 md:p-0 md:flex-row justify-between items-center dark:bg-(--background-200) bg-(--background-900)"
         >
+          @if (this.eventOverview.organiser.overallRating != null) {
+          <div
+            class="absolute bottom-2 right-2 w-auto h-auto py-4 px-4 aspect-square rounded-2xl dark:bg-(--background-100) bg-(--background-700) font-extrabold text-2xl"
+          >
+            <span>{{ this.eventOverview.organiser.overallRating }}</span>
+          </div>
+          }
+
           <img
             [src]="this.eventOverview.organiser.thumbnailImage"
             alt="Organiser thumbnail"

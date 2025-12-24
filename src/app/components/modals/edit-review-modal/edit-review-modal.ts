@@ -50,10 +50,11 @@ export class EditReviewModal implements OnInit {
         cleanliness: [this.reviewModel.userCleanliness, Validators.required],
       });
     } else if (this.isOrganiserReview(this.reviewModel)) {
+      console.log(this.reviewModel)
       this.form = this.fb.group({
         header: [this.reviewModel.header, Validators.required],
         body: [this.reviewModel.body, Validators.required],
-        // overallRating: [this.reviewModel.userOverallRating, Validators.required], FIX LATER, ADD ORGANISER COMBINED REVIEW
+        overallRating: [this.reviewModel.userOverallRating, Validators.required],
         atmosphere: [this.reviewModel.userOrganiserAtmosphere, Validators.required],
         quality: [this.reviewModel.userOrganiserQuality, Validators.required],
         enjoyability: [this.reviewModel.userOrganiserEnjoyability, Validators.required],
@@ -98,7 +99,7 @@ export class EditReviewModal implements OnInit {
   }
 
   private isSpotReview(model: any): model is SpotReviewModel {
-    return model && 'userOverallRating' in model;
+    return model && 'userStaffKindness' in model;
   }
 
   private isOrganiserReview(model: any): model is EventOrganiserReviewModel {

@@ -22,7 +22,7 @@ import { ModalHost } from "../../components/modals/modal-host/modal-host";
   templateUrl: './user.html',
   styleUrl: './user.css',
   host: {
-    class: "w-full h-screen flex flex-col justify-start items-stretch"
+    class: "w-full min-h-screen flex flex-col justify-start items-stretch"
   }
 })
 export class User {

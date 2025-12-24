@@ -5,7 +5,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-organiser-reiew-card',
-  imports: [DatePipe, TranslocoPipe],
+  imports: [DatePipe, TranslocoPipe, NgClass],
   templateUrl: './organiser-reiew-card.html',
   styleUrl: './organiser-reiew-card.css',
   host: {

@@ -47,7 +47,7 @@ export class AddReviewModal implements OnInit {
       this.form = this.fb.group({
         header: ['', Validators.required],
         body: ['', Validators.required],
-        // overallRating: [5.5, Validators.required], FIX ADD RATINGS FOR ORGANISERS
+        overallRating: [5.5, Validators.required],
         atmosphere: [5.5, Validators.required],
         quality: [5.5, Validators.required],
         enjoyability: [5.5, Validators.required],

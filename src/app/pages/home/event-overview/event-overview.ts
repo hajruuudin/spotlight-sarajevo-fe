@@ -87,6 +87,8 @@ export class EventOverview {
     this.activatedRoute.data.subscribe({
       next: (data: any) => {
         this.eventOverview = data['0'];
+
+        console.log(this.eventOverview)
         this.loadUserOrganiserReview(this.eventOverview.organiser.id)
         this.loadOtherOrganiserReviews(this.eventOverview.organiser.id)
 
@@ -182,7 +184,7 @@ export class EventOverview {
         formData.organiserId,
         formData.header,
         formData.body,
-        // formData.overallRating,
+        formData.overallRating,
         formData.quality,
         formData.atmosphere,
         formData.enjoyability,
@@ -209,6 +211,7 @@ export class EventOverview {
         this.userEventOrganiserReview!.userId,
         formData.header,
         formData.body,
+        formData.overallRating,
         formData.quality,
         formData.atmosphere,
         formData.enjoyability
