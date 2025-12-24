@@ -1,5 +1,6 @@
 <!-- REVIEW HEADER: TITLE - USER - DATE -->
-<div class="w-full flex flex-col justify-center items-start">
+ @if (this.review.header != '') {
+    <div class="w-full flex flex-col justify-center items-start">
     <div class="w-full flex flex-row justify-between items-center gap-4">
         <span class="font-semibold w-auto text-lg md:text-2xl text-start">{{ this.review.header }}</span>
         <span [ngClass]="'font-extrabold text-lg md:text-2xl dark:bg-(--primary-300) bg-(--accent-900) rounded-2xl p-2 '">{{ this.review.userOverallRating }}</span>
@@ -7,10 +8,29 @@
     
     <div class="w-full flex flex-row justify-between items-center gap-8">
         <span class="italic text-sm md:text-base">{{ this.review.username }}</span>
-        <span class="italic text-sm md:text-base">Last Edited: {{ this.review.modified | date }}</span>
+        @if (this.review.modified != null) {
+            <span class="italic text-sm md:text-base">Last Edited: {{ this.review.modified | date }}</span>
+        }
     </div>
 </div>
 <div class="w-full h-0.5 my-2 rounded-full dark:bg-(--primary-900) bg-black"></div>
+ } @else {
+    <div class="w-full flex flex-col justify-center items-start">
+    <div class="w-full flex flex-row justify-between items-center gap-4">
+        <span class="font-semibold w-auto text-lg md:text-2xl text-start">Overall rating</span>
+        <span [ngClass]="'font-extrabold text-lg md:text-2xl dark:bg-(--primary-300) bg-(--accent-900) rounded-2xl p-2 '">{{ this.review.userOverallRating }}</span>
+    </div>
+    
+    <div class="w-full flex flex-row justify-between items-center gap-8">
+        <span class="italic text-sm md:text-base">{{ this.review.username }}</span>
+        @if (this.review.modified != null) {
+            <span class="italic text-sm md:text-base">Last Edited: {{ this.review.modified | date }}</span>
+        }
+        
+    </div>
+</div>
+ }
+
 <!-- REVIEW HEADER: TITLE - USER - DATE -->
 
 <!-- REVIEW BODY: CONTENT OF THE REVIEW -->

@@ -223,6 +223,8 @@ export class SpotOverview implements OnInit {
     }
 
     if (result.type === 'add') {
+      this.handleAddEditReview(result.data, false);
+    } else if (result.type === 'edit'){
       this.handleAddEditReview(result.data, true);
     }
   }

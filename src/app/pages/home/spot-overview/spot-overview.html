@@ -187,7 +187,8 @@
       </div>
 
       <!-- RATING GRAPH SECTION -->
-      <div
+       @if (this.spotOverview.combinedRating != 0) {
+        <div
         class="w-full lg:w-2/3 flex flex-col justify-end items-center space-y-4 px-4 pb-4 pt-2 rounded-2xl h-[500px]"
       >
         <app-subheading [subheading]="'spotOverview.ratings' | transloco"></app-subheading>
@@ -202,6 +203,14 @@
           </canvas>
         </div>
       </div>
+       } @else {
+        <div
+        class="w-full lg:w-2/3 flex flex-col justify-end items-center space-y-4 px-4 pb-4 pt-2 rounded-2xl h-full"
+      >
+        <app-not-found-component [headerMessage]="'spotOverview.noGraphHeading' | transloco" [messageDescription]="'spotOverview.noGraphDesc' | transloco"></app-not-found-component>
+    </div>
+       }
+      
     </div>
   </div>
 

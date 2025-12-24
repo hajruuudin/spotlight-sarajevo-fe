@@ -33,8 +33,8 @@ export class AddReviewModal implements OnInit {
   ngOnInit(): void {
     if (this.reviewType) {
       this.form = this.fb.group({
-        header: ['', Validators.required],
-        body: ['', Validators.required],
+        header: [''],
+        body: [''],
         overallRating: [5.5, Validators.required],
         affordability: [5.5, Validators.required],
         accessibility: [5.5, Validators.required],
@@ -45,8 +45,8 @@ export class AddReviewModal implements OnInit {
       });
     } else {
       this.form = this.fb.group({
-        header: ['', Validators.required],
-        body: ['', Validators.required],
+        header: [''],
+        body: [''],
         overallRating: [5.5, Validators.required],
         atmosphere: [5.5, Validators.required],
         quality: [5.5, Validators.required],

@@ -312,8 +312,8 @@
           @if (this.session.getUser() == null) {
           <app-not-found-component
             class="col-span-2"
-            [headerMessage]="'eventOverview.noAuthReviewHeader' | transloco"
-            [messageDescription]="'eventOverview.noAuthReviewSubheading' | transloco"
+            [headerMessage]="'eventOverview.noAuthOrganiserReviewHeader' | transloco"
+            [messageDescription]="'eventOverview.noAuthOrganiserReviewSubheading' | transloco"
           ></app-not-found-component>
           <app-button-primary
             class="col-span-2 w-full"
@@ -327,8 +327,8 @@
             @if (this.userEventOrganiserReview == null) {
             <app-not-found-component
               class="col-span-2"
-              [headerMessage]="'spotOverview.noUserReviewHeader' | transloco"
-              [messageDescription]="'spotOverview.noUserReviewSubheading' | transloco"
+              [headerMessage]="'eventOverview.noUserOrganiserReviewHeader' | transloco"
+              [messageDescription]="'eventOverview.noUserOrganiserReviewSubheading' | transloco"
             ></app-not-found-component>
             <app-button-primary
               class="col-span-2"
@@ -363,8 +363,8 @@
           @if(this.eventOrganiserReviews.length == 0){
           <app-not-found-component
             class="col-span-2"
-            [headerMessage]="'eventOverview.noOtherReviewHeading' | transloco"
-            [messageDescription]="'eventOverview.noOtherReviewSubheading' | transloco"
+            [headerMessage]="'eventOverview.noOtherOrganiserReviewHeading' | transloco"
+            [messageDescription]="'eventOverview.noOtherOrganiserReviewSubheading' | transloco"
           ></app-not-found-component>
           } @else {
           <div class="w-full columns-1 md:columns-2">
