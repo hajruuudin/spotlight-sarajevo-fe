@@ -66,7 +66,7 @@ export class AddToCollectionModal {
     this.collectionService.findUserCollections().subscribe({
       next: (result: CollectionModel[]) => {
         result.map((res) => {
-          if (res.collectionType == this.objectType) {
+          if (res.collectionType == this.objectType && !res.isSystem) {
             let obj = {
               label: res.collectionName,
               value: res.id,

@@ -61,7 +61,7 @@ export const routes: Routes = [
       { path: 'events', component: EventSearch, title: 'Browse Events - SpotlightSarajevo' },
       {
         path: 'events/:eventSlug',
-        resolve: [eventResolver],
+        resolve: {eventData: eventResolver},
         component: EventOverview,
         title: 'Event - SpotlightSarajevo',
       },

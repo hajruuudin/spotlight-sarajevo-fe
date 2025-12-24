@@ -202,9 +202,10 @@ export class Collections implements OnInit {
       this.collectionService.deleteCollection(this.selectedCollection.collectionId).subscribe({
         next: (result: CollectionModel) => {
           this.toastr.success('Collection Deleted');
-          this.removeCollectionFrontend(result);
-          this.fetchSystemCollection(true);
           this.cdr.detectChanges();
+          this.removeCollectionFrontend(result);
+          this.fetchSystemCollection(true)
+          
         },
         error: (error: HttpErrorResponse) => {
           this.toastr.error('There was an error. Replace this later.');

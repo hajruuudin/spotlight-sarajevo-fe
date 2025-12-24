@@ -15,6 +15,9 @@ export const collectionsResolver: ResolveFn<CollectionPageData> = (route, state)
   const collectionService = inject(CollectionService);
 
   return collectionService.findUserCollections().pipe(
+    map((collections: CollectionModel[]) => {
+      return collections ? collections.filter((c) => !c.isSystem) : [];
+    }),
     switchMap((collections: CollectionModel[]) => {
       const userCollections = collections || [];
 

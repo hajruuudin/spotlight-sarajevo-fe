@@ -45,7 +45,8 @@ export class CollectionAddItemModel {
   constructor(
     public objectId: number,
     public objectType: string,
-    public collectionId: number
+    public collectionId: number,
+    public isSystem: boolean
   ) {}
 }
 
@@ -69,7 +70,8 @@ export class AddCollectionItemsModel{
   constructor(
     public ids: number[],
     public collectionType: string,
-    public objectId: number
+    public objectId: number,
+    public isSystem: boolean = false
   ){}
 }
 

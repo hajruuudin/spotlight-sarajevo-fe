@@ -102,6 +102,22 @@
       </div>
 
       <div class="w-full md:w-2/3 flex flex-row justify-around items-center space-x-2">
+        @if (this.isSaved) {
+           <app-button-regular
+          (click)="this.removeFromAllSpots()"
+          classAddons="px-4"
+          [buttonIcon]="'COLLECTION_ADD_EDIT'"
+          [buttonContent]="'Unsave Spot'"
+        ></app-button-regular>
+        } @else {
+           <app-button-regular
+          (click)="this.saveToAllSpots()"
+          classAddons="px-4"
+          [buttonIcon]="'COLLECTION_ADD_EDIT'"
+          [buttonContent]="'Save Spot'"
+        ></app-button-regular>
+        }
+       
         <app-button-regular
           (click)="this.openAddCollectionModal()"
           classAddons="px-4"
