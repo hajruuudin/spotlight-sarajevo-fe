@@ -155,6 +155,8 @@
     "closed": "Zatvoreno",
     "ratings": "OCJENA",
     "location": "LOKACIJA NA MAPI",
+    "noGraphHeading": "Nema recenzija za ovo mjesto",
+    "noGraphDesc": "Nakon što se dodaju prve recenzije, ovdje će biti prikazan grafikon sa statistikom za ovo mjesto",
     "reviews": "RECENZIJE",
     "noAuthReviewHeader": "Prijavite se da ostavite recenziju i pogledate svoje recenzije!",
     "noAuthReviewSubheading": "Samo jedan brzi korak! Napravite račun ako ga već nemate!",
@@ -213,12 +215,12 @@
     "contactEmail": "Email: ",
     "contactWebsite": "Web stranica: ",
     "reviews": "RECENZIJE ORGANIZATORA",
-    "noAuthReviewHeader": "Prijavite se da biste ostavili recenziju i vidjeli svoje recenzije!",
-    "noAuthReviewSubheading": "To je samo jedan brzi korak! Napravite nalog ako ga već nemate!",
-    "noUserReviewHeader": "Niste ocijenili ovog organizatora.",
-    "noUserReviewSubheading": "Ostavite recenziju ako ste prisustvovali događajima ovog organizatora. To pomaže njima i drugim korisnicima SpotlightSarajevo.",
-    "noOtherReviewHeading": "Nijedan drugi korisnik još nije ostavio recenziju za ovog organizatora!",
-    "noOtherReviewSubheading": "Izgleda prazno i usamljeno. Ostavite recenziju i budite prvi!"
+    "noAuthOrganiserReviewHeader": "Prijavite se da ostavite recenziju i vidite svoje recenzije!",
+    "noAuthOrganiserReviewSubheading": "Samo jedan brzi korak! Napravite profil ako ga već nemate!",
+    "noUserOrganiserReviewHeader": "Još niste ostavili recenziju za ovog organizatora.",
+    "noUserOrganiserReviewSubheading": "Ostavite recenziju ako ste bili na događajima ovog organizatora. Time pomažete njima i drugim korisnicima SpotlightSarajeva.",
+    "noOtherOrganiserReviewHeading": "Još uvijek nema recenzija drugih korisnika za ovog organizatora!",
+    "noOtherOrganiserReviewSubheading": "Izgleda prazno i usamljeno. Ostavite recenziju i budite prvi!"
   },
   "eventReview": {
     "create": "Dodaj recenziju",
