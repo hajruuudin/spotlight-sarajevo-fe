@@ -61,7 +61,7 @@ export class AuthService {
    * @returns Observable<any> - The response from the API.
    */
   registerToSystem(request: PreferencesModel) {
-    return this.http.post(`${this.apiUrl}/auth/register`, request, {
+    return this.http.post<LoggedUserModel>(`${this.apiUrl}/auth/register`, request, {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true
     });

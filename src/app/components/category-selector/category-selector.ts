@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './category-selector.html',
   styleUrl: './category-selector.css',
   host: {
-    class: 'w-auto h-auto py-2 py-2 rounded-2xl',
+    class: 'w-auto h-auto py-1 rounded-2xl',
   },
 })
 export class CategorySelector {

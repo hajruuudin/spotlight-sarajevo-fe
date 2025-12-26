@@ -14,6 +14,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { forkJoin, Subscription } from 'rxjs';
 import { SessionService } from '../../../core/services/session.service';
 import { EventService } from '../../../services/event.service';
+import {ActivatedRoute} from '@angular/router';
+import {DiscoverPageData} from '../../../core/resolvers/discover.resolver';
 
 @Component({
   selector: 'app-discover',
@@ -41,64 +43,19 @@ export class Discover implements OnInit {
   constructor(
     protected spotService: SpotService,
     protected eventService: EventService,
+    protected route: ActivatedRoute,
     protected session: SessionService,
     protected cdr: ChangeDetectorRef,
     protected toastr: HotToastService
   ) {}
 
   ngOnInit(): void {
-    this.loadInitialData();
-  }
-
-  loadInitialData() {
-    forkJoin({
-      recentlyAddedSpots: this.spotService.findSpotsPaginated(
-        0,
-        10,
-        '',
-        SortOptions.ALPHABETICAL.toString(),
-        []
-      ),
-      landmarkSpots: this.spotService.findSpotsPaginated(
-        0,
-        10,
-        '',
-        SortOptions.ALPHABETICAL.toString(),
-        []
-      ),
-      popularSpots: this.spotService.findSpotsPaginated(
-        0,
-        10,
-        '',
-        SortOptions.ALPHABETICAL.toString(),
-        []
-      ),
-      upcomingEvents: this.eventService.findEventsPaginated(
-        0,
-        10,
-        '',
-        SortOptions.ALPHABETICAL.toString(),
-        []
-      ),
-      favouriteSpots: this.spotService.findSpotsPaginated(
-        0,
-        10,
-        '',
-        SortOptions.ALPHABETICAL.toString(),
-        []
-      ),
-    }).subscribe({
-      next: (result) => {
-        this.recentlyAddedSpots = result.recentlyAddedSpots.content;
-        this.landmarkSpots = result.landmarkSpots.content;
-        this.popularSpots = result.popularSpots.content;
-        this.upcomingEvents = result.upcomingEvents.content;
-        this.favouriteSpots = result.favouriteSpots.content;
-        this.cdr.detectChanges();
-      },
-      error: (error: HttpErrorResponse) => {
-        this.toastr.error(error.message);
-      },
-    });
+    const data = this.route.snapshot.data['discoverData'] as DiscoverPageData
+    
+    this.recentlyAddedSpots = data.recentlyAddedSpots;
+    this.landmarkSpots = data.landmarkSpots;
+    this.upcomingEvents = data.upcomingEvents;
+    this.favouriteSpots = data.favouriteSpots;
+    this.popularSpots = data.popularSpots;
   }
 }

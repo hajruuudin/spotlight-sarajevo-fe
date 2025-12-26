@@ -26,10 +26,13 @@ import { AdminAddEvents } from './pages/admin/admin-add-events/admin-add-events'
 import { AdminAddGuides } from './pages/admin/admin-add-guides/admin-add-guides';
 import { NotFound } from './interfaces/error/not-found';
 import { CommunityRequests } from './pages/home/community-requests/community-requests';
-import { authGuard } from './core/guards/auth-guard.guard';
 import { spotResolver } from './core/resolvers/spot.resolver';
 import { eventResolver } from './core/resolvers/event.resolver';
 import { collectionsResolver } from './core/resolvers/collection.resolver';
+import { AuthBenefits } from './pages/home/auth-benefits/auth-benefits';
+import { authGuard } from './core/guards/auth.guard';
+import {discoverResolver} from './core/resolvers/discover.resolver';
+import { homepageResolver } from './core/resolvers/homepage.resolver';
 
 export const routes: Routes = [
   {
@@ -45,41 +48,50 @@ export const routes: Routes = [
     component: User,
     children: [
       { path: '', redirectTo: 'homepage', pathMatch: 'full' },
-      { path: 'homepage', component: Homepage, title: 'Homepage - SpotlightSarajevo' },
+      { path: 'homepage', resolve: {homepageData: homepageResolver}, component: Homepage, title: 'Homepage - SpotlightSarajevo' },
 
       { path: 'spots', component: SpotSearch, title: 'Browse Spots - SpotlightSarajevo' },
-      { path: 'spots/:spotSlug', resolve: [spotResolver], component: SpotOverview, title: 'Spot Overview - SpotlightSarajevo' },
+      {
+        path: 'spots/:spotSlug',
+        resolve: [spotResolver],
+        component: SpotOverview,
+        title: 'Spot Overview - SpotlightSarajevo',
+      },
 
       { path: 'events', component: EventSearch, title: 'Browse Events - SpotlightSarajevo' },
-      { path: 'events/:eventSlug', resolve: [eventResolver], component: EventOverview, title: 'Event - SpotlightSarajevo' },
+      {
+        path: 'events/:eventSlug',
+        resolve: {eventData: eventResolver},
+        component: EventOverview,
+        title: 'Event - SpotlightSarajevo',
+      },
 
-      { path: 'discover', component: Discover, title: 'Discover - SpotlightSarajevo' },
+      { path: 'discover', resolve: { discoverData: discoverResolver }, component: Discover, title: 'Discover - SpotlightSarajevo' },
       { path: 'profile', component: Profile, title: 'Profile - SpotlightSarajevo' },
-
       { path: 'guide', component: TouristGuide, title: 'Browse Guides - SpotlightSarajevo' },
       {
         path: 'guide/slug',
-       
         component: TouristGuideOverview,
         title: 'Guide Overview - SpotlightSarajevo',
       },
-
       { path: 'transport', component: Transport, title: 'Public Transport - SpotlightSarajevo' },
-
       {
         path: 'collections',
-        resolve: {
-          collectionData: collectionsResolver
-        },
+        canMatch: [authGuard],
+        resolve: { collectionData: collectionsResolver },
         component: Collections,
         title: 'Your Collections - SpotlightSarajevo',
       },
-
       {
         path: 'requests',
         component: CommunityRequests,
         title: 'Community Requests - SpotlightSarajevo',
       },
+      {
+        path: 'auth-benefits',
+        component: AuthBenefits,
+        title: 'Login for more! Extra Functions'
+      }
     ],
   },
   {
@@ -95,7 +107,6 @@ export const routes: Routes = [
         component: AdminTransportOverview,
         title: 'Admin - Transport Overview',
       },
-
       {
         path: 'requests-overview',
         component: AdminRequestOverview,

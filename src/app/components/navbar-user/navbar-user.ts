@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { HomepageIcon } from '../../resources/icons/homepage-icon/homepage-icon';
 import { ProfileIcon } from '../../resources/icons/profile-icon/profile-icon';
 import { DiscoverIcon } from '../../resources/icons/discover-icon/discover-icon';
@@ -41,6 +41,7 @@ import { ButtonPrimary } from "../button-primary/button-primary";
 export class NavbarUser {
   protected isMobileNavbarLoaded: Boolean = true;
   protected isMobileNavbarOpen = false;
+  protected loggedUser = computed(() => this.session.user() !== null)
 
   constructor(protected session: SessionService, protected router: Router) {}
 
@@ -49,17 +50,11 @@ export class NavbarUser {
   }
 
   toggleTheme(): void {
-    const html = document.documentElement;
-    const currentTheme = html.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-    html.setAttribute('data-theme', newTheme);
-    this.session.setStoredTheme(newTheme);
+    this.session.setTheme(this.session.theme() === 'dark' ? 'light' : 'dark');
   }
 
   toggleLanguage() {
-    const newLang = this.session.getStoredLanguage() === 'en' ? 'ba' : 'en';
-    this.session.setStoredLanguage(newLang);
+    this.session.setLanguage(this.session.language() === 'en' ? 'ba' : 'en')
   }
 
   navigateToLogin(){

@@ -39,8 +39,8 @@ export class EditReviewModal implements OnInit {
   ngOnInit(): void {
     if (this.isSpotReview(this.reviewModel)) {
       this.form = this.fb.group({
-        header: [this.reviewModel.header, Validators.required],
-        body: [this.reviewModel.body, Validators.required],
+        header: [this.reviewModel.header],
+        body: [this.reviewModel.body],
         overallRating: [this.reviewModel.userOverallRating, Validators.required],
         affordability: [this.reviewModel.userAffordability, Validators.required],
         accessibility: [this.reviewModel.userAccessibility, Validators.required],
@@ -50,10 +50,11 @@ export class EditReviewModal implements OnInit {
         cleanliness: [this.reviewModel.userCleanliness, Validators.required],
       });
     } else if (this.isOrganiserReview(this.reviewModel)) {
+      console.log(this.reviewModel)
       this.form = this.fb.group({
-        header: [this.reviewModel.header, Validators.required],
-        body: [this.reviewModel.body, Validators.required],
-        // overallRating: [this.reviewModel.userOverallRating, Validators.required], FIX LATER, ADD ORGANISER COMBINED REVIEW
+        header: [this.reviewModel.header],
+        body: [this.reviewModel.body],
+        overallRating: [this.reviewModel.userOverallRating, Validators.required],
         atmosphere: [this.reviewModel.userOrganiserAtmosphere, Validators.required],
         quality: [this.reviewModel.userOrganiserQuality, Validators.required],
         enjoyability: [this.reviewModel.userOrganiserEnjoyability, Validators.required],
@@ -94,11 +95,15 @@ export class EditReviewModal implements OnInit {
   }
 
   get reviewType(){
-    return this.isSpotReview(this.reviewModel)
+    if (this.isSpotReview(this.reviewModel)){
+      return true
+    } else {
+      return false
+    }
   }
 
   private isSpotReview(model: any): model is SpotReviewModel {
-    return model && 'userOverallRating' in model;
+    return model && 'userAffordability' in model;
   }
 
   private isOrganiserReview(model: any): model is EventOrganiserReviewModel {

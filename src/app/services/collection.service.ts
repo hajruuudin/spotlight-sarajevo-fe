@@ -59,16 +59,28 @@ export class CollectionService {
     });
   }
 
+  findAllSpotsCollection(){
+    return this.http.get<CollectionItemsModel>(this.apiUrl + `/collection/all-spots`, {
+      withCredentials: true
+    })
+  }
+
+  findAllEventsCollection(){
+    return this.http.get<CollectionItemsModel>(this.apiUrl + `/collection/all-events`, {
+      withCredentials: true
+    })
+  }
+
   addItemToCollection(itemAdd: CollectionAddItemModel) {
     return this.http.post<CollectionItemsModel>(this.apiUrl + `/collection/add-item`, itemAdd, {
       withCredentials: true,
     });
   }
 
-  removeItemFromCollection(collectionId: number, itemId: number, collectionType: string) {
+  removeItemFromCollection(collectionId: number, itemId: number, collectionType: string, isSystem: boolean) {
     return this.http.delete<CollectionItemsModel>(
       this.apiUrl +
-        `/collection/remove-item?collectionId=${collectionId}&itemId=${itemId}&collectionType=${collectionType}`,
+        `/collection/remove-item?collectionId=${collectionId}&itemId=${itemId}&collectionType=${collectionType}&isSystem=${isSystem}`,
       {
         withCredentials: true,
       }
@@ -107,8 +119,15 @@ export class CollectionService {
         collectionIds: idsParam,
         objectId: objectId,
         objectType: objectType,
+        isSystem: false
       },
       withCredentials: true,
     });
+  }
+
+  checkIfPresentInCollection(objectId: number, objectType: string){
+    return this.http.get<boolean>(this.apiUrl + `/collection/exists?objectId=${objectId}&objectType=${objectType}`, {
+      withCredentials: true
+    })
   }
 }

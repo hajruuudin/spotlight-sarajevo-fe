@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { SpotShorthandModel } from '../../shared/models/spot.model';
-import { TranslocoPipe } from '@ngneat/transloco';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, NgClass } from '@angular/common';
+import { ZeroReview } from '../../shared/pipes/zero-review-pipe';
 
 @Component({
   selector: 'app-search-spot-card',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, ZeroReview, NgClass],
   templateUrl: './search-spot-card.html',
   styleUrl: './search-spot-card.css',
   host: {

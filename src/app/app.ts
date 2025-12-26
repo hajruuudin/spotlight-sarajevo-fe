@@ -1,26 +1,43 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { environment } from '../environments/environment';
-import { RouterOutlet } from '@angular/router';
-import { SpinnerComponent } from "./components/spinner-component/spinner-component";
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
+import { SpinnerComponent } from './components/spinner-component/spinner-component';
 import { SpinnerService } from './core/services/spinner.service';
 import { SessionService } from './core/services/session.service';
+import { filter } from 'rxjs';
+import { SpinnerNavigate } from "./components/spinner-navigate/spinner-navigate";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SpinnerComponent],
+  imports: [RouterOutlet, SpinnerNavigate],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('spotlight-sarajevo-fe');
   protected loading = false;
-  protected apiUrl = environment.API_URL
+  protected apiUrl = environment.API_URL;
 
-  constructor(private spinner: SpinnerService) {
-  }
-
-
-  get isLoading() {
-    return this.spinner.loadingGlobal();
+  constructor(
+    protected spinner: SpinnerService,
+    protected session: SessionService,
+    protected router: Router
+  ) {
+    console.log("Check sesion is running in the constructor")
+    this.session.checkSession();
+    this.router.events.pipe(
+      filter(event => 
+        event instanceof NavigationStart || 
+        event instanceof NavigationEnd || 
+        event instanceof NavigationCancel || 
+        event instanceof NavigationError
+      )
+    ).subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.spinner.showNavigateSpinner()
+      } else {
+        this.spinner.hideNavigateSpinner()
+      }
+    })
   }
 }

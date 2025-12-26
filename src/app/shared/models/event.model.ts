@@ -59,7 +59,11 @@ export class EventOrganiserModel{
         public organiserPhone: string,
         public organiserEmail: string,
         public organiserWebsite: string,
-        public thumbnailImage: string
+        public thumbnailImage: string,
+        public overallAtmosphere: number,
+        public overallQuality: number,
+        public overallEnjoyability: number,
+        public overallRating: number
     ){}
 }
 
@@ -73,6 +77,7 @@ export class EventOrganiserReviewModel{
         public modified: string,
         public header: string,
         public body: string,
+        public userOverallRating: number,
         public userOrganiserQuality: number,
         public userOrganiserAtmosphere: number,
         public userOrganiserEnjoyability: number,
@@ -84,6 +89,7 @@ export class EventOrganiserReviewCreateModel{
         public organiserId: number,
         public header: string,
         public body: string,
+        public userOverallRating: number,
         public userOrganiserQuality: number,
         public userOrganiserAtmosphere: number,
         public userOrganiserEnjoyability: number,
@@ -97,6 +103,7 @@ export class EventOrganiserReviewUpdateModel{
         public userId: number,
         public header: string,
         public body: string,
+        public userOverallRating: number,
         public userOrganiserQuality: number,
         public userOrganiserAtmosphere: number,
         public userOrganiserEnjoyability: number,

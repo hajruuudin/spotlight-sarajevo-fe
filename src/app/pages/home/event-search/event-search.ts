@@ -83,7 +83,7 @@ export class EventSearch {
   protected isSectionLoading = computed(() => this.spinner.loadingSection());
 
   getCurrentLanguage(): string {
-    return this.session.getStoredLanguage();
+    return this.session.language();
   }
 
   ngOnInit(): void {
@@ -218,8 +218,6 @@ export class EventSearch {
   }
 
   navigateToEventOverview(eventSlug: string){
-    this.spinner.showNavigateSpinner()
     this.router.navigate(['/events/' + eventSlug])
-    this.spinner.hideNavigateSpinner()
   }
 }

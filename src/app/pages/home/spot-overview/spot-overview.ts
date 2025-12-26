@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, computed, ElementRef, HostListener, NgZone, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  computed,
+  ElementRef,
+  HostListener,
+  NgZone,
+  OnInit,
+} from '@angular/core';
 import { SpotService } from '../../../services/spot.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpinnerService } from '../../../core/services/spinner.service';
@@ -31,11 +39,13 @@ import { error } from 'console';
 import { ReviewService } from '../../../services/review.service';
 import { DecimalPipe } from '@angular/common';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { BnwRatingIcon } from "../../../resources/icons/bnw-rating-icon/bnw-rating-icon";
-import { BnwLocationIcon } from "../../../resources/icons/bnw-location-icon/bnw-location-icon";
-import { BnwCategoryIcon } from "../../../resources/icons/bnw-category-icon/bnw-category-icon";
+import { BnwRatingIcon } from '../../../resources/icons/bnw-rating-icon/bnw-rating-icon';
+import { BnwLocationIcon } from '../../../resources/icons/bnw-location-icon/bnw-location-icon';
+import { BnwCategoryIcon } from '../../../resources/icons/bnw-category-icon/bnw-category-icon';
 import { AddToCollectionModal } from '../../../components/modals/add-to-collection-modal/add-to-collection-modal';
-import { ButtonRegular } from "../../../components/button-regular/button-regular";
+import { ButtonRegular } from '../../../components/button-regular/button-regular';
+import { CollectionService } from '../../../services/collection.service';
+import { CollectionAddItemModel } from '../../../shared/models/collection.model';
 
 @Component({
   selector: 'app-spot-overview',
@@ -53,8 +63,8 @@ import { ButtonRegular } from "../../../components/button-regular/button-regular
     BnwRatingIcon,
     BnwLocationIcon,
     BnwCategoryIcon,
-    ButtonRegular
-],
+    ButtonRegular,
+  ],
   templateUrl: './spot-overview.html',
   styleUrl: './spot-overview.css',
   host: {
@@ -63,6 +73,7 @@ import { ButtonRegular } from "../../../components/button-regular/button-regular
 })
 export class SpotOverview implements OnInit {
   protected spotOverview!: SpotOverviewModel;
+  protected isSaved: boolean = false;
   protected images: string[] = [];
 
   protected headerContainer!: HTMLElement;
@@ -81,6 +92,7 @@ export class SpotOverview implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private spotService: SpotService,
+    private collectionService: CollectionService,
     private reviewService: ReviewService,
     private el: ElementRef,
     private toastr: HotToastService,
@@ -88,7 +100,7 @@ export class SpotOverview implements OnInit {
     private spinner: SpinnerService,
     protected session: SessionService,
     private cdr: ChangeDetectorRef,
-    private ngZone: NgZone,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -100,7 +112,8 @@ export class SpotOverview implements OnInit {
         this.formatSpotWorkHours(this.spotOverview.workHours);
         this.initialiseRadarChart(this.session.language()!, this.session.theme()!);
         this.loadUserSpotReview(this.spotOverview.id);
-        this.loadOtherSpotReviews(this.spotOverview.id)
+        this.loadOtherSpotReviews(this.spotOverview.id);
+        this.checkIfPresentInSystemCollection()
 
         this.images.push(this.spotOverview.thumbnailImage);
         this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');
@@ -151,31 +164,34 @@ export class SpotOverview implements OnInit {
   }
 
   loadUserSpotReview(spotId: number) {
-    if(this.session.getUser() == null){
-      return
+    if (this.session.getUser() == null) {
+      return;
     } else {
       this.reviewService.findUserSpotReview(spotId).subscribe({
-      next: (response: SpotReviewModel) => {
-        this.userReview = response;
-      },
-      error: (response: HttpErrorResponse) => {
-        // do something
-      },
-    });
+        next: (response: SpotReviewModel) => {
+          this.userReview = response;
+        },
+        error: (response: HttpErrorResponse) => {
+          // do something
+        },
+      });
     }
-    
   }
 
   loadOtherSpotReviews(spotId: number) {
-    this.reviewService.findAllSpotReviews(this.reviewPageNumber, this.reviewPageSize, spotId, 'ALPHABETICAL').subscribe({
-      next: (response : PageResponseModel<SpotReviewModel>) => {
-        const filteredResult = response.content.filter(review => review.userId != this.session.getUserId())
-        this.spotReviews = filteredResult
-      },
-      error: (error : HttpErrorResponse) => {
-        // do something
-      }
-    })
+    this.reviewService
+      .findAllSpotReviews(this.reviewPageNumber, this.reviewPageSize, spotId, 'ALPHABETICAL')
+      .subscribe({
+        next: (response: PageResponseModel<SpotReviewModel>) => {
+          const filteredResult = response.content.filter(
+            (review) => review.userId != this.session.getUserId()
+          );
+          this.spotReviews = filteredResult;
+        },
+        error: (error: HttpErrorResponse) => {
+          // do something
+        },
+      });
   }
 
   async openAddModal() {
@@ -194,11 +210,11 @@ export class SpotOverview implements OnInit {
     }
   }
 
-  async openEditModal(){
-    const result = await this.modal.openAsync<{type: string; data?: any}>(EditReviewModal, {
+  async openEditModal() {
+    const result = await this.modal.openAsync<{ type: string; data?: any }>(EditReviewModal, {
       spotId: this.spotOverview.id,
-      reviewModel: this.userReview
-    })
+      reviewModel: this.userReview,
+    });
 
     if (result?.type === 'cancel') return;
     if (result?.type === 'invalid') {
@@ -207,12 +223,14 @@ export class SpotOverview implements OnInit {
     }
 
     if (result.type === 'add') {
+      this.handleAddEditReview(result.data, false);
+    } else if (result.type === 'edit'){
       this.handleAddEditReview(result.data, true);
     }
   }
 
   private handleAddEditReview(formData: any, isEdit: boolean) {
-    if(!isEdit){
+    if (!isEdit) {
       const reviewAdd = new SpotReviewCreateModel(
         formData.spotId,
         formData.header,
@@ -226,15 +244,15 @@ export class SpotOverview implements OnInit {
         formData.localeQuality
       );
 
-      this.spinner.showNavigateSpinner()
+      this.spinner.showNavigateSpinner();
       this.reviewService.addSpotReview(reviewAdd).subscribe({
         next: (review: SpotReviewModel) => {
-          this.spinner.hideNavigateSpinner()
+          this.spinner.hideNavigateSpinner();
           this.toastr.success('Review Added!');
           this.ngZone.run(() => {
             this.userReview = review;
           });
-          this.cdr.markForCheck()
+          this.cdr.markForCheck();
         },
         error: () => {
           this.toastr.error('There was an error :(');
@@ -254,24 +272,23 @@ export class SpotOverview implements OnInit {
         formData.affordability,
         formData.cleanliness,
         formData.localeQuality
-      )
+      );
 
-      this.spinner.showNavigateSpinner()
+      this.spinner.showNavigateSpinner();
       this.reviewService.updateSpotReview(reviewEdit).subscribe({
         next: (review: SpotReviewModel) => {
-          this.spinner.hideNavigateSpinner()
+          this.spinner.hideNavigateSpinner();
           this.toastr.success('Review Edited!');
           this.ngZone.run(() => {
             this.userReview = review;
           });
-          this.cdr.markForCheck()
+          this.cdr.markForCheck();
         },
         error: () => {
           this.toastr.error('There was an error :(');
         },
-      })
+      });
     }
-    
   }
 
   async openDeleteReviewModal() {
@@ -279,16 +296,15 @@ export class SpotOverview implements OnInit {
 
     if (!result.confirmed) return;
 
-    this.spinner.showNavigateSpinner()
+    this.spinner.showNavigateSpinner();
     await this.reviewService.deleteSpotReview(this.spotOverview.id, this.userReview!.id).subscribe({
       next: (response: SpotReviewModel) => {
-        this.spinner.hideNavigateSpinner()
+        this.spinner.hideNavigateSpinner();
         this.toastr.success('Review deleted');
         this.ngZone.run(() => {
           this.userReview = null;
         });
-        this.cdr.markForCheck()
-        
+        this.cdr.markForCheck();
       },
       error: (response: HttpErrorResponse) => {
         this.toastr.error('Something went wrong, try again later!');
@@ -299,8 +315,8 @@ export class SpotOverview implements OnInit {
   redirectToLogin() {
     this.router.navigate(['/auth/login'], {
       queryParams: {
-        returnUrl: `/spots/${this.spotOverview.slug}`
-      }
+        returnUrl: `/spots/${this.spotOverview.slug}`,
+      },
     });
   }
 
@@ -336,7 +352,7 @@ export class SpotOverview implements OnInit {
           this.spotOverview.combinedAtmosphere,
           this.spotOverview.combinedLocaleQuality,
           this.spotOverview.combinedStaffKindness,
-          this.spotOverview.combinedCleanliness
+          this.spotOverview.combinedCleanliness,
         ],
         backgroundColor: ['#056766', '#07777B', '#088891', '#0AA1A0', '#1BB7B5', '#33CDCB'],
         borderColor: '#e7fcfe',
@@ -354,11 +370,12 @@ export class SpotOverview implements OnInit {
         x: {
           min: 0,
           max: 10,
-          grid: { 
-            display: false,},
+          grid: {
+            display: false,
+          },
           ticks: {
             color: textColor,
-            font: { size: 12, family: "Kumbh Sans" },
+            font: { size: 12, family: 'Kumbh Sans' },
             stepSize: 2,
           },
         },
@@ -383,20 +400,61 @@ export class SpotOverview implements OnInit {
     };
   }
 
-  async openAddCollectionModal(){
-      const result = await this.modal.openAsync<{type: string, data: any, confirmed: boolean }>(AddToCollectionModal, {
+  async openAddCollectionModal() {
+    const result = await this.modal.openAsync<{ type: string; data: any; confirmed: boolean }>(
+      AddToCollectionModal,
+      {
         objectId: this.spotOverview.id,
-        objectType: 'SPOT'
-      });
-  
-      if (result.type == 'exit') return;
-  
-      if (result.type == 'success-remove'){
-        this.toastr.success('Items removed!')
-      } else if (result.type == 'success-add'){
-        this.toastr.success('Items added!')
-      } else if (result.type == 'success-both'){
-        this.toastr.success('Changes made!')
+        objectType: 'SPOT',
       }
+    );
+
+    if (result.type == 'exit') return;
+
+    if (result.type == 'success-remove') {
+      this.toastr.success('Items removed!');
+    } else if (result.type == 'success-add') {
+      this.toastr.success('Items added!');
+    } else if (result.type == 'success-both') {
+      this.toastr.success('Changes made!');
     }
+  }
+
+  checkIfPresentInSystemCollection() {
+    this.collectionService.checkIfPresentInCollection(this.spotOverview.id, 'SPOT').subscribe({
+      next: (present) => (this.isSaved = present),
+      error: (err) => console.error('Error checking saved status', err),
+    });
+  }
+
+  saveToAllSpots() {
+    const request: CollectionAddItemModel = {
+      objectId: this.spotOverview.id,
+      objectType: 'SPOT',
+      collectionId: 0,
+      isSystem: true,
+    };
+
+    this.collectionService.addItemToCollection(request).subscribe({
+      next: () => {
+        this.isSaved = true;
+        this.toastr.success('Item saved!');
+        this.cdr.detectChanges()
+      },
+      error: (err) => console.error('Error saving to system collection', err),
+    });
+  }
+
+  removeFromAllSpots() {
+    this.collectionService
+      .removeItemFromCollection(0, this.spotOverview.id, 'SPOT', true)
+      .subscribe({
+        next: () => {
+          this.isSaved = false;
+          this.toastr.success('Item unsaved!');
+          this.cdr.detectChanges()
+        },
+        error: (err) => console.error('Error removing from system collection', err),
+      });
+  }
 }

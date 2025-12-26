@@ -1,9 +1,13 @@
-import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { Component, computed, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SessionService } from '../../core/services/session.service';
+import { AsyncPipe } from '@angular/common';
+import { SpinnerComponent } from "../../components/spinner-component/spinner-component";
+import { SpinnerService } from '../../core/services/spinner.service';
+import { SpinnerNavigate } from "../../components/spinner-navigate/spinner-navigate";
 
 /**
- * Authentication User Interface: Container for authentication related 
+ * Authentication User Interface: Container for authentication related
  * pages. This intercace encapsulates:
  * - The login process
  * - The signup process
@@ -23,6 +27,7 @@ export class Auth implements OnInit {
 
   constructor(
     public session: SessionService,
+    public spinner: SpinnerService,
     private el: ElementRef,
     private renderer: Renderer2
   ) {}
@@ -30,7 +35,7 @@ export class Auth implements OnInit {
   ngOnInit(): void {
     this.backgroundImage = this.el.nativeElement.querySelector('#backgroundImage');
 
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem('app_theme');
     const html = document.documentElement;
 
     if (savedTheme) {
@@ -39,7 +44,7 @@ export class Auth implements OnInit {
       html.setAttribute('data-theme', 'dark');
     }
 
-    const savedLang = localStorage.getItem('lang');
+    const savedLang = localStorage.getItem('app_language');
     if (savedLang) {
       this.language = savedLang as 'en' | 'ba';
     }
@@ -61,16 +66,11 @@ export class Auth implements OnInit {
   }
 
   toggleTheme(): void {
-    const html = document.documentElement;
-    const currentTheme = html.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-    html.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
+    this.session.setTheme(this.session.theme() === 'dark' ? 'light' : 'dark');
   }
 
   toggleLanguage() {
-    const newLang = this.session.getStoredLanguage() === 'en' ? 'ba' : 'en';
-    this.session.setStoredLanguage(newLang);
+    const newLang = this.session.language() === 'en' ? 'ba' : 'en';
+    this.session.setLanguage(newLang);
   }
 }

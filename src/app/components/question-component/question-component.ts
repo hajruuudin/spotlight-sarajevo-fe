@@ -31,10 +31,10 @@ export class QuestionComponent {
   }
 
   yesButtonStyle() {
-    return this.isSelectedA ? 'bg-(--primary-500)' : 'bg-(--secondary-300)';
+    return this.isSelectedA ? 'dark:bg-(--primary-400) bg-(--primary-400)' : 'dark:bg-(--secondary-300) bg-(--secondary-800)';
   }
 
   noButtonStyle() {
-    return this.isSelectedB ? 'bg-(--primary-500)' : 'bg-(--secondary-300)';
+    return this.isSelectedB ? 'dark:bg-red-700 bg-red-300' : 'dark:bg-(--secondary-300) bg-(--secondary-800)';
   }
 }

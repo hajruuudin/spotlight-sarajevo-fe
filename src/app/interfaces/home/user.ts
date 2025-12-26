@@ -18,11 +18,11 @@ import { ModalHost } from "../../components/modals/modal-host/modal-host";
  */
 @Component({
   selector: 'app-user',
-  imports: [NavbarUser, RouterOutlet, Footer, SpinnerNavigate, ModalHost],
+  imports: [NavbarUser, RouterOutlet, Footer, ModalHost],
   templateUrl: './user.html',
   styleUrl: './user.css',
   host: {
-    class: "w-full flex flex-col justify-start items-stretch"
+    class: "w-full min-h-screen flex flex-col justify-start items-stretch"
   }
 })
 export class User {

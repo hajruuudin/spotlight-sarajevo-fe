@@ -1,13 +1,11 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, isDevMode, importProvidersFrom, APP_INITIALIZER, provideAppInitializer, inject } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
-import { HttpHandler, HttpHandlerFn, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpHandlerFn, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@ngneat/transloco';
-import { SessionService } from './core/services/session.service';
-import { AuthInterceptor } from './core/interceptors/auth-interceptor.interceptor';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
@@ -19,7 +17,11 @@ export const appConfig: ApplicationConfig = {
     ])),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes), 
+    provideRouter(routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'top',
+      })
+    ), 
     provideHotToastConfig({
       duration: 4000,
       position: 'top-right',

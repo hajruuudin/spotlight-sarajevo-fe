@@ -21,9 +21,7 @@ export class Profile implements OnInit{
     private router: Router
   ){}
   
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   logout(){
     this.authService.logout().subscribe({

@@ -9,11 +9,18 @@
 
   <div class="w-full h-0.5 rounded-full dark:bg-white bg-black mt-2"></div>
 
-  <content class="w-full h-56 overflow-y-scroll py-4">
+  @if (this.userCollections.length == 0) {
+    <content class="w-full h-auto flex flex-col justify-center items-center">
+      <app-not-found-component [headerMessage]="'collection.noCollectionsHeader' | transloco" [messageDescription]="'collection.noCollectionsDesc' | transloco"></app-not-found-component>
+    </content>
+  } @else {
+    <content class="w-full h-56 overflow-y-scroll py-4">
     <form [formGroup]="this.form" class="w-full flex flex-row justify-start items-stretch gap-4">
       <app-checkbox-group [options]="this.userCollections" formControlName="selectedCollections"></app-checkbox-group>
     </form>
   </content>
+  }
+  
 
   <footer class="w-full h-auto flex flex-row justify-center items-center gap-4">
     <app-button-primary

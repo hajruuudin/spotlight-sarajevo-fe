@@ -17,7 +17,7 @@ import { SessionService } from '../../../core/services/session.service';
   templateUrl: './login.html',
   styleUrl: './login.css',
   host: {
-    class: "dark:bg-(--primary-200) bg-(--primary-700) md:rounded-2xl w-full md:w-3/5 xl:w-2/5 max-w-5xl h-full md:h-auto hover:outline-4 dark:hover:outline-(--primary-600) hover:outline-(--primary-600) transition-all flex flex-col jusitfy-center items-center space-y-2 px-12 py-4 shadow-xl"
+    class: "dark:bg-(--primary-200) bg-(--primary-700) md:rounded-2xl w-full md:w-3/5 xl:w-2/5 max-w-5xl h-full md:h-auto hover:outline-4 dark:hover:outline-(--primary-600) hover:outline-(--primary-200) transition-all flex flex-col jusitfy-center items-center space-y-2 px-12 py-4 shadow-xl"
   }
 })
 export class Login implements OnInit {
@@ -42,7 +42,7 @@ export class Login implements OnInit {
   }
 
   loginWithGoogle(): void {
-    this.spinner.showGlobalSpinner()
+    this.spinner.showNavigateSpinner()
     window.google.accounts.id.prompt();
   }
 
@@ -58,12 +58,12 @@ export class Login implements OnInit {
       this.spinner.showGlobalSpinner()
       this.authService.loginWithSystem(loginObject).subscribe({
         next: (response: LoggedUserModel) => {
-          this.spinner.hideGlobalSpinner()
+          this.spinner.hideNavigateSpinner()
           this.session.setUser(response)
           this.router.navigate(['/homepage'])
         },
         error: (error: HttpErrorResponse) => {
-          this.spinner.hideGlobalSpinner()
+          this.spinner.hideNavigateSpinner()
           this.toast.error(error.error.message)
         }
       })
@@ -78,15 +78,14 @@ export class Login implements OnInit {
         if (idToken) {
           this.authService.loginWithGoogle(idToken).subscribe({
             next: (response: LoggedUserModel) => {
-              this.spinner.hideGlobalSpinner()
+              this.spinner.hideNavigateSpinner()
               this.session.setUser(response)
-
               const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
               this.router.navigateByUrl(returnUrl);
               
             },
             error: (error: HttpErrorResponse) => {
-              this.spinner.hideGlobalSpinner()
+              this.spinner.hideNavigateSpinner()
               this.toast.error(error.error.message)
             }
           });
