@@ -263,5 +263,14 @@
     "deleteConfirmMessage": "Da, obriši kolekciju",
     "noCollectionsHeader": "Nema kolekcija",
     "noCollectionsDesc": "Kreirajte kolekcije na svom profilu i dodajte stavke u njih!"
+  },
+  "guides": {
+    "headerTitle": "Vodići za Turiste",
+    "headerSubtitle": "Pronađi najbolje vodiće kako bi istražio/la Sarajevo kao lokalac!",
+    "recentSpan": "NEDAVNO",
+    "recentTitle": "Nedavno dodani vodići za turiste",
+    "allSpan": "SVE",
+    "allTitle": "Pregled svih vodića za turiste",
+    "viewAllButton": "Vidi sve"
   }
 }

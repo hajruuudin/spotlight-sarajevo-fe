@@ -33,6 +33,7 @@ import { AuthBenefits } from './pages/home/auth-benefits/auth-benefits';
 import { authGuard } from './core/guards/auth.guard';
 import {discoverResolver} from './core/resolvers/discover.resolver';
 import { homepageResolver } from './core/resolvers/homepage.resolver';
+import { touristGuideResolver } from './core/resolvers/tourist.guide.resolver';
 
 export const routes: Routes = [
   {
@@ -68,7 +69,7 @@ export const routes: Routes = [
 
       { path: 'discover', resolve: { discoverData: discoverResolver }, component: Discover, title: 'Discover - SpotlightSarajevo' },
       { path: 'profile', component: Profile, title: 'Profile - SpotlightSarajevo' },
-      { path: 'guide', component: TouristGuide, title: 'Browse Guides - SpotlightSarajevo' },
+      { path: 'guide', resolve: { touristGuides: touristGuideResolver }, component: TouristGuide, title: 'Browse Guides - SpotlightSarajevo' },
       {
         path: 'guide/slug',
         component: TouristGuideOverview,
