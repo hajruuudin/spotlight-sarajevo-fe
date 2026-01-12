@@ -3,10 +3,10 @@
   id="guideHeaderSectionContainer"
   [style.backgroundImage]="
     this.session.theme() == 'dark'
-      ? 'url(/assets/images/GUIDES_BG_D.jpg)'
-      : 'url(/assets/images/GUIDES_BG_L.jpg)'
+      ? 'url(/assets/images/TOURIST_GUIDE_BG_D.jpg)'
+      : 'url(/assets/images/TOURIST_GUIDE_BG_L.jpg)'
   "
-  style="background-size: cover; background-position: bottom;"
+  style="background-size: cover; background-position: center"
   class="w-full h-auto pt-3 pb-6 flex flex-col justify-start items-center space-y-4"
 >
   <div
@@ -25,6 +25,7 @@
     >
       @for (guide of mainGuides; track guide.id) {
       <app-tourist-guide-card
+        (click)="navigateToGuide(guide.id)"
         [lang]="this.session.language()!"
         [guide]="guide"
       ></app-tourist-guide-card>
@@ -54,6 +55,7 @@
     >
       @for (guide of this.touristRelatedGuides; track guide.id) {
       <app-tourist-guide-card
+        (click)="navigateToGuide(guide.id)"
         [lang]="this.session.language()!"
         [guide]="guide"
       ></app-tourist-guide-card>
@@ -66,23 +68,25 @@
       }}</span>
       <h2 class="text-xl md:text-3xl">{{ 'guides.allTitle' | transloco }}</h2>
     </div>
-    <div
-      class="w-full max-w-application h-auto grid grid-cols-1 md:grid-cols-2 py-4 gap-4"
-    >
+    <div class="w-full max-w-application h-auto grid grid-cols-1 md:grid-cols-2 py-4 gap-4">
       @for (guide of this.allGuides; track guide.id) {
       <app-tourist-guide-card
+        (click)="navigateToGuide(guide.id)"
         [lang]="this.session.language()!"
         [guide]="guide"
       ></app-tourist-guide-card>
       <app-tourist-guide-card
+        (click)="navigateToGuide(guide.id)"
         [lang]="this.session.language()!"
         [guide]="guide"
       ></app-tourist-guide-card>
       <app-tourist-guide-card
+        (click)="navigateToGuide(guide.id)"
         [lang]="this.session.language()!"
         [guide]="guide"
       ></app-tourist-guide-card>
       <app-tourist-guide-card
+        (click)="navigateToGuide(guide.id)"
         [lang]="this.session.language()!"
         [guide]="guide"
       ></app-tourist-guide-card>

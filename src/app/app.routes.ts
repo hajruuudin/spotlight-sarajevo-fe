@@ -71,7 +71,7 @@ export const routes: Routes = [
       { path: 'profile', component: Profile, title: 'Profile - SpotlightSarajevo' },
       { path: 'guide', resolve: { touristGuides: touristGuideResolver }, component: TouristGuide, title: 'Browse Guides - SpotlightSarajevo' },
       {
-        path: 'guide/slug',
+        path: 'guide/:id',
         component: TouristGuideOverview,
         title: 'Guide Overview - SpotlightSarajevo',
       },
