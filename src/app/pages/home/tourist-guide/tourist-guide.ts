@@ -41,7 +41,7 @@ export class TouristGuide implements OnInit {
     console.log('Tourist Guide Resolved Data:', resolvedData);
   }
 
-  navigateToGuide(slug: number): void {
+  navigateToGuide(slug: string): void {
     this.router.navigate([`/guide/${slug}`]);
   }
 }

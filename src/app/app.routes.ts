@@ -34,6 +34,7 @@ import { authGuard } from './core/guards/auth.guard';
 import {discoverResolver} from './core/resolvers/discover.resolver';
 import { homepageResolver } from './core/resolvers/homepage.resolver';
 import { touristGuideResolver } from './core/resolvers/tourist.guide.resolver';
+import { touristGuideOverviewResolver } from './core/resolvers/tourist.guide.overview.resolver';
 
 export const routes: Routes = [
   {
@@ -71,7 +72,8 @@ export const routes: Routes = [
       { path: 'profile', component: Profile, title: 'Profile - SpotlightSarajevo' },
       { path: 'guide', resolve: { touristGuides: touristGuideResolver }, component: TouristGuide, title: 'Browse Guides - SpotlightSarajevo' },
       {
-        path: 'guide/:id',
+        path: 'guide/:slug',
+        resolve: { guideOverviewData: touristGuideOverviewResolver },
         component: TouristGuideOverview,
         title: 'Guide Overview - SpotlightSarajevo',
       },

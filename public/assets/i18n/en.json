@@ -274,5 +274,8 @@
     "allSpan": "ALL GUIDES",
     "allTitle": "Browse all available tourist guides",
     "viewAllButton": "View All"
+  },
+   "guideOverview" : {
+    "aboutThisGuide" : "ABOUT THIS GUIDE"
   }
 }

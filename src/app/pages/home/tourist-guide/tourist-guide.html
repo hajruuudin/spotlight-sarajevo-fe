@@ -25,7 +25,7 @@
     >
       @for (guide of mainGuides; track guide.id) {
       <app-tourist-guide-card
-        (click)="navigateToGuide(guide.id)"
+        (click)="navigateToGuide(guide.slug)"
         [lang]="this.session.language()!"
         [guide]="guide"
       ></app-tourist-guide-card>
@@ -55,7 +55,7 @@
     >
       @for (guide of this.touristRelatedGuides; track guide.id) {
       <app-tourist-guide-card
-        (click)="navigateToGuide(guide.id)"
+        (click)="navigateToGuide(guide.slug)"
         [lang]="this.session.language()!"
         [guide]="guide"
       ></app-tourist-guide-card>
@@ -71,22 +71,22 @@
     <div class="w-full max-w-application h-auto grid grid-cols-1 md:grid-cols-2 py-4 gap-4">
       @for (guide of this.allGuides; track guide.id) {
       <app-tourist-guide-card
-        (click)="navigateToGuide(guide.id)"
+        (click)="navigateToGuide(guide.slug)"
         [lang]="this.session.language()!"
         [guide]="guide"
       ></app-tourist-guide-card>
       <app-tourist-guide-card
-        (click)="navigateToGuide(guide.id)"
+        (click)="navigateToGuide(guide.slug)"
         [lang]="this.session.language()!"
         [guide]="guide"
       ></app-tourist-guide-card>
       <app-tourist-guide-card
-        (click)="navigateToGuide(guide.id)"
+        (click)="navigateToGuide(guide.slug)"
         [lang]="this.session.language()!"
         [guide]="guide"
       ></app-tourist-guide-card>
       <app-tourist-guide-card
-        (click)="navigateToGuide(guide.id)"
+        (click)="navigateToGuide(guide.slug)"
         [lang]="this.session.language()!"
         [guide]="guide"
       ></app-tourist-guide-card>

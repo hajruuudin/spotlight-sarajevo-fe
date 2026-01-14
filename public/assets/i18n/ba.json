@@ -272,5 +272,8 @@
     "allSpan": "SVE",
     "allTitle": "Pregled svih vodića za turiste",
     "viewAllButton": "Vidi sve"
+  },
+  "guideOverview" : {
+    "aboutThisGuide" : "O OVOM VODIĆU"
   }
 }
