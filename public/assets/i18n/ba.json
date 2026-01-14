@@ -275,5 +275,24 @@
   },
   "guideOverview" : {
     "aboutThisGuide" : "O OVOM VODIĆU"
+  },
+  "transport": {
+    "headerTitle": "Javni Prevoz",
+    "headerSubtitle": "Pregled svih dostupnih metoda javnog prevoza u Sarajevu",
+    "tramcar": "Tramvaj",
+    "trolley": "Trolejbus",
+    "bus": "Autobus",
+    "taxi": "Taxi",
+    "coverage": "POKRIVENOST PREVOZA",
+    "description": "OPIS",
+    "lines": "DOSTUPNE LINIJE",
+    "lineNumber": "Linija",
+    "lineRoute": "Ruta",
+    "operator": "Operator",
+    "taxiServices": "TAXI USLUGE",
+    "taxiCompany": "Kompanija",
+    "taxiPhone": "Telefon",
+    "taxiWebsite": "Web stranica",
+    "noWebsite": "N/A"
   }
 }

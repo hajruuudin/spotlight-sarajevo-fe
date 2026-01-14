@@ -277,5 +277,24 @@
   },
    "guideOverview" : {
     "aboutThisGuide" : "ABOUT THIS GUIDE"
+  },
+  "transport": {
+    "headerTitle": "Public Transport",
+    "headerSubtitle": "An overview of all available public transport methods in Sarajevo",
+    "tramcar": "Tramcar",
+    "trolley": "Trolley",
+    "bus": "Bus",
+    "taxi": "Taxi",
+    "coverage": "TRANSPORT COVERAGE",
+    "description": "DESCRIPTION",
+    "lines": "AVAILABLE LINES",
+    "lineNumber": "Line",
+    "lineRoute": "Route",
+    "operator": "Operator",
+    "taxiServices": "TAXI SERVICES",
+    "taxiCompany": "Company",
+    "taxiPhone": "Phone",
+    "taxiWebsite": "Website",
+    "noWebsite": "N/A"
   }
 }
