@@ -263,5 +263,19 @@
     "deleteConfirmMessage": "Yes, delete collection",
     "noCollectionsHeader": "No collections",
     "noCollectionsDesc": "Create collections on Your profile and then add to them!"
+  },
+  "guides": {
+    "headerTitle": "Tourist Guides",
+    "headerSubtitle": "Explore Sarajevo through the eyes of locals and tourists alike!",
+    "mainnSpan": "TOURIST GUIDES",
+    "mainTitle": "Popular Tourist Guides",
+    "recentSpan": "RECENT",
+    "recentTitle": "Recently added tourist guides",
+    "allSpan": "ALL GUIDES",
+    "allTitle": "Browse all available tourist guides",
+    "viewAllButton": "View All"
+  },
+   "guideOverview" : {
+    "aboutThisGuide" : "ABOUT THIS GUIDE"
   }
 }
