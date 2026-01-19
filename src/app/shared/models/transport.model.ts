@@ -21,7 +21,7 @@ export class TransportMethodLineModel{
     constructor(
         public id: number,
         public operatorId: number,
-        public transportOperatorname: string,
+        public transportOperatorName: string,
         public lineStart: string,
         public lineEnd: string,
         public lineNumber: string,

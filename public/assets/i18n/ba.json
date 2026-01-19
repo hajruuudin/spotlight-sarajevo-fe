@@ -285,6 +285,7 @@
     "taxi": "Taxi",
     "coverage": "POKRIVENOST PREVOZA",
     "description": "OPIS",
+    "usefulInfo": "KORISNE INFORMACIJE",
     "lines": "DOSTUPNE LINIJE",
     "lineNumber": "Linija",
     "lineRoute": "Ruta",

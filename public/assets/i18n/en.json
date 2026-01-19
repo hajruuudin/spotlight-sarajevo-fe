@@ -287,6 +287,7 @@
     "taxi": "Taxi",
     "coverage": "TRANSPORT COVERAGE",
     "description": "DESCRIPTION",
+    "usefulInfo": "USEFUL INFORMATION",
     "lines": "AVAILABLE LINES",
     "lineNumber": "Line",
     "lineRoute": "Route",

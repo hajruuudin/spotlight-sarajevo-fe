@@ -1,14 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { PageHeader } from "../../../components/page-header/page-header";
 import { Subheading } from "../../../components/subheading/subheading";
 import { TranslocoPipe } from '@ngneat/transloco';
 import { SessionService } from '../../../core/services/session.service';
 import { PublicTransportService } from '../../../services/transport.service';
+import { TransportPageData } from '../../../core/resolvers/transport.resolver';
 import { TransportMethodModel, TransportMethodShorthandModel, TransportMethodLineModel, TaxiCompanyModel } from '../../../shared/models/transport.model';
 import { TransportType, TRANSPORT_OPERATORS } from '../../../shared/constants/TransportOperators';
 import { TAXI_COMPANIES } from '../../../shared/constants/TaxiCompanies';
 import { LeafletModule } from '@bluehalo/ngx-leaflet';
 import * as L from 'leaflet';
+
+// Helper to get marker icon path based on transport type
+function getTransportMarkerIcon(transportType: number): L.Icon {
+  let iconUrl = '';
+  switch (transportType) {
+    case TransportType.TRAMCAR:
+      iconUrl = 'assets/markers/transport/TRAM_MARKER.png';
+      break;
+    case TransportType.TROLLEY:
+      iconUrl = 'assets/markers/transport/TROLLEY_MARKER.png';
+      break;
+    case TransportType.BUS:
+      iconUrl = 'assets/markers/transport/BUS_MARKER.png';
+      break;
+    case TransportType.TAXI:
+      iconUrl = 'assets/markers/transport/TAXI_MARKER.png';
+      break;
+    default:
+      iconUrl = 'assets/markers/default-pin.svg';
+  }
+  return L.icon({
+    iconUrl,
+    iconSize: [40, 40],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+  });
+}
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -35,35 +64,27 @@ export class Transport implements OnInit {
 
   constructor(
     public session: SessionService,
-    private transportService: PublicTransportService
+    private transportService: PublicTransportService,
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.loadTransportMethods();
+    // Load resolved data from router
+    const resolvedData: TransportPageData = this.route.snapshot.data['transportData'];
+    
+    if (resolvedData) {
+      this.transportMethods = resolvedData.transportMethods;
+      this.selectedMethod = resolvedData.initialMethod;
+      this.transportLines = resolvedData.initialLines;
+    }
+    
     this.prepareMap();
-    this.selectMethod(TransportType.TRAMCAR);
-  }
-
-  loadTransportMethods(): void {
-    this.transportService.findAllTransportMethods().subscribe({
-      next: (methods) => {
-        this.transportMethods = methods;
-      },
-      error: (err) => {
-        console.error('Error loading transport methods:', err);
-      }
-    });
+    this.cdr.detectChanges();
   }
 
   selectMethod(methodId: number): void {
     this.selectedMethodId = methodId;
-    
-    if (methodId === TransportType.TAXI) {
-      this.selectedMethod = null;
-      this.transportLines = [];
-      this.clearGeoJsonLayer();
-      return;
-    }
 
     this.transportService.findMethodById(methodId).subscribe({
       next: (method) => {
@@ -90,6 +111,7 @@ export class Transport implements OnInit {
           if (completedRequests === TRANSPORT_OPERATORS.length) {
             this.transportLines = allLines;
           }
+          this.cdr.detectChanges();
         },
         error: (err) => {
           console.error('Error loading transport lines:', err);
@@ -135,22 +157,28 @@ export class Transport implements OnInit {
 
   onMapReady(map: L.Map): void {
     this.map = map;
+    // Load initial GeoJSON data from resolved data when map is ready
+    if (this.selectedMethod?.geometryGeoJson) {
+      this.updateMapWithGeoJson(this.selectedMethod.geometryGeoJson);
+    }
   }
 
   updateMapWithGeoJson(geoJsonString: string): void {
     if (!this.map) return;
-    
     this.clearGeoJsonLayer();
-
     try {
       const geoJsonData = JSON.parse(geoJsonString);
       const lineColor = this.getLineColor();
-      
+      const markerIcon = getTransportMarkerIcon(this.selectedMethodId);
+
       this.geoJsonLayer = L.geoJSON(geoJsonData, {
         style: {
           color: lineColor,
           weight: 4,
           opacity: 0.8
+        },
+        pointToLayer: (feature, latlng) => {
+          return L.marker(latlng, { icon: markerIcon });
         }
       }).addTo(this.map);
 
@@ -172,11 +200,11 @@ export class Transport implements OnInit {
   getLineColor(): string {
     switch (this.selectedMethodId) {
       case TransportType.TRAMCAR:
-        return '#ef4444';
+        return '#bb0068';
       case TransportType.TROLLEY:
-        return '#3b82f6';
+        return '#956623';
       case TransportType.BUS:
-        return '#22c55e';
+        return '#3684a6';
       default:
         return '#8b5cf6';
     }

@@ -20,8 +20,10 @@
       <button
         (click)="selectMethod(TransportType.TRAMCAR)"
         [ngClass]="{
-          'dark:bg-(--primary-200) bg-(--primary-300) dark:text-black text-white': selectedMethodId === TransportType.TRAMCAR,
-          'dark:bg-(--secondary-400) bg-(--primary-900) dark:text-white text-white': selectedMethodId !== TransportType.TRAMCAR
+          'dark:bg-(--primary-200) bg-(--primary-300) dark:text-black text-white':
+            selectedMethodId === TransportType.TRAMCAR,
+          'dark:bg-(--secondary-400) bg-(--primary-900) dark:text-white text-white':
+            selectedMethodId !== TransportType.TRAMCAR,
         }"
         class="px-6 py-3 rounded-2xl font-semibold text-base md:text-lg transition-all hover:scale-105"
       >
@@ -31,8 +33,10 @@
       <button
         (click)="selectMethod(TransportType.TROLLEY)"
         [ngClass]="{
-          'dark:bg-(--primary-200) bg-(--primary-300) dark:text-black text-white': selectedMethodId === TransportType.TROLLEY,
-          'dark:bg-(--secondary-400) bg-(--primary-900) dark:text-white text-white': selectedMethodId !== TransportType.TROLLEY
+          'dark:bg-(--primary-200) bg-(--primary-300) dark:text-black text-white':
+            selectedMethodId === TransportType.TROLLEY,
+          'dark:bg-(--secondary-400) bg-(--primary-900) dark:text-white text-white':
+            selectedMethodId !== TransportType.TROLLEY,
         }"
         class="px-6 py-3 rounded-2xl font-semibold text-base md:text-lg transition-all hover:scale-105"
       >
@@ -42,8 +46,10 @@
       <button
         (click)="selectMethod(TransportType.BUS)"
         [ngClass]="{
-          'dark:bg-(--primary-200) bg-(--primary-300) dark:text-black text-white': selectedMethodId === TransportType.BUS,
-          'dark:bg-(--secondary-400) bg-(--primary-900) dark:text-white text-white': selectedMethodId !== TransportType.BUS
+          'dark:bg-(--primary-200) bg-(--primary-300) dark:text-black text-white':
+            selectedMethodId === TransportType.BUS,
+          'dark:bg-(--secondary-400) bg-(--primary-900) dark:text-white text-white':
+            selectedMethodId !== TransportType.BUS,
         }"
         class="px-6 py-3 rounded-2xl font-semibold text-base md:text-lg transition-all hover:scale-105"
       >
@@ -53,14 +59,47 @@
       <button
         (click)="selectMethod(TransportType.TAXI)"
         [ngClass]="{
-          'dark:bg-(--primary-200) bg-(--primary-300) dark:text-black text-white': selectedMethodId === TransportType.TAXI,
-          'dark:bg-(--secondary-400) bg-(--primary-900) dark:text-white text-white': selectedMethodId !== TransportType.TAXI
+          'dark:bg-(--primary-200) bg-(--primary-300) dark:text-black text-white':
+            selectedMethodId === TransportType.TAXI,
+          'dark:bg-(--secondary-400) bg-(--primary-900) dark:text-white text-white':
+            selectedMethodId !== TransportType.TAXI,
         }"
         class="px-6 py-3 rounded-2xl font-semibold text-base md:text-lg transition-all hover:scale-105"
       >
         {{ 'transport.taxi' | transloco }}
       </button>
     </div>
+
+    <!-- Description and Useful Info Section -->
+    @if (selectedMethod) {
+      <section
+        id="transportDescriptionSection"
+        class="w-full h-auto py-8 flex flex-col xl:flex-row justify-start items-center"
+      >
+        <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+          <app-subheading [subheading]="'transport.description' | transloco"></app-subheading>
+
+          <p class="text-base md:text-lg text-center mt-4 max-w-3xl">
+            {{
+              session.language() === 'en'
+                ? selectedMethod.methodDescriptionEn
+                : selectedMethod.methodDescriptionBs
+            }}
+          </p>
+        </div>
+        <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+          <app-subheading [subheading]="'transport.usefulInfo' | transloco"></app-subheading>
+
+          <p class="text-base md:text-lg text-center mt-4 max-w-3xl">
+            {{
+              session.language() === 'en'
+                ? selectedMethod.methodDescriptionEn
+                : selectedMethod.methodDescriptionBs
+            }}
+          </p>
+        </div>
+      </section>
+    }
   </div>
 </section>
 
@@ -71,7 +110,7 @@
 >
   <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
     <app-subheading [subheading]="'transport.coverage' | transloco"></app-subheading>
-    
+
     <div class="w-full h-[500px] rounded-2xl overflow-hidden mt-4 z-10">
       <div
         leaflet
@@ -83,133 +122,119 @@
   </div>
 </section>
 
-<!-- Description Section (only for non-taxi) -->
-@if (!isTaxi() && selectedMethod) {
-<section
-  id="transportDescriptionSection"
-  [style.backgroundImage]="
-    this.session.theme() == 'dark'
-      ? 'url(/assets/images/SECTION_BG_03.png)'
-      : 'url(/assets/images/SECTION_BG_03_L.png)'
-  "
-  style="background-size: cover; background-position: center"
-  class="w-full h-auto py-8 flex flex-col justify-start items-center"
->
-  <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
-    <app-subheading [subheading]="'transport.description' | transloco"></app-subheading>
-    
-    <p class="text-base md:text-lg text-center mt-4 max-w-3xl">
-      {{ session.language() === 'en' ? selectedMethod.methodDescriptionEn : selectedMethod.methodDescriptionBs }}
-    </p>
-  </div>
-</section>
-}
-
 <!-- Lines Table Section (for tram, trolley, bus) -->
 @if (!isTaxi()) {
-<section
-  id="transportLinesSection"
-  class="w-full dark:bg-(--background-100) bg-(--background-800) h-auto py-8 flex flex-col justify-start items-center"
->
-  <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
-    <app-subheading [subheading]="'transport.lines' | transloco"></app-subheading>
-    
-    <div class="w-full overflow-x-auto mt-4 rounded-2xl overflow-hidden">
-      <table class="w-full border-collapse">
-        <thead>
-          <tr class="dark:bg-(--secondary-400) bg-(--primary-200)">
-            <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
-              {{ 'transport.lineNumber' | transloco }}
-            </th>
-            <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
-              {{ 'transport.lineRoute' | transloco }}
-            </th>
-            <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
-              {{ 'transport.operator' | transloco }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (line of transportLines; track line.id) {
-          <tr class="border-b dark:border-(--secondary-500) border-(--primary-100) hover:dark:bg-(--secondary-500)/20 hover:bg-(--primary-100)/20 transition-colors">
-            <td class="px-4 py-3 text-sm md:text-base font-medium">
-              {{ line.lineNumber }}
-            </td>
-            <td class="px-4 py-3 text-sm md:text-base">
-              {{ line.lineStart }} - {{ line.lineEnd }}
-            </td>
-            <td class="px-4 py-3 text-sm md:text-base">
-              {{ line.transportOperatorname }}
-            </td>
-          </tr>
-          }
-          @if (transportLines.length === 0) {
-          <tr>
-            <td colspan="3" class="px-4 py-8 text-center text-sm md:text-base opacity-60">
-              No lines available
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
+  <section
+    id="transportLinesSection"
+    class="w-full dark:bg-(--background-100) bg-(--background-800) h-auto py-8 flex flex-col justify-start items-center"
+  >
+    <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+      <app-subheading [subheading]="'transport.lines' | transloco"></app-subheading>
+
+      <div class="w-full overflow-x-auto mt-4 rounded-2xl overflow-hidden">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="dark:bg-(--secondary-400) bg-(--primary-200)">
+              <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
+                {{ 'transport.lineNumber' | transloco }}
+              </th>
+              <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
+                {{ 'transport.lineRoute' | transloco }}
+              </th>
+              <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
+                {{ 'transport.operator' | transloco }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (line of transportLines; track line.id) {
+              <tr
+                class="border-b dark:border-(--secondary-500) border-(--primary-100) hover:dark:bg-(--secondary-500)/20 hover:bg-(--primary-100)/20 transition-colors"
+              >
+                <td class="px-4 py-3 text-sm text-left md:text-base font-medium">
+                  {{ line.lineNumber }}
+                </td>
+                <td class="px-4 py-3 text-sm text-left md:text-base">
+                  {{ line.lineStart }} - {{ line.lineEnd }}
+                </td>
+                <td class="px-4 py-3 text-sm text-left md:text-base">
+                  {{ line.transportOperatorName }}
+                </td>
+              </tr>
+            }
+            @if (transportLines.length === 0) {
+              <tr>
+                <td colspan="3" class="px-4 py-8 text-center text-sm md:text-base opacity-60">
+                  No lines available
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 }
 
 <!-- Taxi Services Table Section -->
 @if (isTaxi()) {
-<section
-  id="taxiServicesSection"
-  [style.backgroundImage]="
-    this.session.theme() == 'dark'
-      ? 'url(/assets/images/SECTION_BG_03.png)'
-      : 'url(/assets/images/SECTION_BG_03_L.png)'
-  "
-  style="background-size: cover; background-position: center"
-  class="w-full h-auto py-8 flex flex-col justify-start items-center"
->
-  <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
-    <app-subheading [subheading]="'transport.taxiServices' | transloco"></app-subheading>
-    
-    <div class="w-full overflow-x-auto mt-4 rounded-2xl overflow-hidden">
-      <table class="w-full border-collapse">
-        <thead>
-          <tr class="dark:bg-(--secondary-400) bg-(--primary-200)">
-            <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
-              {{ 'transport.taxiCompany' | transloco }}
-            </th>
-            <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
-              {{ 'transport.taxiPhone' | transloco }}
-            </th>
-            <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
-              {{ 'transport.taxiWebsite' | transloco }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (company of taxiCompanies; track company.id) {
-          <tr class="border-b dark:border-(--secondary-500) border-(--primary-100) hover:dark:bg-(--secondary-500)/20 hover:bg-(--primary-100)/20 transition-colors">
-            <td class="px-4 py-3 text-sm md:text-base font-medium">
-              {{ company.name }}
-            </td>
-            <td class="px-4 py-3 text-sm md:text-base">
-              {{ company.phone }}
-            </td>
-            <td class="px-4 py-3 text-sm md:text-base">
-              @if (company.website) {
-                <a [href]="'https://' + company.website" target="_blank" class="dark:text-(--primary-200) text-(--primary-400) hover:underline">
-                  {{ company.website }}
-                </a>
-              } @else {
-                {{ 'transport.noWebsite' | transloco }}
-              }
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
+  <section
+    id="taxiServicesSection"
+    [style.backgroundImage]="
+      this.session.theme() == 'dark'
+        ? 'url(/assets/images/SECTION_BG_03.png)'
+        : 'url(/assets/images/SECTION_BG_03_L.png)'
+    "
+    style="background-size: cover; background-position: center"
+    class="w-full h-auto py-8 flex flex-col justify-start items-center"
+  >
+    <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+      <app-subheading [subheading]="'transport.taxiServices' | transloco"></app-subheading>
+
+      <div class="w-full overflow-x-auto mt-4 rounded-2xl overflow-hidden">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="dark:bg-(--secondary-400) bg-(--primary-200)">
+              <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
+                {{ 'transport.taxiCompany' | transloco }}
+              </th>
+              <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
+                {{ 'transport.taxiPhone' | transloco }}
+              </th>
+              <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
+                {{ 'transport.taxiWebsite' | transloco }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (company of taxiCompanies; track company.id) {
+              <tr
+                class="border-b dark:border-(--secondary-500) border-(--primary-100) hover:dark:bg-(--secondary-500)/20 hover:bg-(--primary-100)/20 transition-colors"
+              >
+                <td class="px-4 py-3 text-sm md:text-base font-medium">
+                  {{ company.name }}
+                </td>
+                <td class="px-4 py-3 text-sm md:text-base">
+                  {{ company.phone }}
+                </td>
+                <td class="px-4 py-3 text-sm md:text-base">
+                  @if (company.website) {
+                    <a
+                      [href]="'https://' + company.website"
+                      target="_blank"
+                      class="dark:text-(--primary-200) text-(--primary-400) hover:underline"
+                    >
+                      {{ company.website }}
+                    </a>
+                  } @else {
+                    {{ 'transport.noWebsite' | transloco }}
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 }

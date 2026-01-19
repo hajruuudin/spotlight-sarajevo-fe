@@ -35,6 +35,7 @@ import {discoverResolver} from './core/resolvers/discover.resolver';
 import { homepageResolver } from './core/resolvers/homepage.resolver';
 import { touristGuideResolver } from './core/resolvers/tourist.guide.resolver';
 import { touristGuideOverviewResolver } from './core/resolvers/tourist.guide.overview.resolver';
+import { transportResolver } from './core/resolvers/transport.resolver';
 
 export const routes: Routes = [
   {
@@ -77,7 +78,7 @@ export const routes: Routes = [
         component: TouristGuideOverview,
         title: 'Guide Overview - SpotlightSarajevo',
       },
-      { path: 'transport', component: Transport, title: 'Public Transport - SpotlightSarajevo' },
+      { path: 'transport', resolve: { transportData: transportResolver }, component: Transport, title: 'Public Transport - SpotlightSarajevo' },
       {
         path: 'collections',
         canMatch: [authGuard],
