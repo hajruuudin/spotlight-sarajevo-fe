@@ -61,9 +61,18 @@
     >
       <div class="scroll-container-slow flex flex-row justify-center items-center space-x-4">
         @for (spot of this.favouriteSpots; track spot.id) {
-        <app-small-spot-card [lang]="this.session.language()!" [spot]="spot" classAddons=""></app-small-spot-card>
-        } @for (spot of this.favouriteSpots; track spot.id) {
-        <app-small-spot-card [lang]="this.session.language()!" [spot]="spot" classAddons=""></app-small-spot-card>
+          <app-small-spot-card
+            [lang]="this.session.language()!"
+            [spot]="spot"
+            classAddons=""
+          ></app-small-spot-card>
+        }
+        @for (spot of this.favouriteSpots; track spot.id) {
+          <app-small-spot-card
+            [lang]="this.session.language()!"
+            [spot]="spot"
+            classAddons=""
+          ></app-small-spot-card>
         }
       </div>
     </div>
@@ -87,7 +96,6 @@
     id="homepagePopularSection"
     class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full py-6"
   >
-    <!-- SUB-SECTION TITLE -->
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto mb-2">
       <span class="text-xs sm:text-base tracking-wider">{{
         'homepage.popularSectionSpotsSpan' | transloco
@@ -97,7 +105,6 @@
       </h2>
     </div>
 
-    <!-- POPULAR SPOTS CONTAINER - FIRST TWO ROWS -->
     <div
       class="w-full h-auto flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 space-x-4 my-2 items-stretch"
     >
@@ -111,7 +118,6 @@
       ></app-search-spot-card>
     </div>
 
-    <!-- POPULAR SPOTS CONTAINER - SECOND TWO ROWS -->
     <div
       class="w-full h-auto flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 space-x-4 my-2 items-stretch"
     >
@@ -130,7 +136,6 @@
     id="homepageCalendarSection"
     class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full my-2"
   >
-    <!-- SUB-SECTION TITLE -->
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto my-2">
       <span class="text-xs sm:text-base tracking-wider">{{
         'homepage.popularSectionEventsSpan' | transloco
@@ -140,24 +145,22 @@
       </h2>
     </div>
 
-    <!-- CALENDAR PICKER SECTION -->
     <div
       class="w-full h-auto flex flex-row justify-center items-center overflow-x-scroll sm:overflow-hidden my-2"
     >
       <div class="w-1/3 hidden sm:inline h-1 rounded-full bg-white"></div>
       <div class="w-full sm:w-auto flex flex-row justify-around items-center space-x-1 mx-1">
         @for (day of this.eventCalendarDays; track $index) {
-        <app-calendar-date-icon
-          [day]="day"
-          [isSelectedDay]="day.queryDate === selectedDate"
-          (daySelected)="handleDaySelection($event)"
-        ></app-calendar-date-icon>
+          <app-calendar-date-icon
+            [day]="day"
+            [isSelectedDay]="day.queryDate === selectedDate"
+            (daySelected)="handleDaySelection($event)"
+          ></app-calendar-date-icon>
         }
       </div>
       <div class="w-1/3 hidden sm:inline h-1 rounded-full bg-white"></div>
     </div>
 
-    <!-- CALENDAR EVENT RESULTS SECTION -->
     <div
       class="w-full h-auto flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 my-2"
     >
@@ -194,7 +197,6 @@
     id="homepageDiscoverLandmarks"
     class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full pt-6 pb-0"
   >
-    <!-- SUB-SECTION TITLE -->
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto my-2">
       <span class="text-xs sm:text-base tracking-wider">{{
         'homepage.discoverSectionLandmarksSpan' | transloco
@@ -204,12 +206,14 @@
       </h2>
     </div>
 
-    <!-- DISCOVER LANDMARKS  -->
     <div
       class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4"
     >
       @for (spot of this.landmarkSpots; track spot.id) {
-      <app-historical-spot-card [lang]="this.session.language()!" [spot]="spot"></app-historical-spot-card>
+        <app-historical-spot-card
+          [lang]="this.session.language()!"
+          [spot]="spot"
+        ></app-historical-spot-card>
       }
     </div>
 
@@ -225,7 +229,6 @@
     id="homepageDiscoverCategories"
     class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full pt-0 pb-6"
   >
-    <!-- SUB-SECTION TITLE -->
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
       <span class="text-xs sm:text-base tracking-wider">{{
         'homepage.discoverSectionCategoriesSpan' | transloco
@@ -235,42 +238,42 @@
       </h2>
     </div>
 
-    <!-- SPOT CATEGORIES SECTION -->
     <div class="w-full max-w-application h-auto overflow-x-auto mb-1 mt-2">
       <div class="scroll-container-fast flex flex-row justify-start items-center space-x-2">
         @for (cat of this.spotCategories; track $index) {
-        <app-category-card
-          [lang]="this.session.language()!"
-          [spotCategoryModel]="cat"
-          [eventCategoryModel]="null"
-        ></app-category-card>
-        } @for (cat of this.spotCategories; track $index) {
-        <app-category-card
-          [lang]="this.session.language()!"
-          [spotCategoryModel]="cat"
-          [eventCategoryModel]="null"
-        ></app-category-card>
+          <app-category-card
+            [lang]="this.session.language()!"
+            [spotCategoryModel]="cat"
+            [eventCategoryModel]="null"
+          ></app-category-card>
+        }
+        @for (cat of this.spotCategories; track $index) {
+          <app-category-card
+            [lang]="this.session.language()!"
+            [spotCategoryModel]="cat"
+            [eventCategoryModel]="null"
+          ></app-category-card>
         }
       </div>
     </div>
 
-    <!-- EVENT CATEGORIES SECTION -->
     <div class="w-full max-w-application h-auto overflow-x-auto group mt-1 mb-2">
       <div
         class="scroll-container-fast flex flex-row justify-center items-center space-x-2 scroll-in"
       >
         @for (cat of this.eventCategories; track $index) {
-        <app-category-card
-          [lang]="this.session.language()!"
-          [spotCategoryModel]="null"
-          [eventCategoryModel]="cat"
-        ></app-category-card>
-        } @for (cat of this.eventCategories; track $index) {
-        <app-category-card
-          [lang]="this.session.language()!"
-          [spotCategoryModel]="null"
-          [eventCategoryModel]="cat"
-        ></app-category-card>
+          <app-category-card
+            [lang]="this.session.language()!"
+            [spotCategoryModel]="null"
+            [eventCategoryModel]="cat"
+          ></app-category-card>
+        }
+        @for (cat of this.eventCategories; track $index) {
+          <app-category-card
+            [lang]="this.session.language()!"
+            [spotCategoryModel]="null"
+            [eventCategoryModel]="cat"
+          ></app-category-card>
         }
       </div>
     </div>

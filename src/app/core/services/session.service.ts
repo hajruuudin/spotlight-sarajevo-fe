@@ -5,6 +5,14 @@ import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { catchError, map, of, tap } from 'rxjs';
 
+/**
+ * Service for managing user session, including language, theme, and user data.
+ * Utilizes Angular signals for reactive state management.
+ * Incorporates models and entities: LoggedUserModel
+ *
+ * @version 1.0.0
+ * @author hajrudin.imamovic
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -20,7 +28,7 @@ export class SessionService {
   constructor(
     private transloco: TranslocoService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
   ) {
     effect(() => {
       const lang = this.language();
@@ -55,6 +63,10 @@ export class SessionService {
 
   private getStoredLanguageFallback(): string {
     return localStorage.getItem(this.APP_LANG_KEY) || 'en';
+  }
+
+  translate(key: string) {
+    return this.transloco.selectTranslate(key, {}, this.getLanguage());
   }
 
   // ===== THEME =====
@@ -103,7 +115,7 @@ export class SessionService {
         }
       }),
       map((response) => response != null),
-      catchError(() => of(false))
+      catchError(() => of(false)),
     );
   }
 
@@ -116,7 +128,7 @@ export class SessionService {
             this.clearSession();
           }
           return of(false);
-        })
+        }),
       )
       .subscribe();
   }

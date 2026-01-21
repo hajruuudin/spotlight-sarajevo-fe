@@ -15,7 +15,6 @@ export interface TransportPageData {
 export const transportResolver: ResolveFn<TransportPageData> = (route, state) => {
   const transportService = inject(PublicTransportService);
 
-  // Build requests for lines from all operators for the default transport type (TRAMCAR)
   const lineRequests = TRANSPORT_OPERATORS.map(operator =>
     transportService.findLinesByOperatorAndTransportType(operator.id, TransportType.TRAMCAR).pipe(
       catchError(() => of([]))
@@ -32,7 +31,7 @@ export const transportResolver: ResolveFn<TransportPageData> = (route, state) =>
     lines: forkJoin(lineRequests).pipe(
       map(results => results.flat()),
       catchError(() => of([]))
-    )
+    ),
   }).pipe(
     map((response) => ({
       transportMethods: response.transportMethods,

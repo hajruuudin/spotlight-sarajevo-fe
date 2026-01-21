@@ -1,4 +1,46 @@
 {
+  "errors": {
+    "spot": {
+      "INVALID_REQUEST_CONTENT": "Proslijeđene informacije o lokalu nisu ispravne.",
+      "SPOT_NOT_FOUND": "Traženi lokal nije pronađen.",
+      "EMPTY_SPOT_REQUEST_BODY": "Molim unesite informacije o lokalu da biste nastavili.",
+      "SPOT_UNAUTHORIZED_ACCESS": "Nemate dozvolu za pristup ovom lokalu.",
+      "SPOT_UPDATE_EXCEPTION": "Došlo je do greške pri ažuriranju lokala. Molim pokušajte ponovo.",
+      "SPOT_REVIEW_NOT_FOUND": "Traženi pregled nije pronađen.",
+      "SPOT_REVIEW_CONFLICT": "Ovaj pregled već postoji ili je u konfliktu sa drugim unosom."
+    },
+    "event": {
+      "INVALID_REQUEST_CONTENT": "Proslijeđene informacije o događaju nisu ispravne.",
+      "EVENT_NOT_FOUND": "Traženi događaj nije pronađen.",
+      "EVENT_UNAUTHORIZED_ACCESS": "Nemate dozvolu za pristup ovom događaju.",
+      "EVENT_UPDATE_EXCEPTION": "Došlo je do greške pri ažuriranju događaja. Molim pokušajte ponovo.",
+      "EVENT_ORGANISER_REVIEW_NOT_FOUND": "Pregled organizatora nije pronađen."
+    },
+    "collection": {
+      "COLLECTION_FIND_UNAUTHORISED": "Nemate dozvolu za pregled ove kolekcije.",
+      "COLLECTION_REQUEST_INVALID": "Zahtjev za kolekciju nije ispravan.",
+      "COLLECTION_NOT_FOUND": "Tražena kolekcija nije pronađena.",
+      "COLLECTION_UNAUTHORISED_ACCESS": "Nemate dozvolu za izmjenu ove kolekcije.",
+      "COLLECTION_INVALID_TYPE": "Tip kolekcije nije ispravan.",
+      "COLLECTION_ITEM_NOT_FOUND": "Stavka koju tražite nije u ovoj kolekciji.",
+      "COLLECTION_SYSTEM_EXCEPTION": "Došlo je do sistemske greške sa kolekcijom. Molim pokušajte ponovo.",
+      "COLLECTION_NAME_CONFLICT": "Kolekcija sa ovim imenom već postoji."
+    },
+    "touristGuide": {
+      "TOURIST_GUIDE_BAD_REQUEST": "Proslijeđene informacije o turističkom vodiču nisu ispravne.",
+      "TOURIST_GUIDE_NOT_FOUND": "Traženi turistički vodič nije pronađen.",
+      "TOURIST_GUIDE_C_BR": "Došlo je do greške pri kreiranju turističkog vodiča. Molim pokušajte ponovo.",
+      "TOURIST_GUIDE_C_AU": "Nemate dozvolu za kreiranje ili izmjenu turističkih vodiča.",
+      "TOURIST_GUIDE_C_SLUG": "Vodič sa ovim slug-om već postoji."
+    },
+    "media": {
+      "MEDIA_C_BR": "Došlo je do greške pri obradi datoteke. Molim pokušajte ponovo."
+    },
+    "transport": {
+      "TRANSPORT_METHOD_NOT_FOUND": "Tražena metoda prijevoza nije pronađena.",
+      "TRANSPORT_INVALID_REQUEST": "Informacije o zahtjevu za prijevoz nisu ispravne."
+    }
+  },
   "navbar": {
     "homepage": "Početna",
     "browseSpots": "Traži Loakle",
@@ -295,5 +337,12 @@
     "taxiPhone": "Telefon",
     "taxiWebsite": "Web stranica",
     "noWebsite": "N/A"
+  },
+  "notFound": {
+    "pageTitle": "Stranica nije pronađena",
+    "headerMessage": "Ups! Nešto je pošlo naopako",
+    "description": "Stranica koju tražite ne postoji ili je prebačena. Nema brige, možete se vratiti na početnu stranicu.",
+    "helpText": "Ako mislite da je ovo greška, molimo vas da nam je prijavite ili pokušajte navigirati koristeći meni.",
+    "backHome": "Nazad na početnu stranicu"
   }
 }

@@ -128,6 +128,21 @@
   --accent-950: #ffece5;
 }
 
+/* Light mode (default) */
+:root {
+  --toast-bg: var(--background-900);
+  --toast-text: var(--text-100);
+  --toast-border: var(--secondary-800);
+}
+
+/* Dark mode */
+[data-theme="dark"],
+html.dark {
+  --toast-bg: var(--background-100);
+  --toast-text: var(--text-900);
+  --toast-border: var(--secondary-500);
+}
+
 @font-face {
   font-family: 'Kumbh Sans';
   src: url('/assets/fonts/KumbhSans-VariableFont_wght.ttf') format('truetype');

@@ -10,11 +10,9 @@ import { SpinnerNavigate } from "./components/spinner-navigate/spinner-navigate"
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, SpinnerNavigate],
-  templateUrl: './app.html',
-  styleUrl: './app.css',
+  templateUrl: './app.html'
 })
 export class App {
-  protected readonly title = signal('spotlight-sarajevo-fe');
   protected loading = false;
   protected apiUrl = environment.API_URL;
 
@@ -23,7 +21,6 @@ export class App {
     protected session: SessionService,
     protected router: Router
   ) {
-    console.log("Check sesion is running in the constructor")
     this.session.checkSession();
     this.router.events.pipe(
       filter(event => 

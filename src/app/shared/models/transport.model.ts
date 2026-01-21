@@ -29,10 +29,10 @@ export class TransportMethodLineModel{
     ){}
 }
 
-export class TaxiCompanyModel{
+export class TaxiOperatorModel{
     constructor(
         public id: number,
-        public name: string,
+        public company: string,
         public phone: string,
         public website?: string
     ){}

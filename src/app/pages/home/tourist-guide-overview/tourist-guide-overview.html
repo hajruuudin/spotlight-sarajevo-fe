@@ -37,7 +37,6 @@
   </div>
 </section>
 
-<!-- Guide Description Section -->
 <section
   id="guideDescriptionSectionContainer"
   [style.backgroundImage]="
@@ -52,11 +51,7 @@
     id="guideDescriptionContent"
     class="max-w-application px-2 md:px-4 w-full md:w-3/4 flex flex-col justify-start items-center space-y-4"
   >
-    <app-subheading
-      [subheading]="
-       'guideOverview.aboutThisGuide' | transloco
-      "
-    ></app-subheading>
+    <app-subheading [subheading]="'guideOverview.aboutThisGuide' | transloco"></app-subheading>
     <p class="text-base text-center">
       {{
         this.session.language() == 'en'
@@ -67,113 +62,82 @@
   </div>
 </section>
 
-<!-- Guide Sections -->
-<section
-  id="guideSectionsContainer"
-  class="w-full h-auto flex flex-col justify-start items-center"
->
+<section id="guideSectionsContainer" class="w-full h-auto flex flex-col justify-start items-center">
   @for (section of this.guideOverview.sections; track section.id; let idx = $index) {
-  <!-- Background Container -->
-  <div
-    [id]="'guideSectionContainer-' + section.id"
-    [class]="
-      idx % 2 === 0
-        ? 'w-full min-h-80 flex justify-center dark:bg-(--background-100) bg-(--primary-900)'
-        : 'w-full min-h-80 flex justify-center dark:bg-(--background-50) bg-white'
-    "
-  >
-    <!-- Content Container -->
     <div
-      class="max-w-application w-full flex flex-col md:flex-row justify-center items-stretch overflow-hidden"
+      [id]="'guideSectionContainer-' + section.id"
+      [class]="
+        idx % 2 === 0
+          ? 'w-full min-h-80 flex justify-center dark:bg-(--background-100) bg-(--primary-900)'
+          : 'w-full min-h-80 flex justify-center dark:bg-(--background-50) bg-white'
+      "
     >
-      @if (idx % 2 === 0) {
-      <!-- Even index: Image on left, Text on right -->
-      <!-- Image Container -->
       <div
-        class="relative w-full md:w-2/5 h-64 md:h-auto flex-shrink-0 order-1"
+        class="max-w-application w-full flex flex-col md:flex-row justify-center items-stretch overflow-hidden"
       >
-        <img
-          [src]="section.thumbnailImage"
-          [alt]="
-            this.session.language() == 'en'
-              ? section.sectionTitleEn
-              : section.sectionTitleBs
-          "
-          class="absolute inset-0 w-full h-full object-cover"
-        />
-        <!-- Gradient fade on the left edge (outer side) -->
-        <div
-          [class]="
-            idx % 2 === 0
-              ? 'hidden md:inline absolute inset-0 bg-gradient-to-r dark:from-(--background-100) from-(--primary-900) to-transparent w-1/3'
-              : 'hidden md:inline absolute inset-0 bg-gradient-to-r dark:from-(--background-50) from-white to-transparent w-1/3'
-          "
-        ></div>
+        @if (idx % 2 === 0) {
+          <div class="relative w-full md:w-2/5 h-64 md:h-auto flex-shrink-0 order-1">
+            <img
+              [src]="section.thumbnailImage"
+              [alt]="
+                this.session.language() == 'en' ? section.sectionTitleEn : section.sectionTitleBs
+              "
+              class="absolute inset-0 w-full h-full object-cover"
+            />
+
+            <div
+              [class]="
+                idx % 2 === 0
+                  ? 'hidden md:inline absolute inset-0 bg-gradient-to-r dark:from-(--background-100) from-(--primary-900) to-transparent w-1/3'
+                  : 'hidden md:inline absolute inset-0 bg-gradient-to-r dark:from-(--background-50) from-white to-transparent w-1/3'
+              "
+            ></div>
+          </div>
+
+          <div
+            class="w-full md:w-3/5 flex flex-col justify-center items-center py-8 px-4 md:px-8 order-2"
+          >
+            <app-subheading
+              [subheading]="
+                this.session.language() == 'en' ? section.sectionTitleEn : section.sectionTitleBs
+              "
+            ></app-subheading>
+            <p class="text-base text-center md:text-left mt-4">
+              {{ this.session.language() == 'en' ? section.sectionBodyEn : section.sectionBodyBs }}
+            </p>
+          </div>
+        } @else {
+          <div
+            class="w-full md:w-3/5 flex flex-col justify-center items-center py-8 px-4 md:px-8 order-2 md:order-1"
+          >
+            <app-subheading
+              [subheading]="
+                this.session.language() == 'en' ? section.sectionTitleEn : section.sectionTitleBs
+              "
+            ></app-subheading>
+            <p class="text-base text-center md:text-left mt-4">
+              {{ this.session.language() == 'en' ? section.sectionBodyEn : section.sectionBodyBs }}
+            </p>
+          </div>
+
+          <div class="relative w-full md:w-2/5 h-64 md:h-auto flex-shrink-0 order-1 md:order-2">
+            <img
+              [src]="section.thumbnailImage"
+              [alt]="
+                this.session.language() == 'en' ? section.sectionTitleEn : section.sectionTitleBs
+              "
+              class="absolute inset-0 w-full h-full object-cover"
+            />
+            <div
+              [class]="
+                idx % 2 === 0
+                  ? 'hidden md:inline absolute inset-0 bg-gradient-to-l dark:from-(--background-100) from-(--primary-900) to-transparent w-1/3 ml-auto'
+                  : 'hidden md:inline absolute inset-0 bg-gradient-to-l dark:from-(--background-50) from-white to-transparent w-1/3 ml-auto'
+              "
+            ></div>
+          </div>
+        }
       </div>
-      <!-- Text Container -->
-      <div
-        class="w-full md:w-3/5 flex flex-col justify-center items-center py-8 px-4 md:px-8 order-2"
-      >
-        <app-subheading
-          [subheading]="
-            this.session.language() == 'en'
-              ? section.sectionTitleEn
-              : section.sectionTitleBs
-          "
-        ></app-subheading>
-        <p class="text-base text-center md:text-left mt-4">
-          {{
-            this.session.language() == 'en'
-              ? section.sectionBodyEn
-              : section.sectionBodyBs
-          }}
-        </p>
-      </div>
-      } @else {
-      <!-- Odd index: Text on left, Image on right -->
-      <!-- Text Container -->
-      <div
-        class="w-full md:w-3/5 flex flex-col justify-center items-center py-8 px-4 md:px-8 order-2 md:order-1"
-      >
-        <app-subheading
-          [subheading]="
-            this.session.language() == 'en'
-              ? section.sectionTitleEn
-              : section.sectionTitleBs
-          "
-        ></app-subheading>
-        <p class="text-base text-center md:text-left mt-4">
-          {{
-            this.session.language() == 'en'
-              ? section.sectionBodyEn
-              : section.sectionBodyBs
-          }}
-        </p>
-      </div>
-      <!-- Image Container -->
-      <div
-        class="relative w-full md:w-2/5 h-64 md:h-auto flex-shrink-0 order-1 md:order-2"
-      >
-        <img
-          [src]="section.thumbnailImage"
-          [alt]="
-            this.session.language() == 'en'
-              ? section.sectionTitleEn
-              : section.sectionTitleBs
-          "
-          class="absolute inset-0 w-full h-full object-cover"
-        />
-        <!-- Gradient fade on the right edge (outer side) -->
-        <div
-          [class]="
-            idx % 2 === 0
-              ? 'hidden md:inline absolute inset-0 bg-gradient-to-l dark:from-(--background-100) from-(--primary-900) to-transparent w-1/3 ml-auto'
-              : 'hidden md:inline absolute inset-0 bg-gradient-to-l dark:from-(--background-50) from-white to-transparent w-1/3 ml-auto'
-          "
-        ></div>
-      </div>
-      }
     </div>
-  </div>
   }
 </section>

@@ -14,7 +14,6 @@ import { SortingSelector } from '../../../components/sorting-selector/sorting-se
 import { ButtonSecondary } from '../../../components/button-secondary/button-secondary';
 import { CategoryFilterSelector } from '../../../components/category-filter-selector/category-filter-selector';
 import { SearchEventCard } from '../../../components/search-event-card/search-event-card';
-import { Subscription } from 'rxjs';
 import { SortOptions } from '../../../shared/constants/SortOptions';
 import { EventService } from '../../../services/event.service';
 import { PageResponseModel } from '../../../shared/models/shared.model';
@@ -43,36 +42,34 @@ import { Router } from '@angular/router';
   },
 })
 export class EventSearch {
-  protected eventSearchForm: FormGroup;
-  protected eventCategories: EventCategoryModel[] = [];
-  protected sortingMethods: string[] = [
-    SortOptions.ALPHABETICAL.toString(),
-    SortOptions.DATE.toString(),
-  ];
+  eventSearchForm: FormGroup;
+  eventCategories: EventCategoryModel[] = [];
+  sortingMethods: string[] = [SortOptions.ALPHABETICAL.toString(), SortOptions.DATE.toString()];
 
-  protected selectedCategoryIds: number[] = [];
-  protected selectedSortingMethod: string = SortOptions.ALPHABETICAL.toString();
+  selectedCategoryIds: number[] = [];
+  selectedSortingMethod: string = SortOptions.ALPHABETICAL.toString();
 
-  protected isFilterPopupLoaded: boolean = false;
-  protected isSortingPopupLoaded: boolean = false;
+  isFilterPopupLoaded: boolean = false;
+  isSortingPopupLoaded: boolean = false;
 
-  protected pageNumber: number = 0;
-  protected pageSize: number = 2;
-  protected totalElements: number = 0;
-  protected totalPages: number = 0;
+  pageNumber: number = 0;
+  pageSize: number = 2;
+  totalElements: number = 0;
+  totalPages: number = 0;
 
-  protected eventSearchResults: EventShorthandModel[] = [];
+  eventSearchResults: EventShorthandModel[] = [];
+
+  isSectionLoading = computed(() => this.spinner.loadingSection());
 
   constructor(
-    private categoryService: CategoryService,
-    private eventService: EventService,
-    //====== COMMON NON-OBJECT SERVICES =====//
-    public session: SessionService,
-    private fb: FormBuilder,
-    private spinner: SpinnerService,
-    private router: Router,
-    private toastr: HotToastService,
-    private cdr: ChangeDetectorRef
+    protected categoryService: CategoryService,
+    protected eventService: EventService,
+    protected session: SessionService,
+    protected fb: FormBuilder,
+    protected spinner: SpinnerService,
+    protected router: Router,
+    protected toastr: HotToastService,
+    protected cdr: ChangeDetectorRef,
   ) {
     this.eventSearchForm = this.fb.group({
       searchTerm: ['', Validators.required],
@@ -80,7 +77,6 @@ export class EventSearch {
     });
   }
 
-  protected isSectionLoading = computed(() => this.spinner.loadingSection());
 
   getCurrentLanguage(): string {
     return this.session.language();
@@ -104,7 +100,7 @@ export class EventSearch {
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       true,
-      false
+      false,
     );
   }
 
@@ -116,7 +112,7 @@ export class EventSearch {
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       true,
-      false
+      false,
     );
   }
 
@@ -147,7 +143,7 @@ export class EventSearch {
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       true,
-      false
+      false,
     );
   }
 
@@ -160,7 +156,7 @@ export class EventSearch {
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       true,
-      false
+      false,
     );
   }
 
@@ -171,7 +167,7 @@ export class EventSearch {
     sortOption: string,
     categoryIds: number[],
     resetPages: boolean,
-    extendResultSet: boolean
+    extendResultSet: boolean,
   ) {
     if (resetPages) {
       pageNumber = 0;
@@ -213,11 +209,11 @@ export class EventSearch {
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       false,
-      true
+      true,
     );
   }
 
-  navigateToEventOverview(eventSlug: string){
-    this.router.navigate(['/events/' + eventSlug])
+  navigateToEventOverview(eventSlug: string) {
+    this.router.navigate(['/events/' + eventSlug]);
   }
 }

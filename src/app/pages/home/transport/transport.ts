@@ -1,61 +1,38 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PageHeader } from "../../../components/page-header/page-header";
-import { Subheading } from "../../../components/subheading/subheading";
+import { PageHeader } from '../../../components/page-header/page-header';
+import { Subheading } from '../../../components/subheading/subheading';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { SessionService } from '../../../core/services/session.service';
 import { PublicTransportService } from '../../../services/transport.service';
 import { TransportPageData } from '../../../core/resolvers/transport.resolver';
-import { TransportMethodModel, TransportMethodShorthandModel, TransportMethodLineModel, TaxiCompanyModel } from '../../../shared/models/transport.model';
+import {
+  TransportMethodModel,
+  TransportMethodShorthandModel,
+  TransportMethodLineModel,
+  TaxiOperatorModel,
+} from '../../../shared/models/transport.model';
 import { TransportType, TRANSPORT_OPERATORS } from '../../../shared/constants/TransportOperators';
-import { TAXI_COMPANIES } from '../../../shared/constants/TaxiCompanies';
 import { LeafletModule } from '@bluehalo/ngx-leaflet';
 import * as L from 'leaflet';
-
-// Helper to get marker icon path based on transport type
-function getTransportMarkerIcon(transportType: number): L.Icon {
-  let iconUrl = '';
-  switch (transportType) {
-    case TransportType.TRAMCAR:
-      iconUrl = 'assets/markers/transport/TRAM_MARKER.png';
-      break;
-    case TransportType.TROLLEY:
-      iconUrl = 'assets/markers/transport/TROLLEY_MARKER.png';
-      break;
-    case TransportType.BUS:
-      iconUrl = 'assets/markers/transport/BUS_MARKER.png';
-      break;
-    case TransportType.TAXI:
-      iconUrl = 'assets/markers/transport/TAXI_MARKER.png';
-      break;
-    default:
-      iconUrl = 'assets/markers/default-pin.svg';
-  }
-  return L.icon({
-    iconUrl,
-    iconSize: [40, 40],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32],
-  });
-}
-import { NgClass } from '@angular/common';
+import { ButtonPrimary } from '../../../components/button-primary/button-primary';
 
 @Component({
   selector: 'app-transport',
-  imports: [PageHeader, Subheading, TranslocoPipe, LeafletModule, NgClass],
+  imports: [PageHeader, Subheading, TranslocoPipe, LeafletModule, ButtonPrimary],
   templateUrl: './transport.html',
   styleUrl: './transport.css',
   host: {
-    class: "flex flex-col w-full justify-start items-center"
-  }
+    class: 'flex flex-col w-full justify-start items-center',
+  },
 })
 export class Transport implements OnInit {
   transportMethods: TransportMethodShorthandModel[] = [];
   selectedMethod: TransportMethodModel | null = null;
   selectedMethodId: number = TransportType.TRAMCAR;
   transportLines: TransportMethodLineModel[] = [];
-  taxiCompanies: TaxiCompanyModel[] = TAXI_COMPANIES;
-  
+  taxiCompanies: TaxiOperatorModel[] = [];
+
   map!: L.Map;
   mapOptions!: L.MapOptions;
   geoJsonLayer: L.GeoJSON | null = null;
@@ -66,19 +43,18 @@ export class Transport implements OnInit {
     public session: SessionService,
     private transportService: PublicTransportService,
     private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
-    // Load resolved data from router
     const resolvedData: TransportPageData = this.route.snapshot.data['transportData'];
-    
+
     if (resolvedData) {
       this.transportMethods = resolvedData.transportMethods;
       this.selectedMethod = resolvedData.initialMethod;
       this.transportLines = resolvedData.initialLines;
     }
-    
+
     this.prepareMap();
     this.cdr.detectChanges();
   }
@@ -93,37 +69,55 @@ export class Transport implements OnInit {
       },
       error: (err) => {
         console.error('Error loading transport method:', err);
-      }
+      },
     });
 
-    this.loadTransportLines(methodId);
+    if (methodId !== TransportType.TAXI) {
+      this.loadTransportLines(methodId);
+    } else {
+      this.loadTaxiOperators();
+    }
+  }
+
+  loadTaxiOperators(): void {
+    this.transportService.findTaxiOperators().subscribe({
+      next: (companies) => {
+        this.taxiCompanies = companies;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error loading taxi operators:', err);
+      },
+    });
   }
 
   loadTransportLines(transportTypeId: number): void {
     const allLines: TransportMethodLineModel[] = [];
     let completedRequests = 0;
 
-    TRANSPORT_OPERATORS.forEach(operator => {
-      this.transportService.findLinesByOperatorAndTransportType(operator.id, transportTypeId).subscribe({
-        next: (lines) => {
-          allLines.push(...lines);
-          completedRequests++;
-          if (completedRequests === TRANSPORT_OPERATORS.length) {
-            this.transportLines = allLines;
-          }
-          this.cdr.detectChanges();
-        },
-        error: (err) => {
-          console.error('Error loading transport lines:', err);
-          completedRequests++;
-        }
-      });
+    TRANSPORT_OPERATORS.forEach((operator) => {
+      this.transportService
+        .findLinesByOperatorAndTransportType(operator.id, transportTypeId)
+        .subscribe({
+          next: (lines) => {
+            allLines.push(...lines);
+            completedRequests++;
+            if (completedRequests === TRANSPORT_OPERATORS.length) {
+              this.transportLines = allLines;
+            }
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            console.error('Error loading transport lines:', err);
+            completedRequests++;
+          },
+        });
     });
   }
 
   prepareMap(): void {
     const sarajevoCenter: L.LatLngTuple = [43.8563, 18.4131];
-    
+
     if (this.session.theme() === 'dark') {
       this.mapOptions = {
         zoom: 12,
@@ -134,7 +128,7 @@ export class Transport implements OnInit {
             {
               attribution: '&copy; <a href="https://www.jawg.io">Jawg</a>',
               maxZoom: 22,
-            }
+            },
           ),
         ],
       };
@@ -148,7 +142,7 @@ export class Transport implements OnInit {
             {
               attribution: '&copy; <a href="https://www.jawg.io">Jawg</a>',
               maxZoom: 22,
-            }
+            },
           ),
         ],
       };
@@ -157,10 +151,35 @@ export class Transport implements OnInit {
 
   onMapReady(map: L.Map): void {
     this.map = map;
-    // Load initial GeoJSON data from resolved data when map is ready
     if (this.selectedMethod?.geometryGeoJson) {
       this.updateMapWithGeoJson(this.selectedMethod.geometryGeoJson);
     }
+  }
+
+  getTransportMarkerIcon(transportType: number): L.Icon {
+    let iconUrl = '';
+    switch (transportType) {
+      case TransportType.TRAMCAR:
+        iconUrl = 'assets/markers/transport/TRAM_MARKER.png';
+        break;
+      case TransportType.TROLLEY:
+        iconUrl = 'assets/markers/transport/TROLLEY_MARKER.png';
+        break;
+      case TransportType.BUS:
+        iconUrl = 'assets/markers/transport/BUS_MARKER.png';
+        break;
+      case TransportType.TAXI:
+        iconUrl = 'assets/markers/transport/TAXI_MARKER.png';
+        break;
+      default:
+        iconUrl = 'assets/markers/default-pin.svg';
+    }
+    return L.icon({
+      iconUrl,
+      iconSize: [40, 40],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+    });
   }
 
   updateMapWithGeoJson(geoJsonString: string): void {
@@ -169,17 +188,17 @@ export class Transport implements OnInit {
     try {
       const geoJsonData = JSON.parse(geoJsonString);
       const lineColor = this.getLineColor();
-      const markerIcon = getTransportMarkerIcon(this.selectedMethodId);
+      const markerIcon = this.getTransportMarkerIcon(this.selectedMethodId);
 
       this.geoJsonLayer = L.geoJSON(geoJsonData, {
         style: {
           color: lineColor,
           weight: 4,
-          opacity: 0.8
+          opacity: 0.8,
         },
         pointToLayer: (feature, latlng) => {
           return L.marker(latlng, { icon: markerIcon });
-        }
+        },
       }).addTo(this.map);
 
       if (this.geoJsonLayer.getBounds().isValid()) {

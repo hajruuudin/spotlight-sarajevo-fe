@@ -15,62 +15,36 @@
       [subtitle]="'transport.headerSubtitle' | transloco"
     ></app-page-header>
 
-    <!-- Transport Method Buttons -->
     <div class="w-full flex flex-row flex-wrap justify-center items-center gap-3 mt-4">
-      <button
-        (click)="selectMethod(TransportType.TRAMCAR)"
-        [ngClass]="{
-          'dark:bg-(--primary-200) bg-(--primary-300) dark:text-black text-white':
-            selectedMethodId === TransportType.TRAMCAR,
-          'dark:bg-(--secondary-400) bg-(--primary-900) dark:text-white text-white':
-            selectedMethodId !== TransportType.TRAMCAR,
-        }"
-        class="px-6 py-3 rounded-2xl font-semibold text-base md:text-lg transition-all hover:scale-105"
-      >
-        {{ 'transport.tramcar' | transloco }}
-      </button>
+      <app-button-primary
+        [buttonContent]="'transport.tramcar' | transloco"
+        [isActive]="selectedMethodId === TransportType.TRAMCAR"
+        (pressed)="selectMethod(TransportType.TRAMCAR)"
+        classAddons="px-6 py-3"
+      ></app-button-primary>
 
-      <button
-        (click)="selectMethod(TransportType.TROLLEY)"
-        [ngClass]="{
-          'dark:bg-(--primary-200) bg-(--primary-300) dark:text-black text-white':
-            selectedMethodId === TransportType.TROLLEY,
-          'dark:bg-(--secondary-400) bg-(--primary-900) dark:text-white text-white':
-            selectedMethodId !== TransportType.TROLLEY,
-        }"
-        class="px-6 py-3 rounded-2xl font-semibold text-base md:text-lg transition-all hover:scale-105"
-      >
-        {{ 'transport.trolley' | transloco }}
-      </button>
+      <app-button-primary
+        [buttonContent]="'transport.trolley' | transloco"
+        [isActive]="selectedMethodId === TransportType.TROLLEY"
+        (pressed)="selectMethod(TransportType.TROLLEY)"
+        classAddons="px-6 py-3"
+      ></app-button-primary>
 
-      <button
-        (click)="selectMethod(TransportType.BUS)"
-        [ngClass]="{
-          'dark:bg-(--primary-200) bg-(--primary-300) dark:text-black text-white':
-            selectedMethodId === TransportType.BUS,
-          'dark:bg-(--secondary-400) bg-(--primary-900) dark:text-white text-white':
-            selectedMethodId !== TransportType.BUS,
-        }"
-        class="px-6 py-3 rounded-2xl font-semibold text-base md:text-lg transition-all hover:scale-105"
-      >
-        {{ 'transport.bus' | transloco }}
-      </button>
+      <app-button-primary
+        [buttonContent]="'transport.bus' | transloco"
+        [isActive]="selectedMethodId === TransportType.BUS"
+        (pressed)="selectMethod(TransportType.BUS)"
+        classAddons="px-6 py-3"
+      ></app-button-primary>
 
-      <button
-        (click)="selectMethod(TransportType.TAXI)"
-        [ngClass]="{
-          'dark:bg-(--primary-200) bg-(--primary-300) dark:text-black text-white':
-            selectedMethodId === TransportType.TAXI,
-          'dark:bg-(--secondary-400) bg-(--primary-900) dark:text-white text-white':
-            selectedMethodId !== TransportType.TAXI,
-        }"
-        class="px-6 py-3 rounded-2xl font-semibold text-base md:text-lg transition-all hover:scale-105"
-      >
-        {{ 'transport.taxi' | transloco }}
-      </button>
+      <app-button-primary
+        [buttonContent]="'transport.taxi' | transloco"
+        [isActive]="selectedMethodId === TransportType.TAXI"
+        (pressed)="selectMethod(TransportType.TAXI)"
+        classAddons="px-6 py-3"
+      ></app-button-primary>
     </div>
 
-    <!-- Description and Useful Info Section -->
     @if (selectedMethod) {
       <section
         id="transportDescriptionSection"
@@ -87,23 +61,11 @@
             }}
           </p>
         </div>
-        <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
-          <app-subheading [subheading]="'transport.usefulInfo' | transloco"></app-subheading>
-
-          <p class="text-base md:text-lg text-center mt-4 max-w-3xl">
-            {{
-              session.language() === 'en'
-                ? selectedMethod.methodDescriptionEn
-                : selectedMethod.methodDescriptionBs
-            }}
-          </p>
-        </div>
       </section>
     }
   </div>
 </section>
 
-<!-- Map Section -->
 <section
   id="transportMapSection"
   class="w-full dark:bg-(--background-100) bg-(--background-800) h-auto py-8 flex flex-col justify-start items-center"
@@ -122,11 +84,16 @@
   </div>
 </section>
 
-<!-- Lines Table Section (for tram, trolley, bus) -->
 @if (!isTaxi()) {
   <section
     id="transportLinesSection"
-    class="w-full dark:bg-(--background-100) bg-(--background-800) h-auto py-8 flex flex-col justify-start items-center"
+    [style.backgroundImage]="
+      this.session.theme() == 'dark'
+        ? 'url(/assets/images/SECTION_BG_03.png)'
+        : 'url(/assets/images/SECTION_BG_03_L.png)'
+    "
+    style="background-size: cover; background-position: center"
+    class="w-full  h-auto py-8 flex flex-col justify-start items-center"
   >
     <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
       <app-subheading [subheading]="'transport.lines' | transloco"></app-subheading>
@@ -176,7 +143,6 @@
   </section>
 }
 
-<!-- Taxi Services Table Section -->
 @if (isTaxi()) {
   <section
     id="taxiServicesSection"
@@ -192,16 +158,16 @@
       <app-subheading [subheading]="'transport.taxiServices' | transloco"></app-subheading>
 
       <div class="w-full overflow-x-auto mt-4 rounded-2xl overflow-hidden">
-        <table class="w-full border-collapse">
+        <table class="w-full border-collapse text-left">
           <thead>
-            <tr class="dark:bg-(--secondary-400) bg-(--primary-200)">
-              <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
+            <tr class="dark:bg-(--secondary-400) bg-(--primary-400)">
+              <th class="px-4 py-3 font-semibold text-sm md:text-base">
                 {{ 'transport.taxiCompany' | transloco }}
               </th>
-              <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
+              <th class="px-4 py-3 font-semibold text-sm md:text-base">
                 {{ 'transport.taxiPhone' | transloco }}
               </th>
-              <th class="px-4 py-3 text-left font-semibold text-sm md:text-base">
+              <th class="px-4 py-3 font-semibold text-sm md:text-base">
                 {{ 'transport.taxiWebsite' | transloco }}
               </th>
             </tr>
@@ -212,7 +178,7 @@
                 class="border-b dark:border-(--secondary-500) border-(--primary-100) hover:dark:bg-(--secondary-500)/20 hover:bg-(--primary-100)/20 transition-colors"
               >
                 <td class="px-4 py-3 text-sm md:text-base font-medium">
-                  {{ company.name }}
+                  {{ company.company }}
                 </td>
                 <td class="px-4 py-3 text-sm md:text-base">
                   {{ company.phone }}
@@ -222,7 +188,7 @@
                     <a
                       [href]="'https://' + company.website"
                       target="_blank"
-                      class="dark:text-(--primary-200) text-(--primary-400) hover:underline"
+                      class="dark:text-(--primary-600) text-(--primary-200) hover:underline"
                     >
                       {{ company.website }}
                     </a>

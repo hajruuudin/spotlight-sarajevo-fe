@@ -4,6 +4,19 @@ import { HttpClient } from '@angular/common/http';
 import { PageResponseModel } from '../shared/models/shared.model';
 import { EventOverviewModel, EventShorthandModel } from '../shared/models/event.model';
 
+/**
+ * EventService handles all available backend endpoints related to events.
+ * This includes (not limited to) basic retrieval operations
+ * - Paginated event GET methods with custom search, sort and filter criteria
+ * - GET method to retrieve event overview by slug
+ *
+ * Models and entities incorporated in the method: EventShorthandModel, EventOverviewModel
+ *
+ * All HTTP requests include credentials for cookie/session management.
+ *
+ * @version 1.0.0
+ * @author hajrudin.imamovic
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -20,7 +33,7 @@ export class EventService {
    * @param searchTerm The search query specified by the user in the search bar (Events are searched against their Official Name as specified on any reliable online resource)
    * @param sortOption The sorting option specified by the user
    * @param categoryIds The category Ids by which the user filters the result. If left empty, all event categories will be taken into account.
-   * @returns A sorted page of Event Shothand results
+   * @returns A sorted page of Event Shorthand results
    *
    */
   findEventsPaginated(
@@ -28,36 +41,30 @@ export class EventService {
     pageSize: number,
     searchTerm: string,
     sortOption: string,
-    categoryIds: number[]
+    categoryIds: number[],
   ) {
     return this.http.get<PageResponseModel<EventShorthandModel>>(
       this.apiUrl +
         `/event/find-events?pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortOption=${sortOption}&categoryIds=${categoryIds}`,
       {
         withCredentials: true,
-      }
+      },
     );
   }
 
-
   /**
-   * Method to find an event overview based on the slug. Used in Event Overview Page. 
+   * Method to find an event overview based on the slug. Used in Event Overview Page.
    * Data for Event Reviews is not contained within this default response.
-   * 
-   * @param eventSlug 
+   *
+   * @param eventSlug
    * @returns {EventOverviewModel}
    */
-  findEventOverview(
-    eventSlug: string
-  ){
+  findEventOverview(eventSlug: string) {
     return this.http.get<EventOverviewModel>(
-      this.apiUrl + 
-        `/event/find-event-overview?eventSlug=${eventSlug}`,
-        {
-          withCredentials: true
-        }
-    )
+      this.apiUrl + `/event/find-event-overview?eventSlug=${eventSlug}`,
+      {
+        withCredentials: true,
+      },
+    );
   }
-
- 
 }

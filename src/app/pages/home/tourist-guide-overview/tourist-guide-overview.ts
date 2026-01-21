@@ -3,10 +3,13 @@ import { TouristGuideService } from '../../../services/tourist.guide.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { SpinnerService } from '../../../core/services/spinner.service';
-import { TouristGuideOverviewModel, TouristGuideSectionModel } from '../../../shared/models/tourist.guide.model';
+import {
+  TouristGuideOverviewModel,
+  TouristGuideSectionModel,
+} from '../../../shared/models/tourist.guide.model';
 import { SessionService } from '../../../core/services/session.service';
-import { PageHeader } from "../../../components/page-header/page-header";
-import { Subheading } from "../../../components/subheading/subheading";
+import { PageHeader } from '../../../components/page-header/page-header';
+import { Subheading } from '../../../components/subheading/subheading';
 import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
@@ -15,8 +18,8 @@ import { TranslocoPipe } from '@ngneat/transloco';
   templateUrl: './tourist-guide-overview.html',
   styleUrl: './tourist-guide-overview.css',
   host: {
-    class: "flex flex-col w-full justify-start items-center"
-  }
+    class: 'flex flex-col w-full justify-start items-center',
+  },
 })
 export class TouristGuideOverview implements OnInit {
   protected guideOverview!: TouristGuideOverviewModel;
@@ -27,14 +30,13 @@ export class TouristGuideOverview implements OnInit {
     protected session: SessionService,
     private activatedRoute: ActivatedRoute,
     private toastr: HotToastService,
-    private spinner: SpinnerService
-  ) {
-
-  }
+    private spinner: SpinnerService,
+  ) {}
 
   ngOnInit(): void {
-    const data = this.activatedRoute.snapshot.data['guideOverviewData'] as TouristGuideOverviewModel;
-    this.guideOverview = data
-    console.log("Guide Overview Data:", this.guideOverview);
+    const data = this.activatedRoute.snapshot.data[
+      'guideOverviewData'
+    ] as TouristGuideOverviewModel;
+    this.guideOverview = data;
   }
 }

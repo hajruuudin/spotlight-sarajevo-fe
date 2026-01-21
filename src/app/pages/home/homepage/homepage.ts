@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
+  effect,
   ElementRef,
   HostListener,
   OnInit,
@@ -52,25 +53,30 @@ import { HomepagePageData } from '../../../core/resolvers/homepage.resolver';
   },
 })
 export class Homepage implements OnInit {
-  protected headlineSpot: SpotShorthandModel | null = null;
-  protected headlineEvent: EventShorthandModel | null = null;
-  protected favouriteSpots: SpotShorthandModel[] = [];
-  protected popularSpots: SpotShorthandModel[] = [];
-  protected upcomingEvents: EventShorthandModel[] = [];
-  protected landmarkSpots: SpotShorthandModel[] = [];
-  public spotCategories: SpotCategoryModel[] = [];
-  public eventCategories: EventCategoryModel[] = [];
+  headlineSpot: SpotShorthandModel | null = null;
+  headlineEvent: EventShorthandModel | null = null;
+  favouriteSpots: SpotShorthandModel[] = [];
+  popularSpots: SpotShorthandModel[] = [];
+  upcomingEvents: EventShorthandModel[] = [];
+  landmarkSpots: SpotShorthandModel[] = [];
+  spotCategories: SpotCategoryModel[] = [];
+  eventCategories: EventCategoryModel[] = [];
 
   constructor(
-    public spotService: SpotService,
-    public eventService: EventService,
-    public session: SessionService,
-    public cdr: ChangeDetectorRef,
-    private route: ActivatedRoute,
-    private categoryService: CategoryService,
-    private toastr: HotToastService,
-    private spinner: SpinnerService
-  ) {}
+    protected spotService: SpotService,
+    protected eventService: EventService,
+    protected session: SessionService,
+    protected cdr: ChangeDetectorRef,
+    protected route: ActivatedRoute,
+    protected categoryService: CategoryService,
+    protected toastr: HotToastService,
+    protected spinner: SpinnerService,
+  ) {
+    effect(() => {
+      this.session.language();
+      this.loadQueryAndDisplayDays();
+    });
+  }
 
   protected selectedDate: string = '';
   public eventCalendarDays: any = [];
@@ -86,15 +92,13 @@ export class Homepage implements OnInit {
     this.landmarkSpots = data.landmarkSpots;
     this.spotCategories = data.spotCategories;
     this.eventCategories = data.eventCategories;
-
-    this.loadQueryAndDisplayDays();
   }
 
   loadQueryAndDisplayDays() {
     this.eventCalendarDays = [];
     let date = new Date();
     const daysOfWeekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const daysOfWeekBs = ['Ned', 'Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub']; // 05.11.2025: Fix this sometime, needs to load the days based on language
+    const daysOfWeekBs = ['Ned', 'Pon', 'Uto', 'Sri', 'Čet', 'Pet', 'Sub'];
 
     for (let i = 0; i < 7; i++) {
       const year = date.getFullYear();
@@ -102,6 +106,17 @@ export class Homepage implements OnInit {
       const dayOfMonthPadded = String(date.getDate()).padStart(2, '0');
       const formattedDate = `${year}-${month}-${dayOfMonthPadded}`;
       const dayOfWeekIndex = date.getDay();
+      if (this.session.language() === 'ba') {
+        const dayOfWeekBsLocalized = daysOfWeekBs[dayOfWeekIndex];
+        const dayOfMonth = date.getDate();
+
+        this.eventCalendarDays.push({
+          queryDate: formattedDate,
+          displayInfo: { day: dayOfWeekBsLocalized, date: dayOfMonth },
+        });
+        date.setDate(date.getDate() + 1);
+        continue;
+      }
       const dayOfWeek = daysOfWeekEn[dayOfWeekIndex];
       const dayOfMonth = date.getDate();
 
@@ -114,7 +129,7 @@ export class Homepage implements OnInit {
     }
 
     this.selectedDate = this.eventCalendarDays[0].queryDate;
-    // this.loadEventsForDate(selectedQueryDate); // Handle this after inserting events into the system
+    // this.loadEventsForDate(selectedQueryDate); // Handle this after inserting events into the system. Loads events for the first day by default
   }
 
   handleDaySelection(selectedQueryDate: string) {
