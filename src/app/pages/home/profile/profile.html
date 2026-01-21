@@ -1,2 +1,55 @@
-<app-page-header class="max-w-application pt-4" title="Profile" subtitle="Review Your information and stats"></app-page-header>
-<app-button-regular (click)="this.logout()" buttonContent="Logout" classAddons="px-4 py-2 my-4"></app-button-regular>
+<section
+  id="profileHeaderSection"
+  [style.backgroundImage]="
+    this.session.theme() == 'dark'
+      ? 'url(/assets/images/SECTION_BG_03.png)'
+      : 'url(/assets/images/SECTION_BG_03_L.png)'
+  "
+  style="background-size: cover; background-position: center"
+  class="w-full h-auto pt-3 pb-8 flex flex-col justify-start items-center"
+>
+  <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+    <app-page-header
+      class="max-w-application py-4"
+      [title]="'profile.headerTitle' | transloco"
+      [subtitle]="'profile.headerSubtitle' | transloco"
+    ></app-page-header>
+
+    <div class="w-full flex flex-row flex-wrap justify-center items-center gap-3 mt-4"></div>
+  </div>
+
+  <div class="max-w-application px-4 md:px-8 flex flex-col justify-center items-center w-full">
+    <div class="w-full flex flex-col md:flex-row justify-around items-center gap-4">
+      <div class="w-3/4 h-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+        <app-text-holder [text]="userInfo.firstName"></app-text-holder>
+        <app-text-holder [text]="userInfo.lastName"></app-text-holder>
+        <app-text-holder [text]="userInfo.email"></app-text-holder>
+        <app-text-holder [text]="userInfo.username"></app-text-holder>
+      </div>
+      <div
+        class="hidden md:flex w-64 flex-col justify-center items-center rounded-full aspect-square bg-(--background-50)"
+      >
+        <app-profile-icon classes="w-32"></app-profile-icon>
+      </div>
+    </div>
+    <app-button-regular
+      (click)="this.logout()"
+      buttonContent="Logout"
+      classAddons="px-4 py-2 my-4"
+    ></app-button-regular>
+  </div>
+</section>
+
+<section
+  id="profileStatsSection"
+  class="w-full h-auto pt-3 pb-8 flex flex-col justify-start items-center dark:bg-(--background-50) bg-(--background-800)"
+>
+    <div class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full">
+        <app-subheading
+        class="max-w-application py-4"
+        [subheading]="'profile.statsSectionTitle' | transloco"
+        ></app-subheading>
+    
+        <div class="w-full flex flex-row flex-wrap justify-center items-center gap-3 mt-4"></div>
+    </div>
+</section>

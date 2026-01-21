@@ -39,6 +39,14 @@
     "transport": {
       "TRANSPORT_METHOD_NOT_FOUND": "Tražena metoda prijevoza nije pronađena.",
       "TRANSPORT_INVALID_REQUEST": "Informacije o zahtjevu za prijevoz nisu ispravne."
+    },
+    "auth" : {
+      "AUTH_INVALID_CREDENTIALS": "Neispravni podaci za prijavu. Molim pokušajte ponovo.",
+      "AUTH_USER_NOT_FOUND": "Korisnik sa ovim email-om nije pronađen.",
+      "AUTH_EMAIL_ALREADY_EXISTS": "Korisnik sa ovim email-om već postoji.",
+      "AUTH_WEAK_PASSWORD": "Lozinka je preslaba. Molim odaberite jaču lozinku.",
+      "AUTH_UNAUTHORIZED_ACCESS": "Nemate dozvolu za pristup ovom resursu.",
+      "AUTH_INVALID_TOKEN": "Token nije ispravan ili je istekao. Molim prijavite se ponovo."
     }
   },
   "navbar": {
@@ -344,5 +352,17 @@
     "description": "Stranica koju tražite ne postoji ili je prebačena. Nema brige, možete se vratiti na početnu stranicu.",
     "helpText": "Ako mislite da je ovo greška, molimo vas da nam je prijavite ili pokušajte navigirati koristeći meni.",
     "backHome": "Nazad na početnu stranicu"
+  },
+  "profile" : {
+    "headerTitle": "Vaš Profil",
+    "headerSubtitle": "Pregled i upravljanje vašim ličnim informacijama i postavkama.",
+    "statsSectionTitle": "Vaše Statistike",
+    "spotsVisitedOne" : "Posjetili ste...",
+    "spotsVisitedTwo" : "lokala!",
+    "eventsAttendedOne" : "Prisustvovali ste na...",
+    "eventsAttendedTwo" : "događaja!",
+    "communityRequestsOne" : "Podnijeli ste...",
+    "communityRequestsTwo" : "zahtjeva zajednici!",
+    "logout": "Izloguj se"
   }
 }

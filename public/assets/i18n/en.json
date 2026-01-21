@@ -39,6 +39,14 @@
     "transport": {
       "TRANSPORT_METHOD_NOT_FOUND": "The requested transport method could not be found.",
       "TRANSPORT_INVALID_REQUEST": "The transport request information is invalid."
+    },
+    "auth" : {
+      "AUTH_INVALID_CREDENTIALS": "Invalid login credentials. Please try again.",
+      "AUTH_USER_NOT_FOUND": "No user found with this email.",
+      "AUTH_EMAIL_ALREADY_EXISTS": "A user with this email already exists.",
+      "AUTH_WEAK_PASSWORD": "The password is too weak. Please choose a stronger password.",
+      "AUTH_UNAUTHORIZED_ACCESS": "You do not have permission to access this resource.",
+      "AUTH_INVALID_TOKEN": "The token is invalid or has expired. Please log in again."
     }
   },
   "navbar": {
@@ -346,5 +354,17 @@
     "description": "The page you're looking for doesn't exist or has been moved. Don't worry, you can navigate back to the homepage.",
     "helpText": "If you believe this is an error, please report it to us or try navigating using the menu.",
     "backHome": "Back to Homepage"
+  },
+  "profile" : {
+    "headerTitle": "Your Profile",
+    "headerSubtitle": "Overview and manage your personal information and settings.",
+    "statsSectionTitle": "Your Statistics",
+    "spotsVisitedOne" : "You have visited...",
+    "spotsVisitedTwo" : "spots!",
+    "eventsAttendedOne" : "You have attended...",
+    "eventsAttendedTwo" : "events!",
+    "communityRequestsOne" : "You have submitted...",
+    "communityRequestsTwo" : "community requests!",
+    "logout": "Log Out"
   }
 }
