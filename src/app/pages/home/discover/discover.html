@@ -18,7 +18,6 @@
       [subtitle]="'discover.headerSubtitle' | transloco"
     ></app-page-header>
 
-    <!-- RECENTS SECTION -->
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
       <span class="text-base md:text-base font-semibold tracking-wider">{{
         'discover.recentSpan' | transloco
@@ -30,7 +29,7 @@
       class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
     >
       @for (spot of recentlyAddedSpots; track spot.id) {
-      <app-small-spot-card [lang]="this.session.language()!" [spot]="spot"></app-small-spot-card>
+        <app-small-spot-card [lang]="this.session.language()!" [spot]="spot"></app-small-spot-card>
       }
     </div>
 
@@ -41,7 +40,6 @@
       ></app-button-primary>
     </div>
 
-    <!-- LANDMARK SECTION -->
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
       <span class="text-base md:text-base font-semibold tracking-wider">{{
         'discover.landmarkSpan' | transloco
@@ -53,7 +51,10 @@
       class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
     >
       @for (spot of landmarkSpots; track spot.id) {
-      <app-historical-spot-card [lang]="this.session.language()!" [spot]="spot"></app-historical-spot-card>
+        <app-historical-spot-card
+          [lang]="this.session.language()!"
+          [spot]="spot"
+        ></app-historical-spot-card>
       }
     </div>
 
@@ -75,7 +76,6 @@
     id="discoverPopularUpcomingSection"
     class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full"
   >
-    <!-- POPULAR SECTION -->
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto pt-2">
       <span class="text-base md:text-base font-semibold tracking-wider">{{
         'discover.popularSpan' | transloco
@@ -87,7 +87,7 @@
       class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
     >
       @for (spot of popularSpots; track spot.id) {
-      <app-small-spot-card [lang]="this.session.language()!" [spot]="spot"></app-small-spot-card>
+        <app-small-spot-card [lang]="this.session.language()!" [spot]="spot"></app-small-spot-card>
       }
     </div>
 
@@ -98,7 +98,6 @@
       ></app-button-primary>
     </div>
 
-    <!-- UPCOMING SECTION -->
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
       <span class="text-base md:text-base font-semibold tracking-wider">{{
         'discover.eventSpan' | transloco
@@ -109,7 +108,10 @@
       class="w-full max-w-application h-auto flex flex-row justify-start space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
     >
       @for (event of this.upcomingEvents; track event.id) {
-      <app-small-event-card [lang]="this.session.language()!" [event]="event"></app-small-event-card>
+        <app-small-event-card
+          [lang]="this.session.language()!"
+          [event]="event"
+        ></app-small-event-card>
       }
     </div>
     <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application">
@@ -130,7 +132,6 @@
     id="discoverFavouritesSection"
     class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full"
   >
-    <!-- FAVOURITE SPOTS SECTION -->
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto pt-2">
       <span class="text-base md:text-base font-semibold tracking-wider">{{
         'discover.favouriteSpotsSpan' | transloco
@@ -142,7 +143,7 @@
       class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
     >
       @for (spot of favouriteSpots; track spot.id) {
-      <app-small-spot-card [lang]="this.session.language()!" [spot]="spot"></app-small-spot-card>
+        <app-small-spot-card [lang]="this.session.language()!" [spot]="spot"></app-small-spot-card>
       }
     </div>
 
@@ -153,7 +154,6 @@
       ></app-button-primary>
     </div>
 
-    <!-- FAVOURITE EVENTS SECTION -->
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
       <span class="text-base md:text-base font-semibold tracking-wider">{{
         'discover.favouriteEventsSpan' | transloco
@@ -164,7 +164,10 @@
       class="w-full max-w-application h-auto flex flex-row justify-start space-y-4 md:space-y-0 space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
     >
       @for (event of this.upcomingEvents; track event.id) {
-      <app-small-event-card [lang]="this.session.language()!" [event]="event"></app-small-event-card>
+        <app-small-event-card
+          [lang]="this.session.language()!"
+          [event]="event"
+        ></app-small-event-card>
       }
     </div>
     <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application">

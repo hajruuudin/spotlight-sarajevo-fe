@@ -16,12 +16,11 @@ import { SpotShorthandModel } from '../../../shared/models/spot.model';
 import { SearchSpotCard } from '../../../components/search-spot-card/search-spot-card';
 import { SortOptions } from '../../../shared/constants/SortOptions';
 import { SpotService } from '../../../services/spot.service';
-import { Subscription } from 'rxjs';
 import { SpinnerSmallComponent } from '../../../components/spinner-small-component/spinner-small-component';
 import { PageResponseModel } from '../../../shared/models/shared.model';
 import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
 import { Router } from '@angular/router';
-import { ButtonPrimary } from "../../../components/button-primary/button-primary";
+import { ButtonPrimary } from '../../../components/button-primary/button-primary';
 
 @Component({
   selector: 'app-spot-search',
@@ -36,8 +35,8 @@ import { ButtonPrimary } from "../../../components/button-primary/button-primary
     SearchSpotCard,
     SpinnerSmallComponent,
     NotFoundComponent,
-    ButtonPrimary
-],
+    ButtonPrimary,
+  ],
   templateUrl: './spot-search.html',
   styleUrl: './spot-search.css',
   host: {
@@ -45,36 +44,29 @@ import { ButtonPrimary } from "../../../components/button-primary/button-primary
   },
 })
 export class SpotSearch implements OnInit {
-  protected spotSearchForm: FormGroup;
-  protected spotCategories: SpotCategoryModel[] = [];
-  protected sortingMethods: string[] = [
-    SortOptions.ALPHABETICAL.toString(),
-    SortOptions.RATING.toString(),
-  ];
+  spotSearchForm: FormGroup;
+  spotCategories: SpotCategoryModel[] = [];
+  sortingMethods: string[] = [SortOptions.ALPHABETICAL.toString(), SortOptions.RATING.toString()];
 
-  protected selectedCategoryIds: number[] = [];
-  protected selectedSortingMethod: string = SortOptions.ALPHABETICAL.toString();
-
-  protected isFilterPopupLoaded: boolean = false;
-  protected isSortingPopupLoaded: boolean = false;
-
-  protected pageNumber: number = 0;
-  protected pageSize: number = 4;
-  protected totalElements: number = 0;
-  protected totalPages: number = 0;
-
-  protected spotSearchResults: SpotShorthandModel[] = [];
+  selectedCategoryIds: number[] = [];
+  selectedSortingMethod: string = SortOptions.ALPHABETICAL.toString();
+  isFilterPopupLoaded = false;
+  isSortingPopupLoaded = false;
+  pageNumber = 0;
+  pageSize = 4;
+  totalElements = 0;
+  totalPages = 0;
+  spotSearchResults: SpotShorthandModel[] = [];
 
   constructor(
-    private categoryService: CategoryService,
-    private spotService: SpotService,
-    //====== COMMON SERVICES =====//
+    protected categoryService: CategoryService,
+    protected spotService: SpotService,
     protected session: SessionService,
-    private router: Router,
-    private fb: FormBuilder,
-    private spinner: SpinnerService,
-    private toastr: HotToastService,
-    private cdr: ChangeDetectorRef
+    protected router: Router,
+    protected fb: FormBuilder,
+    protected spinner: SpinnerService,
+    protected toastr: HotToastService,
+    protected cdr: ChangeDetectorRef,
   ) {
     this.spotSearchForm = this.fb.group({
       searchTerm: ['', Validators.required],
@@ -105,7 +97,7 @@ export class SpotSearch implements OnInit {
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       true,
-      false
+      false,
     );
   }
 
@@ -117,7 +109,7 @@ export class SpotSearch implements OnInit {
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       true,
-      false
+      false,
     );
   }
 
@@ -148,7 +140,7 @@ export class SpotSearch implements OnInit {
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       true,
-      false
+      false,
     );
   }
 
@@ -161,7 +153,7 @@ export class SpotSearch implements OnInit {
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       true,
-      false
+      false,
     );
   }
 
@@ -172,7 +164,7 @@ export class SpotSearch implements OnInit {
     sortingMethod: string,
     categoryIds: number[],
     resetPages: boolean,
-    extendResultSet: boolean
+    extendResultSet: boolean,
   ) {
     if (resetPages) {
       pageNumber = 0;
@@ -214,11 +206,11 @@ export class SpotSearch implements OnInit {
       this.selectedSortingMethod,
       this.selectedCategoryIds,
       false,
-      true
+      true,
     );
   }
 
-  navigateToSpotOverview(spotSlug: string){
-    this.router.navigate(['/spots/' + spotSlug])
+  navigateToSpotOverview(spotSlug: string) {
+    this.router.navigate(['/spots/' + spotSlug]);
   }
 }

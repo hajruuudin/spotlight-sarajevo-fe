@@ -5,7 +5,6 @@ import {
   EventOrganiserReviewUpdateModel,
   EventOverviewModel,
 } from '../../../shared/models/event.model';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../../../services/event.service';
 import { ReviewService } from '../../../services/review.service';
@@ -14,7 +13,6 @@ import { ModalService } from '../../../core/services/modal.service';
 import { SpinnerService } from '../../../core/services/spinner.service';
 import { SessionService } from '../../../core/services/session.service';
 import { PageHeader } from '../../../components/page-header/page-header';
-import { BnwRatingIcon } from '../../../resources/icons/bnw-rating-icon/bnw-rating-icon';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { BnwLocationIcon } from '../../../resources/icons/bnw-location-icon/bnw-location-icon';
 import { BnwCategoryIcon } from '../../../resources/icons/bnw-category-icon/bnw-category-icon';
@@ -28,7 +26,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { PageResponseModel } from '../../../shared/models/shared.model';
 import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
 import { ButtonPrimary } from '../../../components/button-primary/button-primary';
-import { SpotReviewCard } from '../../../components/spot-review-card/spot-review-card';
 import { EditReviewModal } from '../../../components/modals/edit-review-modal/edit-review-modal';
 import { DeleteReviewModal } from '../../../components/modals/delete-review-modal/delete-review-modal';
 import { AddReviewModal } from '../../../components/modals/add-review-modal/add-review-modal';
@@ -63,31 +60,31 @@ import { CollectionAddItemModel } from '../../../shared/models/collection.model'
   },
 })
 export class EventOverview {
-  protected eventOverview!: EventOverviewModel;
-  protected isSaved: boolean = false;
-  protected images: string[] = []; // TEMPORARY FOR DEMONSTRATION
+  eventOverview!: EventOverviewModel;
+  isSaved: boolean = false;
+  images: string[] = []; // TEMPORARY FOR DEMONSTRATION
 
-  protected headerContainer!: HTMLElement;
+  headerContainer!: HTMLElement;
 
-  protected userEventOrganiserReview: EventOrganiserReviewModel | null = null;
-  protected eventOrganiserReviews: EventOrganiserReviewModel[] = [];
+  userEventOrganiserReview: EventOrganiserReviewModel | null = null;
+  eventOrganiserReviews: EventOrganiserReviewModel[] = [];
 
-  protected reviewPageNumber: number = 0;
-  protected reviewPageSize: number = 20;
+  reviewPageNumber: number = 0;
+  reviewPageSize: number = 20;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private eventService: EventService,
-    private collectionService: CollectionService,
-    private reviewService: ReviewService,
-    private el: ElementRef,
-    private toastr: HotToastService,
-    private modal: ModalService,
-    private spinner: SpinnerService,
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
+    protected eventService: EventService,
+    protected collectionService: CollectionService,
+    protected reviewService: ReviewService,
+    protected el: ElementRef,
+    protected toastr: HotToastService,
+    protected modal: ModalService,
+    protected spinner: SpinnerService,
     protected session: SessionService,
-    private cdr: ChangeDetectorRef,
-    private ngZone: NgZone
+    protected cdr: ChangeDetectorRef,
+    protected ngZone: NgZone,
   ) {}
 
   ngOnInit(): void {
@@ -95,7 +92,6 @@ export class EventOverview {
 
     this.eventOverview = this.activatedRoute.snapshot.data['eventData'] as EventOverviewModel;
 
-    console.log(this.eventOverview);
     this.loadUserOrganiserReview(this.eventOverview.organiser.id);
     this.loadOtherOrganiserReviews(this.eventOverview.organiser.id);
 
@@ -140,12 +136,12 @@ export class EventOverview {
         this.reviewPageNumber,
         this.reviewPageSize,
         organiserId,
-        'ALPHABETICAL'
+        'ALPHABETICAL',
       )
       .subscribe({
         next: (response: PageResponseModel<EventOrganiserReviewModel>) => {
           const filteredResult = response.content.filter(
-            (review) => review.userId != this.session.getUserId()
+            (review) => review.userId != this.session.getUserId(),
           );
           this.eventOrganiserReviews = filteredResult;
         },
@@ -198,7 +194,7 @@ export class EventOverview {
         formData.overallRating,
         formData.quality,
         formData.atmosphere,
-        formData.enjoyability
+        formData.enjoyability,
       );
 
       this.spinner.showNavigateSpinner();
@@ -225,7 +221,7 @@ export class EventOverview {
         formData.overallRating,
         formData.quality,
         formData.atmosphere,
-        formData.enjoyability
+        formData.enjoyability,
       );
 
       this.spinner.showNavigateSpinner();
@@ -256,7 +252,7 @@ export class EventOverview {
     await this.reviewService
       .deleteEventOrganiserReview(
         this.eventOverview.organiser.id,
-        this.userEventOrganiserReview!.id
+        this.userEventOrganiserReview!.id,
       )
       .subscribe({
         next: (response: EventOrganiserReviewModel) => {
@@ -287,7 +283,7 @@ export class EventOverview {
       {
         objectId: this.eventOverview.id,
         objectType: 'EVENT',
-      }
+      },
     );
 
     if (result.type == 'exit') return;

@@ -1,11 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PageHeader } from '../../../components/page-header/page-header';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { map, of, Subscription, switchMap } from 'rxjs';
 import { SessionService } from '../../../core/services/session.service';
 import {
   CollectionCreateModel,
-  CollectionItems,
   CollectionItemsModel,
   CollectionModel,
   CollectionUpdateModel,
@@ -50,11 +48,11 @@ import { CollectionHeader } from '../../../components/collection-header/collecti
   },
 })
 export class Collections implements OnInit {
-  protected userCollections: CollectionModel[] = [];
-  protected userEventCollections: CollectionModel[] = [];
-  protected userSpotCollections: CollectionModel[] = [];
+  userCollections: CollectionModel[] = [];
+  userEventCollections: CollectionModel[] = [];
+  userSpotCollections: CollectionModel[] = [];
 
-  protected selectedCollection: CollectionItemsModel = {
+  selectedCollection: CollectionItemsModel = {
     collectionName: 'Default',
     collectionDescription: 'Default',
     collectionId: 0,
@@ -63,18 +61,18 @@ export class Collections implements OnInit {
     isSystem: false,
   };
 
-  protected collectionSelectForm: FormGroup;
+  collectionSelectForm: FormGroup;
 
   constructor(
     protected session: SessionService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private collectionService: CollectionService,
-    private toastr: HotToastService,
-    private modal: ModalService,
-    private cdr: ChangeDetectorRef,
-    private spinner: SpinnerService,
-    private fb: FormBuilder
+    protected router: Router,
+    protected route: ActivatedRoute,
+    protected collectionService: CollectionService,
+    protected toastr: HotToastService,
+    protected modal: ModalService,
+    protected cdr: ChangeDetectorRef,
+    protected spinner: SpinnerService,
+    protected fb: FormBuilder,
   ) {
     this.collectionSelectForm = this.fb.group({
       selectedCollection: [null],
@@ -102,7 +100,7 @@ export class Collections implements OnInit {
       this.collectionService.findAllSpotsCollection().subscribe({
         next: (response: CollectionItemsModel) => {
           const uniqueItems = Array.from(
-            new Map(response.collectionItems.map((item) => [item.id, item])).values()
+            new Map(response.collectionItems.map((item) => [item.id, item])).values(),
           );
           response.collectionItems = uniqueItems;
           this.selectedCollection = { ...response };
@@ -112,11 +110,10 @@ export class Collections implements OnInit {
         },
       });
     } else {
-      // fetch events
       this.collectionService.findAllEventsCollection().subscribe({
         next: (response: CollectionItemsModel) => {
           const uniqueItems = Array.from(
-            new Map(response.collectionItems.map((item) => [item.id, item])).values()
+            new Map(response.collectionItems.map((item) => [item.id, item])).values(),
           );
           response.collectionItems = uniqueItems;
           this.selectedCollection = { ...response };
@@ -139,7 +136,7 @@ export class Collections implements OnInit {
         this.toastr.error(
           this.session.language() == 'en'
             ? 'Cannot load that collection! :('
-            : 'Kolekcija se ne moze ucitati! :('
+            : 'Kolekcija se ne moze ucitati! :(',
         );
       },
     });
@@ -147,13 +144,10 @@ export class Collections implements OnInit {
 
   divideUserCollection() {
     this.userEventCollections = this.userCollections.filter(
-      (col) => col.collectionType === 'EVENT'
+      (col) => col.collectionType === 'EVENT',
     );
 
     this.userSpotCollections = this.userCollections.filter((col) => col.collectionType === 'SPOT');
-
-    console.log(this.userSpotCollections);
-    console.log(this.userEventCollections);
   }
 
   async openAddCollectionModal() {
@@ -166,15 +160,15 @@ export class Collections implements OnInit {
         new CollectionCreateModel(
           result.data.collectionName,
           result.data.collectionDescription,
-          result.data.collectionType == 1 ? 'SPOT' : 'EVENT'
-        )
+          result.data.collectionType == 1 ? 'SPOT' : 'EVENT',
+        ),
       );
     }
   }
 
   async openEditCollectionModal() {
     const collectionModel = this.userCollections.find(
-      (c) => c.id === this.selectedCollection.collectionId
+      (c) => c.id === this.selectedCollection.collectionId,
     );
     const result = await this.modal.openAsync<{ type: string; data?: any }>(EditCollectionModal, {
       collectionModel: collectionModel,
@@ -187,8 +181,8 @@ export class Collections implements OnInit {
         new CollectionUpdateModel(
           collectionModel!.id,
           result.data.collectionName,
-          result.data.collectionDescription
-        )
+          result.data.collectionDescription,
+        ),
       );
     }
   }
@@ -204,8 +198,7 @@ export class Collections implements OnInit {
           this.toastr.success('Collection Deleted');
           this.cdr.detectChanges();
           this.removeCollectionFrontend(result);
-          this.fetchSystemCollection(true)
-          
+          this.fetchSystemCollection(true);
         },
         error: (error: HttpErrorResponse) => {
           this.toastr.error('There was an error. Replace this later.');
@@ -220,14 +213,16 @@ export class Collections implements OnInit {
       next: (response: CollectionModel) => {
         this.spinner.hideNavigateSpinner();
         this.toastr.success(
-          this.session.language() == 'en' ? 'New collection created!' : 'Nova kolekcija napravljena'
+          this.session.language() == 'en'
+            ? 'New collection created!'
+            : 'Nova kolekcija napravljena',
         );
         this.addCollectionFrontend(response);
       },
       error: (response: HttpErrorResponse) => {
         this.spinner.hideNavigateSpinner();
         this.toastr.error(
-          this.session.language() == 'en' ? 'Something went wrong!' : 'Nesto je krenulo po zlu'
+          this.session.language() == 'en' ? 'Something went wrong!' : 'Nesto je krenulo po zlu',
         );
       },
     });
@@ -239,14 +234,14 @@ export class Collections implements OnInit {
       next: (response: CollectionModel) => {
         this.spinner.hideNavigateSpinner();
         this.toastr.success(
-          this.session.language() == 'en' ? 'Collection edited!' : 'Kolekcija izmjenjena'
+          this.session.language() == 'en' ? 'Collection edited!' : 'Kolekcija izmjenjena',
         );
         this.updateCollectionFrontend(response);
       },
       error: (response: HttpErrorResponse) => {
         this.spinner.hideNavigateSpinner();
         this.toastr.error(
-          this.session.language() == 'en' ? 'Something went wrong!' : 'Nesto je krenulo po zlu'
+          this.session.language() == 'en' ? 'Something went wrong!' : 'Nesto je krenulo po zlu',
         );
       },
     });
@@ -267,14 +262,14 @@ export class Collections implements OnInit {
   updateCollectionFrontend(updated: CollectionModel): void {
     if (updated.collectionType === 'SPOT') {
       this.userSpotCollections = this.userSpotCollections.map((c) =>
-        c.id === updated.id ? updated : c
+        c.id === updated.id ? updated : c,
       );
       return;
     }
 
     if (updated.collectionType === 'EVENT') {
       this.userEventCollections = this.userEventCollections.map((c) =>
-        c.id === updated.id ? updated : c
+        c.id === updated.id ? updated : c,
       );
       return;
     }

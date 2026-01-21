@@ -3,9 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TouristGuideCreateModel, TouristGuideOverviewModel, TouristGuideShorthandModel } from '../shared/models/tourist.guide.model';
 import { environment } from '../../environments/environment';
-// Import your models here
-// import { TouristGuideShorthandModel, TouristGuideOverviewModel, TouristGuideCreateModel } from './models';
 
+/**
+ * Service for interacting with the Tourist Guide API.
+ * Provides methods to fetch tourist guides and create new ones.
+ * All requests include credentials for authentication.
+ * 
+ * Models and entities incorporated in the methods: TouristGuideShorthandModel, TouristGuideOverviewModel, TouristGuideCreateModel
+ * 
+ * @version 1.0.0
+ * @author hajrudin.imamovic
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +23,7 @@ export class TouristGuideService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Fetches all tourist guides shorthand info
+   * Fetches all tourist guides in shorthand format
    */
   findAllGuides(): Observable<TouristGuideShorthandModel[]> {
     return this.http.get<TouristGuideShorthandModel[]>(`${this.API_URL}/all`, {

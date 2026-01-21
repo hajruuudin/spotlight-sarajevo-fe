@@ -1,13 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SortOptions } from '../shared/constants/SortOptions';
 import { environment } from '../../environments/environment';
 import {
   SpotOverviewModel,
-  SpotReviewCreateModel,
-  SpotReviewDeleteModel,
-  SpotReviewModel,
-  SpotReviewUpdateModel,
   SpotShorthandModel,
 } from '../shared/models/spot.model';
 import { PageResponseModel } from '../shared/models/shared.model';
@@ -17,7 +12,7 @@ import { PageResponseModel } from '../shared/models/shared.model';
  * This includes (not limited to) basic CRUD operations
  * - Paginated spot GET method with custom search criteria
  * - POST method to create a spot, available only to admin users
- * - PUT method to update a spot, available only to admi users
+ * - PUT method to update a spot, available only to admin users
  * - DELETE method to delete a spot from the database along with its information, available only to admin users
  * ... among other methods.
  *
@@ -63,6 +58,12 @@ export class SpotService {
     );
   }
 
+  /**
+   * Method to retrieve detailed overview information about a specific spot by its slug.
+   *
+   * @param spotSlug The unique string identifier for the spot
+   * @returns The detailed spot overview information
+   */
   findSpotOverview(spotSlug: string) {
     return this.http.get<SpotOverviewModel>(
       this.apiUrl + `/spot/find-spot-overview?spotSlug=${spotSlug}`,

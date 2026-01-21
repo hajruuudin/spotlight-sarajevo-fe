@@ -1,6 +1,3 @@
-/*====== SPOT MODELS ======*/
-/* Includes all DTO class models from the Spot API on the backend */
-
 import { TagModel } from "./category.model";
 
 export class SpotShorthandModel {

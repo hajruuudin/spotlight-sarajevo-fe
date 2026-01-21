@@ -1,4 +1,46 @@
 {
+  "errors": {
+    "spot": {
+      "INVALID_REQUEST_CONTENT": "The provided spot information is invalid.",
+      "SPOT_NOT_FOUND": "The requested spot could not be found.",
+      "EMPTY_SPOT_REQUEST_BODY": "Please provide spot information to continue.",
+      "SPOT_UNAUTHORIZED_ACCESS": "You do not have permission to access this spot.",
+      "SPOT_UPDATE_EXCEPTION": "There was an error updating the spot. Please try again.",
+      "SPOT_REVIEW_NOT_FOUND": "The requested review could not be found.",
+      "SPOT_REVIEW_CONFLICT": "This review already exists or conflicts with another entry."
+    },
+    "event": {
+      "INVALID_REQUEST_CONTENT": "The provided event information is invalid.",
+      "EVENT_NOT_FOUND": "The requested event could not be found.",
+      "EVENT_UNAUTHORIZED_ACCESS": "You do not have permission to access this event.",
+      "EVENT_UPDATE_EXCEPTION": "There was an error updating the event. Please try again.",
+      "EVENT_ORGANISER_REVIEW_NOT_FOUND": "The organizer review could not be found."
+    },
+    "collection": {
+      "COLLECTION_FIND_UNAUTHORISED": "You do not have permission to view this collection.",
+      "COLLECTION_REQUEST_INVALID": "The collection request is invalid.",
+      "COLLECTION_NOT_FOUND": "The requested collection could not be found.",
+      "COLLECTION_UNAUTHORISED_ACCESS": "You do not have permission to modify this collection.",
+      "COLLECTION_INVALID_TYPE": "The collection type is invalid.",
+      "COLLECTION_ITEM_NOT_FOUND": "The item you are looking for is not in this collection.",
+      "COLLECTION_SYSTEM_EXCEPTION": "There was a system error with the collection. Please try again.",
+      "COLLECTION_NAME_CONFLICT": "A collection with this name already exists."
+    },
+    "touristGuide": {
+      "TOURIST_GUIDE_BAD_REQUEST": "The provided tourist guide information is invalid.",
+      "TOURIST_GUIDE_NOT_FOUND": "The requested tourist guide could not be found.",
+      "TOURIST_GUIDE_C_BR": "There was an error creating the tourist guide. Please try again.",
+      "TOURIST_GUIDE_C_AU": "You do not have permission to create or modify tourist guides.",
+      "TOURIST_GUIDE_C_SLUG": "A guide with this slug already exists."
+    },
+    "media": {
+      "MEDIA_C_BR": "There was an error processing the media file. Please try again."
+    },
+    "transport": {
+      "TRANSPORT_METHOD_NOT_FOUND": "The requested transport method could not be found.",
+      "TRANSPORT_INVALID_REQUEST": "The transport request information is invalid."
+    }
+  },
   "navbar": {
     "homepage": "Homepage",
     "browseSpots": "Browse Spots",
@@ -277,5 +319,32 @@
   },
    "guideOverview" : {
     "aboutThisGuide" : "ABOUT THIS GUIDE"
+  },
+  "transport": {
+    "headerTitle": "Public Transport",
+    "headerSubtitle": "An overview of all available public transport methods in Sarajevo",
+    "tramcar": "Tramcar",
+    "trolley": "Trolley",
+    "bus": "Bus",
+    "taxi": "Taxi",
+    "coverage": "TRANSPORT COVERAGE",
+    "description": "DESCRIPTION",
+    "usefulInfo": "USEFUL INFORMATION",
+    "lines": "AVAILABLE LINES",
+    "lineNumber": "Line",
+    "lineRoute": "Route",
+    "operator": "Operator",
+    "taxiServices": "TAXI SERVICES",
+    "taxiCompany": "Company",
+    "taxiPhone": "Phone",
+    "taxiWebsite": "Website",
+    "noWebsite": "N/A"
+  },
+  "notFound": {
+    "pageTitle": "Page Not Found",
+    "headerMessage": "Oops! Something went wrong",
+    "description": "The page you're looking for doesn't exist or has been moved. Don't worry, you can navigate back to the homepage.",
+    "helpText": "If you believe this is an error, please report it to us or try navigating using the menu.",
+    "backHome": "Back to Homepage"
   }
 }

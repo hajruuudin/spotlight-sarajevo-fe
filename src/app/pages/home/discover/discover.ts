@@ -9,13 +9,10 @@ import { ButtonPrimary } from '../../../components/button-primary/button-primary
 import { SmallSpotCard } from '../../../components/small-spot-card/small-spot-card';
 import { SmallEventCard } from '../../../components/small-event-card/small-event-card';
 import { SpotService } from '../../../services/spot.service';
-import { SortOptions } from '../../../shared/constants/SortOptions';
-import { HttpErrorResponse } from '@angular/common/http';
-import { forkJoin, Subscription } from 'rxjs';
 import { SessionService } from '../../../core/services/session.service';
 import { EventService } from '../../../services/event.service';
-import {ActivatedRoute} from '@angular/router';
-import {DiscoverPageData} from '../../../core/resolvers/discover.resolver';
+import { ActivatedRoute } from '@angular/router';
+import { DiscoverPageData } from '../../../core/resolvers/discover.resolver';
 
 @Component({
   selector: 'app-discover',
@@ -34,11 +31,11 @@ import {DiscoverPageData} from '../../../core/resolvers/discover.resolver';
   },
 })
 export class Discover implements OnInit {
-  protected recentlyAddedSpots: SpotShorthandModel[] = [];
-  protected landmarkSpots: SpotShorthandModel[] = [];
-  protected popularSpots: SpotShorthandModel[] = [];
-  protected upcomingEvents: EventShorthandModel[] = [];
-  protected favouriteSpots: SpotShorthandModel[] = [];
+  recentlyAddedSpots: SpotShorthandModel[] = [];
+  landmarkSpots: SpotShorthandModel[] = [];
+  popularSpots: SpotShorthandModel[] = [];
+  upcomingEvents: EventShorthandModel[] = [];
+  favouriteSpots: SpotShorthandModel[] = [];
 
   constructor(
     protected spotService: SpotService,
@@ -46,12 +43,12 @@ export class Discover implements OnInit {
     protected route: ActivatedRoute,
     protected session: SessionService,
     protected cdr: ChangeDetectorRef,
-    protected toastr: HotToastService
+    protected toastr: HotToastService,
   ) {}
 
   ngOnInit(): void {
-    const data = this.route.snapshot.data['discoverData'] as DiscoverPageData
-    
+    const data = this.route.snapshot.data['discoverData'] as DiscoverPageData;
+
     this.recentlyAddedSpots = data.recentlyAddedSpots;
     this.landmarkSpots = data.landmarkSpots;
     this.upcomingEvents = data.upcomingEvents;

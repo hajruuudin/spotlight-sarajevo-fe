@@ -1,7 +1,6 @@
 import {
   ChangeDetectorRef,
   Component,
-  computed,
   ElementRef,
   HostListener,
   NgZone,
@@ -20,7 +19,6 @@ import {
 } from '../../../shared/models/spot.model';
 import { PageHeader } from '../../../components/page-header/page-header';
 import { SessionService } from '../../../core/services/session.service';
-import { Subscription } from 'rxjs';
 import { Subheading } from '../../../components/subheading/subheading';
 import { ImageCarousel } from '../../../components/image-carousel/image-carousel';
 import { ChartConfiguration } from 'chart.js';
@@ -35,17 +33,16 @@ import { NotFoundComponent } from '../../../components/not-found-component/not-f
 import { DeleteReviewModal } from '../../../components/modals/delete-review-modal/delete-review-modal';
 import { EditReviewModal } from '../../../components/modals/edit-review-modal/edit-review-modal';
 import { PageResponseModel } from '../../../shared/models/shared.model';
-import { error } from 'console';
 import { ReviewService } from '../../../services/review.service';
 import { DecimalPipe } from '@angular/common';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { BnwRatingIcon } from '../../../resources/icons/bnw-rating-icon/bnw-rating-icon';
 import { BnwLocationIcon } from '../../../resources/icons/bnw-location-icon/bnw-location-icon';
 import { BnwCategoryIcon } from '../../../resources/icons/bnw-category-icon/bnw-category-icon';
 import { AddToCollectionModal } from '../../../components/modals/add-to-collection-modal/add-to-collection-modal';
-import { ButtonRegular } from '../../../components/button-regular/button-regular';
 import { CollectionService } from '../../../services/collection.service';
 import { CollectionAddItemModel } from '../../../shared/models/collection.model';
+import { ZeroReview } from '../../../shared/pipes/zero-review-pipe';
 
 @Component({
   selector: 'app-spot-overview',
@@ -59,11 +56,11 @@ import { CollectionAddItemModel } from '../../../shared/models/collection.model'
     ButtonPrimary,
     NotFoundComponent,
     DecimalPipe,
+    ZeroReview,
     TranslocoPipe,
     BnwRatingIcon,
     BnwLocationIcon,
     BnwCategoryIcon,
-    ButtonRegular,
   ],
   templateUrl: './spot-overview.html',
   styleUrl: './spot-overview.css',
@@ -72,35 +69,36 @@ import { CollectionAddItemModel } from '../../../shared/models/collection.model'
   },
 })
 export class SpotOverview implements OnInit {
-  protected spotOverview!: SpotOverviewModel;
-  protected isSaved: boolean = false;
-  protected images: string[] = [];
+  spotOverview!: SpotOverviewModel;
+  isSaved: boolean = false;
+  images: string[] = [];
 
-  protected headerContainer!: HTMLElement;
-  protected formattedSpotWorkHours: SpotWorkHoursModel[] = [];
+  headerContainer!: HTMLElement;
+  formattedSpotWorkHours: SpotWorkHoursModel[] = [];
 
-  protected barChartData: ChartConfiguration<'bar'>['data'] = { labels: [], datasets: [] };
-  protected barChartOptions: ChartConfiguration<'bar'>['options'] = {};
+  barChartData: ChartConfiguration<'bar'>['data'] = { labels: [], datasets: [] };
+  barChartOptions: ChartConfiguration<'bar'>['options'] = {};
 
-  protected userReview: SpotReviewModel | null = null;
-  protected spotReviews: SpotReviewModel[] = [];
+  userReview: SpotReviewModel | null = null;
+  spotReviews: SpotReviewModel[] = [];
 
-  protected reviewPageNumber: number = 0;
-  protected reviewPageSize: number = 20;
+  reviewPageNumber: number = 0;
+  reviewPageSize: number = 20;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private spotService: SpotService,
-    private collectionService: CollectionService,
-    private reviewService: ReviewService,
-    private el: ElementRef,
-    private toastr: HotToastService,
-    private modal: ModalService,
-    private spinner: SpinnerService,
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
+    protected spotService: SpotService,
+    protected collectionService: CollectionService,
+    protected reviewService: ReviewService,
+    protected el: ElementRef,
+    protected toastr: HotToastService,
+    protected modal: ModalService,
+    protected spinner: SpinnerService,
     protected session: SessionService,
-    private cdr: ChangeDetectorRef,
-    private ngZone: NgZone
+    protected cdr: ChangeDetectorRef,
+    protected ngZone: NgZone,
+    protected transloco: TranslocoService,
   ) {}
 
   ngOnInit(): void {
@@ -113,7 +111,7 @@ export class SpotOverview implements OnInit {
         this.initialiseRadarChart(this.session.language()!, this.session.theme()!);
         this.loadUserSpotReview(this.spotOverview.id);
         this.loadOtherSpotReviews(this.spotOverview.id);
-        this.checkIfPresentInSystemCollection()
+        this.checkIfPresentInSystemCollection();
 
         this.images.push(this.spotOverview.thumbnailImage);
         this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');
@@ -122,9 +120,13 @@ export class SpotOverview implements OnInit {
         this.images.push(this.spotOverview.thumbnailImage);
         this.images.push(this.spotOverview.thumbnailImage);
         this.images.push(this.spotOverview.thumbnailImage);
+
+        
       },
       error: () => {
-        this.toastr.error('Failed to load spot overview');
+        this.session.translate('spotOverview.loadError').subscribe(
+          (translation) => this.toastr.error(translation)
+        );
       },
     });
   }
@@ -184,7 +186,7 @@ export class SpotOverview implements OnInit {
       .subscribe({
         next: (response: PageResponseModel<SpotReviewModel>) => {
           const filteredResult = response.content.filter(
-            (review) => review.userId != this.session.getUserId()
+            (review) => review.userId != this.session.getUserId(),
           );
           this.spotReviews = filteredResult;
         },
@@ -224,7 +226,7 @@ export class SpotOverview implements OnInit {
 
     if (result.type === 'add') {
       this.handleAddEditReview(result.data, false);
-    } else if (result.type === 'edit'){
+    } else if (result.type === 'edit') {
       this.handleAddEditReview(result.data, true);
     }
   }
@@ -241,7 +243,7 @@ export class SpotOverview implements OnInit {
         formData.staffKindness,
         formData.affordability,
         formData.cleanliness,
-        formData.localeQuality
+        formData.localeQuality,
       );
 
       this.spinner.showNavigateSpinner();
@@ -271,7 +273,7 @@ export class SpotOverview implements OnInit {
         formData.staffKindness,
         formData.affordability,
         formData.cleanliness,
-        formData.localeQuality
+        formData.localeQuality,
       );
 
       this.spinner.showNavigateSpinner();
@@ -321,7 +323,6 @@ export class SpotOverview implements OnInit {
   }
 
   initialiseRadarChart(lang: string, theme: string) {
-    console.log(theme);
     let textColor = theme == 'light' ? '#111111' : '#ffffff';
     let gridColor = theme == 'light' ? '#111111AA' : '#ffffff66';
     let labels =
@@ -406,7 +407,7 @@ export class SpotOverview implements OnInit {
       {
         objectId: this.spotOverview.id,
         objectType: 'SPOT',
-      }
+      },
     );
 
     if (result.type == 'exit') return;
@@ -439,7 +440,7 @@ export class SpotOverview implements OnInit {
       next: () => {
         this.isSaved = true;
         this.toastr.success('Item saved!');
-        this.cdr.detectChanges()
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error saving to system collection', err),
     });
@@ -452,7 +453,7 @@ export class SpotOverview implements OnInit {
         next: () => {
           this.isSaved = false;
           this.toastr.success('Item unsaved!');
-          this.cdr.detectChanges()
+          this.cdr.detectChanges();
         },
         error: (err) => console.error('Error removing from system collection', err),
       });

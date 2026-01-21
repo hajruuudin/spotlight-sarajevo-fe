@@ -1,6 +1,3 @@
-/*====== CATEGORY MODELS ======*/
-/* Includes all DTO class models from the Categories and Tag API on the backend */
-
 export class SpotCategoryModel{
     constructor(
         public id: number,

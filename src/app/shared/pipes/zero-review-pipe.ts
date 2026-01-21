@@ -1,5 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+/**
+ * A pipe that transforms a numeric value, returning a default string if the value is zero or not a number.
+ *
+ * Usage in template:
+ *   {{ value | zeroReview:'No Reviews' }}
+ *
+ * If `value` is 0, null, undefined, or not a number, it will display 'No Reviews'.
+ * Otherwise, it will display the numeric value.
+ */
 @Pipe({
   name: 'zeroReview',
   standalone: true
