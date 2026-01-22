@@ -67,4 +67,37 @@ export class EventService {
       },
     );
   }
+
+  /**
+   * Method to add an event to the list of attended events for the logged-in user.
+   *
+   * @param eventId The unique identifier of the event to be marked as attended.
+   * @returns An observable representing the completion of the operation.
+   */
+  addEventAsAttended(eventId: number) {
+    return this.http.post(
+      this.apiUrl + `/user/attended-event/add`,
+      {
+        eventId: eventId
+      },
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to remove an event from the list of attended events for the logged-in user.
+   *
+   * @param eventId The unique identifier of the event to be removed from attended list.
+   * @returns An observable representing the completion of the operation.
+   */
+  removeEventFromAttended(eventId: number) {
+    return this.http.delete(
+      this.apiUrl + `/user/attended-event/remove?eventId=${eventId}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }

@@ -333,4 +333,13 @@ export class EventOverview {
         error: (err) => console.error('Error removing from system collection', err),
       });
   }
+
+  markEventAsAttended() {
+    this.eventService.addEventAsAttended(this.eventOverview.id).subscribe({
+      next: () => {
+        this.toastr.success('Event marked as attended!');
+      },
+      error: (err) => console.error('Error marking event as attended', err),
+    });
+  }
 }

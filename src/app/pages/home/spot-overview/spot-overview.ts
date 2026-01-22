@@ -458,4 +458,17 @@ export class SpotOverview implements OnInit {
         error: (err) => console.error('Error removing from system collection', err),
       });
   }
+
+  markSpotAsVisited() {
+    this.spotService.addSpotAsVisited(this.spotOverview.id).subscribe({
+      next: () => {
+        this.toastr.success('Spot marked as visited!');
+      },
+      error: (err) => console.error('Error marking spot as visited', err),
+    });
+  }
+
+  removeSpotFromVisited() {
+    // Implementation for removing spot from visited list can be added here
+  }
 }

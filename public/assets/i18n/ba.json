@@ -46,7 +46,9 @@
       "AUTH_EMAIL_ALREADY_EXISTS": "Korisnik sa ovim email-om već postoji.",
       "AUTH_WEAK_PASSWORD": "Lozinka je preslaba. Molim odaberite jaču lozinku.",
       "AUTH_UNAUTHORIZED_ACCESS": "Nemate dozvolu za pristup ovom resursu.",
-      "AUTH_INVALID_TOKEN": "Token nije ispravan ili je istekao. Molim prijavite se ponovo."
+      "AUTH_INVALID_TOKEN": "Token nije ispravan ili je istekao. Molim prijavite se ponovo.",
+      "AUTH_SPOT_ID_MISSING": "ID lokala je obavezan za ovu operaciju.",
+      "AUTH_EVENT_ID_MISSING": "ID događaja je obavezan za ovu operaciju."
     }
   },
   "navbar": {
