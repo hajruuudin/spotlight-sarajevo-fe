@@ -6,9 +6,23 @@ import { Component, Input } from '@angular/core';
   templateUrl: './subheading.html',
   styleUrl: './subheading.css',
   host: {
-    class: 'w-1/2 md:w-1/4 h-auto flex flex-col justify-center items-center my-4'
+    class: 'w-full h-auto flex flex-col'
   }
 })
 export class Subheading {
-  @Input() subheading: string = 'SECTION'
+  @Input() sectionHead: string = 'SECTION'
+  @Input() sectionDescription: string = 'This is the section description'
+  @Input() alignment: string = 'CENTER'
+
+  get alignmentClasses(): string {
+    switch(this.alignment.toUpperCase()) {
+      case 'CENTER':
+        return 'text-center';
+      case 'RIGHT':
+        return 'text-end';
+      case 'LEFT':
+      default:
+        return 'text-start';
+    }
+  }
 }

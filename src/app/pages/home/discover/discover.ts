@@ -13,6 +13,7 @@ import { SessionService } from '../../../core/services/session.service';
 import { EventService } from '../../../services/event.service';
 import { ActivatedRoute } from '@angular/router';
 import { DiscoverPageData } from '../../../core/resolvers/discover.resolver';
+import { Subheading } from "../../../components/subheading/subheading";
 
 @Component({
   selector: 'app-discover',
@@ -23,7 +24,8 @@ import { DiscoverPageData } from '../../../core/resolvers/discover.resolver';
     SmallSpotCard,
     HistoricalSpotCard,
     SmallEventCard,
-  ],
+    Subheading
+],
   templateUrl: './discover.html',
   styleUrl: './discover.css',
   host: {

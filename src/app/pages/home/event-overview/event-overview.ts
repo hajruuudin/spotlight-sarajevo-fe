@@ -50,8 +50,7 @@ import { CollectionAddItemModel } from '../../../shared/models/collection.model'
     EventInfoCard,
     NotFoundComponent,
     ButtonPrimary,
-    OrganiserReiewCard,
-    ButtonRegular,
+    OrganiserReiewCard
   ],
   templateUrl: './event-overview.html',
   styleUrl: './event-overview.css',
@@ -304,7 +303,7 @@ export class EventOverview {
     });
   }
 
-  saveToAllSpots() {
+  saveToAllEvents() {
     const request: CollectionAddItemModel = {
       objectId: this.eventOverview.id,
       objectType: 'EVENT',
@@ -322,7 +321,7 @@ export class EventOverview {
     });
   }
 
-  removeFromAllSpots() {
+  removeFromAllEvents() {
     this.collectionService
       .removeItemFromCollection(0, this.eventOverview.id, 'EVENT', true)
       .subscribe({

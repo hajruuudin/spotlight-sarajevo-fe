@@ -97,12 +97,11 @@
     class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full py-6"
   >
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto mb-2">
-      <span class="text-xs sm:text-base tracking-wider">{{
-        'homepage.popularSectionSpotsSpan' | transloco
-      }}</span>
-      <h2 class="text-xl sm:text-2xl font-semibold">
-        {{ 'homepage.popularSectionSpots' | transloco }}
-      </h2>
+      <app-subheading
+        [sectionHead]="'homepage.popularSectionSpotsSpan' | transloco"
+        [sectionDescription]="'homepage.popularSectionSpots' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
     </div>
 
     <div
@@ -137,14 +136,13 @@
     class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full my-2"
   >
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto my-2">
-      <span class="text-xs sm:text-base tracking-wider">{{
-        'homepage.popularSectionEventsSpan' | transloco
-      }}</span>
-      <h2 class="text-xl sm:text-2xl font-semibold">
-        {{ 'homepage.popularSectionEvents' | transloco }}
-      </h2>
+      <app-subheading
+        [sectionHead]="'homepage.popularSectionEventsSpan' | transloco"
+        [sectionDescription]="'homepage.popularSectionEvents' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
     </div>
-
+      
     <div
       class="w-full h-auto flex flex-row justify-center items-center overflow-x-scroll sm:overflow-hidden my-2"
     >
@@ -198,12 +196,11 @@
     class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full pt-6 pb-0"
   >
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto my-2">
-      <span class="text-xs sm:text-base tracking-wider">{{
-        'homepage.discoverSectionLandmarksSpan' | transloco
-      }}</span>
-      <h2 class="text-xl sm:text-2xl font-semibold">
-        {{ 'homepage.discoverSectionLandmarks' | transloco }}
-      </h2>
+      <app-subheading
+        [sectionHead]="'homepage.discoverSectionLandmarksSpan' | transloco"
+        [sectionDescription]="'homepage.discoverSectionLandmarks' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
     </div>
 
     <div
@@ -230,12 +227,11 @@
     class="max-w-application px-4 md:px-8 flex flex-col justify-start items-center w-full pt-0 pb-6"
   >
     <div class="flex flex-col w-full justify-center items-center md:items-start h-auto">
-      <span class="text-xs sm:text-base tracking-wider">{{
-        'homepage.discoverSectionCategoriesSpan' | transloco
-      }}</span>
-      <h2 class="text-xl sm:text-2xl font-semibold">
-        {{ 'homepage.discoverSectionCategories' | transloco }}
-      </h2>
+      <app-subheading
+        [sectionHead]="'homepage.discoverSectionCategoriesSpan' | transloco"
+        [sectionDescription]="'homepage.discoverSectionCategories' | transloco"
+        [alignment]="'LEFT'"
+      ></app-subheading>
     </div>
 
     <div class="w-full max-w-application h-auto overflow-x-auto mb-1 mt-2">

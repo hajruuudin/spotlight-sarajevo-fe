@@ -106,35 +106,38 @@
 
       <div class="w-full md:w-1/2 flex flex-row justify-around items-center space-x-2">
         @if (this.isSaved) {
-           <app-button-regular
-          (click)="this.removeFromAllSpots()"
-          classAddons="px-4"
-          [buttonIcon]="'COLLECTION_ADD_EDIT'"
-          [buttonContent]="'Unsave event'"
-        ></app-button-regular>
+          <app-button-primary
+            (click)="this.removeFromAllEvents()"
+            classAddons="px-4 py-2"
+            [buttonType]="'DEFAULT'"
+            [buttonContent]="'Unsave Event'"
+          ></app-button-primary>
         } @else {
-           <app-button-regular
-          (click)="this.saveToAllSpots()"
-          classAddons="px-4"
-          [buttonIcon]="'COLLECTION_ADD_EDIT'"
-          [buttonContent]="'Save event'"
-        ></app-button-regular>
+          <app-button-primary
+            (click)="this.saveToAllEvents()"
+            classAddons="px-4 py-2"
+            [buttonType]="'DEFAULT'"
+            [buttonContent]="'Save Event'"
+          ></app-button-primary>
         }
-        <app-button-regular
+        <app-button-primary
           (click)="this.openAddCollectionModal()"
           classAddons="px-4"
-          [buttonIcon]="'COLLECTION_ADD_EDIT'"
+          [buttonType]="'DEFAULT'"
           [buttonContent]="'Add to Collection'"
-        ></app-button-regular>
-        <app-button-regular
+        ></app-button-primary>
+        <app-button-primary
           classAddons="px-4"
-          [buttonIcon]="'MARK_WILL_ATTEND'"
+          [buttonType]="'DEFAULT'"
           [buttonContent]="'Mark as will attend'"
-        ></app-button-regular>
+        ></app-button-primary>
       </div>
 
-      <div class="w-full h-auto flex flex-col jusitfy-center items-center">
-        <app-subheading [subheading]="'eventOverview.description' | transloco"></app-subheading>
+      <div class="w-full h-auto flex flex-col jusitfy-center py-4 items-center">
+        <app-subheading
+          [sectionDescription]="'eventOverview.descriptionTitle' | transloco"
+          [sectionHead]="'eventOverview.descriptionHead' | transloco"
+          ></app-subheading>
         <p class="text-base">
           {{
             this.session.language() == 'en'
@@ -146,10 +149,15 @@
         </p>
       </div>
 
-      <div class="w-full h-auto flex flex-col jusitfy-center items-center">
-        <app-subheading [subheading]="'eventOverview.images' | transloco"></app-subheading>
+      @if (this.images.length > 0) {
+      <div class="w-full h-auto flex flex-col jusitfy-center py-4 items-center">
+        <app-subheading
+          [sectionDescription]="'eventOverview.imagesTitle' | transloco"
+          [sectionHead]="'eventOverview.imagesHead' | transloco"
+          ></app-subheading>
         <app-image-carousel [images]="this.images"></app-image-carousel>
       </div>
+      }
     </div>
   </div>
 
@@ -220,11 +228,11 @@
       style="background-size: cover; background-position: center"
       class="w-full h-auto pb-10 flex flex-col justify-center items-center dark:bg-(--background-50) bg-white"
     >
-      <div id="location" class="w-full h-auto flex flex-col justify-center items-center">
+      <div id="location" class="w-full h-auto flex flex-col py-4 gap-4 justify-center items-center">
         <app-subheading
-          class="max-w-application"
-          [subheading]="'eventOverview.location' | transloco"
-        ></app-subheading>
+          [sectionDescription]="'eventOverview.locationTitle' | transloco"
+          [sectionHead]="'eventOverview.locationHead' | transloco"
+          ></app-subheading>
         <app-map-regular
           class="z-10"
           [layoutMode]="this.session.theme()"
@@ -242,9 +250,12 @@
     >
       <div
         id="organiserAndReview"
-        class="max-w-application w-full px-4 lg:w-2/3 flex flex-col jusitfy-center items-center space-y-8"
+        class="max-w-application w-full px-4 lg:w-2/3 flex flex-col py-4 jusitfy-center items-center space-y-8"
       >
-        <app-subheading [subheading]="'eventOverview.organiser' | transloco"></app-subheading>
+        <app-subheading
+          [sectionDescription]="'eventOverview.organiserTitle' | transloco"
+          [sectionHead]="'eventOverview.organiserHead' | transloco"
+        ></app-subheading>
 
         <div
           class="relative w-full h-auto flex flex-col rounded-2xl p-4 md:p-0 md:flex-row justify-between items-center dark:bg-(--background-200) bg-(--background-900)"
@@ -307,7 +318,10 @@
           </div>
         </div>
 
-        <app-subheading [subheading]="'eventOverview.reviews' | transloco"></app-subheading>
+        <app-subheading
+          [sectionDescription]="'eventOverview.reviewsTitle' | transloco"
+          [sectionHead]="'eventOverview.reviewsHead' | transloco"
+        ></app-subheading>
         <div class="dark:bg-(--primary-200) bg-white p-10 rounded-2xl w-full">
           @if (this.session.getUser() == null) {
           <app-not-found-component
@@ -333,7 +347,7 @@
             <app-button-primary
               class="col-span-2"
               (click)="this.openAddModal()"
-              [classAddons]="'w-1/2'"
+              [classAddons]="'w-full'"
               [buttonType]="'DEFAULT'"
               [buttonContent]="'spotReview.create' | transloco"
             ></app-button-primary>

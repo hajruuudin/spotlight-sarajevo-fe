@@ -15,7 +15,7 @@ import { Subheading } from "../../../components/subheading/subheading";
 
 @Component({
   selector: 'app-profile',
-  imports: [PageHeader, ButtonRegular, TranslocoPipe, TextHolder, ProfileIcon, Subheading],
+  imports: [PageHeader, ButtonRegular, TranslocoPipe, TextHolder, ProfileIcon, Subheading, ButtonPrimary],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
   host: {
