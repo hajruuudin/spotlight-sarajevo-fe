@@ -55,7 +55,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'homepage', pathMatch: 'full' },
       { path: 'homepage', resolve: {homepageData: homepageResolver}, component: Homepage, title: 'Homepage - SpotlightSarajevo' },
       { path: 'spots', component: SpotSearch, title: 'Browse Spots - SpotlightSarajevo' },
-      { path: 'spots/:spotSlug', resolve: [spotResolver], component: SpotOverview, title: 'Spot Overview - SpotlightSarajevo',},
+      { path: 'spots/:spotSlug', resolve: {spotData: spotResolver}, component: SpotOverview, title: 'Spot Overview - SpotlightSarajevo',},
       { path: 'events', component: EventSearch, title: 'Browse Events - SpotlightSarajevo' },
       { path: 'events/:eventSlug', resolve: {eventData: eventResolver}, component: EventOverview, title: 'Event - SpotlightSarajevo',},
       { path: 'discover', resolve: { discoverData: discoverResolver }, component: Discover, title: 'Discover - SpotlightSarajevo' },

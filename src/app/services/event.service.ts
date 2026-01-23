@@ -67,6 +67,21 @@ export class EventService {
       },
     );
   }
+  
+  /**
+   * Method to check if the logged-in user has marked a specific event as attended.
+   *
+   * @param eventId The unique identifier of the event to be checked.
+   * @returns An observable containing a boolean indicating attendance status.
+   */
+  checkIfEventIsAttended(eventId: number) {
+    return this.http.get<Boolean>(
+      this.apiUrl + `/event/attended-event/check?eventId=${eventId}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 
   /**
    * Method to add an event to the list of attended events for the logged-in user.

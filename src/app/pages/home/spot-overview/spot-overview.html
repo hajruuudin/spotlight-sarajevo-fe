@@ -124,12 +124,21 @@
           [buttonType]="'DEFAULT'"
           [buttonContent]="'Add to Collection'"
         ></app-button-primary>
-        <app-button-primary
+        @if (this.isVisited) {
+          <app-button-primary
+            classAddons="px-4 py-2"
+            [buttonType]="'DEFAULT'"
+            (click)="this.removeSpotFromVisited()"
+            [buttonContent]="'Unmark as visited'"
+          ></app-button-primary>
+        } @else {
+          <app-button-primary
           classAddons="px-4 py-2"
           [buttonType]="'DEFAULT'"
           (click)="this.markSpotAsVisited()"
           [buttonContent]="'Mark as visited'"
         ></app-button-primary>
+        }
         <app-button-primary
           classAddons="px-4 py-2"
           [buttonType]="'DEFAULT'"

@@ -60,6 +60,7 @@ import { CollectionAddItemModel } from '../../../shared/models/collection.model'
 })
 export class EventOverview {
   eventOverview!: EventOverviewModel;
+  isAttended: Boolean = false;
   isSaved: boolean = false;
   images: string[] = []; // TEMPORARY FOR DEMONSTRATION
 
@@ -89,7 +90,8 @@ export class EventOverview {
   ngOnInit(): void {
     this.headerContainer = this.el.nativeElement.querySelector('#headerContainer');
 
-    this.eventOverview = this.activatedRoute.snapshot.data['eventData'] as EventOverviewModel;
+    this.eventOverview = this.activatedRoute.snapshot.data['eventData'].event as EventOverviewModel;
+    this.isAttended = this.activatedRoute.snapshot.data['eventData'].isAttended as Boolean;
 
     this.loadUserOrganiserReview(this.eventOverview.organiser.id);
     this.loadOtherOrganiserReviews(this.eventOverview.organiser.id);
@@ -101,6 +103,9 @@ export class EventOverview {
     this.images.push(this.eventOverview.thumbnailImage);
     this.images.push(this.eventOverview.thumbnailImage);
     this.images.push(this.eventOverview.thumbnailImage);
+
+    
+    this.checkIfPresentInSystemCollection();
   }
 
   @HostListener('document:scroll')
@@ -338,8 +343,21 @@ export class EventOverview {
     this.eventService.addEventAsAttended(this.eventOverview.id).subscribe({
       next: () => {
         this.toastr.success('Event marked as attended!');
+        this.isAttended = true;
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error marking event as attended', err),
+    });
+  }
+
+  unmarkEventAsAttended() {
+    this.eventService.removeEventFromAttended(this.eventOverview.id).subscribe({
+      next: () => {
+        this.toastr.success('Event unmarked as attended!');
+        this.isAttended = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error unmarking event as attended', err),
     });
   }
 }

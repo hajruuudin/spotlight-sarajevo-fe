@@ -40,13 +40,13 @@
       class="flex flex-row flex-wrap gap-2 items-center justify-center pb-4 z-20"
     >
       @for (tag of this.eventOverview.eventTags; track $index) {
-      <div
-        class="category-label-medium bg-fuchsia-50 w-auto mt-2 px-2 md:px-5 py-0.5 flex flex-row justify-center items-center rounded-full"
-      >
-        <span class="text-sm md:text-base text-black font-semibold">{{
-          this.session.language() == 'en' ? tag.tagNameEn : tag.tagNameBs
-        }}</span>
-      </div>
+        <div
+          class="category-label-medium bg-fuchsia-50 w-auto mt-2 px-2 md:px-5 py-0.5 flex flex-row justify-center items-center rounded-full"
+        >
+          <span class="text-sm md:text-base text-black font-semibold">{{
+            this.session.language() == 'en' ? tag.tagNameEn : tag.tagNameBs
+          }}</span>
+        </div>
       }
     </div>
   </div>
@@ -126,19 +126,28 @@
           [buttonType]="'DEFAULT'"
           [buttonContent]="'Add to Collection'"
         ></app-button-primary>
-        <app-button-primary
-          classAddons="px-4"
-          (click)="markEventAsAttended()"
-          [buttonType]="'DEFAULT'"
-          [buttonContent]="'Mark as will attend'"
-        ></app-button-primary>
+        @if (this.isAttended) {
+          <app-button-primary
+            classAddons="px-4"
+            (click)="unmarkEventAsAttended()"
+            [buttonType]="'DEFAULT'"
+            [buttonContent]="'Unmark as will attend'"
+          ></app-button-primary>
+        } @else {
+          <app-button-primary
+            classAddons="px-4"
+            (click)="markEventAsAttended()"
+            [buttonType]="'DEFAULT'"
+            [buttonContent]="'Mark as will attend'"
+          ></app-button-primary>
+        }
       </div>
 
       <div class="w-full h-auto flex flex-col jusitfy-center py-4 items-center">
         <app-subheading
           [sectionDescription]="'eventOverview.descriptionTitle' | transloco"
           [sectionHead]="'eventOverview.descriptionHead' | transloco"
-          ></app-subheading>
+        ></app-subheading>
         <p class="text-base">
           {{
             this.session.language() == 'en'
@@ -151,13 +160,13 @@
       </div>
 
       @if (this.images.length > 0) {
-      <div class="w-full h-auto flex flex-col jusitfy-center py-4 items-center">
-        <app-subheading
-          [sectionDescription]="'eventOverview.imagesTitle' | transloco"
-          [sectionHead]="'eventOverview.imagesHead' | transloco"
+        <div class="w-full h-auto flex flex-col jusitfy-center py-4 items-center">
+          <app-subheading
+            [sectionDescription]="'eventOverview.imagesTitle' | transloco"
+            [sectionHead]="'eventOverview.imagesHead' | transloco"
           ></app-subheading>
-        <app-image-carousel [images]="this.images"></app-image-carousel>
-      </div>
+          <app-image-carousel [images]="this.images"></app-image-carousel>
+        </div>
       }
     </div>
   </div>
@@ -170,7 +179,6 @@
       id="eventDetailsAndInformation"
       class="max-w-application px-2 md:px-4 w-full md:w-5/6 lg:w-3/4 flex flex-col jusitfy-center items-center gap-6"
     >
-      
       <div
         class="w-full lg:w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 px-4 pb-4 pt-2"
       >
@@ -233,7 +241,7 @@
         <app-subheading
           [sectionDescription]="'eventOverview.locationTitle' | transloco"
           [sectionHead]="'eventOverview.locationHead' | transloco"
-          ></app-subheading>
+        ></app-subheading>
         <app-map-regular
           class="z-10"
           [layoutMode]="this.session.theme()"
@@ -262,11 +270,11 @@
           class="relative w-full h-auto flex flex-col rounded-2xl p-4 md:p-0 md:flex-row justify-between items-center dark:bg-(--background-200) bg-(--background-900)"
         >
           @if (this.eventOverview.organiser.overallRating != null) {
-          <div
-            class="absolute bottom-2 right-2 w-auto h-auto py-4 px-4 aspect-square rounded-2xl dark:bg-(--background-100) bg-(--background-700) font-extrabold text-2xl"
-          >
-            <span>{{ this.eventOverview.organiser.overallRating }}</span>
-          </div>
+            <div
+              class="absolute bottom-2 right-2 w-auto h-auto py-4 px-4 aspect-square rounded-2xl dark:bg-(--background-100) bg-(--background-700) font-extrabold text-2xl"
+            >
+              <span>{{ this.eventOverview.organiser.overallRating }}</span>
+            </div>
           }
 
           <img
@@ -325,68 +333,68 @@
         ></app-subheading>
         <div class="dark:bg-(--primary-200) bg-white p-10 rounded-2xl w-full">
           @if (this.session.getUser() == null) {
-          <app-not-found-component
-            class="col-span-2"
-            [headerMessage]="'eventOverview.noAuthOrganiserReviewHeader' | transloco"
-            [messageDescription]="'eventOverview.noAuthOrganiserReviewSubheading' | transloco"
-          ></app-not-found-component>
-          <app-button-primary
-            class="col-span-2 w-full"
-            (click)="this.redirectToLogin()"
-            [classAddons]="'w-1/2'"
-            [buttonType]="'DEFAULT'"
-            [buttonContent]="'Log in'"
-          ></app-button-primary>
-          } @else {
-          <div class="w-full grid grid-cols-2 gap-2">
-            @if (this.userEventOrganiserReview == null) {
             <app-not-found-component
               class="col-span-2"
-              [headerMessage]="'eventOverview.noUserOrganiserReviewHeader' | transloco"
-              [messageDescription]="'eventOverview.noUserOrganiserReviewSubheading' | transloco"
+              [headerMessage]="'eventOverview.noAuthOrganiserReviewHeader' | transloco"
+              [messageDescription]="'eventOverview.noAuthOrganiserReviewSubheading' | transloco"
             ></app-not-found-component>
             <app-button-primary
-              class="col-span-2"
-              (click)="this.openAddModal()"
-              [classAddons]="'w-full'"
+              class="col-span-2 w-full"
+              (click)="this.redirectToLogin()"
+              [classAddons]="'w-1/2'"
               [buttonType]="'DEFAULT'"
-              [buttonContent]="'spotReview.create' | transloco"
+              [buttonContent]="'Log in'"
             ></app-button-primary>
-            } @else {
-            <app-organiser-reiew-card
-              [review]="this.userEventOrganiserReview"
-              class="col-span-2"
-            ></app-organiser-reiew-card>
-            <app-button-primary
-              (click)="this.openEditModal()"
-              [classAddons]="'w-full'"
-              [buttonType]="'DEFAULT'"
-              [buttonContent]="'eventReview.update' | transloco"
-            ></app-button-primary>
-            <app-button-primary
-              (click)="this.openDeleteReviewModal()"
-              [classAddons]="'w-full'"
-              [buttonType]="'DANGER'"
-              [buttonContent]="'eventReview.delete' | transloco"
-            ></app-button-primary>
-            }
-          </div>
+          } @else {
+            <div class="w-full grid grid-cols-2 gap-2">
+              @if (this.userEventOrganiserReview == null) {
+                <app-not-found-component
+                  class="col-span-2"
+                  [headerMessage]="'eventOverview.noUserOrganiserReviewHeader' | transloco"
+                  [messageDescription]="'eventOverview.noUserOrganiserReviewSubheading' | transloco"
+                ></app-not-found-component>
+                <app-button-primary
+                  class="col-span-2"
+                  (click)="this.openAddModal()"
+                  [classAddons]="'w-full'"
+                  [buttonType]="'DEFAULT'"
+                  [buttonContent]="'spotReview.create' | transloco"
+                ></app-button-primary>
+              } @else {
+                <app-organiser-reiew-card
+                  [review]="this.userEventOrganiserReview"
+                  class="col-span-2"
+                ></app-organiser-reiew-card>
+                <app-button-primary
+                  (click)="this.openEditModal()"
+                  [classAddons]="'w-full'"
+                  [buttonType]="'DEFAULT'"
+                  [buttonContent]="'eventReview.update' | transloco"
+                ></app-button-primary>
+                <app-button-primary
+                  (click)="this.openDeleteReviewModal()"
+                  [classAddons]="'w-full'"
+                  [buttonType]="'DANGER'"
+                  [buttonContent]="'eventReview.delete' | transloco"
+                ></app-button-primary>
+              }
+            </div>
           }
         </div>
 
         <div class="w-full flex flex-col justify-start items-center">
-          @if(this.eventOrganiserReviews.length == 0){
-          <app-not-found-component
-            class="col-span-2"
-            [headerMessage]="'eventOverview.noOtherOrganiserReviewHeading' | transloco"
-            [messageDescription]="'eventOverview.noOtherOrganiserReviewSubheading' | transloco"
-          ></app-not-found-component>
+          @if (this.eventOrganiserReviews.length == 0) {
+            <app-not-found-component
+              class="col-span-2"
+              [headerMessage]="'eventOverview.noOtherOrganiserReviewHeading' | transloco"
+              [messageDescription]="'eventOverview.noOtherOrganiserReviewSubheading' | transloco"
+            ></app-not-found-component>
           } @else {
-          <div class="w-full columns-1 md:columns-2">
-            @for (review of this.eventOrganiserReviews; track $index) {
-            <app-organiser-reiew-card [review]="review"></app-organiser-reiew-card>
-            }
-          </div>
+            <div class="w-full columns-1 md:columns-2">
+              @for (review of this.eventOrganiserReviews; track $index) {
+                <app-organiser-reiew-card [review]="review"></app-organiser-reiew-card>
+              }
+            </div>
           }
         </div>
       </div>

@@ -71,6 +71,7 @@ import { ZeroReview } from '../../../shared/pipes/zero-review-pipe';
 export class SpotOverview implements OnInit {
   spotOverview!: SpotOverviewModel;
   isSaved: boolean = false;
+  isVisited: Boolean = false;
   images: string[] = [];
 
   headerContainer!: HTMLElement;
@@ -104,38 +105,31 @@ export class SpotOverview implements OnInit {
   ngOnInit(): void {
     this.headerContainer = this.el.nativeElement.querySelector('#headerContainer');
 
-    this.activatedRoute.data.subscribe({
-      next: (data: any) => {
-        this.spotOverview = data['0'];
-        this.formatSpotWorkHours(this.spotOverview.workHours);
-        this.initialiseRadarChart(this.session.language()!, this.session.theme()!);
-        this.loadUserSpotReview(this.spotOverview.id);
-        this.loadOtherSpotReviews(this.spotOverview.id);
-        this.checkIfPresentInSystemCollection();
+    this.spotOverview = this.activatedRoute.snapshot.data['spotData'].spot as SpotOverviewModel;
+    this.isVisited = this.activatedRoute.snapshot.data['spotData'].isVisited as Boolean;
 
-        this.images.push(this.spotOverview.thumbnailImage);
-        this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');
-        this.images.push(this.spotOverview.thumbnailImage);
-        this.images.push(this.spotOverview.thumbnailImage);
-        this.images.push(this.spotOverview.thumbnailImage);
-        this.images.push(this.spotOverview.thumbnailImage);
-        this.images.push(this.spotOverview.thumbnailImage);
+    console.log(this.activatedRoute.snapshot.data['spotData'].isVisited)
 
-        
-      },
-      error: () => {
-        this.session.translate('spotOverview.loadError').subscribe(
-          (translation) => this.toastr.error(translation)
-        );
-      },
-    });
+    this.formatSpotWorkHours(this.spotOverview.workHours);
+    this.initialiseRadarChart(this.session.language()!, this.session.theme()!);
+    this.loadUserSpotReview(this.spotOverview.id);
+    this.loadOtherSpotReviews(this.spotOverview.id);
+    this.checkIfPresentInSystemCollection();
+
+    this.images.push(this.spotOverview.thumbnailImage);
+    this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');
+    this.images.push(this.spotOverview.thumbnailImage);
+    this.images.push(this.spotOverview.thumbnailImage);
+    this.images.push(this.spotOverview.thumbnailImage);
+    this.images.push(this.spotOverview.thumbnailImage);
+    this.images.push(this.spotOverview.thumbnailImage);
   }
 
   @HostListener('document:scroll')
   scrollHeaderSlow(): void {
     if (!this.headerContainer) return;
 
-    scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollY = document.documentElement.scrollTop || document.body.scrollTop;
 
     const parallaxOffset = scrollY * 0.3;
 
@@ -463,12 +457,21 @@ export class SpotOverview implements OnInit {
     this.spotService.addSpotAsVisited(this.spotOverview.id).subscribe({
       next: () => {
         this.toastr.success('Spot marked as visited!');
+        this.isVisited = true;
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error marking spot as visited', err),
     });
   }
 
   removeSpotFromVisited() {
-    // Implementation for removing spot from visited list can be added here
+    this.spotService.removeSpotFromVisited(this.spotOverview.id).subscribe({
+      next: () => {
+        this.toastr.success('Spot unmarked as visited!');
+        this.isVisited = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error unmarking spot as visited', err),
+    });
   }
 }
