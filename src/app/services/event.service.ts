@@ -67,4 +67,52 @@ export class EventService {
       },
     );
   }
+  
+  /**
+   * Method to check if the logged-in user has marked a specific event as attended.
+   *
+   * @param eventId The unique identifier of the event to be checked.
+   * @returns An observable containing a boolean indicating attendance status.
+   */
+  checkIfEventIsAttended(eventId: number) {
+    return this.http.get<Boolean>(
+      this.apiUrl + `/event/attended-event/check?eventId=${eventId}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to add an event to the list of attended events for the logged-in user.
+   *
+   * @param eventId The unique identifier of the event to be marked as attended.
+   * @returns An observable representing the completion of the operation.
+   */
+  addEventAsAttended(eventId: number) {
+    return this.http.post(
+      this.apiUrl + `/user/attended-event/add`,
+      {
+        eventId: eventId
+      },
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to remove an event from the list of attended events for the logged-in user.
+   *
+   * @param eventId The unique identifier of the event to be removed from attended list.
+   * @returns An observable representing the completion of the operation.
+   */
+  removeEventFromAttended(eventId: number) {
+    return this.http.delete(
+      this.apiUrl + `/user/attended-event/remove?eventId=${eventId}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }

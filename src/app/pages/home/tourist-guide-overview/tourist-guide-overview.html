@@ -51,7 +51,8 @@
     id="guideDescriptionContent"
     class="max-w-application px-2 md:px-4 w-full md:w-3/4 flex flex-col justify-start items-center space-y-4"
   >
-    <app-subheading [subheading]="'guideOverview.aboutThisGuide' | transloco"></app-subheading>
+    <app-subheading 
+      [sectionHead]="'guideOverview.aboutThisGuide' | transloco"></app-subheading>
     <p class="text-base text-center">
       {{
         this.session.language() == 'en'
@@ -98,7 +99,7 @@
             class="w-full md:w-3/5 flex flex-col justify-center items-center py-8 px-4 md:px-8 order-2"
           >
             <app-subheading
-              [subheading]="
+              [sectionHead]="
                 this.session.language() == 'en' ? section.sectionTitleEn : section.sectionTitleBs
               "
             ></app-subheading>
@@ -111,7 +112,7 @@
             class="w-full md:w-3/5 flex flex-col justify-center items-center py-8 px-4 md:px-8 order-2 md:order-1"
           >
             <app-subheading
-              [subheading]="
+              [sectionHead]="
                 this.session.language() == 'en' ? section.sectionTitleEn : section.sectionTitleBs
               "
             ></app-subheading>

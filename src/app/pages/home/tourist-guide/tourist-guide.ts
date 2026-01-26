@@ -7,10 +7,11 @@ import { HotToastService } from '@ngxpert/hot-toast';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { TouristGuideCard } from "../../../components/tourist-guide-card/tourist-guide-card";
+import { Subheading } from "../../../components/subheading/subheading";
 
 @Component({
   selector: 'app-tourist-guide',
-  imports: [PageHeader, TranslocoPipe, TouristGuideCard],
+  imports: [PageHeader, TranslocoPipe, TouristGuideCard, Subheading],
   templateUrl: './tourist-guide.html',
   styleUrl: './tourist-guide.css',
   host: {

@@ -30,6 +30,7 @@ import { EventService } from '../../../services/event.service';
 import { SpinnerService } from '../../../core/services/spinner.service';
 import { ActivatedRoute } from '@angular/router';
 import { HomepagePageData } from '../../../core/resolvers/homepage.resolver';
+import { Subheading } from "../../../components/subheading/subheading";
 
 @Component({
   selector: 'app-homepage',
@@ -45,7 +46,8 @@ import { HomepagePageData } from '../../../core/resolvers/homepage.resolver';
     HistoricalSpotCard,
     CategoryCard,
     ButtonPrimary,
-  ],
+    Subheading
+],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
   host: {

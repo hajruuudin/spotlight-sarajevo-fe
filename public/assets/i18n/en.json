@@ -39,6 +39,16 @@
     "transport": {
       "TRANSPORT_METHOD_NOT_FOUND": "The requested transport method could not be found.",
       "TRANSPORT_INVALID_REQUEST": "The transport request information is invalid."
+    },
+    "auth" : {
+      "AUTH_INVALID_CREDENTIALS": "Invalid login credentials. Please try again.",
+      "AUTH_USER_NOT_FOUND": "No user found with this email.",
+      "AUTH_EMAIL_ALREADY_EXISTS": "A user with this email already exists.",
+      "AUTH_WEAK_PASSWORD": "The password is too weak. Please choose a stronger password.",
+      "AUTH_UNAUTHORIZED_ACCESS": "You do not have permission to access this resource.",
+      "AUTH_INVALID_TOKEN": "The token is invalid or has expired. Please log in again.",
+      "AUTH_SPOT_ID_MISSING": "Spot ID is required for this operation.",
+      "AUTH_EVENT_ID_MISSING": "Event ID is required for this operation."
     }
   },
   "navbar": {
@@ -191,16 +201,25 @@
     "rating": "RATING",
     "address": "ADDRESS",
     "category": "CATEGORY",
-    "description": "DESCRIPTION",
-    "images": "SPOT IMAGES",
-    "workHours": "WORK HOURS",
+    "descriptionHead": "DESCRIPTION",
+    "descriptionTitle" : "About this Spot",
+  
+    "imagesHead": "SPOT IMAGES",
+    "imagesTitle": "View images of this spot",
+    "workHoursHead": "WORK HOURS",
+    "workHoursTitle": "Working hours of this spot",
+
     "closed": "Closed",
-    "ratings": "RATINGS",
-    "ratingNote": "Note: The ratings of the spot are calculated as the total weight of all of the available reviews along with the admins initial review of the spot.",
-    "location": "SPOT LOCATION",
+
+    "ratingsHead": "RATINGS",
+    "ratingsTitle": "Detailed ratings of this spot",
+
+    "locationHead": "SPOT LOCATION",
+    "locationTitle": "Location of this spot on the map",
     "noGraphHeading": "No reviews are present for this spot",
     "noGraphDesc": "Once reviews are made, a graph will be shown to represent the stats of the spot",
-    "reviews": "REVIEWS",
+    "reviewsHead": "REVIEWS",
+    "reviewsTitle": "What other users say about this place",
     "noAuthReviewHeader": "Log in to leave reviews and see Your reviews!",
     "noAuthReviewSubheading": "Its only a quick step! Create an account if You dont have one already!",
     "noUserReviewHeader": "You havent reviewed this place.",
@@ -234,8 +253,21 @@
     "startDate": "START DATE",
     "location": "LOCATION",
     "category": "CATEGORY",
-    "description": "DESCRIPTION",
-    "images": "EVENT IMAGES",
+    "descriptionHead": "DESCRIPTION",
+    "descriptionTitle" : "About this Event",
+  
+    "imagesHead": "EVENT IMAGES",
+    "imagesTitle": "View images of this event",
+
+    "locationHead": "EVENT LOCATION",
+    "locationTitle": "Location of this event on the map",
+
+    "organiserHead": "ORGANISER INFO",
+    "organiserTitle": "Information about the event organiser",
+
+    "reviewsHead": "ORGANISER REVIEWS",
+    "reviewsTitle": "What other users say about this organiser",
+
     "eventStart": "Event starts at:",
     "eventEnd": "Event ends at:",
     "eventInfoAgeYes": "You have to be at least the required age to enter this event: ",
@@ -248,7 +280,6 @@
     "eventInfoCancelNo": "The organisers do NOT offer refunds for late cancellations.",
     "eventInfoLangYes": "The predominant language of this event is: ",
     "eventInfoLangNo": "There is no predominant langauge for this event. A multilingual atmosphere is welcome!",
-    "organiser": "ORGANISER INFO",
     "organiserName": "Organiser Name: ",
     "organiserCreation": "Organisation formed / founded on: ",
     "organiserCategory": "Predominantly makinng events in this category: ",
@@ -256,7 +287,6 @@
     "contactPhone": "Phone: ",
     "contactEmail": "Email: ",
     "contactWebsite": "Website: ",
-    "reviews": "ORGANISER REVIEWS",
     "noAuthOrganiserReviewHeader": "Log in to leave reviews and see your reviews!",
     "noAuthOrganiserReviewSubheading": "It's only a quick step! Create an account if you don't have one already!",
     "noUserOrganiserReviewHeader": "You haven't reviewed this organiser.",
@@ -346,5 +376,38 @@
     "description": "The page you're looking for doesn't exist or has been moved. Don't worry, you can navigate back to the homepage.",
     "helpText": "If you believe this is an error, please report it to us or try navigating using the menu.",
     "backHome": "Back to Homepage"
+  },
+  "profile" : {
+    "headerTitle": "Your Profile",
+    "headerSubtitle": "View and manage your personal information and settings.",
+
+    "statsSectionHead": "YOUR STATISTICS",
+    "statsSectionTitle": "Statistical overview of your activities in Sarajevo",
+    "spotsVisitedOne": "You have visited...",
+    "spotsVisitedTwo": "locations!",
+    "eventsAttendedOne": "You have attended...",
+    "eventsAttendedTwo": "events!",
+    "communityRequestsOne": "You have submitted...",
+    "communityRequestsTwo": "requests to the community!",
+
+    "communityRequestsSectionHead": "COMMUNITY REQUESTS",
+    "communityRequestsSectionTitle": "Help us improve SpotlightSarajevo",
+    "communityRequestsSectionParagraphOne": "Here you can submit requests to add new locations or events that are not currently in the SpotlightSarajevo system. Your requests help us keep our database current and relevant for all users.",
+    "communityRequestsSectionParagraphTwo": "If you know of a location or event that is not currently in the system, feel free to submit a report using our form, and our administrators will review your request as quickly as possible. The more locations and events in the system, the better for the entire city!",
+    "makeRequestButton": "Make Request",
+
+    "premiumAccountSectionHead": "PREMIUM",
+    "premiumAccountSectionTitle": "Become a premium member of SpotlightSarajevo!",
+    "premiumAccountSectionParagraphOne": "SpotlightSarajevo services are designed to provide a quick and easy guide through Sarajevo for all its residents and tourists. We value every individual who chooses to use our application and understand that each person has their own vision of the application's functionality.",
+    "premiumAccountSectionParagraphTwo": "Nevertheless, our developers always work hard to improve the application and populate the system as needed. That is why every part of the financial benefit the application generates is vitally important to us.",
+    "premiumAccountSectionParagraphThree": "We understand that paying for online services is not for everyone, so for people who choose to do so, we have added bonus features to the application to further enhance your experience. Become a monthly premium member of SpotlightSarajevo and enjoy additional benefits!",
+    "subscribeButton": "Subscribe Now",
+    "premiumBenefitOne": "Ad-free experience",
+    "premiumBenefitTwo": "Dedicated Map Search for locations and events",
+    "premiumBenefitThree": "Calendar view of upcoming events",
+    "premiumBenefitFour": "Unlimited custom collections",
+    "premiumStatusInfo": "You are currently a premium member! Thank you for supporting SpotlightSarajevo! Your benefits include:",
+    "unsubscribeButton": "Cancel subscription",
+    "logout": "Logout"
   }
 }

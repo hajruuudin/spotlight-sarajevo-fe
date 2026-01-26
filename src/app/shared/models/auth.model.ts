@@ -1,3 +1,5 @@
+import { EventCategoryModel, SpotCategoryModel } from "./category.model";
+
 export class LoginModel {
     constructor(
         public email: String,
@@ -43,3 +45,19 @@ export class LoggedUserModel {
         public isPremium: boolean
     ) {}
 }
+
+export class UserInfoModel {
+    constructor(
+        public id: number,
+        public firstName: String,
+        public lastName: String,
+        public email: String,
+        public username: String,
+        public isAdmin: boolean,
+        public isPremium: boolean,
+        public favoriteSpotCategories: SpotCategoryModel[],
+        public favoriteEventCategories: EventCategoryModel[],
+        public attendedEventsCount: number,
+        public visitedSpotsCount: number,
+    ) {}
+}  

@@ -72,4 +72,50 @@ export class SpotService {
       }
     );
   }
+
+  /**
+   * Method to check if a spot is marked as visited by the current user.
+   * @param spotId The ID of the spot to check
+   * @returns A boolean indicating if the spot is marked as visited
+   */
+  checkIfSpotIsVisited(spotId: number) {
+    return this.http.get<Boolean>(
+      this.apiUrl + `/spot/visited-spot/check?spotId=${spotId}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to add a spot to the user's visited spots list.
+   * 
+   * @param spotId The ID of the spot to be added as visited
+   * @returns An observable representing the result of the add operation
+   */
+  addSpotAsVisited(spotId: number) {
+    return this.http.post(
+      this.apiUrl + `/user/visited-spot/add`,
+      {
+        spotId: spotId
+      },
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to remove a spot from the user's visited spots list.
+   * @param spotId The ID of the spot to be removed from visited
+   * @returns An observable representing the result of the remove operation
+   */
+  removeSpotFromVisited(spotId: number) {
+    return this.http.delete(
+      this.apiUrl + `/user/visited-spot/remove?spotId=${spotId}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }

@@ -101,43 +101,59 @@
         </div>
       </div>
 
-      <div class="w-full md:w-2/3 flex flex-row justify-around items-center space-x-2">
-        @if (this.isSaved) {
+      @if (this.session.getUser() != null) {
+        <div class="w-full md:w-2/3 flex flex-row justify-around items-center space-x-2">
+          @if (this.isSaved) {
+            <app-button-primary
+              (click)="this.removeFromAllSpots()"
+              classAddons="px-4 py-2"
+              [buttonType]="'DEFAULT'"
+              [buttonContent]="'Unsave Spot'"
+            ></app-button-primary>
+          } @else {
+            <app-button-primary
+              (click)="this.saveToAllSpots()"
+              classAddons="px-4 py-2"
+              [buttonType]="'DEFAULT'"
+              [buttonContent]="'Save Spot'"
+            ></app-button-primary>
+          }
+
           <app-button-primary
-            (click)="this.removeFromAllSpots()"
+            (click)="this.openAddCollectionModal()"
             classAddons="px-4 py-2"
             [buttonType]="'DEFAULT'"
-            [buttonContent]="'Unsave Spot'"
+            [buttonContent]="'Add to Collection'"
           ></app-button-primary>
-        } @else {
+          @if (this.isVisited) {
+            <app-button-primary
+              classAddons="px-4 py-2"
+              [buttonType]="'DEFAULT'"
+              (click)="this.removeSpotFromVisited()"
+              [buttonContent]="'Unmark as visited'"
+            ></app-button-primary>
+          } @else {
+            <app-button-primary
+              classAddons="px-4 py-2"
+              [buttonType]="'DEFAULT'"
+              (click)="this.markSpotAsVisited()"
+              [buttonContent]="'Mark as visited'"
+            ></app-button-primary>
+          }
           <app-button-primary
-            (click)="this.saveToAllSpots()"
             classAddons="px-4 py-2"
             [buttonType]="'DEFAULT'"
-            [buttonContent]="'Save Spot'"
+            [buttonContent]="'Report an update'"
           ></app-button-primary>
-        }
+        </div>
+      }
 
-        <app-button-primary
-          (click)="this.openAddCollectionModal()"
-          classAddons="px-4 py-2"
-          [buttonType]="'DEFAULT'"
-          [buttonContent]="'Add to Collection'"
-        ></app-button-primary>
-        <app-button-primary
-          classAddons="px-4 py-2"
-          [buttonType]="'DEFAULT'"
-          [buttonContent]="'Mark as visited'"
-        ></app-button-primary>
-        <app-button-primary
-          classAddons="px-4 py-2"
-          [buttonType]="'DEFAULT'"
-          [buttonContent]="'Report an update'"
-        ></app-button-primary>
-      </div>
-
-      <div class="w-full h-auto flex flex-col jusitfy-center items-center">
-        <app-subheading [subheading]="'spotOverview.description' | transloco"></app-subheading>
+      <div class="w-full h-auto flex flex-col justify-center items-center py-4">
+        <app-subheading
+          [alignment]="'CENTER'"
+          [sectionDescription]="'spotOverview.descriptionTitle' | transloco"
+          [sectionHead]="'spotOverview.descriptionHead' | transloco"
+        ></app-subheading>
         <p class="text-base">
           {{
             this.session.language() == 'en'
@@ -149,9 +165,13 @@
         </p>
       </div>
 
-      <div class="w-full h-auto flex flex-col jusitfy-center items-center">
-        <app-subheading [subheading]="'spotOverview.images' | transloco"></app-subheading>
-        <app-image-carousel [images]="this.images"></app-image-carousel>
+      <div class="w-full h-auto flex flex-col justify-center items-center py-4">
+        <app-subheading
+          [alignment]="'CENTER'"
+          [sectionHead]="'spotOverview.imagesHead' | transloco"
+          [sectionDescription]="'spotOverview.imagesTitle' | transloco"
+        ></app-subheading>
+        <app-image-carousel class="my-2" [images]="this.images"></app-image-carousel>
       </div>
     </div>
   </div>
@@ -167,7 +187,11 @@
       <div
         class="w-full lg:w-1/3 flex flex-col jusitfy-center items-center space-y-3 md:space-y-6 dark:bg-(--background-200) bg-white shadow-2xl px-4 pb-4 pt-2 rounded-2xl"
       >
-        <app-subheading [subheading]="'spotOverview.workHours' | transloco"></app-subheading>
+        <app-subheading
+          [sectionHead]="'spotOverview.workHoursHead' | transloco"
+          [alignment]="'CENTER'"
+          [sectionDescription]="'spotOverview.workHoursTitle' | transloco"
+        ></app-subheading>
         @for (workDay of this.formattedSpotWorkHours; track workDay.dayIndex) {
           <div class="w-full h-auto flex flex-row justify-center items-center space-x-2">
             <span class="w-auto uppercase text-lg text-start font-semibold">{{ workDay.day }}</span>
@@ -187,9 +211,13 @@
 
       @if (this.spotOverview.combinedRating != 0) {
         <div
-          class="w-full lg:w-2/3 flex flex-col justify-end items-center space-y-4 px-4 pb-4 pt-2 rounded-2xl h-[500px]"
+          class="w-full lg:w-2/3 flex flex-col justify-end items-center space-y-4 px-4 mt-16 rounded-2xl h-[500px]"
         >
-          <app-subheading [subheading]="'spotOverview.ratings' | transloco"></app-subheading>
+          <app-subheading
+            [sectionHead]="'spotOverview.ratingsHead' | transloco"
+            [alignment]="'CENTER'"
+            [sectionDescription]="'spotOverview.ratingsTitle' | transloco"
+          ></app-subheading>
           <div class="w-full h-full">
             <canvas
               baseChart
@@ -224,10 +252,14 @@
     style="background-size: cover; background-position: center"
     class="w-full h-auto flex flex-col justify-center items-center dark:bg-(--background-50) bg-white"
   >
-    <div id="location" class="w-full pb-16 md:w-full flex flex-col jusitfy-center items-center">
+    <div
+      id="location"
+      class="w-full pb-16 md:w-full flex flex-col gap-4 py-4 jusitfy-center items-center"
+    >
       <app-subheading
-        class="max-w-application"
-        [subheading]="'spotOverview.location' | transloco"
+        [alignment]="'CENTER'"
+        [sectionDescription]="'spotOverview.locationTitle' | transloco"
+        [sectionHead]="'spotOverview.locationHead' | transloco"
       ></app-subheading>
       <app-map-regular
         class="z-10"
@@ -248,7 +280,10 @@
       id="reviews"
       class="max-w-application px-2 md:px-4 w-full md:w-3/4 flex flex-col jusitfy-center items-center space-y-8"
     >
-      <app-subheading [subheading]="'spotOverview.reviews' | transloco"></app-subheading>
+      <app-subheading
+        [sectionDescription]="'spotOverview.reviewsTitle' | transloco"
+        [sectionHead]="'spotOverview.reviewsHead' | transloco"
+      ></app-subheading>
       <div class="dark:bg-(--primary-200) bg-white p-10 rounded-2xl w-full">
         @if (this.session.getUser() == null) {
           <app-not-found-component

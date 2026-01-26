@@ -39,6 +39,16 @@
     "transport": {
       "TRANSPORT_METHOD_NOT_FOUND": "Tražena metoda prijevoza nije pronađena.",
       "TRANSPORT_INVALID_REQUEST": "Informacije o zahtjevu za prijevoz nisu ispravne."
+    },
+    "auth": {
+      "AUTH_INVALID_CREDENTIALS": "Neispravni podaci za prijavu. Molim pokušajte ponovo.",
+      "AUTH_USER_NOT_FOUND": "Korisnik sa ovim email-om nije pronađen.",
+      "AUTH_EMAIL_ALREADY_EXISTS": "Korisnik sa ovim email-om već postoji.",
+      "AUTH_WEAK_PASSWORD": "Lozinka je preslaba. Molim odaberite jaču lozinku.",
+      "AUTH_UNAUTHORIZED_ACCESS": "Nemate dozvolu za pristup ovom resursu.",
+      "AUTH_INVALID_TOKEN": "Token nije ispravan ili je istekao. Molim prijavite se ponovo.",
+      "AUTH_SPOT_ID_MISSING": "ID lokala je obavezan za ovu operaciju.",
+      "AUTH_EVENT_ID_MISSING": "ID događaja je obavezan za ovu operaciju."
     }
   },
   "navbar": {
@@ -191,15 +201,27 @@
     "rating": "OCJENA",
     "address": "ADRESA",
     "category": "KATEGORIJA",
-    "description": "OPIS",
-    "images": "SLIKE LOKACIJE",
-    "workHours": "RADNO VRIJEME",
+    "descriptionHead": "OPIS",
+    "descriptionTitle" : "O ovom Mjestu",
+  
+    "imagesHead": "SLIKE LOKACIJE",
+    "imagesTitle": "Pogledajte slike ovog mjesta",
+
+    "workHoursHead": "RADNO VRIJEME",
+    "workHoursTitle": "Radno vrijeme ovog mjesta",
+
     "closed": "Zatvoreno",
-    "ratings": "OCJENA",
-    "location": "LOKACIJA NA MAPI",
+
+    "ratingsHead": "OCJENA",
+    "ratingsTitle": "Detaljne ocjene ovog mjesta",
+
+    "locationHead": "LOKACIJA NA MAPI",
+    "locationTitle": "Lokaciju ovog mjesta na mapi",
+
     "noGraphHeading": "Nema recenzija za ovo mjesto",
     "noGraphDesc": "Nakon što se dodaju prve recenzije, ovdje će biti prikazan grafikon sa statistikom za ovo mjesto",
-    "reviews": "RECENZIJE",
+    "reviewsHead": "RECENZIJE",
+    "reviewsTitle": "Šta drugi korisnici kažu o ovom mjestu",
     "noAuthReviewHeader": "Prijavite se da ostavite recenziju i pogledate svoje recenzije!",
     "noAuthReviewSubheading": "Samo jedan brzi korak! Napravite račun ako ga već nemate!",
     "noUserReviewHeader": "Niste ostavili recenziju za ovu lokaciju.",
@@ -234,8 +256,20 @@
     "startDate": "DATUM POČETKA",
     "location": "LOKACIJA",
     "category": "KATEGORIJA",
-    "description": "OPIS",
-    "images": "SLIKE DOGAĐAJA",
+    "descriptionHead": "OPIS",
+    "descriptionTitle" : "O ovom događaju",
+  
+    "imagesHead": "SLIKE DOGAĐAJA",
+    "imagesTitle": "Pogledajte slike ovog događaja",
+
+    "locationHead": "LOKACIJA DOGAĐAJA",
+    "locationTitle": "Lokacija ovog događaja na mapi",
+
+    "organiserHead": "INFORMACIJE O ORGANIZATORU",
+    "organiserTitle": "Informacije o organizatoru događaja",
+
+    "reviewsHead": "RECENZIJE ORGANIZATORA",
+    "reviewsTitle": "Šta drugi korisnici kažu o ovom organizatoru",
     "eventStart": "Događaj počinje u:",
     "eventEnd": "Događaj završava u:",
     "eventInfoAgeYes": "Morate imati najmanje navedeni broj godina da biste ušli na ovaj događaj: ",
@@ -248,7 +282,6 @@
     "eventInfoCancelNo": "Organizatori NE nude povrat novca za kasna otkazivanja.",
     "eventInfoLangYes": "Dominantni jezik ovog događaja je: ",
     "eventInfoLangNo": "Nema dominantnog jezika za ovaj događaj. Višejezična atmosfera je dobrodošla!",
-    "organiser": "INFORMACIJE O ORGANIZATORU",
     "organiserName": "Ime organizatora: ",
     "organiserCreation": "Organizacija osnovana/formirana: ",
     "organiserCategory": "Pretežno pravi događaje u ovoj kategoriji: ",
@@ -256,7 +289,6 @@
     "contactPhone": "Telefon: ",
     "contactEmail": "Email: ",
     "contactWebsite": "Web stranica: ",
-    "reviews": "RECENZIJE ORGANIZATORA",
     "noAuthOrganiserReviewHeader": "Prijavite se da ostavite recenziju i vidite svoje recenzije!",
     "noAuthOrganiserReviewSubheading": "Samo jedan brzi korak! Napravite profil ako ga već nemate!",
     "noUserOrganiserReviewHeader": "Još niste ostavili recenziju za ovog organizatora.",
@@ -315,8 +347,8 @@
     "allTitle": "Pregled svih vodića za turiste",
     "viewAllButton": "Vidi sve"
   },
-  "guideOverview" : {
-    "aboutThisGuide" : "O OVOM VODIĆU"
+  "guideOverview": {
+    "aboutThisGuide": "O OVOM VODIĆU"
   },
   "transport": {
     "headerTitle": "Javni Prevoz",
@@ -344,5 +376,38 @@
     "description": "Stranica koju tražite ne postoji ili je prebačena. Nema brige, možete se vratiti na početnu stranicu.",
     "helpText": "Ako mislite da je ovo greška, molimo vas da nam je prijavite ili pokušajte navigirati koristeći meni.",
     "backHome": "Nazad na početnu stranicu"
+  },
+  "profile": {
+    "headerTitle": "Vaš Profil",
+    "headerSubtitle": "Pregled i upravljanje vašim ličnim informacijama i postavkama.",
+
+    "statsSectionHead": "VAŠE STATISTIKE",
+    "statsSectionTitle": "Statisticki pregled vaših aktivnosti u Sarajevu",
+    "spotsVisitedOne": "Posjetili ste...",
+    "spotsVisitedTwo": "lokala!",
+    "eventsAttendedOne": "Prisustvovali ste na...",
+    "eventsAttendedTwo": "događaja!",
+    "communityRequestsOne": "Podnijeli ste...",
+    "communityRequestsTwo": "zahtjeva zajednici!",
+
+    "communityRequestsSectionHead": "ZAHTJEVI ZAJEDNICE",
+    "communityRequestsSectionTitle": "Pomozite nam da poboljšamo SpotlightSarajevo",
+    "communityRequestsSectionParagraphOne": "Ovdje možete podnijeti zahtjeve za dodavanje novih lokala ili događaja koji trenutno nisu u sistemu SpotlightSarajevo. Vaši zahtjevi pomažu nam da održavamo našu bazu podataka ažurnom i relevantnom za sve korisnike.",
+    "communityRequestsSectionParagraphTwo": "Ako znate za neki lokal ili događaj koji trenutno nije u sistemu, slobodno podnijeti izvještaj koristeći naš obrazac, i naši administratori će sigurno pregledati zahtjev što je brže moguće. Što više lokala i događaja u sistemu, to bolje za cijeli grad!",
+    "makeRequestButton": "Napravi Zahtjev",
+
+    "premiumAccountSectionHead": "PREMIUM",
+    "premiumAccountSectionTitle": "Postanite premium član SpotlightSarajevo!",
+    "premiumAccountSectionParagraphOne": "Usluge SpotlightSarajeva su napravljene sa namjerom da pruže brz i lak vodič kroz Sarajevo za sve njegove stanovnike i turiste. Cijenimo svakog pojedinca koji odabere da koristi našu aplikaciju i razumijemo da svaka osoba ima svoje viđenje funkcionalnosti aplikacije.",
+    "premiumAccountSectionParagraphTwo": "Uprkos tome, naši razvijači uvijek rade naporno da poboljšaju aplikaciju i popune sistem po potrebi. Zato je svaki dio financijske dobiti koju aplikacija ostvari od vitalne važnosti za nas.",
+    "premiumAccountSectionParagraphThree": "Razumijemo da plaćanje online usluge nije za sve, pa za ljude koji se odluče za to, dodali smo bonus funkcije u aplikaciju kako bi dodatno poboljšali iskustvo. Postanite mjesečni premium član SpotlightSarajeva i uživajte dodatne prednosti!",
+    "subscribeButton": "Pretplatite se sada",
+    "premiumBenefitOne": "Iskustvo bez oglasa",
+    "premiumBenefitTwo": "Dedicirano Mapsko Pretraživanje za lokale i događaje",
+    "premiumBenefitThree": "Pregled Kalendara nadolazećih događaja",
+    "premiumBenefitFour": "Neograničen broj prilagođenih kolekcija",
+    "premiumStatusInfo": "Trenutno ste premium član! Hvala vam što podržavate SpotlightSarajevo! Vaše prednosti uključuju:",
+    "unsubscribeButton": "Otkaži pretplatu",
+    "logout": "Izloguj se"
   }
 }

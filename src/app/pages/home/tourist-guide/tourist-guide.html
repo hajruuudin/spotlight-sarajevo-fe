@@ -43,11 +43,12 @@
     class="max-w-application px-4 md:px-8 py-8 flex flex-col justify-start items-center w-full"
   >
     <div class="flex flex-col w-full justify-center items-center h-auto">
-      <span class="text-base md:text-base font-semibold tracking-wider">{{
-        'guides.recentSpan' | transloco
-      }}</span>
-      <h2 class="text-xl md:text-3xl">{{ 'guides.recentTitle' | transloco }}</h2>
+      <app-subheading
+        [sectionDescription]="'guides.recentTitle' | transloco"
+        [sectionHead]="'guides.recentSpan' | transloco"
+      ></app-subheading>
     </div>
+      
     <div
       class="w-full max-w-application h-auto flex flex-row justify-start space-x-4 items-stretch overflow-x-scroll py-4 pl-1"
     >
@@ -61,10 +62,10 @@
     </div>
 
     <div class="flex flex-col w-full justify-center items-center h-auto">
-      <span class="text-base md:text-base font-semibold tracking-wider">{{
-        'guides.allSpan' | transloco
-      }}</span>
-      <h2 class="text-xl md:text-3xl">{{ 'guides.allTitle' | transloco }}</h2>
+      <app-subheading
+        [sectionDescription]="'guides.allTitle' | transloco"
+        [sectionHead]="'guides.allSpan' | transloco"
+      ></app-subheading>
     </div>
     <div class="w-full max-w-application h-auto grid grid-cols-1 md:grid-cols-2 py-4 gap-4">
       @for (guide of this.allGuides; track guide.id) {

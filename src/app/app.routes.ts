@@ -36,6 +36,8 @@ import { homepageResolver } from './core/resolvers/homepage.resolver';
 import { touristGuideResolver } from './core/resolvers/tourist.guide.resolver';
 import { touristGuideOverviewResolver } from './core/resolvers/tourist.guide.overview.resolver';
 import { transportResolver } from './core/resolvers/transport.resolver';
+import { profileEnd } from 'node:console';
+import { profilePageResolver } from './core/resolvers/profile.page.resolver';
 
 export const routes: Routes = [
   {
@@ -53,11 +55,11 @@ export const routes: Routes = [
       { path: '', redirectTo: 'homepage', pathMatch: 'full' },
       { path: 'homepage', resolve: {homepageData: homepageResolver}, component: Homepage, title: 'Homepage - SpotlightSarajevo' },
       { path: 'spots', component: SpotSearch, title: 'Browse Spots - SpotlightSarajevo' },
-      { path: 'spots/:spotSlug', resolve: [spotResolver], component: SpotOverview, title: 'Spot Overview - SpotlightSarajevo',},
+      { path: 'spots/:spotSlug', resolve: {spotData: spotResolver}, component: SpotOverview, title: 'Spot Overview - SpotlightSarajevo',},
       { path: 'events', component: EventSearch, title: 'Browse Events - SpotlightSarajevo' },
       { path: 'events/:eventSlug', resolve: {eventData: eventResolver}, component: EventOverview, title: 'Event - SpotlightSarajevo',},
       { path: 'discover', resolve: { discoverData: discoverResolver }, component: Discover, title: 'Discover - SpotlightSarajevo' },
-      { path: 'profile', component: Profile, title: 'Profile - SpotlightSarajevo' },
+      { path: 'profile', resolve: { userInfo: profilePageResolver }, component: Profile, title: 'Profile - SpotlightSarajevo' },
       { path: 'guide', resolve: { touristGuides: touristGuideResolver }, component: TouristGuide, title: 'Browse Guides - SpotlightSarajevo' },
       { path: 'guide/:slug', resolve: { guideOverviewData: touristGuideOverviewResolver }, component: TouristGuideOverview,title: 'Guide Overview - SpotlightSarajevo' },
       { path: 'transport', resolve: { transportData: transportResolver }, component: Transport, title: 'Public Transport - SpotlightSarajevo' },
