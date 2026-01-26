@@ -108,13 +108,14 @@ export class SpotOverview implements OnInit {
     this.spotOverview = this.activatedRoute.snapshot.data['spotData'].spot as SpotOverviewModel;
     this.isVisited = this.activatedRoute.snapshot.data['spotData'].isVisited as Boolean;
 
-    console.log(this.activatedRoute.snapshot.data['spotData'].isVisited)
-
     this.formatSpotWorkHours(this.spotOverview.workHours);
     this.initialiseRadarChart(this.session.language()!, this.session.theme()!);
     this.loadUserSpotReview(this.spotOverview.id);
     this.loadOtherSpotReviews(this.spotOverview.id);
-    this.checkIfPresentInSystemCollection();
+
+    if (this.session.getUser() != null){
+      this.checkIfPresentInSystemCollection();
+    }
 
     this.images.push(this.spotOverview.thumbnailImage);
     this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');

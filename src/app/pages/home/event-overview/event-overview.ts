@@ -95,6 +95,9 @@ export class EventOverview {
 
     this.loadUserOrganiserReview(this.eventOverview.organiser.id);
     this.loadOtherOrganiserReviews(this.eventOverview.organiser.id);
+    if(this.session.getUser() != null){
+      this.checkIfPresentInSystemCollection();
+    } 
 
     this.images.push(this.eventOverview.thumbnailImage);
     this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');
@@ -104,8 +107,7 @@ export class EventOverview {
     this.images.push(this.eventOverview.thumbnailImage);
     this.images.push(this.eventOverview.thumbnailImage);
 
-    
-    this.checkIfPresentInSystemCollection();
+   
   }
 
   @HostListener('document:scroll')

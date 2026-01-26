@@ -104,44 +104,46 @@
         </div>
       </div>
 
-      <div class="w-full md:w-1/2 flex flex-row justify-around items-center space-x-2">
-        @if (this.isSaved) {
+      @if (this.session.getUser() != null) {
+        <div class="w-full md:w-1/2 flex flex-row justify-around items-center space-x-2">
+          @if (this.isSaved) {
+            <app-button-primary
+              (click)="this.removeFromAllEvents()"
+              classAddons="px-4 py-2"
+              [buttonType]="'DEFAULT'"
+              [buttonContent]="'Unsave Event'"
+            ></app-button-primary>
+          } @else {
+            <app-button-primary
+              (click)="this.saveToAllEvents()"
+              classAddons="px-4 py-2"
+              [buttonType]="'DEFAULT'"
+              [buttonContent]="'Save Event'"
+            ></app-button-primary>
+          }
           <app-button-primary
-            (click)="this.removeFromAllEvents()"
-            classAddons="px-4 py-2"
-            [buttonType]="'DEFAULT'"
-            [buttonContent]="'Unsave Event'"
-          ></app-button-primary>
-        } @else {
-          <app-button-primary
-            (click)="this.saveToAllEvents()"
-            classAddons="px-4 py-2"
-            [buttonType]="'DEFAULT'"
-            [buttonContent]="'Save Event'"
-          ></app-button-primary>
-        }
-        <app-button-primary
-          (click)="this.openAddCollectionModal()"
-          classAddons="px-4"
-          [buttonType]="'DEFAULT'"
-          [buttonContent]="'Add to Collection'"
-        ></app-button-primary>
-        @if (this.isAttended) {
-          <app-button-primary
+            (click)="this.openAddCollectionModal()"
             classAddons="px-4"
-            (click)="unmarkEventAsAttended()"
             [buttonType]="'DEFAULT'"
-            [buttonContent]="'Unmark as will attend'"
+            [buttonContent]="'Add to Collection'"
           ></app-button-primary>
-        } @else {
-          <app-button-primary
-            classAddons="px-4"
-            (click)="markEventAsAttended()"
-            [buttonType]="'DEFAULT'"
-            [buttonContent]="'Mark as will attend'"
-          ></app-button-primary>
-        }
-      </div>
+          @if (this.isAttended) {
+            <app-button-primary
+              classAddons="px-4"
+              (click)="unmarkEventAsAttended()"
+              [buttonType]="'DEFAULT'"
+              [buttonContent]="'Unmark as will attend'"
+            ></app-button-primary>
+          } @else {
+            <app-button-primary
+              classAddons="px-4"
+              (click)="markEventAsAttended()"
+              [buttonType]="'DEFAULT'"
+              [buttonContent]="'Mark as will attend'"
+            ></app-button-primary>
+          }
+        </div>
+      }
 
       <div class="w-full h-auto flex flex-col jusitfy-center py-4 items-center">
         <app-subheading
