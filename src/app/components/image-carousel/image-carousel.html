@@ -31,21 +31,21 @@
       <app-button-primary
         (click)="previousImage(); $event.stopPropagation()"
         [buttonContent]="'‹'"
-        classAddons="rounded-full font-black aspect-square"
+        classAddons="rounded-full font-black px-6"
       ></app-button-primary>
 
       <!-- Close button -->
       <app-button-primary
         (click)="exitImageFullscreenPreview()"
         [buttonContent]="'x'"
-        classAddons="rounded-full font-black aspect-square"
+        classAddons="rounded-full font-black px-8"
       ></app-button-primary>
 
       <!-- Right arrow -->
       <app-button-primary
         (click)="nextImage(); $event.stopPropagation()"
         [buttonContent]="'›'"
-        classAddons="rounded-full font-black aspect-square"
+        classAddons="rounded-full font-black px-6"
       ></app-button-primary>
     </div>
   </div>

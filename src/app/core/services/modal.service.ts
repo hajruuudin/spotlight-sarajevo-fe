@@ -4,8 +4,7 @@ import { ComponentRef, Injectable, Type, ViewContainerRef } from '@angular/core'
  * Custom modal service for dynamically creating and managing modal components.
  * Provides methods to open modals and pass data to them.
  * Ensures proper cleanup and restores body scroll on modal close.
- * 
- * @version 1.0.0
+ *
  * @author hajrudin.imamovic
  */
 @Injectable({
