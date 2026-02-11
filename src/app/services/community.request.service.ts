@@ -7,7 +7,7 @@ import { HttpClient } from "@angular/common/http";
   providedIn: 'root'
 })
 export class CommunityRequestService {
-  private apiUrl = environment.API_URL + 'community-requests';
+  private apiUrl = environment.API_URL + '/community-request';
 
   constructor(private http: HttpClient) {}
 

@@ -38,6 +38,7 @@ import { touristGuideOverviewResolver } from './core/resolvers/tourist.guide.ove
 import { transportResolver } from './core/resolvers/transport.resolver';
 import { profileEnd } from 'node:console';
 import { profilePageResolver } from './core/resolvers/profile.page.resolver';
+import { communityRequestResolver } from './core/resolvers/community.request.resolver';
 
 export const routes: Routes = [
   {
@@ -64,7 +65,7 @@ export const routes: Routes = [
       { path: 'guide/:slug', resolve: { guideOverviewData: touristGuideOverviewResolver }, component: TouristGuideOverview,title: 'Guide Overview - SpotlightSarajevo' },
       { path: 'transport', resolve: { transportData: transportResolver }, component: Transport, title: 'Public Transport - SpotlightSarajevo' },
       { path: 'collections', canMatch: [authGuard], resolve: { collectionData: collectionsResolver }, component: Collections, title: 'Your Collections - SpotlightSarajevo' },
-      { path: 'requests', component: CommunityRequests, title: 'Community Requests - SpotlightSarajevo' },
+      { path: 'requests', canMatch: [authGuard], resolve: { requestData: communityRequestResolver }, component: CommunityRequests, title: 'Community Requests - SpotlightSarajevo' },
       { path: 'auth-benefits', component: AuthBenefits, title: 'Login for more! Extra Functions'}
     ],
   },
