@@ -17,6 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
     '/review/spot/create',
     '/review/spot/update',
     '/review/spot/delete',
+    '/admin/'
   ];
 
   constructor(private router: Router) {}
@@ -28,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if (isProtectedRoute && error.status === 401) {
           this.router.navigate(['/auth/login']);
-        }
+        } 
         return throwError(() => error);
       })
     );

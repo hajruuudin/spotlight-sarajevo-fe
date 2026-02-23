@@ -39,6 +39,7 @@ export const appConfig: ApplicationConfig = {
     provideHotToastConfig({
       duration: 4000,
       position: 'top-right',
+      dismissible: true,
       style: {
         background: 'var(--toast-bg)',
         color: 'var(--toast-text)',
