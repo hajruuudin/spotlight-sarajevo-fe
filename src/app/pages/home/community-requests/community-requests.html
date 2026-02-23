@@ -29,7 +29,7 @@
       
       <!-- Pending Column -->
       <div class="flex flex-col">
-        <div class="sticky top-0 z-10 dark:bg-(--background-100) bg-(--background-900) pb-2">
+        <div class="sticky top-0 z-10 pb-2">
           <h3 class="text-lg font-bold text-center py-2 rounded-xl bg-yellow-500/20 border-2 border-yellow-500">
             {{ 'communityRequest.pendingColumn' | transloco }}
             <span class="text-sm font-normal opacity-70">({{ pendingRequests.length }})</span>
@@ -51,7 +51,7 @@
 
       <!-- Approved Column -->
       <div class="flex flex-col">
-        <div class="sticky top-0 z-10 dark:bg-(--background-100) bg-(--background-900) pb-2">
+        <div class="sticky top-0 z-10 pb-2">
           <h3 class="text-lg font-bold text-center py-2 rounded-xl bg-green-500/20 border-2 border-green-500">
             {{ 'communityRequest.approvedColumn' | transloco }}
             <span class="text-sm font-normal opacity-70">({{ approvedRequests.length }})</span>
@@ -73,7 +73,7 @@
 
       <!-- Rejected Column -->
       <div class="flex flex-col">
-        <div class="sticky top-0 z-10 dark:bg-(--background-100) bg-(--background-900) pb-2">
+        <div class="sticky top-0 z-10 pb-2">
           <h3 class="text-lg font-bold text-center py-2 rounded-xl bg-red-500/20 border-2 border-red-500">
             {{ 'communityRequest.rejectedColumn' | transloco }}
             <span class="text-sm font-normal opacity-70">({{ rejectedRequests.length }})</span>

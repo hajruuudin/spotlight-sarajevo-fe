@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PageHeader } from '../../../components/page-header/page-header';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { ActivatedRoute } from '@angular/router';
@@ -24,7 +24,7 @@ import { HotToastService } from '@ngxpert/hot-toast';
   templateUrl: './community-requests.html',
   styleUrl: './community-requests.css',
   host: {
-    class: 'flex flex-col w-full justify-start items-center'
+    class: 'flex flex-col w-full justify-start items-center pt-3'
   }
 })
 export class CommunityRequests implements OnInit {
@@ -37,7 +37,8 @@ export class CommunityRequests implements OnInit {
     protected route: ActivatedRoute,
     protected modal: ModalService,
     protected session: SessionService,
-    protected toastr: HotToastService
+    protected toastr: HotToastService,
+    protected cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +59,8 @@ export class CommunityRequests implements OnInit {
     this.rejectedRequests = this.allRequests
       .filter(r => r.status === RequestStatus.REJECTED)
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+    this.cdr.detectChanges()
   }
 
   get isAllEmpty(): boolean {

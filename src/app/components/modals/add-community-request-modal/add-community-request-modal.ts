@@ -69,14 +69,14 @@ export class AddCommunityRequestModal implements OnInit {
     });
 
     this.spotForm = this.fb.group({
-      spotName: ['', Validators.required],
+      spotName: [''],
       spotAddress: [''],
       spotDescription: [''],
       spotCategory: ['']
     });
 
     this.eventForm = this.fb.group({
-      eventName: ['', Validators.required],
+      eventName: [''],
       eventLocation: [''],
       eventDescription: [''],
       eventDate: ['']

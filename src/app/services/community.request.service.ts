@@ -27,11 +27,11 @@ export class CommunityRequestService {
    * 
    * Optionally, additional data related to the request can be provided in the requestBody field of the CommunityRequestCreateModel.
    *
-   * @param requestData 
+   * @param request 
    * @return An observable containing the created CommunityRequestModel object
    */
-  createCommunityRequest(requestData: CommunityRequestCreateModel) {
-    return this.http.post<CommunityRequestModel>(`${this.apiUrl}`, requestData, {
+  createCommunityRequest(request: CommunityRequestCreateModel) {
+    return this.http.post<CommunityRequestModel>(`${this.apiUrl}/create-request`, request, {
         withCredentials: true
     });
   }

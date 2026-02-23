@@ -4,13 +4,23 @@ export enum GuideType {
 }
 
 export enum ObjectType {
-    SPOT, EVENT, USER, GUIDE_THUMBNAIL, SECTION_GUIDE, ORGANISER
+    SPOT = 'SPOT',
+    EVENT = 'EVENT',
+    USER = 'USER',
+    GUIDE_THUMBNAIL = 'GUIDE_THUMBNAIL',
+    SECTION_GUIDE = 'SECTION_GUIDE',
+    ORGANISER = 'ORGANISER'
 }
 
 export enum RequestType {
-    ADD, UPDATE, REMOVE, OTHER
+    ADD = 'ADD',
+    UPDATE = 'UPDATE',
+    REMOVE = 'REMOVE',
+    OTHER = 'OTHER'
 }
 
 export enum RequestStatus {
-    PENDING, APPROVED, REJECTED
+    PENDING = 'PENDING',
+    APPROVED = 'APPROVED',
+    REJECTED = 'REJECTED'
 }

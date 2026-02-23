@@ -10,7 +10,7 @@ import { DatePipe, NgClass } from '@angular/common';
   templateUrl: './community-request-card.html',
   styleUrl: './community-request-card.css',
   host: {
-    class: 'w-full'
+    class: 'w-full opacity-80 hover:opacity-100 transition-opacity'
   }
 })
 export class CommunityRequestCard {
