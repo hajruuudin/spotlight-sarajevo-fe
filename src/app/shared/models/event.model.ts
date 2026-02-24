@@ -106,3 +106,7 @@ export class EventOrganiserReviewUpdateModel{
         public userOrganiserEnjoyability: number,
     ){}
 }
+
+export interface EventDateCheckModel {
+    [date: string]: boolean;
+}

@@ -97,6 +97,21 @@ export class SpotReviewUpdateModel{
     ){}
 }
 
+export class SpotMapModel {
+    constructor(
+        public id: number,
+        public slug: string,
+        public officialNameBs: string,
+        public officialNameEn: string,
+        public categoryNameBs: string,
+        public categoryNameEn: string,
+        public latitude: number,
+        public longitude: number,
+        public thumbnailImage: string,
+        public combinedRating: number
+    ){}
+}
+
 export class SpotReviewDeleteModel{
     constructor(
         public id: number,

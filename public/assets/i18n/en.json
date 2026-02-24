@@ -457,5 +457,17 @@
     "validationError": "Please fill in all required fields",
     "submitSuccess": "Request submitted successfully!",
     "submitError": "Failed to submit request. Please try again."
+  },
+  "spotMap": {
+    "searchPlaceholder": "Search spots on map...",
+    "filterButton": "Filter Categories",
+    "loadError": "Failed to load spots. Please try again."
+  },
+  "eventCalendar": {
+    "title": "Event Calendar",
+    "subtitle": "Browse events by date on the calendar",
+    "eventsOnDate": "Events on",
+    "noEventsHeader": "No events on this date",
+    "noEventsDescription": "There are no events scheduled for this date. Try selecting another day!"
   }
 }

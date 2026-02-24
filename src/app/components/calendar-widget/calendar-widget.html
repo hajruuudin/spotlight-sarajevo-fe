@@ -1,0 +1,57 @@
+<div class="w-full rounded-2xl dark:bg-(--background-200) bg-(--secondary-600) p-4 md:p-6">
+  <!-- Month Header with Navigation -->
+  <div class="flex flex-row justify-between items-center mb-4">
+    <button
+      (click)="goToPreviousMonth()"
+      class="p-2 rounded-xl hover:dark:bg-(--background-300) hover:bg-(--secondary-700) transition-all"
+    >
+      <span class="text-xl font-bold">&larr;</span>
+    </button>
+    <h3 class="text-lg md:text-2xl font-bold tracking-wider">
+      {{ this.monthName }} {{ this.currentYear }}
+    </h3>
+    <button
+      (click)="goToNextMonth()"
+      class="p-2 rounded-xl hover:dark:bg-(--background-300) hover:bg-(--secondary-700) transition-all"
+    >
+      <span class="text-xl font-bold">&rarr;</span>
+    </button>
+  </div>
+
+  <!-- Weekday Headers -->
+  <div class="grid grid-cols-7 gap-1 mb-2">
+    @for (dayName of this.weekDays; track $index) {
+      <div
+        class="text-center text-xs md:text-sm font-semibold py-1"
+        [ngClass]="{
+          'dark:text-(--accent-400) text-(--accent-700)': $index >= 5
+        }"
+      >
+        {{ dayName }}
+      </div>
+    }
+  </div>
+
+  <!-- Calendar Grid -->
+  <div class="grid grid-cols-7 gap-1">
+    @for (day of this.calendarDays; track day.queryDate) {
+      <div
+        (click)="onDayClicked(day)"
+        class="relative flex flex-col items-center justify-center aspect-square rounded-xl cursor-pointer transition-all duration-200 text-sm md:text-base"
+        [ngClass]="{
+          'dark:bg-(--secondary-400) bg-(--secondary-400) text-white font-bold': this.selectedDate === day.queryDate,
+          'dark:bg-(--background-300) bg-(--secondary-700) dark:text-white text-black': day.isToday && this.selectedDate !== day.queryDate,
+          'opacity-40': day.isPast && this.selectedDate !== day.queryDate,
+          'opacity-30': !day.isCurrentMonth,
+          'dark:bg-(--background-100)/30 bg-(--secondary-500)/30': day.isWeekend && this.selectedDate !== day.queryDate && day.isCurrentMonth && !day.isToday,
+          'hover:dark:bg-(--accent-400)/40 hover:bg-(--accent-400)/40': this.selectedDate !== day.queryDate
+        }"
+      >
+        <span>{{ day.date }}</span>
+        @if (day.hasEvents && day.isCurrentMonth) {
+          <span class="absolute bottom-0.5 md:bottom-1 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-(--accent-400)"></span>
+        }
+      </div>
+    }
+  </div>
+</div>

@@ -457,5 +457,17 @@
     "validationError": "Molimo popunite sva obavezna polja",
     "submitSuccess": "Zahtjev uspješno poslan!",
     "submitError": "Slanje zahtjeva nije uspjelo. Molimo pokušajte ponovo."
+  },
+  "spotMap": {
+    "searchPlaceholder": "Pretražite lokacije na mapi...",
+    "filterButton": "Filtriraj kategorije",
+    "loadError": "Učitavanje lokacija nije uspjelo. Molimo pokušajte ponovo."
+  },
+  "eventCalendar": {
+    "title": "Kalendar Događaja",
+    "subtitle": "Pregledajte događaje po datumu na kalendaru",
+    "eventsOnDate": "Događaji na",
+    "noEventsHeader": "Nema događaja na ovaj datum",
+    "noEventsDescription": "Nema zakazanih događaja za ovaj datum. Pokušajte odabrati drugi dan!"
   }
 }

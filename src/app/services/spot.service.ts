@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import {
+  SpotMapModel,
   SpotOverviewModel,
   SpotShorthandModel,
 } from '../shared/models/spot.model';
@@ -16,7 +17,7 @@ import { PageResponseModel } from '../shared/models/shared.model';
  * - DELETE method to delete a spot from the database along with its information, available only to admin users
  * ... among other methods.
  *
- * Models and entities incorporated in the method: SpotShorthandModel, SpotModel
+ * Models and entities incorporated in the method: SpotShorthandModel, SpotMapModel, SpotOverviewModel
  *
  * All HTTP requests include credentials for cookie/session management.
  *
@@ -52,6 +53,24 @@ export class SpotService {
     return this.http.get<PageResponseModel<SpotShorthandModel>>(
       this.apiUrl +
         `/spot/find-spots?pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortOption=${sortOption}&categoryIds=${categoryIds}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to retrieve spot map pin data for displaying spots on a fullscreen map.
+   * Returns lightweight spot data including coordinates, suitable for map markers.
+   *
+   * @param searchTerm The search query to filter spots by name
+   * @param categoryIds The category Ids by which the user filters the result. If left empty, all spot categories will be taken into account.
+   * @returns An array of SpotMapPinModel objects representing spots with their location data
+   */
+  findSpotsForMap(searchTerm: string, categoryIds: number[]) {
+    return this.http.get<SpotMapModel[]>(
+      this.apiUrl +
+        `/spot/find-spots-map?searchTerm=${searchTerm}&categoryIds=${categoryIds}`,
       {
         withCredentials: true,
       }

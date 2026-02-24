@@ -6,8 +6,10 @@ import { User } from './interfaces/home/user';
 import { Homepage } from './pages/home/homepage/homepage';
 import { SpotSearch } from './pages/home/spot-search/spot-search';
 import { SpotOverview } from './pages/home/spot-overview/spot-overview';
+import { SpotMapOverview } from './pages/home/spot-map-overview/spot-map-overview';
 import { EventSearch } from './pages/home/event-search/event-search';
 import { EventOverview } from './pages/home/event-overview/event-overview';
+import { EventCalendarOverview } from './pages/home/event-calendar-overview/event-calendar-overview';
 import { Discover } from './pages/home/discover/discover';
 import { Profile } from './pages/home/profile/profile';
 import { TouristGuide } from './pages/home/tourist-guide/tourist-guide';
@@ -56,8 +58,10 @@ export const routes: Routes = [
       { path: '', redirectTo: 'homepage', pathMatch: 'full' },
       { path: 'homepage', resolve: {homepageData: homepageResolver}, component: Homepage, title: 'Homepage - SpotlightSarajevo' },
       { path: 'spots', component: SpotSearch, title: 'Browse Spots - SpotlightSarajevo' },
+      { path: 'spots/map', component: SpotMapOverview, title: 'Spot Map - SpotlightSarajevo' },
       { path: 'spots/:spotSlug', resolve: {spotData: spotResolver}, component: SpotOverview, title: 'Spot Overview - SpotlightSarajevo',},
       { path: 'events', component: EventSearch, title: 'Browse Events - SpotlightSarajevo' },
+      { path: 'events/calendar', component: EventCalendarOverview, title: 'Event Calendar - SpotlightSarajevo' },
       { path: 'events/:eventSlug', resolve: {eventData: eventResolver}, component: EventOverview, title: 'Event - SpotlightSarajevo',},
       { path: 'discover', resolve: { discoverData: discoverResolver }, component: Discover, title: 'Discover - SpotlightSarajevo' },
       { path: 'profile', resolve: { userInfo: profilePageResolver }, component: Profile, title: 'Profile - SpotlightSarajevo' },
