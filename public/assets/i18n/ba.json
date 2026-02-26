@@ -197,7 +197,8 @@
     "ALPHABETICAL": "Po Abecedi",
     "POPULARITY": "Najpopularnije",
     "RATING": "Najbolje ocjenjeno",
-    "DATE": "Nadolazeće"
+    "DATE": "Nadolazeće",
+    "PROXIMITY": "Najbliže meni"
   },
   "spotOverview": {
     "rating": "OCJENA",

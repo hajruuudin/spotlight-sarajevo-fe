@@ -46,7 +46,11 @@ import { ButtonPrimary } from '../../../components/button-primary/button-primary
 export class SpotSearch implements OnInit {
   spotSearchForm: FormGroup;
   spotCategories: SpotCategoryModel[] = [];
-  sortingMethods: string[] = [SortOptions.ALPHABETICAL.toString(), SortOptions.RATING.toString()];
+  sortingMethods: string[] = [
+    SortOptions.ALPHABETICAL.toString(),
+    SortOptions.RATING.toString(),
+    SortOptions.PROXIMITY.toString()
+  ];
 
   selectedCategoryIds: number[] = [];
   selectedSortingMethod: string = SortOptions.ALPHABETICAL.toString();
@@ -57,6 +61,11 @@ export class SpotSearch implements OnInit {
   totalElements = 0;
   totalPages = 0;
   spotSearchResults: SpotShorthandModel[] = [];
+  
+  // Geolocation state
+  userLatitude: number | null = null;
+  userLongitude: number | null = null;
+  locationPermissionGranted: boolean = false;
 
   constructor(
     protected categoryService: CategoryService,
@@ -131,6 +140,19 @@ export class SpotSearch implements OnInit {
     this.isSortingPopupLoaded = !this.isSortingPopupLoaded;
   }
 
+  onSortingMethodSelected(sortingMethod: string) {
+    this.selectedSortingMethod = sortingMethod;
+    this.fetchSpots(
+      this.pageNumber,
+      this.pageSize,
+      this.spotSearchForm.get('searchTerm')?.value,
+      this.selectedSortingMethod,
+      this.selectedCategoryIds,
+      true,
+      false,
+    );
+  }
+
   resetCategoryFilters() {
     this.selectedCategoryIds = [];
     this.fetchSpots(
@@ -157,6 +179,70 @@ export class SpotSearch implements OnInit {
     );
   }
 
+  async requestLocationPermission(): Promise<void> {
+    if (!navigator.geolocation) {
+      this.toastr.error(this.session.language() === 'en' 
+        ? 'Geolocation is not supported by your browser'
+        : 'Vaš preglednik ne podržava geolokaciju');
+      return;
+    }
+
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.userLatitude = position.coords.latitude;
+          this.userLongitude = position.coords.longitude;
+          this.locationPermissionGranted = true;
+          resolve();
+        },
+        (error) => {
+          this.locationPermissionGranted = false;
+          let errorMessage = '';
+          
+          if (this.session.language() === 'en') {
+            switch (error.code) {
+              case error.PERMISSION_DENIED:
+                errorMessage = 'Location permission denied. Please enable location access to use proximity sorting.';
+                break;
+              case error.POSITION_UNAVAILABLE:
+                errorMessage = 'Location information unavailable.';
+                break;
+              case error.TIMEOUT:
+                errorMessage = 'Location request timed out.';
+                break;
+              default:
+                errorMessage = 'An unknown error occurred while getting location.';
+            }
+          } else {
+            switch (error.code) {
+              case error.PERMISSION_DENIED:
+                errorMessage = 'Dozvola za lokaciju odbijena. Molimo omogućite pristup lokaciji za sortiranje po blizini.';
+                break;
+              case error.POSITION_UNAVAILABLE:
+                errorMessage = 'Informacije o lokaciji nisu dostupne.';
+                break;
+              case error.TIMEOUT:
+                errorMessage = 'Zahtjev za lokaciju je istekao.';
+                break;
+              default:
+                errorMessage = 'Došlo je do nepoznate greške prilikom dobijanja lokacije.';
+            }
+          }
+          
+          this.toastr.error(errorMessage);
+          // Reset to alphabetical if location fails
+          this.selectedSortingMethod = SortOptions.ALPHABETICAL.toString();
+          reject(error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
+        }
+      );
+    });
+  }
+
   fetchSpots(
     pageNumber: number,
     pageSize: number,
@@ -170,9 +256,37 @@ export class SpotSearch implements OnInit {
       pageNumber = 0;
     }
 
+    // If proximity sorting is selected and we don't have location yet, request it
+    if (sortingMethod === SortOptions.PROXIMITY.toString() && !this.locationPermissionGranted) {
+      this.requestLocationPermission().then(() => {
+        this.executeFetchSpots(pageNumber, pageSize, searchValue, sortingMethod, categoryIds, resetPages, extendResultSet);
+      }).catch(() => {
+        // Location permission failed, already handled in requestLocationPermission
+        // Fetch with alphabetical sorting instead
+        this.executeFetchSpots(pageNumber, pageSize, searchValue, SortOptions.ALPHABETICAL.toString(), categoryIds, resetPages, extendResultSet);
+      });
+    } else {
+      this.executeFetchSpots(pageNumber, pageSize, searchValue, sortingMethod, categoryIds, resetPages, extendResultSet);
+    }
+  }
+
+  executeFetchSpots(
+    pageNumber: number,
+    pageSize: number,
+    searchValue: string,
+    sortingMethod: string,
+    categoryIds: number[],
+    resetPages: boolean,
+    extendResultSet: boolean,
+  ) {
     this.spinner.showSectionSpinner();
+    
+    // Pass user location for proximity sorting
+    const latitude = sortingMethod === SortOptions.PROXIMITY.toString() ? this.userLatitude : null;
+    const longitude = sortingMethod === SortOptions.PROXIMITY.toString() ? this.userLongitude : null;
+    
     this.spotService
-      .findSpotsPaginated(pageNumber, pageSize, searchValue, sortingMethod, categoryIds)
+      .findSpotsPaginated(pageNumber, pageSize, searchValue, sortingMethod, categoryIds, latitude, longitude)
       .subscribe({
         next: (response: PageResponseModel<SpotShorthandModel>) => {
           this.spinner.hideSectionSpinner();

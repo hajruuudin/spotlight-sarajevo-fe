@@ -136,6 +136,19 @@ export class EventSearch {
     this.isSortingPopupLoaded = !this.isSortingPopupLoaded;
   }
 
+  onSortingMethodSelected(sortingMethod: string) {
+    this.selectedSortingMethod = sortingMethod;
+    this.fetchEvents(
+      this.pageNumber,
+      this.pageSize,
+      this.eventSearchForm.get('searchTerm')?.value,
+      this.selectedSortingMethod,
+      this.selectedCategoryIds,
+      true,
+      false,
+    );
+  }
+
   resetCategoryFilters() {
     this.selectedCategoryIds = [];
     this.fetchEvents(

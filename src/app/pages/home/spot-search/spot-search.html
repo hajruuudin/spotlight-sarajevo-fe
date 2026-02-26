@@ -27,7 +27,7 @@
         @if (isPremiumUser) {
           <app-button-primary
             [buttonContent]="'🗺️ ' + ('search.viewMap' | transloco)"
-            [classAddons]="'px-6 whitespace-nowrap h-full'"
+            [classAddons]="'px-6 whitespace-nowrap h-full w-full'"
             (pressed)="navigateToMapOverview()"
           ></app-button-primary>
         }
@@ -62,7 +62,7 @@
                   <app-sorting-selector
                     [sortingMethod]="'sorting.' + sorting | transloco"
                     [isSelected]="this.selectedSortingMethod == sorting"
-                    (selectedMethod)="this.selectedSortingMethod = sorting"
+                    (selectedMethod)="this.onSortingMethodSelected(sorting)"
                   ></app-sorting-selector>
                 }
               </div>

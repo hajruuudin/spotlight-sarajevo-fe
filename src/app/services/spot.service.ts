@@ -40,6 +40,8 @@ export class SpotService {
    * @param searchTerm The search query specified by the user in the search bar (Spots are searched against their Official Name as specified on Google Maps / any reliable online resource)
    * @param sortOption The sorting option specified by the user
    * @param categoryIds The category Ids by which the user filters the result. If left empty, all spot categories will be taken into account.
+   * @param userLatitude The user's current latitude for proximity sorting (optional)
+   * @param userLongitude The user's current longitude for proximity sorting (optional)
    * @returns An sorted page of Spot Shothand results
    *
    */
@@ -48,11 +50,20 @@ export class SpotService {
     pageSize: number,
     searchTerm: string,
     sortOption: string,
-    categoryIds: number[]
+    categoryIds: number[],
+    userLatitude: number | null = null,
+    userLongitude: number | null = null
   ) {
+    let url = this.apiUrl +
+      `/spot/find-spots?pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortOption=${sortOption}&categoryIds=${categoryIds}`;
+    
+    // Add location parameters if provided
+    if (userLatitude !== null && userLongitude !== null) {
+      url += `&userLatitude=${userLatitude}&userLongitude=${userLongitude}`;
+    }
+    
     return this.http.get<PageResponseModel<SpotShorthandModel>>(
-      this.apiUrl +
-        `/spot/find-spots?pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortOption=${sortOption}&categoryIds=${categoryIds}`,
+      url,
       {
         withCredentials: true,
       }

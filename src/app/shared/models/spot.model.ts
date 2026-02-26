@@ -10,6 +10,8 @@ export class SpotShorthandModel {
         public smallDescriptionEn: string,
         public categoryNameBs: string,
         public categoryNameEn: string,
+        public latitude: number,
+        public longitude: number,
         public spotTags: TagModel[],
         public combinedRating: number,
         public thumbnailImage: string

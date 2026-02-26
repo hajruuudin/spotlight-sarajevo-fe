@@ -197,7 +197,8 @@
     "ALPHABETICAL": "Alphabetical",
     "POPULARITY": "By Populariy",
     "DATE": "Upcoming",
-    "RATING": "Top Rated"
+    "RATING": "Top Rated",
+    "PROXIMITY": "Nearest to Me"
   },
   "spotOverview": {
     "rating": "RATING",

@@ -2,5 +2,6 @@ export enum SortOptions {
   ALPHABETICAL = 'ALPHABETICAL',
   RATING = 'RATING',
   DATE = 'DATE',
-  CREATED = 'CREATED'
+  CREATED = 'CREATED',
+  PROXIMITY = 'PROXIMITY'
 }
