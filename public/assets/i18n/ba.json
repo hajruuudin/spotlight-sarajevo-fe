@@ -415,6 +415,15 @@
     "unsubscribeButton": "Otkaži pretplatu",
     "logout": "Izloguj se"
   },
+  "premiumBenefits": {
+    "title": "Nadogradite na Premium!",
+    "subtitle": "Pokušali ste pristupiti premium funkciji. Nadogradite svoj nalog kako biste otključali ekskluzivne funkcije i poboljšali svoje SpotlightSarajevo iskustvo!",
+    "benefitOne": "Prikaz pune mape - Pregledajte sve lokale na interaktivnoj mapi",
+    "benefitTwo": "Kalendar događaja - Pogledajte sve nadolazeće događaje u formatu kalendara",
+    "benefitThree": "Pretraga po blizini - Pronađite lokale najbliže vašoj lokaciji",
+    "benefitFour": "Iskustvo bez oglasa - Uživajte u aplikaciji bez prekida",
+    "upgradeButton": "Nadogradite na Premium"
+  },
   "communityRequest": {
     "headerTitle": "Zahtjevi Zajednice",
     "headerSubtitle": "Nešto nije dodano? Napravite zahtjev!",

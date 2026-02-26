@@ -415,6 +415,15 @@
     "unsubscribeButton": "Cancel subscription",
     "logout": "Logout"
   },
+  "premiumBenefits": {
+    "title": "Upgrade to Premium!",
+    "subtitle": "You've tried to access a premium feature. Upgrade your account to unlock exclusive features and enhance your SpotlightSarajevo experience!",
+    "benefitOne": "Full Map View - Browse all spots on an interactive map",
+    "benefitTwo": "Event Calendar - View all upcoming events in calendar format",
+    "benefitThree": "Proximity Search - Find spots nearest to your location",
+    "benefitFour": "Ad-Free Experience - Enjoy the app without interruptions",
+    "upgradeButton": "Upgrade to Premium"
+  },
   "communityRequest": {
     "headerTitle": "Community Requests",
     "headerSubtitle": "Something not added? Make a request!",
@@ -474,5 +483,14 @@
     "eventsOnDate": "Events on",
     "noEventsHeader": "No events on this date",
     "noEventsDescription": "There are no events scheduled for this date. Try selecting another day!"
+  },
+  "premiumBenefits": {
+    "title": "Unlock Premium Features!",
+    "subtitle": "Upgrade to Premium to access exclusive features and enhance your Spotlight Sarajevo experience.",
+    "benefitOne": "View all spots on an interactive map with category filters",
+    "benefitTwo": "Browse events on a calendar view to plan your visits",
+    "benefitThree": "Sort spots by proximity to find the nearest attractions",
+    "benefitFour": "Enjoy an ad-free experience throughout the app",
+    "upgradeButton": "Upgrade to Premium"
   }
 }

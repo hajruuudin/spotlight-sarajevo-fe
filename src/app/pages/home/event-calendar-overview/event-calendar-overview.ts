@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, computed, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SessionService } from '../../../core/services/session.service';
@@ -11,6 +11,7 @@ import { SearchEventCard } from '../../../components/search-event-card/search-ev
 import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
 import { SpinnerSmallComponent } from '../../../components/spinner-small-component/spinner-small-component';
 import { PageHeader } from '../../../components/page-header/page-header';
+import { EventCalendarResolverData } from '../../../core/resolvers/event.calendar.resolver';
 
 @Component({
   selector: 'app-event-calendar-overview',
@@ -38,6 +39,7 @@ export class EventCalendarOverview implements OnInit {
     protected eventService: EventService,
     protected session: SessionService,
     protected router: Router,
+    protected route: ActivatedRoute,
     protected spinner: SpinnerService,
     protected cdr: ChangeDetectorRef,
   ) {}
@@ -45,11 +47,22 @@ export class EventCalendarOverview implements OnInit {
   protected isSectionLoading = computed(() => this.spinner.loadingSection());
 
   ngOnInit(): void {
-    const today = new Date();
-    this.selectedDate = this.formatDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
+    // Get data from resolver
+    const resolverData = this.route.snapshot.data['eventCalendarData'] as EventCalendarResolverData;
+    
+    if (resolverData) {
+      this.eventDatesMap = resolverData.eventDatesMap;
+      this.eventsForDay = resolverData.eventsForDay;
+      this.selectedDate = resolverData.selectedDate;
+      this.cdr.detectChanges();
+    } else {
+      // Fallback: load data manually if resolver didn't run
+      const today = new Date();
+      this.selectedDate = this.formatDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
 
-    this.loadEventDatesCheck(today.getFullYear(), today.getMonth() + 1);
-    this.loadEventsForDate(this.selectedDate);
+      this.loadEventDatesCheck(today.getFullYear(), today.getMonth() + 1);
+      this.loadEventsForDate(this.selectedDate);
+    }
   }
 
   onDateSelected(queryDate: string): void {

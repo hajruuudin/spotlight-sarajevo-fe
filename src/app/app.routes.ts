@@ -32,7 +32,9 @@ import { spotResolver } from './core/resolvers/spot.resolver';
 import { eventResolver } from './core/resolvers/event.resolver';
 import { collectionsResolver } from './core/resolvers/collection.resolver';
 import { AuthBenefits } from './pages/home/auth-benefits/auth-benefits';
+import { PremiumBenefits } from './pages/home/premium-benefits/premium-benefits';
 import { authGuard } from './core/guards/auth.guard';
+import { premiumGuard } from './core/guards/premium.guard';
 import { discoverResolver } from './core/resolvers/discover.resolver';
 import { homepageResolver } from './core/resolvers/homepage.resolver';
 import { touristGuideResolver } from './core/resolvers/tourist.guide.resolver';
@@ -41,6 +43,8 @@ import { transportResolver } from './core/resolvers/transport.resolver';
 import { profileEnd } from 'node:console';
 import { profilePageResolver } from './core/resolvers/profile.page.resolver';
 import { communityRequestResolver } from './core/resolvers/community.request.resolver';
+import { spotMapResolver } from './core/resolvers/spot.map.resolver';
+import { eventCalendarResolver } from './core/resolvers/event.calendar.resolver';
 
 export const routes: Routes = [
   {
@@ -58,10 +62,10 @@ export const routes: Routes = [
       { path: '', redirectTo: 'homepage', pathMatch: 'full' },
       { path: 'homepage', resolve: {homepageData: homepageResolver}, component: Homepage, title: 'Homepage - SpotlightSarajevo' },
       { path: 'spots', component: SpotSearch, title: 'Browse Spots - SpotlightSarajevo' },
-      { path: 'spots/map', component: SpotMapOverview, title: 'Spot Map - SpotlightSarajevo' },
+      { path: 'spots/map', canActivate: [premiumGuard], resolve: {spotMapData: spotMapResolver}, component: SpotMapOverview, title: 'Spot Map - SpotlightSarajevo' },
       { path: 'spots/:spotSlug', resolve: {spotData: spotResolver}, component: SpotOverview, title: 'Spot Overview - SpotlightSarajevo',},
       { path: 'events', component: EventSearch, title: 'Browse Events - SpotlightSarajevo' },
-      { path: 'events/calendar', component: EventCalendarOverview, title: 'Event Calendar - SpotlightSarajevo' },
+      { path: 'events/calendar', canActivate: [premiumGuard], resolve: {eventCalendarData: eventCalendarResolver}, component: EventCalendarOverview, title: 'Event Calendar - SpotlightSarajevo' },
       { path: 'events/:eventSlug', resolve: {eventData: eventResolver}, component: EventOverview, title: 'Event - SpotlightSarajevo',},
       { path: 'discover', resolve: { discoverData: discoverResolver }, component: Discover, title: 'Discover - SpotlightSarajevo' },
       { path: 'profile', resolve: { userInfo: profilePageResolver }, component: Profile, title: 'Profile - SpotlightSarajevo' },
@@ -70,7 +74,8 @@ export const routes: Routes = [
       { path: 'transport', resolve: { transportData: transportResolver }, component: Transport, title: 'Public Transport - SpotlightSarajevo' },
       { path: 'collections', canMatch: [authGuard], resolve: { collectionData: collectionsResolver }, component: Collections, title: 'Your Collections - SpotlightSarajevo' },
       { path: 'requests', canMatch: [authGuard], resolve: { requestData: communityRequestResolver }, component: CommunityRequests, title: 'Community Requests - SpotlightSarajevo' },
-      { path: 'auth-benefits', component: AuthBenefits, title: 'Login for more! Extra Functions'}
+      { path: 'auth-benefits', component: AuthBenefits, title: 'Login for more! Extra Functions'},
+      { path: 'premium-benefits', component: PremiumBenefits, title: 'Upgrade to Premium! - SpotlightSarajevo'}
     ],
   },
   {

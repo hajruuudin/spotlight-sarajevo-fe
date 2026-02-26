@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, computed, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -15,6 +15,7 @@ import { SearchBar } from '../../../components/search-bar/search-bar';
 import { CategoryFilterSelector } from '../../../components/category-filter-selector/category-filter-selector';
 import { ButtonSecondary } from '../../../components/button-secondary/button-secondary';
 import { SpinnerSmallComponent } from '../../../components/spinner-small-component/spinner-small-component';
+import { SpotMapResolverData } from '../../../core/resolvers/spot.map.resolver';
 
 @Component({
   selector: 'app-spot-map-overview',
@@ -45,6 +46,7 @@ export class SpotMapOverview implements OnInit {
     protected categoryService: CategoryService,
     protected session: SessionService,
     protected router: Router,
+    protected route: ActivatedRoute,
     protected fb: FormBuilder,
     protected spinner: SpinnerService,
     protected toastr: HotToastService,
@@ -62,15 +64,25 @@ export class SpotMapOverview implements OnInit {
   }
 
   ngOnInit(): void {
-    this.categoryService.getAllSpotCategories().subscribe({
-      next: (response: SpotCategoryModel[]) => {
-        this.spotCategories = response;
-        this.cdr.detectChanges();
-      },
-      error: (error: HttpErrorResponse) => {},
-    });
+    // Get data from resolver
+    const resolverData = this.route.snapshot.data['spotMapData'] as SpotMapResolverData;
+    
+    if (resolverData) {
+      this.spotCategories = resolverData.spotCategories;
+      this.spotMapPins = resolverData.spotMapPins;
+      this.cdr.detectChanges();
+    } else {
+      // Fallback: load data manually if resolver didn't run
+      this.categoryService.getAllSpotCategories().subscribe({
+        next: (response: SpotCategoryModel[]) => {
+          this.spotCategories = response;
+          this.cdr.detectChanges();
+        },
+        error: (error: HttpErrorResponse) => {},
+      });
 
-    this.fetchSpotsForMap('', this.selectedCategoryIds);
+      this.fetchSpotsForMap('', this.selectedCategoryIds);
+    }
   }
 
   onSearchTriggered(): void {
