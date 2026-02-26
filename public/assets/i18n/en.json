@@ -189,7 +189,9 @@
     "searchFilters": "Filters",
     "searchSorting": "Sorting",
     "searchButton": "Search",
-    "searchReset": "Remove filters"
+    "searchReset": "Remove filters",
+    "viewCalendar": "View Calendar",
+    "viewMap": "View Map"
   },
   "sorting": {
     "ALPHABETICAL": "Alphabetical",

@@ -17,11 +17,21 @@
       [formGroup]="spotSearchForm"
       class="w-full h-auto flex flex-col justify-start items-stretch space-y-4"
     >
-      <app-search-bar
-        formControlName="searchTerm"
-        [placeholder]="'search.searchButton' | transloco"
-        (search)="onSearchTriggered()"
-      ></app-search-bar>
+      <div class="w-full flex flex-col md:flex-row gap-4 items-stretch">
+        <app-search-bar
+          formControlName="searchTerm"
+          [placeholder]="'search.searchButton' | transloco"
+          (search)="onSearchTriggered()"
+          class="flex-1"
+        ></app-search-bar>
+        @if (isPremiumUser) {
+          <app-button-primary
+            [buttonContent]="'🗺️ ' + ('search.viewMap' | transloco)"
+            [classAddons]="'px-6 whitespace-nowrap h-full'"
+            (pressed)="navigateToMapOverview()"
+          ></app-button-primary>
+        }
+      </div>
 
       <section
         id="filterAndResultContainer"

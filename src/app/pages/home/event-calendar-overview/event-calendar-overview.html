@@ -11,10 +11,10 @@
 
   <div
     id="eventCalendarContent"
-    class="max-w-application w-full flex flex-col lg:flex-row justify-start items-start px-4 md:px-8 gap-6"
+    class="max-w-application w-full flex flex-col lg:flex-row justify-center items-center lg:justify-start px-4 md:px-8 gap-6"
   >
     <!-- Left Side: Calendar Widget -->
-    <div class="w-full lg:w-5/12 xl:w-4/12 lg:sticky lg:top-24 shrink-0">
+    <div class="w-3/4 lg:w-5/12 xl:w-5/12 lg:sticky lg:top-24 shrink-0">
       <app-calendar-widget
         [lang]="this.session.language()"
         [eventDatesMap]="this.eventDatesMap"
@@ -24,11 +24,7 @@
     </div>
 
     <!-- Right Side: Events List -->
-    <div class="w-full lg:w-7/12 xl:w-8/12 flex flex-col space-y-4">
-      <h3 class="text-lg md:text-xl font-bold">
-        {{ 'eventCalendar.eventsOnDate' | transloco }} {{ this.selectedDate }}
-      </h3>
-
+    <div class="w-3/4 lg:w-7/12 xl:w-7/12 flex flex-col space-y-4">
       <app-spinner-small-component
         [visible]="this.isEventsLoading"
         message="Loading events..."
@@ -36,7 +32,7 @@
 
       @if (!this.isEventsLoading) {
         @if (this.eventsForDay.length > 0) {
-          <div class="flex flex-col space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+          <div class="flex flex-col space-y-4 max-h-[70vh] overflow-y-auto p-1">
             @for (event of this.eventsForDay; track event.id) {
               <app-search-event-card
                 (click)="navigateToEventOverview(event.slug)"

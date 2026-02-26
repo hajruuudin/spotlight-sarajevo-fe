@@ -213,4 +213,12 @@ export class SpotSearch implements OnInit {
   navigateToSpotOverview(spotSlug: string) {
     this.router.navigate(['/spots/' + spotSlug]);
   }
+
+  get isPremiumUser(): boolean {
+    return this.session.getUser()?.isPremium ?? false;
+  }
+
+  navigateToMapOverview() {
+    this.router.navigate(['/spots/map']);
+  }
 }

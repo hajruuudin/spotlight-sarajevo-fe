@@ -20,6 +20,7 @@ import { PageResponseModel } from '../../../shared/models/shared.model';
 import { SpinnerSmallComponent } from '../../../components/spinner-small-component/spinner-small-component';
 import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
 import { Router } from '@angular/router';
+import { ButtonPrimary } from '../../../components/button-primary/button-primary';
 
 @Component({
   selector: 'app-event-search',
@@ -34,6 +35,7 @@ import { Router } from '@angular/router';
     SearchEventCard,
     SpinnerSmallComponent,
     NotFoundComponent,
+    ButtonPrimary,
   ],
   templateUrl: './event-search.html',
   styleUrl: './event-search.css',
@@ -215,5 +217,13 @@ export class EventSearch {
 
   navigateToEventOverview(eventSlug: string) {
     this.router.navigate(['/events/' + eventSlug]);
+  }
+
+  get isPremiumUser(): boolean {
+    return this.session.getUser()?.isPremium ?? false;
+  }
+
+  navigateToCalendarOverview() {
+    this.router.navigate(['/events/calendar']);
   }
 }

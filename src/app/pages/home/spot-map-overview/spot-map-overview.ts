@@ -30,7 +30,7 @@ import { SpinnerSmallComponent } from '../../../components/spinner-small-compone
   templateUrl: './spot-map-overview.html',
   styleUrl: './spot-map-overview.css',
   host: {
-    class: 'flex flex-col w-full h-[calc(100vh-80px)] relative',
+    class: 'flex flex-col w-full h-[calc(100vh-40px)] relative',
   },
 })
 export class SpotMapOverview implements OnInit {
@@ -126,9 +126,6 @@ export class SpotMapOverview implements OnInit {
     });
   }
 
-  onMarkerClicked(spot: SpotMapModel): void {
-    // Marker click is handled by the map popup link
-  }
 
   navigateToSpotOverview(slug: string): void {
     this.router.navigate(['/spots', slug]);

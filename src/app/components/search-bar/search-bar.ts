@@ -14,7 +14,7 @@ import {
   templateUrl: './search-bar.html',
   styleUrl: './search-bar.css',
   host: {
-    class: 'w-full mt-1',
+    class: 'w-full',
   },
   providers: [
     {

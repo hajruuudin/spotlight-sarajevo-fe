@@ -189,7 +189,9 @@
     "searchFilters": "Filteri",
     "searchSorting": "Sortiranje",
     "searchButton": "Pretraži",
-    "searchReset": "Ukloni filtere"
+    "searchReset": "Ukloni filtere",
+    "viewCalendar": "Prikaži kalendar",
+    "viewMap": "Prikaži mapu"
   },
   "sorting": {
     "ALPHABETICAL": "Po Abecedi",
