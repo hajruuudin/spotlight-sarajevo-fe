@@ -21,6 +21,7 @@ import { PageResponseModel } from '../../../shared/models/shared.model';
 import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
 import { Router } from '@angular/router';
 import { ButtonPrimary } from '../../../components/button-primary/button-primary';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-spot-search',
@@ -36,6 +37,7 @@ import { ButtonPrimary } from '../../../components/button-primary/button-primary
     SpinnerSmallComponent,
     NotFoundComponent,
     ButtonPrimary,
+    NgClass,
   ],
   templateUrl: './spot-search.html',
   styleUrl: './spot-search.css',
@@ -56,6 +58,7 @@ export class SpotSearch implements OnInit {
   selectedSortingMethod: string = SortOptions.ALPHABETICAL.toString();
   isFilterPopupLoaded = false;
   isSortingPopupLoaded = false;
+  showOnlyNonVisited: boolean = false;
   pageNumber = 0;
   pageSize = 4;
   totalElements = 0;
@@ -153,8 +156,22 @@ export class SpotSearch implements OnInit {
     );
   }
 
+  toggleNonVisitedFilter() {
+    this.showOnlyNonVisited = !this.showOnlyNonVisited;
+    this.fetchSpots(
+      this.pageNumber,
+      this.pageSize,
+      this.spotSearchForm.get('searchTerm')?.value,
+      this.selectedSortingMethod,
+      this.selectedCategoryIds,
+      true,
+      false,
+    );
+  }
+
   resetCategoryFilters() {
     this.selectedCategoryIds = [];
+    this.showOnlyNonVisited = false;
     this.fetchSpots(
       this.pageNumber,
       this.pageSize,
@@ -285,8 +302,11 @@ export class SpotSearch implements OnInit {
     const latitude = sortingMethod === SortOptions.PROXIMITY.toString() ? this.userLatitude : null;
     const longitude = sortingMethod === SortOptions.PROXIMITY.toString() ? this.userLongitude : null;
     
+    // Pass isNotVisited parameter if the filter is enabled
+    const isNotVisited = this.showOnlyNonVisited ? true : null;
+    
     this.spotService
-      .findSpotsPaginated(pageNumber, pageSize, searchValue, sortingMethod, categoryIds, latitude, longitude)
+      .findSpotsPaginated(pageNumber, pageSize, searchValue, sortingMethod, categoryIds, latitude, longitude, isNotVisited)
       .subscribe({
         next: (response: PageResponseModel<SpotShorthandModel>) => {
           this.spinner.hideSectionSpinner();

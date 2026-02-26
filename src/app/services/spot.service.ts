@@ -42,6 +42,7 @@ export class SpotService {
    * @param categoryIds The category Ids by which the user filters the result. If left empty, all spot categories will be taken into account.
    * @param userLatitude The user's current latitude for proximity sorting (optional)
    * @param userLongitude The user's current longitude for proximity sorting (optional)
+   * @param excludeVisited Filter to show only non-visited spots (optional)
    * @returns An sorted page of Spot Shothand results
    *
    */
@@ -52,7 +53,8 @@ export class SpotService {
     sortOption: string,
     categoryIds: number[],
     userLatitude: number | null = null,
-    userLongitude: number | null = null
+    userLongitude: number | null = null,
+    excludeVisited: boolean | null = null
   ) {
     let url = this.apiUrl +
       `/spot/find-spots?pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortOption=${sortOption}&categoryIds=${categoryIds}`;
@@ -60,6 +62,11 @@ export class SpotService {
     // Add location parameters if provided
     if (userLatitude !== null && userLongitude !== null) {
       url += `&userLatitude=${userLatitude}&userLongitude=${userLongitude}`;
+    }
+    
+    // Add excludeVisited parameter if provided
+    if (excludeVisited !== null) {
+      url += `&excludeVisited=${excludeVisited}`;
     }
     
     return this.http.get<PageResponseModel<SpotShorthandModel>>(

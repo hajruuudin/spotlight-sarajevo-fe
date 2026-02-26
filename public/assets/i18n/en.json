@@ -191,7 +191,9 @@
     "searchButton": "Search",
     "searchReset": "Remove filters",
     "viewCalendar": "View Calendar",
-    "viewMap": "View Map"
+    "viewMap": "View Map",
+    "showOnlyNonVisited": "Show Only Non-Visited Spots",
+    "showingNonVisited": "✓ Showing Non-Visited Spots Only"
   },
   "sorting": {
     "ALPHABETICAL": "Alphabetical",

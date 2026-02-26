@@ -191,7 +191,9 @@
     "searchButton": "Pretraži",
     "searchReset": "Ukloni filtere",
     "viewCalendar": "Prikaži kalendar",
-    "viewMap": "Prikaži mapu"
+    "viewMap": "Prikaži mapu",
+    "showOnlyNonVisited": "Prikaži samo neposjećene lokale",
+    "showingNonVisited": "✓ Prikazani samo neposjećeni lokali"
   },
   "sorting": {
     "ALPHABETICAL": "Po Abecedi",
