@@ -43,6 +43,7 @@ import { AddToCollectionModal } from '../../../components/modals/add-to-collecti
 import { CollectionService } from '../../../services/collection.service';
 import { CollectionAddItemModel } from '../../../shared/models/collection.model';
 import { ZeroReview } from '../../../shared/pipes/zero-review-pipe';
+import { SortingSelector } from '../../../components/sorting-selector/sorting-selector';
 
 @Component({
   selector: 'app-spot-overview',
@@ -61,6 +62,7 @@ import { ZeroReview } from '../../../shared/pipes/zero-review-pipe';
     BnwRatingIcon,
     BnwLocationIcon,
     BnwCategoryIcon,
+    SortingSelector,
   ],
   templateUrl: './spot-overview.html',
   styleUrl: './spot-overview.css',
@@ -85,6 +87,14 @@ export class SpotOverview implements OnInit {
 
   reviewPageNumber: number = 0;
   reviewPageSize: number = 20;
+  reviewSortOption: string = 'ALPHABETICAL';
+  reviewSortOptions: string[] = ['ALPHABETICAL', 'ALPHABETICAL_DESC', 'RATING', 'RATING_DESC'];
+  reviewSortTranslationKeys: { [key: string]: string } = {
+    'ALPHABETICAL': 'spotOverview.sortAlphabetical',
+    'ALPHABETICAL_DESC': 'spotOverview.sortAlphabeticalDesc',
+    'RATING': 'spotOverview.sortRating',
+    'RATING_DESC': 'spotOverview.sortRatingDesc'
+  };
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -177,7 +187,7 @@ export class SpotOverview implements OnInit {
 
   loadOtherSpotReviews(spotId: number) {
     this.reviewService
-      .findAllSpotReviews(this.reviewPageNumber, this.reviewPageSize, spotId, 'ALPHABETICAL')
+      .findAllSpotReviews(this.reviewPageNumber, this.reviewPageSize, spotId, this.reviewSortOption)
       .subscribe({
         next: (response: PageResponseModel<SpotReviewModel>) => {
           const filteredResult = response.content.filter(
@@ -189,6 +199,11 @@ export class SpotOverview implements OnInit {
           // do something
         },
       });
+  }
+
+  onReviewSortChange(sortOption: string) {
+    this.reviewSortOption = sortOption;
+    this.loadOtherSpotReviews(this.spotOverview.id);
   }
 
   async openAddModal() {

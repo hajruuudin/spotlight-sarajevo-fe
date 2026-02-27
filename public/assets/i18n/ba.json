@@ -232,7 +232,11 @@
     "noUserReviewHeader": "Niste ostavili recenziju za ovu lokaciju.",
     "noUserReviewSubheading": "Ostavite recenziju ako ste posjetili. Pomaže i drugim korisnicima i vlasnicima.",
     "noOtherReviewHeading": "Još uvijek nema recenzija drugih korisnika!",
-    "noOtherReviewSubheading": "Ostavite recenziju ako ste posjetili. Pomaže i drugim korisnicima i vlasnicima."
+    "noOtherReviewSubheading": "Ostavite recenziju ako ste posjetili. Pomaže i drugim korisnicima i vlasnicima.",
+    "sortAlphabetical": "A-Z",
+    "sortAlphabeticalDesc": "Z-A",
+    "sortRating": "Ocjena ↑",
+    "sortRatingDesc": "Ocjena ↓"
   },
   "spotReview": {
     "create": "Dodaj recenziju",
@@ -299,7 +303,11 @@
     "noUserOrganiserReviewHeader": "Još niste ostavili recenziju za ovog organizatora.",
     "noUserOrganiserReviewSubheading": "Ostavite recenziju ako ste bili na događajima ovog organizatora. Time pomažete njima i drugim korisnicima SpotlightSarajeva.",
     "noOtherOrganiserReviewHeading": "Još uvijek nema recenzija drugih korisnika za ovog organizatora!",
-    "noOtherOrganiserReviewSubheading": "Izgleda prazno i usamljeno. Ostavite recenziju i budite prvi!"
+    "noOtherOrganiserReviewSubheading": "Izgleda prazno i usamljeno. Ostavite recenziju i budite prvi!",
+    "sortAlphabetical": "A-Z",
+    "sortAlphabeticalDesc": "Z-A",
+    "sortRating": "Ocjena ↑",
+    "sortRatingDesc": "Ocjena ↓"
   },
   "eventReview": {
     "create": "Dodaj recenziju",

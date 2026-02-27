@@ -230,7 +230,11 @@
     "noUserReviewHeader": "You havent reviewed this place.",
     "noUserReviewSubheading": "Leave a review if You have visited. It helps others and the owners.",
     "noOtherReviewHeading": "No other users have left reviews for this spot yet!",
-    "noOtherReviewSubheading": "Leave a review if You have visited. It helps others and the owners."
+    "noOtherReviewSubheading": "Leave a review if You have visited. It helps others and the owners.",
+    "sortAlphabetical": "A-Z",
+    "sortAlphabeticalDesc": "Z-A",
+    "sortRating": "Rating ↑",
+    "sortRatingDesc": "Rating ↓"
   },
   "spotReview": {
     "create": "Add Review",
@@ -297,7 +301,11 @@
     "noUserOrganiserReviewHeader": "You haven't reviewed this organiser.",
     "noUserOrganiserReviewSubheading": "Leave a review if you have attended this organiser's events. It helps them and other users of SpotlightSarajevo.",
     "noOtherOrganiserReviewHeading": "No other users have left reviews for this organiser yet!",
-    "noOtherOrganiserReviewSubheading": "Seems empty and lonely. Leave a review and become the first!"
+    "noOtherOrganiserReviewSubheading": "Seems empty and lonely. Leave a review and become the first!",
+    "sortAlphabetical": "A-Z",
+    "sortAlphabeticalDesc": "Z-A",
+    "sortRating": "Rating ↑",
+    "sortRatingDesc": "Rating ↓"
   },
   "eventReview": {
     "create": "Add Review",

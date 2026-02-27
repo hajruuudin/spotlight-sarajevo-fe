@@ -34,6 +34,7 @@ import { ButtonRegular } from '../../../components/button-regular/button-regular
 import { AddToCollectionModal } from '../../../components/modals/add-to-collection-modal/add-to-collection-modal';
 import { CollectionService } from '../../../services/collection.service';
 import { CollectionAddItemModel } from '../../../shared/models/collection.model';
+import { SortingSelector } from '../../../components/sorting-selector/sorting-selector';
 
 @Component({
   selector: 'app-event-overview',
@@ -50,7 +51,8 @@ import { CollectionAddItemModel } from '../../../shared/models/collection.model'
     EventInfoCard,
     NotFoundComponent,
     ButtonPrimary,
-    OrganiserReiewCard
+    OrganiserReiewCard,
+    SortingSelector,
   ],
   templateUrl: './event-overview.html',
   styleUrl: './event-overview.css',
@@ -71,6 +73,14 @@ export class EventOverview {
 
   reviewPageNumber: number = 0;
   reviewPageSize: number = 20;
+  reviewSortOption: string = 'ALPHABETICAL';
+  reviewSortOptions: string[] = ['ALPHABETICAL', 'ALPHABETICAL_DESC', 'RATING', 'RATING_DESC'];
+  reviewSortTranslationKeys: { [key: string]: string } = {
+    'ALPHABETICAL': 'eventOverview.sortAlphabetical',
+    'ALPHABETICAL_DESC': 'eventOverview.sortAlphabeticalDesc',
+    'RATING': 'eventOverview.sortRating',
+    'RATING_DESC': 'eventOverview.sortRatingDesc'
+  };
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -142,7 +152,7 @@ export class EventOverview {
         this.reviewPageNumber,
         this.reviewPageSize,
         organiserId,
-        'ALPHABETICAL',
+        this.reviewSortOption,
       )
       .subscribe({
         next: (response: PageResponseModel<EventOrganiserReviewModel>) => {
@@ -155,6 +165,11 @@ export class EventOverview {
           // do something
         },
       });
+  }
+
+  onReviewSortChange(sortOption: string) {
+    this.reviewSortOption = sortOption;
+    this.loadOtherOrganiserReviews(this.eventOverview.organiser.id);
   }
 
   async openAddModal() {
