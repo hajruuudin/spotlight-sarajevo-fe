@@ -158,7 +158,9 @@
     "discoverSectionLandmarks": "Discover Sarajevos Culture",
     "discoverSectionCategoriesSpan": "CATEGORIES",
     "discoverSectionCategories": "Explore Different Categories",
-    "viewAllButton": "View All"
+    "viewAllButton": "View All",
+    "noEventsOnDateHeader": "No events on this date",
+    "noEventsOnDateDescription": "There are no events scheduled for the selected date. Try selecting a different day!"
   },
   "discover": {
     "headerTitle": "Discover",

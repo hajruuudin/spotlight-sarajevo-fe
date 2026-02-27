@@ -158,7 +158,9 @@
     "discoverSectionLandmarks": "Iskusite Sarajevsku historijsku stranu",
     "discoverSectionCategoriesSpan": "KATEGORIJE",
     "discoverSectionCategories": "Pretražite prema kategorijama",
-    "viewAllButton": "Vidi sve"
+    "viewAllButton": "Vidi sve",
+    "noEventsOnDateHeader": "Nema događaja na ovaj datum",
+    "noEventsOnDateDescription": "Nema zakazanih događaja za odabrani datum. Pokušajte odabrati drugi dan!"
   },
   "discover": {
     "headerTitle": "Istraži",

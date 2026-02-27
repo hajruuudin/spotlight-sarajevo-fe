@@ -162,14 +162,21 @@
     <div
       class="w-full h-auto flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4 my-2"
     >
-      <app-search-event-card
-        [lang]="this.session.language()!"
-        [event]="this.upcomingEvents[0]"
-      ></app-search-event-card>
-      <app-search-event-card
-        [lang]="this.session.language()!"
-        [event]="this.upcomingEvents[1]"
-      ></app-search-event-card>
+      @if (this.isLoadingEventsForDate) {
+        <app-spinner-small-component></app-spinner-small-component>
+      } @else if (this.eventsForSelectedDate.length === 0) {
+        <app-not-found-component
+          [headerMessage]="'homepage.noEventsOnDateHeader' | transloco"
+          [messageDescription]="'homepage.noEventsOnDateDescription' | transloco"
+        ></app-not-found-component>
+      } @else {
+        @for (event of this.eventsForSelectedDate; track event.id) {
+          <app-search-event-card
+            [lang]="this.session.language()!"
+            [event]="event"
+          ></app-search-event-card>
+        }
+      }
     </div>
 
     <div class="self-end w-auto flex flex-row justify-center md:justify-end max-w-application my-4">
