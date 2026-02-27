@@ -132,14 +132,14 @@
               classAddons="px-4"
               (click)="unmarkEventAsAttended()"
               [buttonType]="'DEFAULT'"
-              [buttonContent]="'Unmark as will attend'"
+              [buttonContent]="this.isPastEvent ? ('eventOverview.unmarkHaveAttended' | transloco) : ('eventOverview.unmarkWillAttend' | transloco)"
             ></app-button-primary>
           } @else {
             <app-button-primary
               classAddons="px-4"
               (click)="markEventAsAttended()"
               [buttonType]="'DEFAULT'"
-              [buttonContent]="'Mark as will attend'"
+              [buttonContent]="this.isPastEvent ? ('eventOverview.haveAttended' | transloco) : ('eventOverview.willAttend' | transloco)"
             ></app-button-primary>
           }
         </div>

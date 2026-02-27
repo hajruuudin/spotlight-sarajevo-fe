@@ -198,7 +198,8 @@
   "sorting": {
     "ALPHABETICAL": "Alphabetical",
     "POPULARITY": "By Populariy",
-    "DATE": "Upcoming",
+    "DATE_UPCOMING": "Upcoming",
+    "DATE_PAST": "Past Events",
     "RATING": "Top Rated",
     "PROXIMITY": "Nearest to Me"
   },
@@ -264,6 +265,11 @@
     "category": "CATEGORY",
     "descriptionHead": "DESCRIPTION",
     "descriptionTitle" : "About this Event",
+    "eventPassed": "Event Passed",
+    "willAttend": "Mark as will attend",
+    "haveAttended": "Mark as attended",
+    "unmarkWillAttend": "Unmark as will attend",
+    "unmarkHaveAttended": "Unmark as attended",
   
     "imagesHead": "EVENT IMAGES",
     "imagesTitle": "View images of this event",

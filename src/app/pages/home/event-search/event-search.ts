@@ -46,10 +46,10 @@ import { ButtonPrimary } from '../../../components/button-primary/button-primary
 export class EventSearch {
   eventSearchForm: FormGroup;
   eventCategories: EventCategoryModel[] = [];
-  sortingMethods: string[] = [SortOptions.ALPHABETICAL.toString(), SortOptions.DATE.toString()];
+  sortingMethods: string[] = [SortOptions.ALPHABETICAL.toString(), SortOptions.DATE_UPCOMING.toString(), SortOptions.DATE_PAST.toString()];
 
   selectedCategoryIds: number[] = [];
-  selectedSortingMethod: string = SortOptions.ALPHABETICAL.toString();
+  selectedSortingMethod: string = SortOptions.DATE_UPCOMING.toString();
 
   isFilterPopupLoaded: boolean = false;
   isSortingPopupLoaded: boolean = false;

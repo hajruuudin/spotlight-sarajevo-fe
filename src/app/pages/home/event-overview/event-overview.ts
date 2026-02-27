@@ -82,6 +82,11 @@ export class EventOverview {
     'RATING_DESC': 'eventOverview.sortRatingDesc'
   };
 
+  get isPastEvent(): boolean {
+    if (!this.eventOverview?.endDate) return false;
+    return new Date(this.eventOverview.endDate) < new Date();
+  }
+
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected router: Router,

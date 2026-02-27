@@ -199,7 +199,8 @@
     "ALPHABETICAL": "Po Abecedi",
     "POPULARITY": "Najpopularnije",
     "RATING": "Najbolje ocjenjeno",
-    "DATE": "Nadolazeće",
+    "DATE_UPCOMING": "Nadolazeće",
+    "DATE_PAST": "Prošli događaji",
     "PROXIMITY": "Najbliže meni"
   },
   "spotOverview": {
@@ -267,6 +268,11 @@
     "category": "KATEGORIJA",
     "descriptionHead": "OPIS",
     "descriptionTitle" : "O ovom događaju",
+    "eventPassed": "Događaj završen",
+    "willAttend": "Označi da ću prisustvovati",
+    "haveAttended": "Označi da sam prisustvovao/la",
+    "unmarkWillAttend": "Ukloni prisustvovanje",
+    "unmarkHaveAttended": "Ukloni prisustvovanje",
   
     "imagesHead": "SLIKE DOGAĐAJA",
     "imagesTitle": "Pogledajte slike ovog događaja",
