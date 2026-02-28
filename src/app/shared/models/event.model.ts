@@ -12,6 +12,7 @@ export class EventShorthandModel {
         public categoryNameEn: string,
         public eventTags: TagModel[],
         public startDate: string,
+        public endDate: string,
         public thumbnailImage: string
     ) { }
 }
@@ -105,4 +106,8 @@ export class EventOrganiserReviewUpdateModel{
         public userOrganiserAtmosphere: number,
         public userOrganiserEnjoyability: number,
     ){}
+}
+
+export interface EventDateCheckModel {
+    [date: string]: boolean;
 }

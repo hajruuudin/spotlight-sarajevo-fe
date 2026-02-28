@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import {
+  SpotMapModel,
   SpotOverviewModel,
   SpotShorthandModel,
 } from '../shared/models/spot.model';
@@ -16,7 +17,7 @@ import { PageResponseModel } from '../shared/models/shared.model';
  * - DELETE method to delete a spot from the database along with its information, available only to admin users
  * ... among other methods.
  *
- * Models and entities incorporated in the method: SpotShorthandModel, SpotModel
+ * Models and entities incorporated in the method: SpotShorthandModel, SpotMapModel, SpotOverviewModel
  *
  * All HTTP requests include credentials for cookie/session management.
  *
@@ -39,6 +40,9 @@ export class SpotService {
    * @param searchTerm The search query specified by the user in the search bar (Spots are searched against their Official Name as specified on Google Maps / any reliable online resource)
    * @param sortOption The sorting option specified by the user
    * @param categoryIds The category Ids by which the user filters the result. If left empty, all spot categories will be taken into account.
+   * @param userLatitude The user's current latitude for proximity sorting (optional)
+   * @param userLongitude The user's current longitude for proximity sorting (optional)
+   * @param excludeVisited Filter to show only non-visited spots (optional)
    * @returns An sorted page of Spot Shothand results
    *
    */
@@ -47,11 +51,44 @@ export class SpotService {
     pageSize: number,
     searchTerm: string,
     sortOption: string,
-    categoryIds: number[]
+    categoryIds: number[],
+    userLatitude: number | null = null,
+    userLongitude: number | null = null,
+    excludeVisited: boolean | null = null
   ) {
+    let url = this.apiUrl +
+      `/spot/find-spots?pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortOption=${sortOption}&categoryIds=${categoryIds}`;
+    
+    // Add location parameters if provided
+    if (userLatitude !== null && userLongitude !== null) {
+      url += `&userLatitude=${userLatitude}&userLongitude=${userLongitude}`;
+    }
+    
+    // Add excludeVisited parameter if provided
+    if (excludeVisited !== null) {
+      url += `&excludeVisited=${excludeVisited}`;
+    }
+    
     return this.http.get<PageResponseModel<SpotShorthandModel>>(
+      url,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to retrieve spot map pin data for displaying spots on a fullscreen map.
+   * Returns lightweight spot data including coordinates, suitable for map markers.
+   *
+   * @param searchTerm The search query to filter spots by name
+   * @param categoryIds The category Ids by which the user filters the result. If left empty, all spot categories will be taken into account.
+   * @returns An array of SpotMapPinModel objects representing spots with their location data
+   */
+  findSpotsForMap(searchTerm: string, categoryIds: number[]) {
+    return this.http.get<SpotMapModel[]>(
       this.apiUrl +
-        `/spot/find-spots?pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortOption=${sortOption}&categoryIds=${categoryIds}`,
+        `/spot/find-spots-map?searchTerm=${searchTerm}&categoryIds=${categoryIds}`,
       {
         withCredentials: true,
       }

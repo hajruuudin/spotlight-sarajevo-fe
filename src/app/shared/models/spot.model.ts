@@ -10,6 +10,8 @@ export class SpotShorthandModel {
         public smallDescriptionEn: string,
         public categoryNameBs: string,
         public categoryNameEn: string,
+        public latitude: number,
+        public longitude: number,
         public spotTags: TagModel[],
         public combinedRating: number,
         public thumbnailImage: string
@@ -94,6 +96,21 @@ export class SpotReviewUpdateModel{
         public userAffordability: number,
         public userCleanliness: number,
         public userLocaleQuality: number
+    ){}
+}
+
+export class SpotMapModel {
+    constructor(
+        public id: number,
+        public slug: string,
+        public officialNameBs: string,
+        public officialNameEn: string,
+        public categoryNameBs: string,
+        public categoryNameEn: string,
+        public latitude: number,
+        public longitude: number,
+        public thumbnailImage: string,
+        public combinedRating: number
     ){}
 }
 

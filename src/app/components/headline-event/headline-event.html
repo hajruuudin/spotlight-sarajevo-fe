@@ -1,8 +1,13 @@
 @if (this.event) {
 <div
-  [ngClass]="this.classAddons"
-  class="dark:bg-black bg-(--primary-200) text-(--text-900) h-auto outline-2 dark:outline-(--primary-200) outline-(--primary-700) hover:outline-2 hover:dark:outline-(--primary-500) hover:outline-(--primary-100) flex flex-row rounded-2xl hover:pl-1 transition-all"
+  [ngClass]="[this.classAddons, this.isPastEvent ? 'opacity-60' : '']"
+  class="dark:bg-black bg-(--primary-200) text-(--text-900) h-auto outline-2 dark:outline-(--primary-200) outline-(--primary-700) hover:outline-2 hover:dark:outline-(--primary-500) hover:outline-(--primary-100) flex flex-row rounded-2xl hover:pl-1 transition-all relative"
 >
+  @if (this.isPastEvent) {
+    <div class="absolute top-2 left-2 z-30 bg-gray-400 px-3 py-1 rounded-full">
+      <span class="text-xs md:text-sm text-black font-semibold">{{ 'eventOverview.eventPassed' | transloco }}</span>
+    </div>
+  }
   <div class="p-3 flex flex-col md:mt-16 mt-6 justify-center items-start w-2/3 md:w-1/2 z-20">
     <span class="text-sm md:text-xl">{{
       this.lang == 'en' ? this.event.categoryNameEn : this.event.categoryNameBs

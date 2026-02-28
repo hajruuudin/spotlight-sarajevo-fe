@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { PageResponseModel } from '../shared/models/shared.model';
-import { EventOverviewModel, EventShorthandModel } from '../shared/models/event.model';
+import { EventDateCheckModel, EventOverviewModel, EventShorthandModel } from '../shared/models/event.model';
 
 /**
  * EventService handles all available backend endpoints related to events.
@@ -110,6 +110,38 @@ export class EventService {
   removeEventFromAttended(eventId: number) {
     return this.http.delete(
       this.apiUrl + `/user/attended-event/remove?eventId=${eventId}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to retrieve a map of dates to booleans indicating whether events exist on each day
+   * of the specified month. Re-called each time the user navigates to a different month.
+   *
+   * @param year The year of the month to check
+   * @param month The month to check (1-indexed, e.g. 1 = January)
+   * @returns A map of date strings (YYYY-MM-DD) to booleans
+   */
+  findEventDatesCheck(year: number, month: number) {
+    return this.http.get<EventDateCheckModel>(
+      this.apiUrl + `/event/event-dates-check?year=${year}&month=${month}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to retrieve all events occurring on a specific date.
+   *
+   * @param date The date in YYYY-MM-DD format
+   * @returns An array of EventShorthandModel objects for that date
+   */
+  findEventsOnDay(date: string) {
+    return this.http.get<EventShorthandModel[]>(
+      this.apiUrl + `/event/events-on-day/${date}`,
       {
         withCredentials: true,
       }

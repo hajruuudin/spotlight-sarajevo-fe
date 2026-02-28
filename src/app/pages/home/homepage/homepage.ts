@@ -31,6 +31,8 @@ import { SpinnerService } from '../../../core/services/spinner.service';
 import { ActivatedRoute } from '@angular/router';
 import { HomepagePageData } from '../../../core/resolvers/homepage.resolver';
 import { Subheading } from "../../../components/subheading/subheading";
+import { NotFoundComponent } from "../../../components/not-found-component/not-found-component";
+import { SpinnerSmallComponent } from "../../../components/spinner-small-component/spinner-small-component";
 
 @Component({
   selector: 'app-homepage',
@@ -46,7 +48,9 @@ import { Subheading } from "../../../components/subheading/subheading";
     HistoricalSpotCard,
     CategoryCard,
     ButtonPrimary,
-    Subheading
+    Subheading,
+    NotFoundComponent,
+    SpinnerSmallComponent
 ],
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
@@ -82,6 +86,8 @@ export class Homepage implements OnInit {
 
   protected selectedDate: string = '';
   public eventCalendarDays: any = [];
+  public eventsForSelectedDate: EventShorthandModel[] = [];
+  public isLoadingEventsForDate: boolean = false;
 
   ngOnInit(): void {
     const data = this.route.snapshot.data['homepageData'] as HomepagePageData;
@@ -131,11 +137,27 @@ export class Homepage implements OnInit {
     }
 
     this.selectedDate = this.eventCalendarDays[0].queryDate;
-    // this.loadEventsForDate(selectedQueryDate); // Handle this after inserting events into the system. Loads events for the first day by default
+    this.loadEventsForDate(this.selectedDate);
   }
 
   handleDaySelection(selectedQueryDate: string) {
     this.selectedDate = selectedQueryDate;
-    // this.loadEventsForDate(selectedQueryDate); // Handle this after inserting events into the system (possibly after admin panel is made)
+    this.loadEventsForDate(selectedQueryDate);
+  }
+
+  loadEventsForDate(date: string) {
+    this.isLoadingEventsForDate = true;
+    this.eventService.findEventsOnDay(date).subscribe({
+      next: (events) => {
+        this.eventsForSelectedDate = events.slice(0, 2);
+        this.isLoadingEventsForDate = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.eventsForSelectedDate = [];
+        this.isLoadingEventsForDate = false;
+        this.cdr.detectChanges();
+      }
+    });
   }
 }

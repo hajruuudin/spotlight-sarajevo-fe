@@ -20,6 +20,7 @@ import { PageResponseModel } from '../../../shared/models/shared.model';
 import { SpinnerSmallComponent } from '../../../components/spinner-small-component/spinner-small-component';
 import { NotFoundComponent } from '../../../components/not-found-component/not-found-component';
 import { Router } from '@angular/router';
+import { ButtonPrimary } from '../../../components/button-primary/button-primary';
 
 @Component({
   selector: 'app-event-search',
@@ -34,6 +35,7 @@ import { Router } from '@angular/router';
     SearchEventCard,
     SpinnerSmallComponent,
     NotFoundComponent,
+    ButtonPrimary,
   ],
   templateUrl: './event-search.html',
   styleUrl: './event-search.css',
@@ -44,10 +46,10 @@ import { Router } from '@angular/router';
 export class EventSearch {
   eventSearchForm: FormGroup;
   eventCategories: EventCategoryModel[] = [];
-  sortingMethods: string[] = [SortOptions.ALPHABETICAL.toString(), SortOptions.DATE.toString()];
+  sortingMethods: string[] = [SortOptions.ALPHABETICAL.toString(), SortOptions.DATE_UPCOMING.toString(), SortOptions.DATE_PAST.toString()];
 
   selectedCategoryIds: number[] = [];
-  selectedSortingMethod: string = SortOptions.ALPHABETICAL.toString();
+  selectedSortingMethod: string = SortOptions.DATE_UPCOMING.toString();
 
   isFilterPopupLoaded: boolean = false;
   isSortingPopupLoaded: boolean = false;
@@ -134,6 +136,19 @@ export class EventSearch {
     this.isSortingPopupLoaded = !this.isSortingPopupLoaded;
   }
 
+  onSortingMethodSelected(sortingMethod: string) {
+    this.selectedSortingMethod = sortingMethod;
+    this.fetchEvents(
+      this.pageNumber,
+      this.pageSize,
+      this.eventSearchForm.get('searchTerm')?.value,
+      this.selectedSortingMethod,
+      this.selectedCategoryIds,
+      true,
+      false,
+    );
+  }
+
   resetCategoryFilters() {
     this.selectedCategoryIds = [];
     this.fetchEvents(
@@ -215,5 +230,13 @@ export class EventSearch {
 
   navigateToEventOverview(eventSlug: string) {
     this.router.navigate(['/events/' + eventSlug]);
+  }
+
+  get isPremiumUser(): boolean {
+    return this.session.getUser()?.isPremium ?? false;
+  }
+
+  navigateToCalendarOverview() {
+    this.router.navigate(['/events/calendar']);
   }
 }

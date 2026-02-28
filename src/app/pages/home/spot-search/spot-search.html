@@ -17,11 +17,21 @@
       [formGroup]="spotSearchForm"
       class="w-full h-auto flex flex-col justify-start items-stretch space-y-4"
     >
-      <app-search-bar
-        formControlName="searchTerm"
-        [placeholder]="'search.searchButton' | transloco"
-        (search)="onSearchTriggered()"
-      ></app-search-bar>
+      <div class="w-full flex flex-col md:flex-row gap-4 items-stretch">
+        <app-search-bar
+          formControlName="searchTerm"
+          [placeholder]="'search.searchButton' | transloco"
+          (search)="onSearchTriggered()"
+          class="flex-1"
+        ></app-search-bar>
+        @if (isPremiumUser) {
+          <app-button-primary
+            [buttonContent]="'🗺️ ' + ('search.viewMap' | transloco)"
+            [classAddons]="'px-6 whitespace-nowrap h-full w-full'"
+            (pressed)="navigateToMapOverview()"
+          ></app-button-primary>
+        }
+      </div>
 
       <section
         id="filterAndResultContainer"
@@ -52,7 +62,7 @@
                   <app-sorting-selector
                     [sortingMethod]="'sorting.' + sorting | transloco"
                     [isSelected]="this.selectedSortingMethod == sorting"
-                    (selectedMethod)="this.selectedSortingMethod = sorting"
+                    (selectedMethod)="this.onSortingMethodSelected(sorting)"
                   ></app-sorting-selector>
                 }
               </div>
@@ -79,6 +89,19 @@
               style="box-shadow: 0px 0px 20px #00000055"
               class="transition-all absolute right-0 top-0 w-full md:w-1/2 h-auto rounded-2xl dark:bg-(--background-400) bg-(--background-900) p-4 flex flex-col space-y-4 z-30 md:ml-4"
             >
+              <!-- Non-Visited Filter Toggle -->
+              <button
+                (click)="toggleNonVisitedFilter()"
+                [ngClass]="{
+                  'dark:bg-(--accent-600) bg-(--accent-200) dark:text-black text-white': showOnlyNonVisited,
+                  'dark:bg-(--background-300) bg-(--background-600) dark:text-white text-black': !showOnlyNonVisited
+                }"
+                class="w-full rounded-xl py-3 px-4 font-semibold text-base transition-all duration-200 hover:opacity-80"
+              >
+                {{ (showOnlyNonVisited ? 'search.showingNonVisited' : 'search.showOnlyNonVisited') | transloco }}
+              </button>
+
+              <!-- Category Filter Section -->
               <div
                 class="h-96 xl:h-auto flex flex-row flex-wrap justify-center space-x-4 space-y-2 xl:overflow-y-hidden overflow-y-scroll"
               >

@@ -132,14 +132,14 @@
               classAddons="px-4"
               (click)="unmarkEventAsAttended()"
               [buttonType]="'DEFAULT'"
-              [buttonContent]="'Unmark as will attend'"
+              [buttonContent]="this.isPastEvent ? ('eventOverview.unmarkHaveAttended' | transloco) : ('eventOverview.unmarkWillAttend' | transloco)"
             ></app-button-primary>
           } @else {
             <app-button-primary
               classAddons="px-4"
               (click)="markEventAsAttended()"
               [buttonType]="'DEFAULT'"
-              [buttonContent]="'Mark as will attend'"
+              [buttonContent]="this.isPastEvent ? ('eventOverview.haveAttended' | transloco) : ('eventOverview.willAttend' | transloco)"
             ></app-button-primary>
           }
         </div>
@@ -343,7 +343,7 @@
             <app-button-primary
               class="col-span-2 w-full"
               (click)="this.redirectToLogin()"
-              [classAddons]="'w-1/2'"
+              [classAddons]="'w-full'"
               [buttonType]="'DEFAULT'"
               [buttonContent]="'Log in'"
             ></app-button-primary>
@@ -392,7 +392,16 @@
               [messageDescription]="'eventOverview.noOtherOrganiserReviewSubheading' | transloco"
             ></app-not-found-component>
           } @else {
-            <div class="w-full columns-1 md:columns-2">
+            <div class="w-full flex flex-row justify-center items-center gap-2 mb-4">
+              @for (option of this.reviewSortOptions; track $index) {
+                <app-sorting-selector
+                  [sortingMethod]="this.reviewSortTranslationKeys[option] | transloco"
+                  [isSelected]="this.reviewSortOption === option"
+                  (selectedMethod)="this.onReviewSortChange(option)"
+                ></app-sorting-selector>
+              }
+            </div>
+            <div class="w-full flex flex-col items-stretch justify-start gap-4">
               @for (review of this.eventOrganiserReviews; track $index) {
                 <app-organiser-reiew-card [review]="review"></app-organiser-reiew-card>
               }

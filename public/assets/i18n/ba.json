@@ -158,7 +158,9 @@
     "discoverSectionLandmarks": "Iskusite Sarajevsku historijsku stranu",
     "discoverSectionCategoriesSpan": "KATEGORIJE",
     "discoverSectionCategories": "Pretražite prema kategorijama",
-    "viewAllButton": "Vidi sve"
+    "viewAllButton": "Vidi sve",
+    "noEventsOnDateHeader": "Nema događaja na ovaj datum",
+    "noEventsOnDateDescription": "Nema zakazanih događaja za odabrani datum. Pokušajte odabrati drugi dan!"
   },
   "discover": {
     "headerTitle": "Istraži",
@@ -189,13 +191,19 @@
     "searchFilters": "Filteri",
     "searchSorting": "Sortiranje",
     "searchButton": "Pretraži",
-    "searchReset": "Ukloni filtere"
+    "searchReset": "Ukloni filtere",
+    "viewCalendar": "Prikaži kalendar",
+    "viewMap": "Prikaži mapu",
+    "showOnlyNonVisited": "Prikaži samo neposjećene lokale",
+    "showingNonVisited": "✓ Prikazani samo neposjećeni lokali"
   },
   "sorting": {
     "ALPHABETICAL": "Po Abecedi",
     "POPULARITY": "Najpopularnije",
     "RATING": "Najbolje ocjenjeno",
-    "DATE": "Nadolazeće"
+    "DATE_UPCOMING": "Nadolazeće",
+    "DATE_PAST": "Prošli događaji",
+    "PROXIMITY": "Najbliže meni"
   },
   "spotOverview": {
     "rating": "OCJENA",
@@ -227,7 +235,11 @@
     "noUserReviewHeader": "Niste ostavili recenziju za ovu lokaciju.",
     "noUserReviewSubheading": "Ostavite recenziju ako ste posjetili. Pomaže i drugim korisnicima i vlasnicima.",
     "noOtherReviewHeading": "Još uvijek nema recenzija drugih korisnika!",
-    "noOtherReviewSubheading": "Ostavite recenziju ako ste posjetili. Pomaže i drugim korisnicima i vlasnicima."
+    "noOtherReviewSubheading": "Ostavite recenziju ako ste posjetili. Pomaže i drugim korisnicima i vlasnicima.",
+    "sortAlphabetical": "A-Z",
+    "sortAlphabeticalDesc": "Z-A",
+    "sortRating": "Ocjena ↑",
+    "sortRatingDesc": "Ocjena ↓"
   },
   "spotReview": {
     "create": "Dodaj recenziju",
@@ -258,6 +270,11 @@
     "category": "KATEGORIJA",
     "descriptionHead": "OPIS",
     "descriptionTitle" : "O ovom događaju",
+    "eventPassed": "Događaj završen",
+    "willAttend": "Označi da ću prisustvovati",
+    "haveAttended": "Označi da sam prisustvovao/la",
+    "unmarkWillAttend": "Ukloni prisustvovanje",
+    "unmarkHaveAttended": "Ukloni prisustvovanje",
   
     "imagesHead": "SLIKE DOGAĐAJA",
     "imagesTitle": "Pogledajte slike ovog događaja",
@@ -294,7 +311,11 @@
     "noUserOrganiserReviewHeader": "Još niste ostavili recenziju za ovog organizatora.",
     "noUserOrganiserReviewSubheading": "Ostavite recenziju ako ste bili na događajima ovog organizatora. Time pomažete njima i drugim korisnicima SpotlightSarajeva.",
     "noOtherOrganiserReviewHeading": "Još uvijek nema recenzija drugih korisnika za ovog organizatora!",
-    "noOtherOrganiserReviewSubheading": "Izgleda prazno i usamljeno. Ostavite recenziju i budite prvi!"
+    "noOtherOrganiserReviewSubheading": "Izgleda prazno i usamljeno. Ostavite recenziju i budite prvi!",
+    "sortAlphabetical": "A-Z",
+    "sortAlphabeticalDesc": "Z-A",
+    "sortRating": "Ocjena ↑",
+    "sortRatingDesc": "Ocjena ↓"
   },
   "eventReview": {
     "create": "Dodaj recenziju",
@@ -410,6 +431,15 @@
     "unsubscribeButton": "Otkaži pretplatu",
     "logout": "Izloguj se"
   },
+  "premiumBenefits": {
+    "title": "Nadogradite na Premium!",
+    "subtitle": "Pokušali ste pristupiti premium funkciji. Nadogradite svoj nalog kako biste otključali ekskluzivne funkcije i poboljšali svoje SpotlightSarajevo iskustvo!",
+    "benefitOne": "Prikaz pune mape - Pregledajte sve lokale na interaktivnoj mapi",
+    "benefitTwo": "Kalendar događaja - Pogledajte sve nadolazeće događaje u formatu kalendara",
+    "benefitThree": "Pretraga po blizini - Pronađite lokale najbliže vašoj lokaciji",
+    "benefitFour": "Iskustvo bez oglasa - Uživajte u aplikaciji bez prekida",
+    "upgradeButton": "Nadogradite na Premium"
+  },
   "communityRequest": {
     "headerTitle": "Zahtjevi Zajednice",
     "headerSubtitle": "Nešto nije dodano? Napravite zahtjev!",
@@ -457,5 +487,17 @@
     "validationError": "Molimo popunite sva obavezna polja",
     "submitSuccess": "Zahtjev uspješno poslan!",
     "submitError": "Slanje zahtjeva nije uspjelo. Molimo pokušajte ponovo."
+  },
+  "spotMap": {
+    "searchPlaceholder": "Pretražite lokacije na mapi...",
+    "filterButton": "Filtriraj kategorije",
+    "loadError": "Učitavanje lokacija nije uspjelo. Molimo pokušajte ponovo."
+  },
+  "eventCalendar": {
+    "title": "Kalendar Događaja",
+    "subtitle": "Pregledajte događaje po datumu na kalendaru",
+    "eventsOnDate": "Događaji na",
+    "noEventsHeader": "Nema događaja na ovaj datum",
+    "noEventsDescription": "Nema zakazanih događaja za ovaj datum. Pokušajte odabrati drugi dan!"
   }
 }

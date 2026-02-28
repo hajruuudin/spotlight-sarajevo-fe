@@ -158,7 +158,9 @@
     "discoverSectionLandmarks": "Discover Sarajevos Culture",
     "discoverSectionCategoriesSpan": "CATEGORIES",
     "discoverSectionCategories": "Explore Different Categories",
-    "viewAllButton": "View All"
+    "viewAllButton": "View All",
+    "noEventsOnDateHeader": "No events on this date",
+    "noEventsOnDateDescription": "There are no events scheduled for the selected date. Try selecting a different day!"
   },
   "discover": {
     "headerTitle": "Discover",
@@ -189,13 +191,19 @@
     "searchFilters": "Filters",
     "searchSorting": "Sorting",
     "searchButton": "Search",
-    "searchReset": "Remove filters"
+    "searchReset": "Remove filters",
+    "viewCalendar": "View Calendar",
+    "viewMap": "View Map",
+    "showOnlyNonVisited": "Show Only Non-Visited Spots",
+    "showingNonVisited": "✓ Showing Non-Visited Spots Only"
   },
   "sorting": {
     "ALPHABETICAL": "Alphabetical",
     "POPULARITY": "By Populariy",
-    "DATE": "Upcoming",
-    "RATING": "Top Rated"
+    "DATE_UPCOMING": "Upcoming",
+    "DATE_PAST": "Past Events",
+    "RATING": "Top Rated",
+    "PROXIMITY": "Nearest to Me"
   },
   "spotOverview": {
     "rating": "RATING",
@@ -225,7 +233,11 @@
     "noUserReviewHeader": "You havent reviewed this place.",
     "noUserReviewSubheading": "Leave a review if You have visited. It helps others and the owners.",
     "noOtherReviewHeading": "No other users have left reviews for this spot yet!",
-    "noOtherReviewSubheading": "Leave a review if You have visited. It helps others and the owners."
+    "noOtherReviewSubheading": "Leave a review if You have visited. It helps others and the owners.",
+    "sortAlphabetical": "A-Z",
+    "sortAlphabeticalDesc": "Z-A",
+    "sortRating": "Rating ↑",
+    "sortRatingDesc": "Rating ↓"
   },
   "spotReview": {
     "create": "Add Review",
@@ -255,6 +267,11 @@
     "category": "CATEGORY",
     "descriptionHead": "DESCRIPTION",
     "descriptionTitle" : "About this Event",
+    "eventPassed": "Event Passed",
+    "willAttend": "Mark as will attend",
+    "haveAttended": "Mark as attended",
+    "unmarkWillAttend": "Unmark as will attend",
+    "unmarkHaveAttended": "Unmark as attended",
   
     "imagesHead": "EVENT IMAGES",
     "imagesTitle": "View images of this event",
@@ -292,7 +309,11 @@
     "noUserOrganiserReviewHeader": "You haven't reviewed this organiser.",
     "noUserOrganiserReviewSubheading": "Leave a review if you have attended this organiser's events. It helps them and other users of SpotlightSarajevo.",
     "noOtherOrganiserReviewHeading": "No other users have left reviews for this organiser yet!",
-    "noOtherOrganiserReviewSubheading": "Seems empty and lonely. Leave a review and become the first!"
+    "noOtherOrganiserReviewSubheading": "Seems empty and lonely. Leave a review and become the first!",
+    "sortAlphabetical": "A-Z",
+    "sortAlphabeticalDesc": "Z-A",
+    "sortRating": "Rating ↑",
+    "sortRatingDesc": "Rating ↓"
   },
   "eventReview": {
     "create": "Add Review",
@@ -410,6 +431,15 @@
     "unsubscribeButton": "Cancel subscription",
     "logout": "Logout"
   },
+  "premiumBenefits": {
+    "title": "Upgrade to Premium!",
+    "subtitle": "You've tried to access a premium feature. Upgrade your account to unlock exclusive features and enhance your SpotlightSarajevo experience!",
+    "benefitOne": "Full Map View - Browse all spots on an interactive map",
+    "benefitTwo": "Event Calendar - View all upcoming events in calendar format",
+    "benefitThree": "Proximity Search - Find spots nearest to your location",
+    "benefitFour": "Ad-Free Experience - Enjoy the app without interruptions",
+    "upgradeButton": "Upgrade to Premium"
+  },
   "communityRequest": {
     "headerTitle": "Community Requests",
     "headerSubtitle": "Something not added? Make a request!",
@@ -457,5 +487,26 @@
     "validationError": "Please fill in all required fields",
     "submitSuccess": "Request submitted successfully!",
     "submitError": "Failed to submit request. Please try again."
+  },
+  "spotMap": {
+    "searchPlaceholder": "Search spots on map...",
+    "filterButton": "Filter Categories",
+    "loadError": "Failed to load spots. Please try again."
+  },
+  "eventCalendar": {
+    "title": "Event Calendar",
+    "subtitle": "Browse events by date on the calendar",
+    "eventsOnDate": "Events on",
+    "noEventsHeader": "No events on this date",
+    "noEventsDescription": "There are no events scheduled for this date. Try selecting another day!"
+  },
+  "premiumBenefits": {
+    "title": "Unlock Premium Features!",
+    "subtitle": "Upgrade to Premium to access exclusive features and enhance your Spotlight Sarajevo experience.",
+    "benefitOne": "View all spots on an interactive map with category filters",
+    "benefitTwo": "Browse events on a calendar view to plan your visits",
+    "benefitThree": "Sort spots by proximity to find the nearest attractions",
+    "benefitFour": "Enjoy an ad-free experience throughout the app",
+    "upgradeButton": "Upgrade to Premium"
   }
 }

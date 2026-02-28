@@ -17,11 +17,21 @@
       [formGroup]="eventSearchForm"
       class="w-full h-auto flex flex-col justify-start items-stretch space-y-4"
     >
-      <app-search-bar
-        formControlName="searchTerm"
-        [placeholder]="'search.searchButton' | transloco"
-        (search)="onSearchTriggered($event)"
-      ></app-search-bar>
+      <div class="w-full flex flex-col md:flex-row gap-4 items-stretch">
+        <app-search-bar
+          formControlName="searchTerm"
+          [placeholder]="'search.searchButton' | transloco"
+          (search)="onSearchTriggered($event)"
+          class="flex-1"
+        ></app-search-bar>
+        @if (isPremiumUser) {
+          <app-button-primary
+            [buttonContent]="'📅 ' + ('search.viewCalendar' | transloco)"
+            [classAddons]="'px-6 whitespace-nowrap h-full w-full'"
+            (pressed)="navigateToCalendarOverview()"
+          ></app-button-primary>
+        }
+      </div>
 
       <section
         id="filterAndResultContainer"
@@ -50,7 +60,7 @@
               <app-sorting-selector
                 [sortingMethod]="'sorting.' + sorting | transloco"
                 [isSelected]="this.selectedSortingMethod == sorting"
-                (selectedMethod)="this.selectedSortingMethod = sorting"
+                (selectedMethod)="this.onSortingMethodSelected(sorting)"
               ></app-sorting-selector>
               }
             </div>

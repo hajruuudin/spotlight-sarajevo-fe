@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { EventShorthandModel } from '../../shared/models/event.model';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-small-event-card',
-  imports: [DatePipe],
+  imports: [DatePipe, NgClass, TranslocoPipe],
   templateUrl: './small-event-card.html',
   styleUrl: './small-event-card.css',
   host: {
@@ -16,4 +17,9 @@ export class SmallEventCard {
   @Input() lang: string = 'en';
   @Input() classAddons: String = '';
   @Input() event!: EventShorthandModel;
+
+  get isPastEvent(): boolean {
+    if (!this.event?.endDate) return false;
+    return new Date(this.event.endDate) < new Date();
+  }
 }

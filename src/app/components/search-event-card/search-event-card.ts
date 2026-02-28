@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { EventShorthandModel } from '../../shared/models/event.model';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-search-event-card',
-  imports: [DatePipe],
+  imports: [DatePipe, NgClass, TranslocoPipe],
   templateUrl: './search-event-card.html',
   styleUrl: './search-event-card.css',
   host: {
@@ -15,4 +16,9 @@ import { DatePipe } from '@angular/common';
 export class SearchEventCard {
   @Input() lang: string = '';
   @Input() event!: EventShorthandModel;
+
+  get isPastEvent(): boolean {
+    if (!this.event?.endDate) return false;
+    return new Date(this.event.endDate) < new Date();
+  }
 }
