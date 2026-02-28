@@ -3,11 +3,11 @@ import { PageHeader } from "../../../components/page-header/page-header";
 import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
-  selector: 'app-admin-transport-overview',
+  selector: 'app-dashboard',
   imports: [PageHeader, TranslocoPipe],
-  templateUrl: './admin-transport-overview.html',
-  styleUrl: './admin-transport-overview.css'
+  templateUrl: './dashboard.html',
+  styleUrl: './dashboard.css'
 })
-export class AdminTransportOverview {
+export class AdminDashboard {
 
 }

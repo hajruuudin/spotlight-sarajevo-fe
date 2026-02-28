@@ -46,6 +46,7 @@ import { communityRequestResolver } from './core/resolvers/community.request.res
 import { spotMapResolver } from './core/resolvers/spot.map.resolver';
 import { eventCalendarResolver } from './core/resolvers/event.calendar.resolver';
 import { adminGuard } from './core/guards/admin.guard';
+import { AdminDashboard } from './pages/admin/dashboard/dashboard';
 
 export const routes: Routes = [
   {
@@ -84,6 +85,8 @@ export const routes: Routes = [
     canActivate: [adminGuard],
     component: Admin,
     children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: AdminDashboard, title: 'Admin - Dashboard' },
       { path: 'spots-overview', component: AdminSpotOverview, title: 'Admin - Spots Overview' },
       { path: 'events-overview', component: AdminEventOverview, title: 'Admin - Events Overview' },
       { path: 'guide-overview', component: AdminGuideOverview, title: 'Admin - Guides Overview' },
@@ -92,7 +95,7 @@ export const routes: Routes = [
       { path: 'requests-overview', component: AdminRequestOverview, title: 'Admin - Requests Overview' },
       { path: 'add-spot', component: AdminAddSpots, title: 'Admin - Add Spot' },
       { path: 'add-event', component: AdminAddEvents, title: 'Admin - Add Event' },
-      { path: 'add-guide', component: AdminAddGuides, title: 'Admin - Add Guide' },
+      { path: 'add-guide', component: AdminAddGuides, title: 'Admin - Add Guide' }
     ],
   },
   {

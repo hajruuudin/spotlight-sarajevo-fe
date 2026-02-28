@@ -62,6 +62,50 @@
     "publicTransport": "Public Transport",
     "profile": "Your Profile"
   },
+  "adminNavbar": {
+    "dashboard": "Dashboard",
+    "dataOverview": "Data Overview",
+    "addNew": "Add New",
+    "spotsOverview": "Spots Overview",
+    "eventsOverview": "Events Overview",
+    "guidesOverview": "Guides Overview",
+    "usersOverview": "Users Overview",
+    "transportOverview": "Transport Overview",
+    "requestsOverview": "Requests Overview",
+    "addSpot": "Add Spot",
+    "addEvent": "Add Event",
+    "addGuide": "Add Guide"
+  },
+  "admin" : {
+    "dashboard" : {
+      "title" : "Admin Dashboard",
+      "subtitle" : "An overview of important information"
+    },
+    "spotOverview" : {
+      "title" : "Overview of Spots",
+      "subtitle" : "Spots and all of their information"
+    },
+    "eventOverview" : {
+      "title" : "Overview of Events",
+      "subtitle" : "Events and all of their information"
+    },
+    "guideOverview" : {
+      "title" : "Overview of Tourist Guides",
+      "subtitle" : "Tourist Guides and all of their information"
+    },
+    "transportOverview" : {
+      "title" : "Overview of Public Transport",
+      "subtitle" : "Public Transport Methods and all of their information"
+    },
+    "usersOverview" : {
+      "title" : "Overview of Users",
+      "subtitle" : "Users and all of their information"
+    },
+    "requestsOverview" : {
+      "title" : "Overview of Requests",
+      "subtitle" : "Community Requests and all of their information"
+    }
+  },
   "footer": {
     "features": {
       "title": "Features",
@@ -508,5 +552,45 @@
     "benefitThree": "Sort spots by proximity to find the nearest attractions",
     "benefitFour": "Enjoy an ad-free experience throughout the app",
     "upgradeButton": "Upgrade to Premium"
+  },
+  "adminTable": {
+    "actions": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close",
+    "save": "Save",
+    "slug": "Slug",
+    "cancel": "Cancel",
+    "confirmDelete": "Confirm",
+    "loading": "Loading...",
+    "noData": "No data available",
+    "showing": "Showing",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next",
+    "id": "ID",
+    "thumbnail": "Image",
+    "name": "Name",
+    "nameBs": "Name (BS)",
+    "nameEn": "Name (EN)",
+    "category": "Category",
+    "rating": "Rating",
+    "tags": "Tags",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "username": "Username",
+    "email": "Email",
+    "requestType": "Request Type",
+    "objectType": "Object Type",
+    "createdAt": "Created At",
+    "header": "Header",
+    "description": "Description",
+    "status": "Status",
+    "reviews": "Reviews",
+    "images": "Images",
+    "sections": "Sections",
+    "workHours": "Work Hours",
+    "deleteReview": "Delete Review",
+    "noReviews": "No reviews yet"
   }
 }

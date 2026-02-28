@@ -1,1 +1,11 @@
-<p>admin-spot-overview works!</p>
+<section class="max-w-application w-full mx-auto px-4 py-6">
+  <app-page-header 
+    [title]="'admin.spotOverview.title' | transloco"
+    [subtitle]="'admin.spotOverview.subtitle' | transloco"
+  ></app-page-header>
+
+  <app-spot-overview-table
+    [tableHeader]="'Spot Overiew Table'"
+    [columnDefinitions]="this.tableDefinitions"
+  ></app-spot-overview-table>
+</section>

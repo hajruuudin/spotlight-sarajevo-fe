@@ -62,6 +62,50 @@
     "publicTransport": "Javni Prevoz",
     "profile": "Vaš Profil"
   },
+  "adminNavbar": {
+    "dashboard": "Kontrolna ploča",
+    "dataOverview": "Pregled podataka",
+    "addNew": "Dodaj novo",
+    "spotsOverview": "Pregled lokala",
+    "eventsOverview": "Pregled događaja",
+    "guidesOverview": "Pregled vodiča",
+    "usersOverview": "Pregled korisnika",
+    "transportOverview": "Pregled prevoza",
+    "requestsOverview": "Pregled zahtjeva",
+    "addSpot": "Dodaj lokal",
+    "addEvent": "Dodaj događaj",
+    "addGuide": "Dodaj vodiča"
+  },
+  "admin" : {
+    "dashboard" : {
+      "title" : "Admin Kontrolna Ploča",
+      "subtitle" : "Pregled važnih informacija"
+    },
+    "spotOverview" : {
+      "title" : "Pregled Lokala",
+      "subtitle" : "Lokali i sve njihove informacije"
+    },
+    "eventOverview" : {
+      "title" : "Pregled Događaja",
+      "subtitle" : "Događaji i sve njihove informacije"
+    },
+    "guideOverview" : {
+      "title" : "Pregled Vodića za Turiste",
+      "subtitle" : "Vodići za turiste i sve njihove informacije"
+    },
+    "transportOverview" : {
+      "title" : "Pregled Javnog Prevoza",
+      "subtitle" : "Metode javnog prevoza i sve njihove informacije"
+    },
+    "usersOverview" : {
+      "title" : "Pregled Korisnika",
+      "subtitle" : "Korisnici i sve njihove informacije"
+    },
+    "requestsOverview" : {
+      "title" : "Pregled Zahtjeva",
+      "subtitle" : "Zahtjevi zajednice i sve njihove informacije"
+    }
+  },
   "footer": {
     "features": {
       "title": "Funkcije",
@@ -499,5 +543,45 @@
     "eventsOnDate": "Događaji na",
     "noEventsHeader": "Nema događaja na ovaj datum",
     "noEventsDescription": "Nema zakazanih događaja za ovaj datum. Pokušajte odabrati drugi dan!"
+  },
+  "adminTable": {
+    "actions": "Akcije",
+    "edit": "Uredi",
+    "delete": "Obriši",
+    "close": "Zatvori",
+    "slug": "Slug",
+    "save": "Spremi",
+    "cancel": "Otkaži",
+    "confirmDelete": "Potvrdi",
+    "loading": "Učitavanje...",
+    "noData": "Nema dostupnih podataka",
+    "showing": "Prikazano",
+    "of": "od",
+    "previous": "Prethodna",
+    "next": "Sljedeća",
+    "id": "ID",
+    "thumbnail": "Slika",
+    "name": "Naziv",
+    "nameBs": "Naziv (BS)",
+    "nameEn": "Naziv (EN)",
+    "category": "Kategorija",
+    "rating": "Ocjena",
+    "tags": "Oznake",
+    "startDate": "Datum početka",
+    "endDate": "Datum završetka",
+    "username": "Korisničko ime",
+    "email": "Email",
+    "requestType": "Tip zahtjeva",
+    "objectType": "Tip objekta",
+    "createdAt": "Kreirano",
+    "header": "Naslov",
+    "description": "Opis",
+    "status": "Status",
+    "reviews": "Recenzije",
+    "images": "Slike",
+    "sections": "Sekcije",
+    "workHours": "Radno vrijeme",
+    "deleteReview": "Obriši recenziju",
+    "noReviews": "Nema recenzija"
   }
 }
