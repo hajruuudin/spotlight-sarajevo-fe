@@ -45,6 +45,7 @@ import { profilePageResolver } from './core/resolvers/profile.page.resolver';
 import { communityRequestResolver } from './core/resolvers/community.request.resolver';
 import { spotMapResolver } from './core/resolvers/spot.map.resolver';
 import { eventCalendarResolver } from './core/resolvers/event.calendar.resolver';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
   {
@@ -80,6 +81,7 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
+    canActivate: [adminGuard],
     component: Admin,
     children: [
       { path: 'spots-overview', component: AdminSpotOverview, title: 'Admin - Spots Overview' },
