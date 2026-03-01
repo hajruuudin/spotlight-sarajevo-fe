@@ -15,7 +15,10 @@ import { ModalHost } from "../../components/modals/modal-host/modal-host";
   selector: 'app-admin',
   imports: [Footer, RouterOutlet, AdminNavbar, ModalHost],
   templateUrl: './admin.html',
-  styleUrl: './admin.css'
+  styleUrl: './admin.css',
+  host: {
+    class: "w-full min-h-screen flex flex-col justify-start items-stretch"
+  }
 })
 export class Admin {
 

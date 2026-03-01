@@ -1,4 +1,5 @@
 import { TagModel } from "./category.model";
+import { MediaCreateModel, MediaStoreModel } from "./shared.model";
 
 export class SpotShorthandModel {
     constructor(
@@ -14,7 +15,7 @@ export class SpotShorthandModel {
         public longitude: number,
         public spotTags: TagModel[],
         public combinedRating: number,
-        public thumbnailImage: string
+        public thumbnailImage: MediaStoreModel
     ){}
 }
 
@@ -29,6 +30,7 @@ export class SpotOverviewModel {
         public fullDescriptionBs: string,
         public fullDescriptionEn: string,
         public address: string,
+        public categoryId: number,
         public categoryNameEn: String,
         public categoryNameBs: String,
         public spotTags: TagModel[],
@@ -43,8 +45,8 @@ export class SpotOverviewModel {
         public combinedLocaleQuality: number,
         public reviews: SpotReviewModel[],
         public workHours: SpotWorkHoursModel[],
-        public thumbnailImage: string,
-        public images: string[]
+        public thumbnailImage: MediaStoreModel,
+        public images: MediaStoreModel[]
     ){}
 }
 
@@ -128,6 +130,30 @@ export class SpotWorkHoursModel{
         public day: string,
         public startTime: string,
         public endTime: string,
-        public spotId: number
+        public spotId: number,
+        public isClosed?: boolean
     ){}
+}
+
+export class SpotUpdateModel {
+    constructor(
+        public id: number,
+        public slug: string,
+        public officialNameBs: string,
+        public officialNameEn: string,
+        public smallDescriptionBs: string,
+        public smallDescriptionEn: string,
+        public fullDescriptionBs: string,
+        public fullDescriptionEn: string,
+        public latitude: number,
+        public longitude: number,
+        public address: string,
+        public categoryId: number,
+        public tagIds: number[],
+        public workHoursModel: SpotWorkHoursModel[],
+        public thumbnailImage: string,
+        public newThumbnailImage: MediaCreateModel | null,
+        public toAddImages: MediaCreateModel[],
+        public toRemoveImages: number[]
+    ) {}
 }

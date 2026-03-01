@@ -2,24 +2,11 @@ export interface TableColumnDefinitions{}
 
 export interface TableDataModel{}
 
-export class SpotTableDataModel implements TableDataModel{
-    constructor(
-        id: number,
-        image: string,
-        slug: string,
-        nameBs: string,
-        nameEn: string,
-        categoryEn: string,
-        categoryBs: string,
-        rating: number,
-        modified: string
-    ){}
-}
 
 export class EventTableDataModel implements TableDataModel{
     constructor(
         id: number,
-        image: string,
+        thumbnail: string,
         slug: string,
         nameBs: string,
         nameEn: string,
@@ -33,7 +20,7 @@ export class EventTableDataModel implements TableDataModel{
 export class GuideTableDataModel implements TableDataModel{
     constructor(
         id: number,
-        image: string,
+        thumbnail: string,
         slug: string,
         nameBs: string,
         nameEn: string,

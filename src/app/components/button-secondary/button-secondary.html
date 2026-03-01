@@ -1,10 +1,7 @@
 @if (this.buttonIcon == "DEFAULT") {
 <button
   (click)="this.handleClick()"
-  [ngClass]="
-    this.classAddons +
-    ' dark:bg-(--secondary-200) h-12 rounded-2xl hover:dark:bg-(--secondary-300) transition-all font-semibold text-base md:text-xl hover:border-4 hover:dark:border-(--secondary-200)'
-  "
+  [ngClass]="this.classAddons + ' ' + getBaseClasses()"
 >
   <span>{{ this.buttonContent }}</span>
 </button>

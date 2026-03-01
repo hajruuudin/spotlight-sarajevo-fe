@@ -127,13 +127,13 @@ export class SpotOverview implements OnInit {
       this.checkIfPresentInSystemCollection();
     }
 
-    this.images.push(this.spotOverview.thumbnailImage);
+    this.images.push(this.spotOverview.thumbnailImage.imageUrl);
     this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');
-    this.images.push(this.spotOverview.thumbnailImage);
-    this.images.push(this.spotOverview.thumbnailImage);
-    this.images.push(this.spotOverview.thumbnailImage);
-    this.images.push(this.spotOverview.thumbnailImage);
-    this.images.push(this.spotOverview.thumbnailImage);
+    this.images.push(this.spotOverview.thumbnailImage.imageUrl);
+    this.images.push(this.spotOverview.thumbnailImage.imageUrl);
+    this.images.push(this.spotOverview.thumbnailImage.imageUrl);
+    this.images.push(this.spotOverview.thumbnailImage.imageUrl);
+    this.images.push(this.spotOverview.thumbnailImage.imageUrl);
   }
 
   @HostListener('document:scroll')

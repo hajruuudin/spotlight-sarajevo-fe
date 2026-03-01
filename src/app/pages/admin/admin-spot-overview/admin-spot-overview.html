@@ -1,11 +1,16 @@
 <section class="max-w-application w-full mx-auto px-4 py-6">
   <app-page-header 
     [title]="'admin.spotOverview.title' | transloco"
-    [subtitle]="'admin.spotOverview.subtitle' | transloco"
+    [subtitle]="''"
   ></app-page-header>
 
   <app-spot-overview-table
-    [tableHeader]="'Spot Overiew Table'"
     [columnDefinitions]="this.tableDefinitions"
-  ></app-spot-overview-table>
+    [tableData]="this.tableShorthandData"
+    [itemOverview]="this.tableSelectedItem"
+    (onOverviewSelect)="handleOverviewSelect($event)"
+    (onDeleteItem)="handleDeleteItem($event)"
+    (onNextPage)="handleNextPage($event)"
+    (onPreviousPage)="handlePreviousPage($event)"
+    ></app-spot-overview-table>
 </section>

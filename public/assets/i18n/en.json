@@ -83,7 +83,16 @@
     },
     "spotOverview" : {
       "title" : "Overview of Spots",
-      "subtitle" : "Spots and all of their information"
+      "subtitle" : "Spots and all of their information",
+      "tableKeys" : {
+        "id" : "ID",
+        "slug" : "SLUG",
+        "officialName" : "OFFICIAL NAME",
+        "smallDescription" : "SMALL DESCRIPTION",
+        "categoryName" : "CATEGORY NAME",
+        "thumbnail" : "THUMBNAIL",
+        "combinedRating" : "RATING"
+      }
     },
     "eventOverview" : {
       "title" : "Overview of Events",
@@ -543,54 +552,5 @@
     "eventsOnDate": "Events on",
     "noEventsHeader": "No events on this date",
     "noEventsDescription": "There are no events scheduled for this date. Try selecting another day!"
-  },
-  "premiumBenefits": {
-    "title": "Unlock Premium Features!",
-    "subtitle": "Upgrade to Premium to access exclusive features and enhance your Spotlight Sarajevo experience.",
-    "benefitOne": "View all spots on an interactive map with category filters",
-    "benefitTwo": "Browse events on a calendar view to plan your visits",
-    "benefitThree": "Sort spots by proximity to find the nearest attractions",
-    "benefitFour": "Enjoy an ad-free experience throughout the app",
-    "upgradeButton": "Upgrade to Premium"
-  },
-  "adminTable": {
-    "actions": "Actions",
-    "edit": "Edit",
-    "delete": "Delete",
-    "close": "Close",
-    "save": "Save",
-    "slug": "Slug",
-    "cancel": "Cancel",
-    "confirmDelete": "Confirm",
-    "loading": "Loading...",
-    "noData": "No data available",
-    "showing": "Showing",
-    "of": "of",
-    "previous": "Previous",
-    "next": "Next",
-    "id": "ID",
-    "thumbnail": "Image",
-    "name": "Name",
-    "nameBs": "Name (BS)",
-    "nameEn": "Name (EN)",
-    "category": "Category",
-    "rating": "Rating",
-    "tags": "Tags",
-    "startDate": "Start Date",
-    "endDate": "End Date",
-    "username": "Username",
-    "email": "Email",
-    "requestType": "Request Type",
-    "objectType": "Object Type",
-    "createdAt": "Created At",
-    "header": "Header",
-    "description": "Description",
-    "status": "Status",
-    "reviews": "Reviews",
-    "images": "Images",
-    "sections": "Sections",
-    "workHours": "Work Hours",
-    "deleteReview": "Delete Review",
-    "noReviews": "No reviews yet"
   }
 }

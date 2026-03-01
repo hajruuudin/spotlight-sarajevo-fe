@@ -83,7 +83,16 @@
     },
     "spotOverview" : {
       "title" : "Pregled Lokala",
-      "subtitle" : "Lokali i sve njihove informacije"
+      "subtitle" : "Lokali i sve njihove informacije",
+      "tableKeys" : {
+        "id" : "ID",
+        "slug" : "SLUG",
+        "officialName" : "ZVANIČNI NAZIV",
+        "smallDescription" : "KRATKI OPIS",
+        "categoryName" : "KATEROIJA",
+        "thumbnail" : "SLIKA",
+        "combinedRating" : "OCJENA"
+      }
     },
     "eventOverview" : {
       "title" : "Pregled Događaja",

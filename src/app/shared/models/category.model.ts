@@ -23,9 +23,9 @@ export class EventCategoryModel{
 export class TagModel{
     constructor(
         public id: number,
-        public tagNameEn: string,
         public tagNameBs: string,
-        public tagDescriptionEn: string,
-        public tagDescriptionBs: string
+        public tagNameEn: string,
+        public tagDescriptionBs: string,
+        public tagDescriptionEn: string
     ){}
 }

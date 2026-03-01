@@ -5,6 +5,7 @@ import {
   SpotMapModel,
   SpotOverviewModel,
   SpotShorthandModel,
+  SpotUpdateModel,
 } from '../shared/models/spot.model';
 import { PageResponseModel } from '../shared/models/shared.model';
 
@@ -150,6 +151,23 @@ export class SpotService {
   removeSpotFromVisited(spotId: number) {
     return this.http.delete(
       this.apiUrl + `/user/visited-spot/remove?spotId=${spotId}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to update an existing spot with new information.
+   * This is an admin-only operation.
+   * 
+   * @param spotUpdateModel The SpotUpdateModel containing all updated spot information
+   * @returns An observable representing the result of the update operation
+   */
+  updateSpot(spotUpdateModel: SpotUpdateModel) {
+    return this.http.put(
+      this.apiUrl + `/spot`,
+      spotUpdateModel,
       {
         withCredentials: true,
       }
