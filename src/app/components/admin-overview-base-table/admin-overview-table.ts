@@ -12,7 +12,7 @@ export abstract class AdminOverviewBaseTable {
   @Input() columnLang: string = 'en'
 
   @Input() currentPage: number = 0
-  @Input() maxPages: number = 99
+  @Input() totalPages: number = 99
   @Input() totalItems: number = 999
 
   @Output() onNextPage: EventEmitter<number> = new EventEmitter
@@ -38,6 +38,17 @@ export abstract class AdminOverviewBaseTable {
     }
   }
 
-  nextPage(){}
-  previousPage(){}
+  nextPage(){
+    if(this.currentPage < this.totalPages - 1) {
+      this.currentPage++
+      this.onNextPage.emit(this.currentPage)
+    }
+  }
+
+  previousPage(){
+    if(this.currentPage > 0) {
+      this.currentPage--
+      this.onPreviousPage.emit(this.currentPage)
+    }
+  }
 }

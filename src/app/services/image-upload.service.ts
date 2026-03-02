@@ -31,7 +31,7 @@ export class ImageUploadService {
    * @returns Observable with the ImageBB response containing url and delete_url
    */
   uploadImage(file: File): Observable<ImageBBResponse> {
-    return from(this.fileToBase64(file)).pipe(
+    return from(this.compressImage(file)).pipe(
       switchMap((base64String) => {
         const formData = new FormData();
         formData.append('key', this.apiKey);
@@ -90,20 +90,40 @@ export class ImageUploadService {
   }
 
   /**
-   * Convert File to base64 string
-   * @param file The file to convert
-   * @returns Promise resolving to base64 string
+   * Compress an image to 75% quality
+   * @param file The image file to compress
+   * @returns Promise resolving to compressed base64 string
    */
-  private fileToBase64(file: File): Promise<string> {
+  private compressImage(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       
-      reader.onload = () => {
-        if (reader.result) {
-          resolve(reader.result as string);
-        } else {
-          reject(new Error('FileReader returned null result'));
-        }
+      reader.onload = (event: any) => {
+        const img = new Image();
+        
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            reject(new Error('Failed to get canvas context'));
+            return;
+          }
+          
+          ctx.drawImage(img, 0, 0);
+          
+          // Compress to 75% quality
+          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.75);
+          resolve(compressedBase64);
+        };
+        
+        img.onerror = () => {
+          reject(new Error(`Failed to load image: ${file.name}`));
+        };
+        
+        img.src = event.target.result;
       };
       
       reader.onerror = () => {

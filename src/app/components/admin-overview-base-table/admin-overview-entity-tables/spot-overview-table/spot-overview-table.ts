@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AdminOverviewBaseTable } from '../../admin-overview-table';
 import {
   SpotOverviewModel,
@@ -9,7 +9,6 @@ import {
 } from '../../../../shared/models/spot.model';
 import { ButtonPrimary } from '../../../button-primary/button-primary';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { DecimalPipe } from '@angular/common';
 import { ZeroReview } from '../../../../shared/pipes/zero-review-pipe';
 import { ButtonSecondary } from '../../../button-secondary/button-secondary';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -24,9 +23,11 @@ import { MultiSelectGroup } from '../../../multiselect-group/multiselect-group';
 import { ImageUploadService } from '../../../../services/image-upload.service';
 import { MediaCreateModel } from '../../../../shared/models/shared.model';
 import { forkJoin, of } from 'rxjs';
-import { SpotService } from '../../../../services/spot.service';
 import { SpinnerService } from '../../../../core/services/spinner.service';
 import { HotToastService } from '@ngxpert/hot-toast';
+import { AdminSpotReviewCard } from '../../../admin-spot-review-card/admin-spot-review-card';
+import { SortOptions } from '../../../../shared/constants/SortOptions';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-spot-overview-table',
@@ -39,8 +40,10 @@ import { HotToastService } from '@ngxpert/hot-toast';
     TextInput,
     TextArea,
     SelectGroup,
-    MultiSelectGroup
-  ],
+    MultiSelectGroup,
+    AdminSpotReviewCard,
+    DecimalPipe
+],
   templateUrl: './spot-overview-table.html',
   styleUrl: './spot-overview-table.css',
   host: {
@@ -51,29 +54,34 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
   @Input() tableData: SpotShorthandModel[] = [];
   @Input() itemOverview: SpotOverviewModel | null = null;
   @Input() spotReviews: SpotReviewModel[] = [];
+  @Input() isLoadingReviews: boolean = false;
 
-  // Forms
+  @Output() onSaveChange: EventEmitter<SpotUpdateModel> = new EventEmitter<SpotUpdateModel>();
+  @Output() onReviewLoadMore: EventEmitter<number> = new EventEmitter<number>();
+  @Output() onReviewSortChange: EventEmitter<string> = new EventEmitter<string>();
+
   protected basicInformationForm: FormGroup;
   protected attributeInformationForm: FormGroup;
   protected workHoursForm: FormGroup;
 
-  // Category options for the selector
   protected categoryOptions: { label: string; value: any }[] = [];
   protected tagOptions: { label: string; value: any }[] = [];
 
-  // Image management state
   protected newThumbnailFile: File | null = null;
   protected newThumbnailPreview: string | null = null;
   protected newImageFiles: File[] = [];
   protected newImagePreviews: string[] = [];
-  protected imagesToDelete: Set<number> = new Set(); // Stores image IDs, not indices
+  protected imagesToDelete: Set<number> = new Set();
+
+  protected currentReviewSortOption: SortOptions = SortOptions.RATING;
+  protected reviewPage: number = 0;
+  protected reviewPageSize: number = 10;
 
   constructor(
     private fb: FormBuilder,
     private categoryService: CategoryService,
     private tagService: TagService,
     private imageUploadService: ImageUploadService,
-    private spotService: SpotService,
     private spinnerService: SpinnerService,
     private toastService: HotToastService
   ) {
@@ -147,11 +155,9 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
         { emitEvent: false },
       );
 
-      // Rebuild work hours array with all 7 days
       const workHoursArray = this.workHoursForm.get('workHours') as FormArray;
       workHoursArray.clear({ emitEvent: false });
 
-      // Use buildWorkHoursArray to get all 7 days (closed or open)
       const newWorkHoursArray = this.buildWorkHoursArray(overview.workHours);
       newWorkHoursArray.controls.forEach((control) => {
         workHoursArray.push(control, { emitEvent: false });
@@ -165,15 +171,8 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
       return;
     }
 
-    console.log('Starting save process with image uploads...');
-    console.log('- New thumbnail:', this.newThumbnailFile ? 'Yes' : 'No');
-    console.log('- New images to upload:', this.newImageFiles.length);
-    console.log('- Images marked for deletion:', this.imagesToDelete.size);
-
-    // Show page-wide spinner
     this.spinnerService.showNavigateSpinner();
 
-    // Upload new thumbnail if provided (backend will delete old one from ImageBB)
     const thumbnailUpload$ = this.newThumbnailFile
       ? this.imageUploadService.uploadImage(this.newThumbnailFile)
       : of(null);
@@ -182,9 +181,6 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
       ? this.imageUploadService.uploadMultipleImages(this.newImageFiles)
       : of([]);
 
-    // Note: ImageBB deletion has CORS restrictions from browser
-    // Backend will handle deleting images from ImageBB using stored delete URLs
-    // We just send the image IDs to be deleted
 
     forkJoin({
       thumbnail: thumbnailUpload$,
@@ -201,7 +197,6 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
           )
         );
 
-        // Build thumbnail MediaCreateModel if new thumbnail was uploaded
         const newThumbnailImage = results.thumbnail 
           ? new MediaCreateModel(
               this.itemOverview!.id,
@@ -212,7 +207,6 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
             )
           : null;
 
-        // Update thumbnail URL if new one was uploaded, otherwise keep existing
         const thumbnailImageUrl = results.thumbnail 
           ? results.thumbnail.data.url 
           : (this.itemOverview?.thumbnailImage?.imageUrl || '');
@@ -231,7 +225,6 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
           this.basicInformationForm.value.address,
           this.attributeInformationForm.value.categoryId,
           this.attributeInformationForm.value.spotTagIds || [],
-          // Only send days that are NOT closed (backend deletes all and re-creates)
           this.workHoursArray.value
             .filter((wh: any) => !wh.isClosed)
             .map((wh: any) => new SpotWorkHoursModel(
@@ -240,7 +233,7 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
               wh.startTime,
               wh.endTime,
               this.itemOverview!.id,
-              false // Never send isClosed=true, just omit closed days
+              false
             )),
           thumbnailImageUrl,
           newThumbnailImage,
@@ -248,25 +241,8 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
           this.imagesToDelete.size > 0 ? Array.from(this.imagesToDelete) : []
         );
 
-        console.log('FINAL_SAVE_PAYLOAD_WITH_IMAGES', finalPayload);
-        
-        // Send update request to backend
-        this.spotService.updateSpot(finalPayload).subscribe({
-          next: (response) => {
-            console.log('Spot updated successfully:', response);
-            // Hide spinner and show success toast
-            this.spinnerService.hideNavigateSpinner();
-            this.toastService.success('Spot updated successfully!');
-            // Reset image state after successful save
-            this.resetImageState();
-          },
-          error: (error) => {
-            console.error('Error updating spot:', error);
-            // Hide spinner and show error toast
-            this.spinnerService.hideNavigateSpinner();
-            this.toastService.error('Failed to update spot. Please try again.');
-          }
-        });
+        this.onSaveChange.emit(finalPayload);
+        this.resetImageState()
       },
       error: (error) => {
         console.error('Error during image upload/delete process:', error);
@@ -327,7 +303,6 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
   private buildWorkHoursArray(workHours: any[] | null | undefined): FormArray {
     const array = this.fb.array([] as any[]);
     
-    // Define all 7 days
     const allDays = [
       { dayIndex: 0, day: 'Monday' },
       { dayIndex: 1, day: 'Tuesday' },
@@ -338,14 +313,12 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
       { dayIndex: 6, day: 'Sunday' }
     ];
 
-    // For each day, check if it exists in backend data
     allDays.forEach((dayInfo) => {
       const existingHours = Array.isArray(workHours) 
         ? workHours.find(wh => wh.dayIndex === dayInfo.dayIndex)
         : null;
 
       if (existingHours) {
-        // Day has specific hours from backend
         array.push(
           this.fb.group({
             dayIndex: [existingHours.dayIndex],
@@ -356,7 +329,6 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
           }) as any
         );
       } else {
-        // Day not in backend = closed
         array.push(
           this.fb.group({
             dayIndex: [dayInfo.dayIndex],
@@ -380,7 +352,6 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
     return this.workHoursArray.at(index) as FormGroup;
   }
 
-  // Image management methods
   onThumbnailSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -427,5 +398,17 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
 
   isImageMarkedForDeletion(imageId: number): boolean {
     return this.imagesToDelete.has(imageId);
+  }
+
+  onReviewLoadMoreClicked(): void {
+    this.reviewPage++;
+    this.onReviewLoadMore.emit(this.reviewPage);
+  }
+
+  onReviewSortOptionChange(sortOption: string): void {
+    if(sortOption == "ALPHABETICAL_DESC") this.currentReviewSortOption = SortOptions.ALPHABETICAL;
+    if(sortOption == "RATING_DESC") this.currentReviewSortOption = SortOptions.RATING
+    this.reviewPage = 0;
+    this.onReviewSortChange.emit(sortOption);
   }
 }

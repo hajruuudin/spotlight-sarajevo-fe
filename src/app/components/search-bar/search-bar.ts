@@ -26,6 +26,7 @@ import {
 })
 export class SearchBar implements ControlValueAccessor {
   @Input() placeholder: string = 'Search object...';
+  @Input() style: 'DEFAULT' | 'ADMIN' = 'DEFAULT';
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
   value: string = '';
