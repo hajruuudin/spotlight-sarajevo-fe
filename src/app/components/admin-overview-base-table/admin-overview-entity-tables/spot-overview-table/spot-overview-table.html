@@ -5,6 +5,9 @@
     id="tableBody"
     class="rounded-t-2xl w-full dark:bg-(--primary-200) bg-(--primary-200) text-white"
   >
+    <!----------------------------------------------------------------->
+    <!--------------------- TABLE COLUMN HEADERS ---------------------->
+    <!----------------------------------------------------------------->
     <div
       id="tableColumnHeaders"
       class="w-full flex flex-row justify-between items-center gap-4 p-2 border-(--primary-700)"
@@ -22,7 +25,9 @@
       id="tableDataContainer"
       class="w-full dark:bg-(--background-100) bg-(--background-900) dark:text-white text-black flex flex-col justify-start items-stretch gap-2"
     >
-
+    <!----------------------------------------------------------------->
+    <!----------------------- TABLE COLUMN DATA ----------------------->
+    <!----------------------------------------------------------------->
       @for (item of this.tableData; track $index) {
         <div class="w-full flex flex-col">
           <div
@@ -58,7 +63,9 @@
             </span>
           </div>
 
-          <!-- Expanded Detail Row with Animation -->
+          <!----------------------------------------------------------------->
+          <!------------------ OVERVIEW EXTENDED SECTION -------------------->
+          <!----------------------------------------------------------------->
           <div
             class="w-full border-t border-b border-(--primary-700) dark:border-(--primary-400) transition-all duration-300 ease-in-out overflow-hidden"
             [class.max-h-0]="this.selectedSpotId !== item.id"
@@ -76,7 +83,7 @@
                 <div
                   class="min-w-[1800px] grid grid-cols-5 gap-3 p-3 bg-(--background-800) dark:bg-(--background-100)"
                 >
-                  <!-- Column 1 -->
+                  <!-- Column 1: BASIC INFORMATION, DESCRIPTIONS, NAMES, SLUG -->
                   <div
                     class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
                   >
@@ -144,7 +151,7 @@
                     </form>
                   </div>
 
-                  <!-- Column 2 -->
+                  <!-- Column 2: LAT, LONG, ADDRESS, CATEGORY AND TAGS -->
                   <div
                     class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
                   >
@@ -193,7 +200,7 @@
                     </form>
                   </div>
 
-                  <!-- Column 3 -->
+                  <!-- Column 3: WORK HOURS -->
                   <div
                     class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
                   >
@@ -247,7 +254,7 @@
                     </form>
                   </div>
 
-                  <!-- Column 4 -->
+                  <!-- Column 4: THUMBNAIL IMAGE AND ADDITIONAL IMAGES -->
                   <div
                     class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-3 bg-(--background-900) dark:bg-(--background-200)"
                   >
@@ -406,7 +413,7 @@
                     }
                   </div>
 
-                  <!-- Column 5: Reviews Section -->
+                  <!-- Column 5: REVIEWS AND RATINGS -->
                   <div
                     class="rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-3 bg-(--background-900) dark:bg-(--background-200) h-full"
                   >
@@ -501,7 +508,9 @@
                       class="flex-1 overflow-y-auto rounded-lg border border-(--primary-700) dark:border-(--primary-400) p-2 flex flex-col gap-2"
                     >
                       @if (this.isLoadingReviews) {
-                        <div class="text-xs opacity-50 text-center py-4 flex items-center justify-center h-full">
+                        <div
+                          class="text-xs opacity-50 text-center py-4 flex items-center justify-center h-full"
+                        >
                           <span>Loading reviews...</span>
                         </div>
                       } @else if (this.spotReviews && this.spotReviews.length > 0) {
@@ -511,9 +520,7 @@
                           ></app-admin-spot-review-card>
                         }
                       } @else {
-                        <div class="text-xs opacity-50 text-center py-4">
-                          No reviews
-                        </div>
+                        <div class="text-xs opacity-50 text-center py-4">No reviews</div>
                       }
                     </div>
 
@@ -555,7 +562,7 @@
     id="tableFooter"
     class="w-full dark:bg-(--primary-200) bg-(--primary-200) text-white rounded-b-2xl flex p-2 flex-row justify-between items-center"
   >
-    <div class="text-sm">Page {{ this.currentPage+1 }} of {{ this.totalPages }}</div>
+    <div class="text-sm">Page {{ this.currentPage + 1 }} of {{ this.totalPages }}</div>
     <div class="flex flex-row gap-4">
       <app-button-primary
         [buttonContent]="'Previous Page'"

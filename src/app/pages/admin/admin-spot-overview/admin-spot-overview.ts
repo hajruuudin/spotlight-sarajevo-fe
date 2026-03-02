@@ -2,7 +2,12 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { PageHeader } from '../../../components/page-header/page-header';
 import { SpotOverviewTable } from '../../../components/admin-overview-base-table/admin-overview-entity-tables/spot-overview-table/spot-overview-table';
-import { SpotOverviewModel, SpotReviewModel, SpotShorthandModel, SpotUpdateModel } from '../../../shared/models/spot.model';
+import {
+  SpotOverviewModel,
+  SpotReviewModel,
+  SpotShorthandModel,
+  SpotUpdateModel,
+} from '../../../shared/models/spot.model';
 import { SpotService } from '../../../services/spot.service';
 import { SessionService } from '../../../core/services/session.service';
 import { HotToastService } from '@ngxpert/hot-toast';
@@ -10,7 +15,7 @@ import { SortOptions } from '../../../shared/constants/SortOptions';
 import { PageResponseModel } from '../../../shared/models/shared.model';
 import { SpinnerService } from '../../../core/services/spinner.service';
 import { ReviewService } from '../../../services/review.service';
-import { SearchBar } from "../../../components/search-bar/search-bar";
+import { SearchBar } from '../../../components/search-bar/search-bar';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -31,9 +36,9 @@ export class AdminSpotOverview implements OnInit {
 
   tableSelectedItem: SpotOverviewModel | null = null;
   tableShorthandData: SpotShorthandModel[] = [];
-  tableSpotReviews: SpotReviewModel[] = []
+  tableSpotReviews: SpotReviewModel[] = [];
   isLoadingReviews: boolean = false;
-  tableSearchForm: FormGroup
+  tableSearchForm: FormGroup;
 
   currentPage: number = 0;
   pageSize: number = 4;
@@ -50,8 +55,8 @@ export class AdminSpotOverview implements OnInit {
     protected cdr: ChangeDetectorRef,
   ) {
     this.tableSearchForm = this.fb.group({
-      'searchTerm' : ['']
-    })
+      searchTerm: [''],
+    });
   }
 
   ngOnInit(): void {
@@ -67,10 +72,16 @@ export class AdminSpotOverview implements OnInit {
       });
   }
 
-  handleSpotSearch(){
-    this.spinnerService.showSectionSpinner()
-this.spotService
-      .findSpotsPaginated(this.currentPage, this.pageSize, this.tableSearchForm.get('searchTerm')?.value, SortOptions.ALPHABETICAL, [])
+  handleSpotSearch() {
+    this.spinnerService.showSectionSpinner();
+    this.spotService
+      .findSpotsPaginated(
+        this.currentPage,
+        this.pageSize,
+        this.tableSearchForm.get('searchTerm')?.value,
+        SortOptions.ALPHABETICAL,
+        [],
+      )
       .subscribe({
         next: (response: PageResponseModel<SpotShorthandModel>) => {
           this.tableShorthandData = response.content;
@@ -90,18 +101,17 @@ this.spotService
           this.tableSelectedItem = overview;
           this.cdr.detectChanges();
 
-          this.handleReviewLoad(spotId, SortOptions.ALPHABETICAL)
+          this.handleReviewLoad(spotId, SortOptions.ALPHABETICAL);
         },
       });
     }
   }
 
-
   handleReviewLoad(spotId: number, sortOption: SortOptions): void {
     this.isLoadingReviews = true;
     this.reviewService.findAllSpotReviews(0, 10, spotId, sortOption).subscribe({
       next: (response: PageResponseModel<SpotReviewModel>) => {
-        this.tableSpotReviews = response.content
+        this.tableSpotReviews = response.content;
         this.isLoadingReviews = false;
         this.cdr.detectChanges();
       },
@@ -109,27 +119,27 @@ this.spotService
         console.error('Error loading reviews:', error);
         this.isLoadingReviews = false;
         this.cdr.detectChanges();
-      }
-    })
+      },
+    });
   }
 
   handleUpdateItem(finalPayload: SpotUpdateModel): void {
     console.log('Update spot payload:', finalPayload);
-        this.spotService.updateSpot(finalPayload).subscribe({
-          next: (response) => {
-            console.log('Spot updated successfully:', response);
+    this.spotService.updateSpot(finalPayload).subscribe({
+      next: (response) => {
+        console.log('Spot updated successfully:', response);
 
-            this.spinnerService.hideNavigateSpinner();
-            this.toastr.success('Spot updated successfully!');
-            
-            this.handleOverviewSelect(finalPayload.id);
-          },
-          error: (error) => {
-            console.error('Error updating spot:', error);
-            this.spinnerService.hideNavigateSpinner();
-            this.toastr.error('Failed to update spot. Please try again.');
-          }
-        });
+        this.spinnerService.hideNavigateSpinner();
+        this.toastr.success('Spot updated successfully!');
+
+        this.handleOverviewSelect(finalPayload.id);
+      },
+      error: (error) => {
+        console.error('Error updating spot:', error);
+        this.spinnerService.hideNavigateSpinner();
+        this.toastr.error('Failed to update spot. Please try again.');
+      },
+    });
   }
 
   handleDeleteItem(spotId: number): void {
@@ -143,7 +153,7 @@ this.spotService
   }
 
   handlePreviousPage(page: number): void {
-    this.currentPage--
+    this.currentPage--;
     this.loadSpots();
   }
 
@@ -163,38 +173,42 @@ this.spotService
   handleReviewLoadMore(page: number): void {
     if (this.tableSelectedItem) {
       this.isLoadingReviews = true;
-      this.reviewService.findAllSpotReviews(page, 10, this.tableSelectedItem.id, SortOptions.RATING).subscribe({
-        next: (response: PageResponseModel<SpotReviewModel>) => {
-          this.tableSpotReviews = [...this.tableSpotReviews, ...response.content];
-          this.isLoadingReviews = false;
-          this.cdr.detectChanges();
-        },
-        error: (error) => {
-          console.error('Error loading more reviews:', error);
-          this.isLoadingReviews = false;
-          this.toastr.error('Failed to load more reviews');
-          this.cdr.detectChanges();
-        }
-      });
+      this.reviewService
+        .findAllSpotReviews(page, 10, this.tableSelectedItem.id, SortOptions.RATING)
+        .subscribe({
+          next: (response: PageResponseModel<SpotReviewModel>) => {
+            this.tableSpotReviews = [...this.tableSpotReviews, ...response.content];
+            this.isLoadingReviews = false;
+            this.cdr.detectChanges();
+          },
+          error: (error) => {
+            console.error('Error loading more reviews:', error);
+            this.isLoadingReviews = false;
+            this.toastr.error('Failed to load more reviews');
+            this.cdr.detectChanges();
+          },
+        });
     }
   }
 
   handleReviewSortChange(sortOption: string): void {
     if (this.tableSelectedItem) {
       this.isLoadingReviews = true;
-      this.reviewService.findAllSpotReviews(0, 10, this.tableSelectedItem.id, sortOption).subscribe({
-        next: (response: PageResponseModel<SpotReviewModel>) => {
-          this.tableSpotReviews = response.content;
-          this.isLoadingReviews = false;
-          this.cdr.detectChanges();
-        },
-        error: (error) => {
-          console.error('Error sorting reviews:', error);
-          this.isLoadingReviews = false;
-          this.toastr.error('Failed to sort reviews');
-          this.cdr.detectChanges();
-        }
-      });
+      this.reviewService
+        .findAllSpotReviews(0, 10, this.tableSelectedItem.id, sortOption)
+        .subscribe({
+          next: (response: PageResponseModel<SpotReviewModel>) => {
+            this.tableSpotReviews = response.content;
+            this.isLoadingReviews = false;
+            this.cdr.detectChanges();
+          },
+          error: (error) => {
+            console.error('Error sorting reviews:', error);
+            this.isLoadingReviews = false;
+            this.toastr.error('Failed to sort reviews');
+            this.cdr.detectChanges();
+          },
+        });
     }
   }
 }

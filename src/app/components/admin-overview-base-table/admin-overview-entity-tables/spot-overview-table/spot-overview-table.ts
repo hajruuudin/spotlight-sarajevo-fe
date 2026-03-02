@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { AdminOverviewBaseTable } from '../../admin-overview-table';
 import {
   SpotOverviewModel,
@@ -12,7 +20,6 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { ZeroReview } from '../../../../shared/pipes/zero-review-pipe';
 import { ButtonSecondary } from '../../../button-secondary/button-secondary';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { TextHolder } from '../../../text-holder/text-holder';
 import { TextInput } from '../../../text-input/text-input';
 import { TextArea } from '../../../text-area/text-area';
 import { SelectGroup } from '../../../select-group/select-group';
@@ -29,6 +36,20 @@ import { AdminSpotReviewCard } from '../../../admin-spot-review-card/admin-spot-
 import { SortOptions } from '../../../../shared/constants/SortOptions';
 import { DecimalPipe } from '@angular/common';
 
+/**
+ * Spot Overview Table Component
+ * 
+ * This is an implementation of the default AdminOverviewTable component. The following table showcases the 
+ * spot infromation and, upon request, may showcase Spot Overview information, alongside the ability to
+ * edit and delete the spot within question.
+ * 
+ * The tables consists of column headers and an overview body:
+ * - The column headers is identical to the SpotShorthandModel and are provided to the component from the parent
+ * - The overview body consists of 5 section, each of which represents some information regarding the spot.
+ * 
+ * This component showcases the data within the spot overview, while the actual requests are handeled by the
+ * parent AdminSpotOverview component.
+ */
 @Component({
   selector: 'app-spot-overview-table',
   imports: [
@@ -42,8 +63,8 @@ import { DecimalPipe } from '@angular/common';
     SelectGroup,
     MultiSelectGroup,
     AdminSpotReviewCard,
-    DecimalPipe
-],
+    DecimalPipe,
+  ],
   templateUrl: './spot-overview-table.html',
   styleUrl: './spot-overview-table.css',
   host: {
@@ -83,7 +104,7 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
     private tagService: TagService,
     private imageUploadService: ImageUploadService,
     private spinnerService: SpinnerService,
-    private toastService: HotToastService
+    private toastService: HotToastService,
   ) {
     super();
     this.basicInformationForm = this.fb.group({
@@ -110,13 +131,16 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
     });
   }
 
+  /* ===================================================== */
+  /* ============ LIFECYCLE UPDATE FUNCTIONS ============= */
+  /* ===================================================== */
   ngOnInit(): void {
     this.categoryService.getAllSpotCategories().subscribe({
       next: (categories) => {
         this.categoryOptions = this.transformCategoriesForOptions(
-        categories, 
-        this.columnLang as 'bs' | 'en'
-      );
+          categories,
+          this.columnLang as 'bs' | 'en',
+        );
       },
     });
     this.tagService.findAll().subscribe({
@@ -165,6 +189,11 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
     }
   }
 
+  
+  /* =================================================================================== */
+  /* ============ DATA MANIPULATION FUNCTIONS WHICH ARE SENT TO THE PARENT ============= */
+  /* =================================================================================== */
+
   override onSaveChangeSelected() {
     if (!this.itemOverview) {
       console.error('No item overview available');
@@ -177,39 +206,40 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
       ? this.imageUploadService.uploadImage(this.newThumbnailFile)
       : of(null);
 
-    const newImagesUpload$ = this.newImageFiles.length > 0
-      ? this.imageUploadService.uploadMultipleImages(this.newImageFiles)
-      : of([]);
-
+    const newImagesUpload$ =
+      this.newImageFiles.length > 0
+        ? this.imageUploadService.uploadMultipleImages(this.newImageFiles)
+        : of([]);
 
     forkJoin({
       thumbnail: thumbnailUpload$,
-      newImages: newImagesUpload$
+      newImages: newImagesUpload$,
     }).subscribe({
       next: (results) => {
-        const imagesToBeUploaded: MediaCreateModel[] = results.newImages.map(response => 
-          new MediaCreateModel(
-            this.itemOverview!.id,
-            'SPOT',
-            response.data.url,
-            response.data.delete_url,
-            false
-          )
+        const imagesToBeUploaded: MediaCreateModel[] = results.newImages.map(
+          (response) =>
+            new MediaCreateModel(
+              this.itemOverview!.id,
+              'SPOT',
+              response.data.url,
+              response.data.delete_url,
+              false,
+            ),
         );
 
-        const newThumbnailImage = results.thumbnail 
+        const newThumbnailImage = results.thumbnail
           ? new MediaCreateModel(
               this.itemOverview!.id,
               'SPOT',
               results.thumbnail.data.url,
               results.thumbnail.data.delete_url,
-              true
+              true,
             )
           : null;
 
-        const thumbnailImageUrl = results.thumbnail 
-          ? results.thumbnail.data.url 
-          : (this.itemOverview?.thumbnailImage?.imageUrl || '');
+        const thumbnailImageUrl = results.thumbnail
+          ? results.thumbnail.data.url
+          : this.itemOverview?.thumbnailImage?.imageUrl || '';
 
         const finalPayload = new SpotUpdateModel(
           this.itemOverview!.id,
@@ -227,29 +257,32 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
           this.attributeInformationForm.value.spotTagIds || [],
           this.workHoursArray.value
             .filter((wh: any) => !wh.isClosed)
-            .map((wh: any) => new SpotWorkHoursModel(
-              wh.dayIndex,
-              wh.day,
-              wh.startTime,
-              wh.endTime,
-              this.itemOverview!.id,
-              false
-            )),
+            .map(
+              (wh: any) =>
+                new SpotWorkHoursModel(
+                  wh.dayIndex,
+                  wh.day,
+                  wh.startTime,
+                  wh.endTime,
+                  this.itemOverview!.id,
+                  false,
+                ),
+            ),
           thumbnailImageUrl,
           newThumbnailImage,
           imagesToBeUploaded,
-          this.imagesToDelete.size > 0 ? Array.from(this.imagesToDelete) : []
+          this.imagesToDelete.size > 0 ? Array.from(this.imagesToDelete) : [],
         );
 
         this.onSaveChange.emit(finalPayload);
-        this.resetImageState()
+        this.resetImageState();
       },
       error: (error) => {
         console.error('Error during image upload/delete process:', error);
         // Hide spinner and show error toast
         this.spinnerService.hideNavigateSpinner();
         this.toastService.error('Failed to upload images. Please try again.');
-      }
+      },
     });
   }
 
@@ -271,6 +304,10 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
     this.onDeleteItem.emit(this.selectedSpotId);
   }
 
+  /* ============================================================================================ */
+  /* ============ UI INTERFACE FUNCTIONS AND HELPERS USED ONLY TO SHOWCASE THE DATA ============= */
+  /* ============================================================================================ */
+
   transformCategoriesForOptions(
     categories: SpotCategoryModel[],
     language: 'bs' | 'en',
@@ -281,9 +318,7 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
     }));
   }
 
-  transformTagsForOptions(
-    tags: TagModel[],
-  ): { label: string; value: any }[] {
+  transformTagsForOptions(tags: TagModel[]): { label: string; value: any }[] {
     return tags.map((tag) => ({
       label: this.columnLang === 'en' ? tag.tagNameEn : tag.tagNameBs,
       value: tag.id,
@@ -295,14 +330,12 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
       return [];
     }
 
-    return tags
-      .map((tag) => tag?.id)
-      .filter((id): id is number => typeof id === 'number');
+    return tags.map((tag) => tag?.id).filter((id): id is number => typeof id === 'number');
   }
 
   private buildWorkHoursArray(workHours: any[] | null | undefined): FormArray {
     const array = this.fb.array([] as any[]);
-    
+
     const allDays = [
       { dayIndex: 0, day: 'Monday' },
       { dayIndex: 1, day: 'Tuesday' },
@@ -310,12 +343,12 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
       { dayIndex: 3, day: 'Thursday' },
       { dayIndex: 4, day: 'Friday' },
       { dayIndex: 5, day: 'Saturday' },
-      { dayIndex: 6, day: 'Sunday' }
+      { dayIndex: 6, day: 'Sunday' },
     ];
 
     allDays.forEach((dayInfo) => {
-      const existingHours = Array.isArray(workHours) 
-        ? workHours.find(wh => wh.dayIndex === dayInfo.dayIndex)
+      const existingHours = Array.isArray(workHours)
+        ? workHours.find((wh) => wh.dayIndex === dayInfo.dayIndex)
         : null;
 
       if (existingHours) {
@@ -326,7 +359,7 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
             startTime: [existingHours.startTime],
             endTime: [existingHours.endTime],
             isClosed: [false],
-          }) as any
+          }) as any,
         );
       } else {
         array.push(
@@ -336,11 +369,11 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
             startTime: ['09:00'],
             endTime: ['17:00'],
             isClosed: [true],
-          }) as any
+          }) as any,
         );
       }
     });
-    
+
     return array;
   }
 
@@ -406,8 +439,8 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
   }
 
   onReviewSortOptionChange(sortOption: string): void {
-    if(sortOption == "ALPHABETICAL_DESC") this.currentReviewSortOption = SortOptions.ALPHABETICAL;
-    if(sortOption == "RATING_DESC") this.currentReviewSortOption = SortOptions.RATING
+    if (sortOption == 'ALPHABETICAL_DESC') this.currentReviewSortOption = SortOptions.ALPHABETICAL;
+    if (sortOption == 'RATING_DESC') this.currentReviewSortOption = SortOptions.RATING;
     this.reviewPage = 0;
     this.onReviewSortChange.emit(sortOption);
   }
