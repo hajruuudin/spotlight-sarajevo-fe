@@ -173,4 +173,20 @@ export class SpotService {
       }
     );
   }
+
+  /**
+   * Method to delete a spot from the database.
+   * This is an admin-only operation.
+   * 
+   * @param spotId The ID of the spot to be deleted
+   * @returns An observable representing the result of the delete operation
+   */
+  deleteSpot(spotId: number) {
+    return this.http.delete(
+      this.apiUrl + `/spot/${spotId}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }

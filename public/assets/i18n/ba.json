@@ -62,6 +62,10 @@
     "publicTransport": "Javni Prevoz",
     "profile": "Vaš Profil"
   },
+  "common": {
+    "delete": "Obriši",
+    "cancel": "Otkaži"
+  },
   "adminNavbar": {
     "dashboard": "Kontrolna ploča",
     "dataOverview": "Pregled podataka",
@@ -92,7 +96,9 @@
         "categoryName" : "KATEROIJA",
         "thumbnail" : "SLIKA",
         "combinedRating" : "OCJENA"
-      }
+      },
+      "delete" : "Obriši Lokal",
+      "deleteConfirm" : "Jeste li sigurni da želite obrisati ovaj lokal? Ova akcija se ne može poništiti."
     },
     "eventOverview" : {
       "title" : "Pregled Događaja",

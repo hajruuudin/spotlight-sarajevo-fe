@@ -17,6 +17,8 @@ import { SpinnerService } from '../../../core/services/spinner.service';
 import { ReviewService } from '../../../services/review.service';
 import { SearchBar } from '../../../components/search-bar/search-bar';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ModalService } from '../../../core/services/modal.service';
+import { DeleteModal } from '../../../components/modals/delete-modal/delete-modal';
 
 @Component({
   selector: 'app-admin-spot-overview',
@@ -53,6 +55,7 @@ export class AdminSpotOverview implements OnInit {
     protected toastr: HotToastService,
     protected fb: FormBuilder,
     protected cdr: ChangeDetectorRef,
+    protected modal: ModalService,
   ) {
     this.tableSearchForm = this.fb.group({
       searchTerm: [''],
@@ -142,9 +145,30 @@ export class AdminSpotOverview implements OnInit {
     });
   }
 
-  handleDeleteItem(spotId: number): void {
-    console.log('Delete spot ID:', spotId);
-    // Call delete service
+  async handleDeleteItem(spotId: number): Promise<void> {
+    const result = await this.modal.openAsync<{ confirmed: boolean }>(DeleteModal, {
+      titleKey: 'admin.spotOverview.delete',
+      confirmMessageKey: 'admin.spotOverview.deleteConfirm',
+    });
+
+    if (!result.confirmed) return;
+
+    this.spinnerService.showSectionSpinner();
+    this.spotService.deleteSpot(spotId).subscribe({
+      next: (response) => {
+        this.spinnerService.hideSectionSpinner();
+        this.toastr.success('Spot deleted successfully!');
+        this.tableSelectedItem = null;
+        this.tableSpotReviews = [];
+        this.cdr.detectChanges();
+        this.loadSpots();
+      },
+      error: (error) => {
+        console.error('Error deleting spot:', error);
+        this.spinnerService.hideSectionSpinner();
+        this.toastr.error('Failed to delete spot. Please try again.');
+      },
+    });
   }
 
   handleNextPage(page: number): void {
