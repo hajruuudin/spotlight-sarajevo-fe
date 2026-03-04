@@ -32,12 +32,12 @@
         <div class="w-full flex flex-col">
           <div
             class="w-full flex h-auto flex-row justify-between items-center text-center"
-            [class.bg-(--background-800)]="$index % 2 === 0 && this.selectedSpotId !== item.id"
-            [class.dark:bg-(--background-100)]="$index % 2 === 0 && this.selectedSpotId !== item.id"
-            [class.bg-(--background-700)]="$index % 2 !== 0 && this.selectedSpotId !== item.id"
-            [class.dark:bg-(--background-200)]="$index % 2 !== 0 && this.selectedSpotId !== item.id"
-            [class.bg-(--background-200)]="this.selectedSpotId === item.id"
-            [class.dark:bg-(--accent-300)]="this.selectedSpotId === item.id"
+            [class.bg-(--background-800)]="$index % 2 === 0 && this.selectedItemId !== item.id"
+            [class.dark:bg-(--background-100)]="$index % 2 === 0 && this.selectedItemId !== item.id"
+            [class.bg-(--background-700)]="$index % 2 !== 0 && this.selectedItemId !== item.id"
+            [class.dark:bg-(--background-200)]="$index % 2 !== 0 && this.selectedItemId !== item.id"
+            [class.bg-(--background-200)]="this.selectedItemId === item.id"
+            [class.dark:bg-(--accent-300)]="this.selectedItemId === item.id"
           >
             <span class="w-1/12 flex flex-col justify-center items-center">{{ item.id }}</span>
             <span class="w-2/12 flex flex-col justify-center items-center">{{ item.slug }}</span>
@@ -55,7 +55,7 @@
             }}</span>
             <span class="w-2/12 flex flex-col justify-center items-center">
               <app-button-secondary
-                [buttonContent]="this.selectedSpotId === item.id ? 'Hide' : 'View More'"
+                [buttonContent]="this.selectedItemId === item.id ? 'Hide' : 'View More'"
                 [size]="'SMALL'"
                 (pressed)="this.onOverviewSelected(item.id)"
               >
@@ -68,10 +68,10 @@
           <!----------------------------------------------------------------->
           <div
             class="w-full border-t border-b border-(--primary-700) dark:border-(--primary-400) transition-all duration-300 ease-in-out overflow-hidden"
-            [class.max-h-0]="this.selectedSpotId !== item.id"
-            [class.max-h-auto]="this.selectedSpotId === item.id"
-            [class.opacity-0]="this.selectedSpotId !== item.id"
-            [class.opacity-100]="this.selectedSpotId === item.id"
+            [class.max-h-0]="this.selectedItemId !== item.id"
+            [class.max-h-auto]="this.selectedItemId === item.id"
+            [class.opacity-0]="this.selectedItemId !== item.id"
+            [class.opacity-100]="this.selectedItemId === item.id"
           >
             <div
               class="w-full p-3 bg-(--background-900) dark:bg-(--background-200) text-black dark:text-white flex flex-col gap-3"

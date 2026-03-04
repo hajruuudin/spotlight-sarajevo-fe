@@ -181,19 +181,6 @@ export class AdminSpotOverview implements OnInit {
     this.loadSpots();
   }
 
-  private loadSpots(): void {
-    this.spotService
-      .findSpotsPaginated(this.currentPage, this.pageSize, '', SortOptions.ALPHABETICAL, [])
-      .subscribe({
-        next: (response) => {
-          this.tableShorthandData = response.content;
-          this.totalItems = response.totalElements;
-          this.totalPages = response.totalPages;
-          this.cdr.detectChanges();
-        },
-      });
-  }
-
   handleReviewLoadMore(page: number): void {
     if (this.tableSelectedItem) {
       this.isLoadingReviews = true;
@@ -234,5 +221,18 @@ export class AdminSpotOverview implements OnInit {
           },
         });
     }
+  }
+
+  private loadSpots(): void {
+    this.spotService
+      .findSpotsPaginated(this.currentPage, this.pageSize, '', SortOptions.ALPHABETICAL, [])
+      .subscribe({
+        next: (response) => {
+          this.tableShorthandData = response.content;
+          this.totalItems = response.totalElements;
+          this.totalPages = response.totalPages;
+          this.cdr.detectChanges();
+        },
+      });
   }
 }

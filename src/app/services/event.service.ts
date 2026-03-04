@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { PageResponseModel } from '../shared/models/shared.model';
-import { EventDateCheckModel, EventOverviewModel, EventShorthandModel } from '../shared/models/event.model';
+import { EventDateCheckModel, EventOverviewModel, EventShorthandModel, EventUpdateModel } from '../shared/models/event.model';
 
 /**
  * EventService handles all available backend endpoints related to events.
@@ -142,6 +142,39 @@ export class EventService {
   findEventsOnDay(date: string) {
     return this.http.get<EventShorthandModel[]>(
       this.apiUrl + `/event/events-on-day/${date}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to update an existing event with new information.
+   * This is an admin-only operation.
+   *
+   * @param eventUpdateModel The EventUpdateModel containing all updated event information
+   * @returns An observable representing the result of the update operation
+   */
+  updateEvent(eventUpdateModel: EventUpdateModel) {
+    return this.http.put(
+      this.apiUrl + `/event`,
+      eventUpdateModel,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to delete an event from the database.
+   * This is an admin-only operation.
+   *
+   * @param eventId The ID of the event to be deleted
+   * @returns An observable representing the result of the delete operation
+   */
+  deleteEvent(eventId: number) {
+    return this.http.delete(
+      this.apiUrl + `/event/${eventId}`,
       {
         withCredentials: true,
       }

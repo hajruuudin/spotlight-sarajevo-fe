@@ -12,7 +12,7 @@
       class="hidden dark:absoulte inset-0 bg-gradient-to-r dark:from-black/100 from-white/100 via-transparent dark:to-black/100 to-white/100"
     ></div>
     <img
-      [src]="this.spotOverview.thumbnailImage"
+      [src]="this.spotOverview.thumbnailImage.imageUrl"
       [style]="
         this.session.theme() == 'dark'
           ? 'mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent)'

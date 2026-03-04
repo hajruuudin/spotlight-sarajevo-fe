@@ -9,5 +9,5 @@ import { TranslocoPipe } from '@ngneat/transloco';
   styleUrl: './admin-request-overview.css'
 })
 export class AdminRequestOverview {
-
+  
 }

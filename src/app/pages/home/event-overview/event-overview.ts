@@ -30,7 +30,6 @@ import { EditReviewModal } from '../../../components/modals/edit-review-modal/ed
 import { DeleteReviewModal } from '../../../components/modals/delete-review-modal/delete-review-modal';
 import { AddReviewModal } from '../../../components/modals/add-review-modal/add-review-modal';
 import { OrganiserReiewCard } from '../../../components/organiser-reiew-card/organiser-reiew-card';
-import { ButtonRegular } from '../../../components/button-regular/button-regular';
 import { AddToCollectionModal } from '../../../components/modals/add-to-collection-modal/add-to-collection-modal';
 import { CollectionService } from '../../../services/collection.service';
 import { CollectionAddItemModel } from '../../../shared/models/collection.model';
@@ -113,16 +112,6 @@ export class EventOverview {
     if(this.session.getUser() != null){
       this.checkIfPresentInSystemCollection();
     } 
-
-    this.images.push(this.eventOverview.thumbnailImage);
-    this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');
-    this.images.push(this.eventOverview.thumbnailImage);
-    this.images.push(this.eventOverview.thumbnailImage);
-    this.images.push(this.eventOverview.thumbnailImage);
-    this.images.push(this.eventOverview.thumbnailImage);
-    this.images.push(this.eventOverview.thumbnailImage);
-
-   
   }
 
   @HostListener('document:scroll')

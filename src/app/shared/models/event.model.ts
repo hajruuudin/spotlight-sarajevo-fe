@@ -1,4 +1,5 @@
 import { TagModel } from "./category.model";
+import { MediaCreateModel, MediaStoreModel } from "./shared.model";
 
 export class EventShorthandModel {
     constructor(
@@ -31,6 +32,7 @@ export class EventOverviewModel {
             public eventLon: number,
             public location: string,
             public locationLinkSlug: string,
+            public categoryId: number,
             public categoryNameEn: String,
             public categoryNameBs: String,
             public eventTags: TagModel[],
@@ -42,9 +44,39 @@ export class EventOverviewModel {
             public ageLimit: number,
             public reservation: boolean,
             public organiser: EventOrganiserModel,
-            public thumbnailImage: string,
-            public images: string[]
+            public thumbnailImage: MediaStoreModel,
+            public images: MediaStoreModel[]
         ){}
+}
+
+export class EventUpdateModel {
+    constructor(
+        public id: number,
+        public slug: string,
+        public officialNameBs: string,
+        public officialNameEn: string,
+        public smallDescriptionBs: string,
+        public smallDescriptionEn: string,
+        public fullDescriptionBs: string,
+        public fullDescriptionEn: string,
+        public eventLat: number,
+        public eventLon: number,
+        public location: string,
+        public locationLinkSlug: string,
+        public categoryId: number,
+        public eventTagIds: number[],
+        public startDate: string,
+        public endDate: string,
+        public entryPrice: number,
+        public cancelRefund: boolean,
+        public eventLanguage: string,
+        public ageLimit: number,
+        public reservation: boolean,
+        public thumbnailImageUrl: string,
+        public newThumbnailImage: MediaCreateModel | null,
+        public imagesToUpload: MediaCreateModel[],
+        public imagesToDelete: number[]
+    ){}
 }
 
 export class EventOrganiserModel{
@@ -52,6 +84,7 @@ export class EventOrganiserModel{
         public id: number,
         public organiserName: string,
         public organiserCreationDate: string,
+        public organiserCategoryId: number,
         public organiserCategoryNameBs: string,
         public organiserCategoryNameEn: string,
         public organiserPhone: string,

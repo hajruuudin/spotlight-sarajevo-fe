@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { CategoryService } from '../../services/category.service';
+import { TagService } from '../../services/tag.service';
+import { ImageUploadService } from '../../services/image-upload.service';
+import { SpinnerService } from '../../core/services/spinner.service';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 /**
  * Base Admin Table class
@@ -50,8 +56,16 @@ export abstract class AdminOverviewBaseTable {
   /* NOTE: Item editind and item retrieval is handeled within the parent overview component */
   @Output() onOverviewSelect: EventEmitter<number> = new EventEmitter
   @Output() onDeleteItem: EventEmitter<number> = new EventEmitter
-  
-  selectedSpotId: number | null = null
+
+  // Services used in derived classes (Individual table components)
+  protected fb = inject(FormBuilder);
+  protected categoryService = inject(CategoryService);
+  protected tagService = inject(TagService);
+  protected imageUploadService = inject(ImageUploadService);
+  protected spinnerService = inject(SpinnerService);
+  protected toastService = inject(HotToastService);
+
+  selectedItemId: number | null = null
   showItemOverview: boolean = false
 
   onDeleteItemSelected(){}
@@ -59,10 +73,10 @@ export abstract class AdminOverviewBaseTable {
 
   onOverviewSelected(id: number){
     console.log(id)
-    if (this.selectedSpotId === id) {
-      this.selectedSpotId = null
+    if (this.selectedItemId === id) {
+      this.selectedItemId = null
     } else {
-      this.selectedSpotId = id
+      this.selectedItemId = id
       this.onOverviewSelect.emit(id)
     }
   }

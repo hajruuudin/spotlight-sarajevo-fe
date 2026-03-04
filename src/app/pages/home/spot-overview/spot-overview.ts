@@ -122,18 +122,11 @@ export class SpotOverview implements OnInit {
     this.initialiseRadarChart(this.session.language()!, this.session.theme()!);
     this.loadUserSpotReview(this.spotOverview.id);
     this.loadOtherSpotReviews(this.spotOverview.id);
-
+    this.transformImageObjectToUrl()
+    
     if (this.session.getUser() != null){
       this.checkIfPresentInSystemCollection();
     }
-
-    this.images.push(this.spotOverview.thumbnailImage.imageUrl);
-    this.images.push('https://i.ibb.co/QjqzJWm7/SFF-2025-Insta-Post-rz.jpg');
-    this.images.push(this.spotOverview.thumbnailImage.imageUrl);
-    this.images.push(this.spotOverview.thumbnailImage.imageUrl);
-    this.images.push(this.spotOverview.thumbnailImage.imageUrl);
-    this.images.push(this.spotOverview.thumbnailImage.imageUrl);
-    this.images.push(this.spotOverview.thumbnailImage.imageUrl);
   }
 
   @HostListener('document:scroll')
@@ -330,6 +323,12 @@ export class SpotOverview implements OnInit {
         returnUrl: `/spots/${this.spotOverview.slug}`,
       },
     });
+  }
+  // TODO: Make this into a utils function
+  transformImageObjectToUrl(){
+    for(let image of this.spotOverview.images){
+      this.images.push(image.imageUrl)
+    }
   }
 
   initialiseRadarChart(lang: string, theme: string) {

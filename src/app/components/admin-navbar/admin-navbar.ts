@@ -24,7 +24,8 @@ import { ButtonPrimary } from '../button-primary/button-primary';
     AddIcon,
     SpotsIcon,
     ButtonPrimary,
-  ],
+    EventsIconComponent
+],
   templateUrl: './admin-navbar.html',
   styleUrl: './admin-navbar.css',
   host: {
