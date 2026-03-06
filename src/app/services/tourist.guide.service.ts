@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TouristGuideCreateModel, TouristGuideOverviewModel, TouristGuideShorthandModel } from '../shared/models/tourist.guide.model';
 import { environment } from '../../environments/environment';
+import { PageResponseModel } from '../shared/models/shared.model';
 
 /**
  * Service for interacting with the Tourist Guide API.
@@ -29,6 +30,14 @@ export class TouristGuideService {
     return this.http.get<TouristGuideShorthandModel[]>(`${this.API_URL}/all`, {
       withCredentials: true
     });
+  }
+
+  findGuidesPaginated(
+    pageNumber: number, pageSize: number, searchTerm: string, sortOption: string
+  ) {
+    return this.http.get<PageResponseModel<TouristGuideShorthandModel>>(`${this.API_URL}?pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortOption=${sortOption}`, {
+      withCredentials: true
+    })
   }
 
   /**

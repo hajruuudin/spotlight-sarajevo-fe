@@ -12,10 +12,14 @@ import { SpinnerService } from '../../../core/services/spinner.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { ModalService } from '../../../core/services/modal.service';
 import { DeleteModal } from '../../../components/modals/delete-modal/delete-modal';
+import { EventOverviewTable } from "../../../components/admin-overview-base-table/admin-overview-entity-tables/event-overview-table/event-overview-table";
+import { GuideOverviewTable } from "../../../components/admin-overview-base-table/admin-overview-entity-tables/guide-overview-table/guide-overview-table";
+import { SortOptions } from '../../../shared/constants/SortOptions';
+import { PageResponseModel } from '../../../shared/models/shared.model';
 
 @Component({
   selector: 'app-admin-guide-overview',
-  imports: [PageHeader, TranslocoPipe],
+  imports: [PageHeader, TranslocoPipe, GuideOverviewTable],
   templateUrl: './admin-guide-overview.html',
   styleUrl: './admin-guide-overview.css',
 })
@@ -23,10 +27,10 @@ export class AdminGuideOverview {
   tableDefinitions: string[] = [
     'ID',
     'SLUG',
-    'OFFICIAL NAME',
+    'GUIDE TITLE',
     'SMALL DESCRIPTION',
-    'CATEGORY NAME',
-    'START DATE',
+    'CATEGORY',
+    'PREVIEW',
   ];
 
   tableSelectedItem: TouristGuideOverviewModel | null = null;
@@ -62,7 +66,7 @@ export class AdminGuideOverview {
 
   handleOverviewSelect(eventId: number): void {}
 
-  handleUpdateItem(finalPayload: any): void {}
+  handleSaveChanges(finalPayload: any): void {}
 
   async handleDeleteItem(spotId: number): Promise<void> {
     const result = await this.modal.openAsync<{ confirmed: boolean }>(DeleteModal, {
@@ -86,9 +90,11 @@ export class AdminGuideOverview {
 
   // Will be fixed. Pagination will be added to the backend
   private loadGuides(): void {
-    this.guideService.findAllGuides().subscribe({
-      next: (response: TouristGuideShorthandModel[]) => {
-        this.tableShorthandData = response;
+    this.guideService.findGuidesPaginated(this.currentPage, this.pageSize, this.tableSearchForm.get('searchTerm')?.value, SortOptions.ALPHABETICAL).subscribe({
+      next: (response: PageResponseModel<TouristGuideShorthandModel>) => {
+        this.tableShorthandData = response.content;
+        this.totalItems = response.totalElements
+        this.totalPages = response.totalPages
         this.cdr.detectChanges();
       },
     });

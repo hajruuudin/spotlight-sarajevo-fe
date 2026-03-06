@@ -101,26 +101,26 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
   constructor() {
     super()
     this.basicInformationForm = this.fb.group({
-      slug: [this.itemOverview?.slug ?? ''],
-      officialNameEn: [this.itemOverview?.officialNameEn ?? ''],
-      officialNameBs: [this.itemOverview?.officialNameBs ?? ''],
-      smallDescriptionEn: [this.itemOverview?.smallDescriptionEn ?? ''],
-      smallDescriptionBs: [this.itemOverview?.smallDescriptionBs ?? ''],
-      fullDescriptionEn: [this.itemOverview?.fullDescriptionEn ?? ''],
-      fullDescriptionBs: [this.itemOverview?.fullDescriptionBs ?? ''],
-      address: [this.itemOverview?.address ?? ''],
+      slug: [''],
+      officialNameEn: [''],
+      officialNameBs: [''],
+      smallDescriptionEn: [''],
+      smallDescriptionBs: [''],
+      fullDescriptionEn: [''],
+      fullDescriptionBs: [''],
+      address: [''],
     });
 
     this.attributeInformationForm = this.fb.group({
-      latitude: [this.itemOverview?.latitude ?? 0],
-      longitude: [this.itemOverview?.longitude ?? 0],
-      categoryId: [this.itemOverview?.categoryId ?? ''],
-      spotTagIds: [this.mapTagIds(this.itemOverview?.spotTags)],
-      combinedRating: [this.itemOverview?.combinedRating ?? 0],
+      latitude: [0],
+      longitude: [0],
+      categoryId: [''],
+      spotTagIds: [this.mapTagIds(undefined)],
+      combinedRating: [0],
     });
 
     this.workHoursForm = this.fb.group({
-      workHours: this.buildWorkHoursArray(this.itemOverview?.workHours),
+      workHours: this.buildWorkHoursArray(undefined),
     });
   }
 

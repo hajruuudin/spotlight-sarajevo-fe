@@ -100,32 +100,32 @@ export class EventOverviewTable extends AdminOverviewBaseTable implements OnInit
     super();
 
     this.basicInformationForm = this.fb.group({
-      slug: [this.itemOverview?.slug ?? ''],
-      officialNameEn: [this.itemOverview?.officialNameEn ?? ''],
-      officialNameBs: [this.itemOverview?.officialNameBs ?? ''],
-      smallDescriptionEn: [this.itemOverview?.smallDescriptionEn ?? ''],
-      smallDescriptionBs: [this.itemOverview?.smallDescriptionBs ?? ''],
-      fullDescriptionEn: [this.itemOverview?.fullDescriptionEn ?? ''],
-      fullDescriptionBs: [this.itemOverview?.fullDescriptionBs ?? ''],
+      slug: [''],
+      officialNameEn: [''],
+      officialNameBs: [''],
+      smallDescriptionEn: [''],
+      smallDescriptionBs: [''],
+      fullDescriptionEn: [''],
+      fullDescriptionBs: [''],
     });
 
     this.locationAttributesForm = this.fb.group({
-      eventLat: [this.itemOverview?.eventLat ?? 0],
-      eventLon: [this.itemOverview?.eventLon ?? 0],
-      location: [this.itemOverview?.location ?? ''],
-      locationLinkSlug: [this.itemOverview?.locationLinkSlug ?? ''],
-      categoryId: [this.itemOverview?.categoryId ?? ''],
-      eventTagIds: [this.mapTagIds(this.itemOverview?.eventTags)],
+      eventLat: [0],
+      eventLon: [0],
+      location: [''],
+      locationLinkSlug: [''],
+      categoryId: [''],
+      eventTagIds: [this.mapTagIds(undefined)],
     });
 
     this.eventDetailsForm = this.fb.group({
-      startDate: [this.itemOverview?.startDate ?? ''],
-      endDate: [this.itemOverview?.endDate ?? ''],
-      entryPrice: [this.itemOverview?.entryPrice ?? 0],
-      cancelRefund: [this.itemOverview?.cancelRefund ?? false],
-      eventLanguage: [this.itemOverview?.eventLanguage ?? ''],
-      ageLimit: [this.itemOverview?.ageLimit ?? 0],
-      reservation: [this.itemOverview?.reservation ?? false],
+      startDate: [''],
+      endDate: [''],
+      entryPrice: [0],
+      cancelRefund: [false],
+      eventLanguage: [''],
+      ageLimit: [0],
+      reservation: [false],
     });
   }
 
