@@ -12,6 +12,7 @@ import { AdminOverviewBaseTable } from '../../admin-overview-table';
 import {
   EventOrganiserModel,
   EventOrganiserReviewModel,
+  EventOrganiserUpdateModel,
   EventOverviewModel,
   EventShorthandModel,
   EventUpdateModel,
@@ -73,6 +74,7 @@ export class EventOverviewTable extends AdminOverviewBaseTable implements OnInit
   @Input() isLoadingReviews: boolean = false;
 
   @Output() onSaveChange: EventEmitter<EventUpdateModel> = new EventEmitter<EventUpdateModel>();
+  @Output() onOrganiserSaveChange: EventEmitter<EventOrganiserUpdateModel> = new EventEmitter<EventOrganiserUpdateModel>();
   @Output() onReviewLoadMore: EventEmitter<number> = new EventEmitter<number>();
   @Output() onReviewSortChange: EventEmitter<string> = new EventEmitter<string>();
 
@@ -363,9 +365,18 @@ export class EventOverviewTable extends AdminOverviewBaseTable implements OnInit
 
   async openOrganiserModal(): Promise<void> {
     if (!this.itemOverview?.organiser) return;
-    await this.modal.openAsync<any>(EventOrganiserModal, {
+
+    const result =await this.modal.openAsync<any>(EventOrganiserModal, {
       organiserModel: this.itemOverview.organiser,
     });
+
+    if (result?.type == 'save'){
+      this.onOrganiserSaveChange.emit(result.payload as EventOrganiserUpdateModel)
+    }
+
+    if (result?.type == 'cancel'){
+      return
+    }
   }
 }
 

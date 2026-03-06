@@ -2,7 +2,9 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { PageHeader } from '../../../components/page-header/page-header';
 import {
+  EventOrganiserModel,
   EventOrganiserReviewModel,
+  EventOrganiserUpdateModel,
   EventOverviewModel,
   EventShorthandModel,
   EventUpdateModel,
@@ -19,6 +21,7 @@ import { SortOptions } from '../../../shared/constants/SortOptions';
 import { DeleteModal } from '../../../components/modals/delete-modal/delete-modal';
 import { SearchBar } from '../../../components/search-bar/search-bar';
 import { EventOverviewTable } from '../../../components/admin-overview-base-table/admin-overview-entity-tables/event-overview-table/event-overview-table';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-event-overview',
@@ -112,6 +115,22 @@ export class AdminEventOverview implements OnInit {
         this.toastr.error('Failed to update event. Please try again.');
       },
     });
+  }
+
+  handleOrganiserUpdateItem(finalPayload: EventOrganiserUpdateModel){
+    this.spinnerService.showNavigateSpinner()
+    console.log(finalPayload)
+    this.eventService.updateEventOrganiser(finalPayload).subscribe({
+      next: (result : EventOrganiserModel) => {
+        this.spinnerService.hideNavigateSpinner()
+        this.toastr.success("Organiser updated")
+        this.handleOverviewSelect(this.tableSelectedItem!.id)
+      },
+      error: (error : HttpErrorResponse) => {
+        this.spinnerService.hideNavigateSpinner()
+        this.toastr.error("Error while updating the organiser. Reffer to logs for more")
+      }
+    })
   }
 
   async handleDeleteItem(eventId: number): Promise<void> {

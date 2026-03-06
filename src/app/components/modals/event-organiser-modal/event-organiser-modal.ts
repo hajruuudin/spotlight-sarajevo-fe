@@ -42,7 +42,7 @@ export class EventOrganiserModal implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       organiserName: [this.organiserModel?.organiserName ?? '', Validators.required],
-      organiserCreationDate: [this.organiserModel?.organiserCreationDate ?? ''],
+      organiserCreationDate: [this.organiserModel?.organiserCreationDate.substring(0, 10) ?? ''],
       organiserCategoryId: [this.organiserModel?.organiserCategoryId ?? null, Validators.required],
       organiserPhone: [this.organiserModel?.organiserPhone ?? '', Validators.required],
       organiserEmail: [
@@ -105,9 +105,8 @@ export class EventOrganiserModal implements OnInit {
             existingThumbnailUrl: this.organiserModel?.thumbnailImage ?? null,
             newThumbnailImage: newThumbnail,
           };
-          console.log('[EventOrganiserModal] Update payload:', payload);
+      
           this.isSaving = false;
-          this.toastr.success('Organiser ready to save (backend pending)');
           this.close({ type: 'save', payload });
         },
         error: (err) => {
