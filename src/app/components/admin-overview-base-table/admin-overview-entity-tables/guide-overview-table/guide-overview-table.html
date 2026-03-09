@@ -258,15 +258,35 @@
                       class="w-[300px] min-w-[300px] rounded-2xl border border-(--primary-700) dark:border-(--primary-400) p-3 flex flex-col gap-2 bg-(--background-900) dark:bg-(--background-200)"
                     >
                       <!-- Section header -->
-                      <div class="flex items-center justify-between">
-                        <h4 class="font-bold text-sm">
+                      <div class="flex items-center justify-between gap-1">
+                        <h4 class="font-bold text-sm shrink-0">
                           Section {{ $index + 1 }}
-                          @if (this.sectionIds[$index] !== null) {
-                            <span class="ml-1 text-xs font-normal opacity-50">#{{ this.sectionIds[$index] }}</span>
-                          } @else {
+                          @if (this.sectionIds[$index] == null) {
                             <span class="ml-1 text-xs font-normal text-green-400">New</span>
-                          }
+                          } 
                         </h4>
+                        <div class="flex items-center gap-1 ml-auto">
+                          <button
+                            type="button"
+                            [disabled]="$index === 0"
+                            (click)="moveSectionUp($index)"
+                            class="px-1.5 py-0.5 text-xs bg-(--background-400) hover:bg-(--background-300) disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors"
+                            title="Move up"
+                          >↑</button>
+                          <button
+                            type="button"
+                            [disabled]="$index === sectionsFormArray.length - 1"
+                            (click)="moveSectionDown($index)"
+                            class="px-1.5 py-0.5 text-xs bg-(--background-400) hover:bg-(--background-300) disabled:opacity-30 disabled:cursor-not-allowed rounded transition-colors"
+                            title="Move down"
+                          >↓</button>
+                          <button
+                            type="button"
+                            (click)="removeSection($index)"
+                            class="px-1.5 py-0.5 text-xs bg-red-500 hover:bg-red-600 text-white rounded transition-colors"
+                            title="Delete section"
+                          >✕</button>
+                        </div>
                       </div>
 
                       <!-- Section thumbnail -->

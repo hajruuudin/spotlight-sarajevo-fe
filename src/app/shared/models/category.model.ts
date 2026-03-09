@@ -23,10 +23,10 @@ export class EventCategoryModel{
 export class GuideCategoryModel {
     constructor(
         public id: number,
-        public guideCategoryNameBs: string,
-        public guideCategoryNameEn: string,
-        public guideCategoryDescriptionBs: string,
-        public guideCategoryDescriptionEn: string,
+        public categoryNameBs: string,
+        public categoryNameEn: string,
+        public categoryDescriptionBs: string,
+        public categoryDescriptionEn: string,
     ){}
 }
 

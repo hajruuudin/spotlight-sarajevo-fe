@@ -16,6 +16,7 @@ import { EventOverviewTable } from "../../../components/admin-overview-base-tabl
 import { GuideOverviewTable } from "../../../components/admin-overview-base-table/admin-overview-entity-tables/guide-overview-table/guide-overview-table";
 import { SortOptions } from '../../../shared/constants/SortOptions';
 import { PageResponseModel } from '../../../shared/models/shared.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-guide-overview',
@@ -64,9 +65,31 @@ export class AdminGuideOverview {
     this.loadGuides();
   }
 
-  handleOverviewSelect(eventId: number): void {}
+  handleOverviewSelect(guideId: number): void {
+    let selectedSlug : string | null = null
 
-  handleSaveChanges(finalPayload: any): void {}
+    for(let guide of this.tableShorthandData){
+      if(guide.id == guideId) selectedSlug = guide.slug
+    }
+
+    if(selectedSlug == null){
+      return
+    } else {
+      this.guideService.findGuideOverview(selectedSlug).subscribe({
+        next: (response : TouristGuideOverviewModel) => {
+          this.tableSelectedItem = response
+          this.cdr.detectChanges()
+        },
+        error: (error : HttpErrorResponse) => {
+          this.toastr.error("Guide could not be loaded")
+        }
+      })
+    }
+  }
+
+  handleSaveChanges(finalPayload: any): void {
+    console.log(finalPayload)
+  }
 
   async handleDeleteItem(spotId: number): Promise<void> {
     const result = await this.modal.openAsync<{ confirmed: boolean }>(DeleteModal, {
@@ -88,7 +111,6 @@ export class AdminGuideOverview {
     this.loadGuides();
   }
 
-  // Will be fixed. Pagination will be added to the backend
   private loadGuides(): void {
     this.guideService.findGuidesPaginated(this.currentPage, this.pageSize, this.tableSearchForm.get('searchTerm')?.value, SortOptions.ALPHABETICAL).subscribe({
       next: (response: PageResponseModel<TouristGuideShorthandModel>) => {

@@ -9,6 +9,7 @@ import { AddIcon } from '../../resources/icons/add-icon/add-icon';
 import { SpotsIcon } from '../../resources/icons/spots-icon/spots-icon';
 import { EventsIconComponent } from '../../resources/icons/events-icon/events-icon';
 import { ButtonPrimary } from '../button-primary/button-primary';
+import { GuidesIcon } from "../../resources/icons/guides-icon/guides-icon";
 
 @Component({
   selector: 'app-admin-navbar',
@@ -20,7 +21,8 @@ import { ButtonPrimary } from '../button-primary/button-primary';
     AddIcon,
     SpotsIcon,
     ButtonPrimary,
-    EventsIconComponent
+    EventsIconComponent,
+    GuidesIcon
 ],
   templateUrl: './admin-navbar.html',
   styleUrl: './admin-navbar.css',

@@ -3,8 +3,10 @@ import {
   TouristGuideOverviewModel,
   TouristGuideShorthandModel,
   TouristGuideSectionUpdateModel,
+  TouristGuideSectionCreateModel,
   TouristGuideUpdateModel,
 } from '../../../../shared/models/tourist.guide.model';
+import { MediaCreateModel } from '../../../../shared/models/shared.model';
 import { AdminOverviewBaseTable } from '../../admin-overview-table';
 import { ButtonPrimary } from '../../../button-primary/button-primary';
 import { ButtonSecondary } from '../../../button-secondary/button-secondary';
@@ -13,7 +15,7 @@ import { TextInput } from '../../../text-input/text-input';
 import { TextArea } from '../../../text-area/text-area';
 import { SelectGroup } from '../../../select-group/select-group';
 import { GuideType } from '../../../../shared/constants/ObjectTypes';
-import { forkJoin, Observable, of } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import { ImageBBResponse } from '../../../../services/image-upload.service';
 import { GuideCategoryModel } from '../../../../shared/models/category.model';
 
@@ -53,6 +55,7 @@ export class GuideOverviewTable extends AdminOverviewBaseTable implements OnChan
   protected sectionExistingThumbnailUrls: string[] = [];
   protected sectionNewThumbnailFiles: (File | null)[] = [];
   protected sectionNewThumbnailPreviews: (string | null)[] = [];
+  protected deletedSectionIds: number[] = [];
 
   readonly MAX_SECTIONS = 6;
 
@@ -79,9 +82,10 @@ export class GuideOverviewTable extends AdminOverviewBaseTable implements OnChan
     this.categoryService.getAllGuideCategories().subscribe({
       next: (categories: GuideCategoryModel[]) => {
         this.categoryOptions = categories.map((c) => ({
-          label: c.guideCategoryNameEn,
+          label: c.categoryNameEn,
           value: c.id,
         }));
+        console.log(this.categoryOptions)
       },
     });
   }
@@ -128,6 +132,7 @@ export class GuideOverviewTable extends AdminOverviewBaseTable implements OnChan
 
       this.newThumbnailFile = null;
       this.newThumbnailPreview = null;
+      this.deletedSectionIds = [];
     }
   }
 
@@ -157,42 +162,123 @@ export class GuideOverviewTable extends AdminOverviewBaseTable implements OnChan
     this.sectionNewThumbnailPreviews.push(null);
   }
 
+  protected removeSection(index: number): void {
+    const id = this.sectionIds[index];
+    if (id !== null) {
+      this.deletedSectionIds.push(id);
+    }
+    this.sectionsFormArray.removeAt(index);
+    this.sectionIds.splice(index, 1);
+    this.sectionExistingThumbnailUrls.splice(index, 1);
+    this.sectionNewThumbnailFiles.splice(index, 1);
+    this.sectionNewThumbnailPreviews.splice(index, 1);
+  }
+
+  protected moveSectionUp(index: number): void {
+    if (index === 0) return;
+    this.swapSections(index, index - 1);
+  }
+
+  protected moveSectionDown(index: number): void {
+    if (index === this.sectionsFormArray.length - 1) return;
+    this.swapSections(index, index + 1);
+  }
+
+  private swapSections(i: number, j: number): void {
+    const controlI = this.sectionsFormArray.at(i);
+    const controlJ = this.sectionsFormArray.at(j);
+    this.sectionsFormArray.setControl(i, controlJ);
+    this.sectionsFormArray.setControl(j, controlI);
+    [this.sectionIds[i], this.sectionIds[j]] = [this.sectionIds[j], this.sectionIds[i]];
+    [this.sectionExistingThumbnailUrls[i], this.sectionExistingThumbnailUrls[j]] = [this.sectionExistingThumbnailUrls[j], this.sectionExistingThumbnailUrls[i]];
+    [this.sectionNewThumbnailFiles[i], this.sectionNewThumbnailFiles[j]] = [this.sectionNewThumbnailFiles[j], this.sectionNewThumbnailFiles[i]];
+    [this.sectionNewThumbnailPreviews[i], this.sectionNewThumbnailPreviews[j]] = [this.sectionNewThumbnailPreviews[j], this.sectionNewThumbnailPreviews[i]];
+  }
+
   override onSaveChangeSelected(): void {
     if (!this.itemOverview) return;
 
     this.spinnerService.showNavigateSpinner();
 
-    const guideThumb$: Observable<ImageBBResponse | null> = this.newThumbnailFile
+    // Split sections into existing (to update) vs new (to add) by current form array position
+    const existingIndices: number[] = [];
+    const newIndices: number[] = [];
+    this.sectionControls.forEach((_, i) => {
+      if (this.sectionIds[i] !== null) {
+        existingIndices.push(i);
+      } else {
+        newIndices.push(i);
+      }
+    });
+
+    const guideThumb$ = this.newThumbnailFile
       ? this.imageUploadService.uploadImage(this.newThumbnailFile)
       : of(null);
 
-    const sectionUploadParts$: Observable<ImageBBResponse | null>[] =
-      this.sectionNewThumbnailFiles.map((file) =>
-        file ? this.imageUploadService.uploadImage(file) : of(null),
-      );
+    const updateThumbUploads$ = existingIndices.map((i) =>
+      this.sectionNewThumbnailFiles[i]
+        ? this.imageUploadService.uploadImage(this.sectionNewThumbnailFiles[i]!)
+        : of(null),
+    );
 
-    const sectionUploads$: Observable<(ImageBBResponse | null)[]> =
-      sectionUploadParts$.length > 0 ? forkJoin(sectionUploadParts$) : of([]);
+    const addThumbUploads$ = newIndices.map((i) =>
+      this.sectionNewThumbnailFiles[i]
+        ? this.imageUploadService.uploadImage(this.sectionNewThumbnailFiles[i]!)
+        : of(null),
+    );
 
-    forkJoin({ guide: guideThumb$, sections: sectionUploads$ }).subscribe({
-      next: (results: { guide: ImageBBResponse | null; sections: (ImageBBResponse | null)[] }) => {
-        const thumbnailUrl = results.guide
-          ? results.guide.data.url
-          : this.itemOverview!.thumbnailImage;
+    forkJoin({
+      guide: guideThumb$,
+      updateThumbs: updateThumbUploads$.length > 0 ? forkJoin(updateThumbUploads$) : of([]),
+      addThumbs: addThumbUploads$.length > 0 ? forkJoin(addThumbUploads$) : of([]),
+    }).subscribe({
+      next: (results) => {
+        const newThumbnailImage: MediaCreateModel | null = results.guide
+          ? new MediaCreateModel(
+              this.itemOverview!.id,
+              'TOURIST_GUIDE',
+              results.guide.data.url,
+              results.guide.data.delete_url,
+              true,
+            )
+          : null;
 
-        const sections: TouristGuideSectionUpdateModel[] = this.sectionControls.map((group, i) => {
-          const thumbUrl = results.sections[i]
-            ? results.sections[i]!.data.url
-            : this.sectionExistingThumbnailUrls[i] ?? '';
+        const toUpdateSections: TouristGuideSectionUpdateModel[] = existingIndices.map(
+          (formIdx, i) => {
+            const group = this.sectionControls[formIdx];
+            const uploadResult = (results.updateThumbs as (ImageBBResponse | null)[])[i];
+            const newThumb: MediaCreateModel | null = uploadResult
+              ? new MediaCreateModel(
+                  this.sectionIds[formIdx]!,
+                  'TOURIST_GUIDE_SECTION',
+                  uploadResult.data.url,
+                  uploadResult.data.delete_url,
+                  true,
+                )
+              : null;
+            return new TouristGuideSectionUpdateModel(
+              this.sectionIds[formIdx]!,
+              group.value.sectionTitleBs,
+              group.value.sectionTitleEn,
+              group.value.sectionBodyBs,
+              group.value.sectionBodyEn,
+              this.sectionExistingThumbnailUrls[formIdx] ?? '',
+              newThumb,
+              formIdx,
+            );
+          },
+        );
 
-          return new TouristGuideSectionUpdateModel(
-            this.sectionIds[i],
+        const toAddSections: TouristGuideSectionCreateModel[] = newIndices.map((formIdx, i) => {
+          const group = this.sectionControls[formIdx];
+          const uploadResult = (results.addThumbs as (ImageBBResponse | null)[])[i];
+          return new TouristGuideSectionCreateModel(
             group.value.sectionTitleBs,
             group.value.sectionTitleEn,
             group.value.sectionBodyBs,
             group.value.sectionBodyEn,
-            thumbUrl,
-            i,
+            uploadResult ? uploadResult.data.url : '',
+            formIdx,
           );
         });
 
@@ -206,8 +292,11 @@ export class GuideOverviewTable extends AdminOverviewBaseTable implements OnChan
           this.basicInformationForm.value.guideFullDescriptionBs,
           this.basicInformationForm.value.guideFullDescriptionEn,
           this.basicInformationForm.value.categoryId,
-          thumbnailUrl,
-          sections,
+          this.itemOverview!.thumbnailImage,
+          newThumbnailImage,
+          toUpdateSections,
+          toAddSections,
+          [...this.deletedSectionIds],
         );
 
         this.spinnerService.hideNavigateSpinner();
@@ -229,6 +318,7 @@ export class GuideOverviewTable extends AdminOverviewBaseTable implements OnChan
   /* ============================================================================================ */
   /* ============ UI INTERFACE FUNCTIONS AND HELPERS USED ONLY TO SHOWCASE THE DATA ============= */
   /* ============================================================================================ */
+
 
   protected onThumbnailSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
