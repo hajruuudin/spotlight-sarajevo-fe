@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { AdminOverviewBaseTable } from '../../admin-overview-table';
 import {
-  EventOrganiserModel,
   EventOrganiserReviewModel,
   EventOrganiserUpdateModel,
   EventOverviewModel,
@@ -19,7 +18,6 @@ import {
 } from '../../../../shared/models/event.model';
 import { ButtonPrimary } from '../../../button-primary/button-primary';
 import { ButtonSecondary } from '../../../button-secondary/button-secondary';
-import { TranslocoPipe } from '@ngneat/transloco';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TextInput } from '../../../text-input/text-input';
 import { TextArea } from '../../../text-area/text-area';

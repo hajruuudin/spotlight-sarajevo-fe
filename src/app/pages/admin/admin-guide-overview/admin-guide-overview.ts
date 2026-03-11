@@ -2,8 +2,10 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { PageHeader } from '../../../components/page-header/page-header';
 import { TranslocoPipe } from '@ngneat/transloco';
 import {
+  TouristGuideModel,
   TouristGuideOverviewModel,
   TouristGuideShorthandModel,
+  TouristGuideUpdateModel,
 } from '../../../shared/models/tourist.guide.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TouristGuideService } from '../../../services/tourist.guide.service';
@@ -12,7 +14,6 @@ import { SpinnerService } from '../../../core/services/spinner.service';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { ModalService } from '../../../core/services/modal.service';
 import { DeleteModal } from '../../../components/modals/delete-modal/delete-modal';
-import { EventOverviewTable } from "../../../components/admin-overview-base-table/admin-overview-entity-tables/event-overview-table/event-overview-table";
 import { GuideOverviewTable } from "../../../components/admin-overview-base-table/admin-overview-entity-tables/guide-overview-table/guide-overview-table";
 import { SortOptions } from '../../../shared/constants/SortOptions';
 import { PageResponseModel } from '../../../shared/models/shared.model';
@@ -87,8 +88,22 @@ export class AdminGuideOverview {
     }
   }
 
-  handleSaveChanges(finalPayload: any): void {
-    console.log(finalPayload)
+  handleSaveChanges(finalPayload: TouristGuideUpdateModel): void {
+    this.spinnerService.showNavigateSpinner()
+    if(finalPayload != null){
+      this.guideService.updateGuide(finalPayload).subscribe({
+        next: (response : TouristGuideModel) => {
+          this.spinnerService.hideNavigateSpinner()
+          this.toastr.success("Guide Updated wiht new Sections")
+          this.cdr.detectChanges()
+        },
+        error: (response: HttpErrorResponse) => {
+          this.spinnerService.hideNavigateSpinner()
+          this.toastr.error("Error while updating guide. Please try again later or view logs for more info!")
+          this.cdr.detectChanges()
+        }
+      })
+    }
   }
 
   async handleDeleteItem(spotId: number): Promise<void> {

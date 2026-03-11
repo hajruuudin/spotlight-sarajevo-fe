@@ -1,6 +1,22 @@
 import { GuideType } from "../constants/ObjectTypes";
 import { MediaCreateModel } from './shared.model';
 
+export class TouristGuideModel {
+  constructor(
+    public id: number,
+    public slug: string,
+    public guideTitleBs: string,
+    public guideTitleEn: string,
+    public guideSmallDescriptionBs: string,
+    public guideSmallDescriptionEn: string,
+    public guideFullDescriptionBs: string,
+    public guideFullDescriptionEn: string,
+    public guideType: GuideType,
+    public contactInfo: { [key: string]: string } | null,
+    public categoryId: number,
+  ) {}
+}
+
 export class TouristGuideShorthandModel {
   constructor(
     public id: number,

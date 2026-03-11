@@ -50,7 +50,6 @@ export class GuideOverviewTable extends AdminOverviewBaseTable implements OnChan
   protected newThumbnailFile: File | null = null;
   protected newThumbnailPreview: string | null = null;
 
-  // Per-section parallel arrays (indexed by position in sectionsFormArray)
   protected sectionIds: (number | null)[] = [];
   protected sectionExistingThumbnailUrls: string[] = [];
   protected sectionNewThumbnailFiles: (File | null)[] = [];
@@ -108,7 +107,6 @@ export class GuideOverviewTable extends AdminOverviewBaseTable implements OnChan
         { emitEvent: false },
       );
 
-      // Rebuild sections FormArray
       this.sectionsFormArray.clear();
       this.sectionIds = [];
       this.sectionExistingThumbnailUrls = [];
@@ -135,8 +133,6 @@ export class GuideOverviewTable extends AdminOverviewBaseTable implements OnChan
       this.deletedSectionIds = [];
     }
   }
-
-  /* ============================ Getters ============================ */
 
   get sectionControls(): FormGroup[] {
     return this.sectionsFormArray.controls as FormGroup[];
@@ -200,7 +196,6 @@ export class GuideOverviewTable extends AdminOverviewBaseTable implements OnChan
 
     this.spinnerService.showNavigateSpinner();
 
-    // Split sections into existing (to update) vs new (to add) by current form array position
     const existingIndices: number[] = [];
     const newIndices: number[] = [];
     this.sectionControls.forEach((_, i) => {
