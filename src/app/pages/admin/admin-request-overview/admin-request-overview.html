@@ -4,6 +4,20 @@
     [subtitle]="'admin.requestsOverview.subtitle' | transloco"
     ></app-page-header>
 
+    <!-- Filter Form Section -->
+    <div class="w-full mb-6 p-4 rounded-2xl dark:bg-(--background-200) bg-(--background-800)">
+      <form [formGroup]="this.filterForm" class="flex flex-col gap-3">
+        <div class="flex flex-col gap-2">
+          <label class="font-semibold text-sm">Filter by Status</label>
+          <app-select-group
+            [options]="this.filterOptions"
+            [placeholder]="'Select a filter...'"
+            formControlName="filter"
+          ></app-select-group>
+        </div>
+      </form>
+    </div>
+
     <app-community-overview-table
     [columnDefinitions]="this.tableDefinitions"
     [tableData]="this.tableShorthandData"
@@ -11,7 +25,6 @@
     [currentPage]="this.currentPage"
     [totalItems]="this.totalItems"
     [totalPages]="this.totalPages"
-    (onFilterChange)="this.handleFilterChange($event)"
     (onOverviewSelect)="this.handleOverviewSelect($event)"
     (onRequestApproval)="this.handleRequestApproval($event)"
     (onRequestRejection)="this.handleRequestDelete($event)"

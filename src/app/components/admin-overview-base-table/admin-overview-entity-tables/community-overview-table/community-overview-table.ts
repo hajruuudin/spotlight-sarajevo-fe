@@ -1,9 +1,9 @@
 import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AdminOverviewBaseTable } from '../../admin-overview-table';
 import { CommunityRequestModel, CommunityRequestOverviewModel, CommunityRequestStatusUpdate } from '../../../../shared/models/community.request.model';
-import { FilterOptions } from '../../../../shared/constants/FilterOptions';
 import { FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ModalService } from '../../../../core/services/modal.service';
+import { ButtonPrimary } from '../../../button-primary/button-primary';
 import { ButtonSecondary } from '../../../button-secondary/button-secondary';
 import { DatePipe, CommonModule, JsonPipe } from '@angular/common';
 
@@ -20,6 +20,7 @@ import { DatePipe, CommonModule, JsonPipe } from '@angular/common';
 @Component({
   selector: 'app-community-overview-table',
   imports: [
+    ButtonPrimary,
     ButtonSecondary,
     ReactiveFormsModule,
     DatePipe,
@@ -40,11 +41,8 @@ export class CommunityOverviewTable extends AdminOverviewBaseTable implements On
   @Output() onRequestRejection: EventEmitter<number> = new EventEmitter<number>();
   @Output() onRequestIntegration: EventEmitter<number> = new EventEmitter<number>();
   @Output() onRequestDelete: EventEmitter<number> = new EventEmitter<number>();
-  @Output() onFilterChange: EventEmitter<FilterOptions> = new EventEmitter<FilterOptions>();
 
   protected updateRequestForm: FormGroup;
-  protected filterOptions: FilterOptions[] = [FilterOptions.ALL, FilterOptions.APPROVED, FilterOptions.PENDING, FilterOptions.REJECTED]
-  protected currentFilterOption: FilterOptions = FilterOptions.ALL;
 
   private readonly modal = inject(ModalService);
   

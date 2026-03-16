@@ -13,9 +13,9 @@
       class="w-full flex flex-row justify-between items-center gap-4 p-2 border-(--primary-700)"
     >
       <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[0] }}</div>
-      <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[1] }}</div>
+      <div class="text-sm font-bold w-2/12">{{ this.columnDefinitions[1] }}</div>
       <div class="text-sm font-bold w-2/12">{{ this.columnDefinitions[2] }}</div>
-      <div class="text-sm font-bold w-3/12">{{ this.columnDefinitions[3] }}</div>
+      <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[3] }}</div>
       <div class="text-sm font-bold w-2/12">{{ this.columnDefinitions[4] }}</div>
       <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[5] }}</div>
       <div class="text-sm font-bold w-1/12">{{ this.columnDefinitions[6] }}</div>
@@ -41,14 +41,14 @@
             [class.dark:bg-(--accent-300)]="this.selectedItemId === item.id"
           >
             <span class="w-1/12 flex flex-col justify-center items-center">{{ item.id }}</span>
-            <span class="w-1/12 flex flex-col justify-center items-center truncate">{{ item.userId }}</span>
-            <span class="w-2/12 flex flex-col justify-center items-center truncate">{{ item.username }}</span>
-            <span class="w-3/12 flex flex-col justify-center items-center truncate">{{ item.requestHeader }}</span>
-            <span class="w-2/12 flex flex-col justify-center items-center truncate">{{ item.requestType }}</span>
-            <span class="w-1/12 flex flex-col justify-center items-center truncate">{{ item.objectType }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center truncate">{{ item.username }} | {{ item.userId }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center truncate">{{ item.requestHeader }}</span>
+            <span class="w-1/12 flex flex-col justify-center items-center truncate">{{ item.requestType }}</span>
+            <span class="w-2/12 flex flex-col justify-center items-center truncate">{{ item.objectType }}</span>
             <span class="w-1/12 flex flex-col justify-center items-center">
               {{ item.createdAt | date:'short' }}
             </span>
+            <span class="w-1/12 flex flex-col justify-center items-center truncate">{{ item.status }}</span>
             <span class="w-2/12 flex flex-col justify-center items-center">
               <app-button-secondary
                 [buttonContent]="this.selectedItemId === item.id ? 'Hide' : 'View More'"
@@ -162,6 +162,27 @@
           </div>
         </div>
       }
+    </div>
+  </div>
+
+  <div
+    id="tableFooter"
+    class="w-full dark:bg-(--primary-200) bg-(--primary-200) text-white rounded-b-2xl flex p-2 flex-row justify-between items-center"
+  >
+    <div class="text-sm">Page {{ this.currentPage + 1 }} of {{ this.totalPages }}</div>
+    <div class="flex flex-row gap-4">
+      <app-button-primary
+        [buttonContent]="'Previous Page'"
+        [buttonType]="'DEFAULT'"
+        (click)="previousPage()"
+        [classAddons]="'p-2'"
+      ></app-button-primary>
+      <app-button-primary
+        [buttonContent]="'Next Page'"
+        [buttonType]="'DEFAULT'"
+        [classAddons]="'p-2'"
+        (click)="nextPage()"
+      ></app-button-primary>
     </div>
   </div>
 </section>
