@@ -12,10 +12,11 @@ import { CommunityRequestService } from '../../../services/community.request.ser
 import { HotToastService } from '@ngxpert/hot-toast';
 import { FormBuilder } from '@angular/forms';
 import { ModalService } from '../../../core/services/modal.service';
+import { CommunityOverviewTable } from "../../../components/admin-overview-base-table/admin-overview-entity-tables/community-overview-table/community-overview-table";
 
 @Component({
   selector: 'app-admin-request-overview',
-  imports: [PageHeader, TranslocoPipe],
+  imports: [PageHeader, TranslocoPipe, CommunityOverviewTable],
   templateUrl: './admin-request-overview.html',
   styleUrl: './admin-request-overview.css'
 })
@@ -56,9 +57,9 @@ export class AdminRequestOverview implements OnInit{
     
   }
 
-  handleOverviewSeclect(requestId: number): void{}
+  handleOverviewSelect(requestId: number): void{}
 
-  handleFilterChange(filter: string){}
+  handleFilterChange(filter: FilterOptions){}
 
   handleRequestApproval(requestId: number){}
 
@@ -79,6 +80,8 @@ export class AdminRequestOverview implements OnInit{
   }
 
   /* Loads all the requests initially upon page load, and upon refreshing the data */
-  private loadCommunityRequests(){}
+  private loadCommunityRequests(){
+    this.requestService.createCommunityRequest
+  }
 
 }

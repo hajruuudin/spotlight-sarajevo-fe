@@ -3,4 +3,21 @@
     [title]="'admin.requestsOverview.title' | transloco"
     [subtitle]="'admin.requestsOverview.subtitle' | transloco"
     ></app-page-header>
+
+    <app-community-overview-table
+    [columnDefinitions]="this.tableDefinitions"
+    [tableData]="this.tableShorthandData"
+    [itemOverview]="this.tableSelectedItem"
+    [currentPage]="this.currentPage"
+    [totalItems]="this.totalItems"
+    [totalPages]="this.totalPages"
+    (onFilterChange)="this.handleFilterChange($event)"
+    (onOverviewSelect)="this.handleOverviewSelect($event)"
+    (onRequestApproval)="this.handleRequestApproval($event)"
+    (onRequestRejection)="this.handleRequestDelete($event)"
+    (onRequestDelete)="this.handleRequestDelete($event)"
+    (onRequestIntegration)="this.handleRequestIntegration($event)"
+    (onNextPage)="this.handleNextPage($event)"
+    (onPreviousPage)="this.handlePreviousPage($event)"
+    ></app-community-overview-table>
 </section>
