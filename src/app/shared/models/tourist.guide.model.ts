@@ -1,4 +1,21 @@
 import { GuideType } from "../constants/ObjectTypes";
+import { MediaCreateModel } from './shared.model';
+
+export class TouristGuideModel {
+  constructor(
+    public id: number,
+    public slug: string,
+    public guideTitleBs: string,
+    public guideTitleEn: string,
+    public guideSmallDescriptionBs: string,
+    public guideSmallDescriptionEn: string,
+    public guideFullDescriptionBs: string,
+    public guideFullDescriptionEn: string,
+    public guideType: GuideType,
+    public contactInfo: { [key: string]: string } | null,
+    public categoryId: number,
+  ) {}
+}
 
 export class TouristGuideShorthandModel {
   constructor(
@@ -41,7 +58,40 @@ export class TouristGuideOverviewModel {
     public sections: TouristGuideSectionModel[],
     public guideType: GuideType,
     public contactInfo: { [key: string]: string },
-    public thumbnailImage: string
+    public thumbnailImage: string,
+    public categoryId: number
+  ) {}
+}
+
+export class TouristGuideSectionUpdateModel {
+  constructor(
+    public id: number,
+    public sectionTitleBs: string,
+    public sectionTitleEn: string,
+    public sectionBodyBs: string,
+    public sectionBodyEn: string,
+    public thumbnailUrl: string,
+    public newThumbnailImage: MediaCreateModel | null,
+    public orderIdx: number
+  ) {}
+}
+
+export class TouristGuideUpdateModel {
+  constructor(
+    public id: number,
+    public slug: string,
+    public guideTitleBs: string,
+    public guideTitleEn: string,
+    public guideSmallDescriptionBs: string,
+    public guideSmallDescriptionEn: string,
+    public guideFullDescriptionBs: string,
+    public guideFullDescriptionEn: string,
+    public categoryId: number,
+    public thumbnailUrl: string,
+    public newThumbnailImage: MediaCreateModel | null,
+    public toUpdateSections: TouristGuideSectionUpdateModel[],
+    public toAddSections: TouristGuideSectionCreateModel[],
+    public toDeleteSections: number[]
   ) {}
 }
 

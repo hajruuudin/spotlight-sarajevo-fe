@@ -22,6 +22,7 @@ export class CommunityRequestModel {
     constructor(
         public id: number,
         public userId: number,
+        public username: string,
         public requestType: RequestType,
         public objectType: ObjectType,
         public requestHeader: string,
@@ -29,6 +30,21 @@ export class CommunityRequestModel {
         public status: RequestStatus,
         public createdAt: Date
     ) {}
+}
+
+export class CommunityRequestOverviewModel {
+    constructor(
+        public id: number,
+        public userId: number,
+        public username: string,
+        public requestType: RequestType,
+        public objectType: ObjectType,
+        public requestHeader: string,
+        public requestDescription: string,
+        public status: RequestStatus,
+        public pendingInfo: any,
+        public createdAt: Date
+    ){}
 }
 
 export class CommunityRequestStatusUpdate {

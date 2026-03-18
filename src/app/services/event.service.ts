@@ -2,7 +2,15 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { PageResponseModel } from '../shared/models/shared.model';
-import { EventDateCheckModel, EventOverviewModel, EventShorthandModel } from '../shared/models/event.model';
+import {
+  EventDateCheckModel,
+  EventOrganiserModel,
+  EventOrganiserUpdateModel,
+  EventOverviewModel,
+  EventShorthandModel,
+  EventUpdateModel,
+} from '../shared/models/event.model';
+import { EventOrganiserModal } from '../components/modals/event-organiser-modal/event-organiser-modal';
 
 /**
  * EventService handles all available backend endpoints related to events.
@@ -67,7 +75,7 @@ export class EventService {
       },
     );
   }
-  
+
   /**
    * Method to check if the logged-in user has marked a specific event as attended.
    *
@@ -75,12 +83,9 @@ export class EventService {
    * @returns An observable containing a boolean indicating attendance status.
    */
   checkIfEventIsAttended(eventId: number) {
-    return this.http.get<Boolean>(
-      this.apiUrl + `/event/attended-event/check?eventId=${eventId}`,
-      {
-        withCredentials: true,
-      }
-    );
+    return this.http.get<Boolean>(this.apiUrl + `/event/attended-event/check?eventId=${eventId}`, {
+      withCredentials: true,
+    });
   }
 
   /**
@@ -93,11 +98,11 @@ export class EventService {
     return this.http.post(
       this.apiUrl + `/user/attended-event/add`,
       {
-        eventId: eventId
+        eventId: eventId,
       },
       {
         withCredentials: true,
-      }
+      },
     );
   }
 
@@ -108,12 +113,9 @@ export class EventService {
    * @returns An observable representing the completion of the operation.
    */
   removeEventFromAttended(eventId: number) {
-    return this.http.delete(
-      this.apiUrl + `/user/attended-event/remove?eventId=${eventId}`,
-      {
-        withCredentials: true,
-      }
-    );
+    return this.http.delete(this.apiUrl + `/user/attended-event/remove?eventId=${eventId}`, {
+      withCredentials: true,
+    });
   }
 
   /**
@@ -129,7 +131,7 @@ export class EventService {
       this.apiUrl + `/event/event-dates-check?year=${year}&month=${month}`,
       {
         withCredentials: true,
-      }
+      },
     );
   }
 
@@ -140,11 +142,47 @@ export class EventService {
    * @returns An array of EventShorthandModel objects for that date
    */
   findEventsOnDay(date: string) {
-    return this.http.get<EventShorthandModel[]>(
-      this.apiUrl + `/event/events-on-day/${date}`,
-      {
-        withCredentials: true,
-      }
-    );
+    return this.http.get<EventShorthandModel[]>(this.apiUrl + `/event/events-on-day/${date}`, {
+      withCredentials: true,
+    });
+  }
+
+  /**
+   * Method to update an existing event with new information.
+   * This is an admin-only operation.
+   *
+   * @param eventUpdateModel The EventUpdateModel containing all updated event information
+   * @returns An observable representing the result of the update operation
+   */
+  updateEvent(eventUpdateModel: EventUpdateModel) {
+    return this.http.put(this.apiUrl + `/event`, eventUpdateModel, {
+      withCredentials: true,
+    });
+  }
+
+  /**
+   * Method to update existing event-organisers with new information.
+   * This is an admin-only operation.
+   * 
+   * @param eventOrganiserUpdateModel The EventOrganiserUpdateModel includes the data being updated
+   * @returns The updated event organiser model
+   */
+  updateEventOrganiser(eventOrganiserUpdateModel: EventOrganiserUpdateModel) {
+    return this.http.put<EventOrganiserModel>(this.apiUrl + `/event/organiser`, eventOrganiserUpdateModel, {
+      withCredentials: true,
+    });
+  }
+
+  /**
+   * Method to delete an event from the database.
+   * This is an admin-only operation.
+   *
+   * @param eventId The ID of the event to be deleted
+   * @returns An observable representing the result of the delete operation
+   */
+  deleteEvent(eventId: number) {
+    return this.http.delete(this.apiUrl + `/event/${eventId}`, {
+      withCredentials: true,
+    });
   }
 }

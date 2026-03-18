@@ -20,12 +20,22 @@ export class EventCategoryModel{
     ){}
 }
 
+export class GuideCategoryModel {
+    constructor(
+        public id: number,
+        public categoryNameBs: string,
+        public categoryNameEn: string,
+        public categoryDescriptionBs: string,
+        public categoryDescriptionEn: string,
+    ){}
+}
+
 export class TagModel{
     constructor(
         public id: number,
-        public tagNameEn: string,
         public tagNameBs: string,
-        public tagDescriptionEn: string,
-        public tagDescriptionBs: string
+        public tagNameEn: string,
+        public tagDescriptionBs: string,
+        public tagDescriptionEn: string
     ){}
 }

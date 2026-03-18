@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
-import { CommunityRequestCreateModel, CommunityRequestModel } from "../shared/models/community.request.model";
+import { CommunityRequestCreateModel, CommunityRequestModel, CommunityRequestOverviewModel } from "../shared/models/community.request.model";
 import { HttpClient } from "@angular/common/http";
 
 @Injectable({
@@ -34,5 +34,32 @@ export class CommunityRequestService {
     return this.http.post<CommunityRequestModel>(`${this.apiUrl}/create-request`, request, {
         withCredentials: true
     });
+  }
+  
+  /**
+   * Fetch all the community requests made by all users. This endpoint is intended for admin use only.
+   * In case the request is successfully processed, the backend will return an array of CommunityRequestModel objects.
+   * In case the request fails, an error will be thrown.
+   * 
+   * @returns An observable containing an array of CommunityRequestModel objects
+   */
+  getCommunityRequests(filter: string){
+    return this.http.get<CommunityRequestModel[]>(`${this.apiUrl}/admin/get-all-requests?filterOption=${filter}`, {
+      withCredentials: true
+    })
+  }
+  
+  /**
+   * Fetch the full overview information for a specific community request. This endpoint is intended for admin use only.
+   * In case the request is successfully processed, the backend will return a CommunityRequestOverviewModel object containing the full information about the request.
+   * In case the request fails, an error will be thrown.
+   * 
+   * @param requestId The ID of the community request for which the overview information is requested
+   * @returns An observable containing a CommunityRequestOverviewModel object with the full information about the request
+   */
+  getRequestOverview(requestId: number){
+    return this.http.get<CommunityRequestOverviewModel>(`${this.apiUrl}/admin/get-request/${requestId}`, {
+      withCredentials: true
+    })
   }
 }

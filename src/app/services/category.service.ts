@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { EventCategoryModel, SpotCategoryModel } from '../shared/models/category.model';
+import { EventCategoryModel, GuideCategoryModel, SpotCategoryModel, TagModel } from '../shared/models/category.model';
 
 /**
  * Service for interacting with the Category API.
@@ -38,4 +38,21 @@ export class CategoryService {
       withCredentials: true
     })
   }
+
+  /**
+   * Method to retrieve all tags from the backend.
+   * @returns An array of TagModel objects representing all available tags
+   */
+  getAllTags(){
+    return this.http.get<TagModel[]>(this.API_URL + '/category/allTags', {
+      withCredentials: true
+    })
+  }
+
+  getAllGuideCategories(){
+    return this.http.get<GuideCategoryModel[]>(this.API_URL + '/category/allGuide', {
+      withCredentials: true
+    })
+  }
+
 }
