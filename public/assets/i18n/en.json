@@ -100,6 +100,14 @@
       "delete" : "Delete Spot",
       "deleteConfirm" : "Are you sure you want to delete this spot? This action cannot be undone."
     },
+    "addSpot" : {
+      "title" : "Create New Spot",
+      "subtitle" : "Add a new spot to the system"
+    },
+    "addEvent" : {
+      "title" : "Create New Event",
+      "subtitle" : "Add a new event to the system"
+    },
     "eventOverview" : {
       "title" : "Overview of Events",
       "subtitle" : "Events and all of their information",

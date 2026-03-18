@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { PageResponseModel } from '../shared/models/shared.model';
 import {
+  EventCreateModel,
   EventDateCheckModel,
   EventOrganiserModel,
   EventOrganiserUpdateModel,
@@ -143,6 +144,19 @@ export class EventService {
    */
   findEventsOnDay(date: string) {
     return this.http.get<EventShorthandModel[]>(this.apiUrl + `/event/events-on-day/${date}`, {
+      withCredentials: true,
+    });
+  }
+
+  /**
+   * Method to create a new event.
+   * This is an admin-only operation.
+   *
+   * @param eventCreateModel The EventCreateModel containing all event information for creation
+   * @returns An observable representing the result of the create operation
+   */
+  createEvent(eventCreateModel: EventCreateModel) {
+    return this.http.post(this.apiUrl + `/event`, eventCreateModel, {
       withCredentials: true,
     });
   }

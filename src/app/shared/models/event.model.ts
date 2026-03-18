@@ -79,6 +79,34 @@ export class EventUpdateModel {
   ) {}
 }
 
+export class EventCreateModel {
+  constructor(
+    public slug: string,
+    public officialNameBs: string,
+    public officialNameEn: string,
+    public smallDescriptionBs: string,
+    public smallDescriptionEn: string,
+    public fullDescriptionBs: string,
+    public fullDescriptionEn: string,
+    public eventLat: number,
+    public eventLon: number,
+    public location: string,
+    public locationLinkSlug: string,
+    public categoryId: number,
+    public eventTagIds: number[],
+    public startDate: string,
+    public endDate: string,
+    public entryPrice: number,
+    public cancelRefund: boolean,
+    public eventLanguage: string,
+    public ageLimit: number,
+    public reservation: boolean,
+    public organiserId: number,
+    public newThumbnailImage: MediaCreateModel | null,
+    public toAddImages: MediaCreateModel[],
+  ) {}
+}
+
 export class EventOrganiserModel {
   constructor(
     public id: number,
