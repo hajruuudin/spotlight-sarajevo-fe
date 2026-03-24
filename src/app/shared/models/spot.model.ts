@@ -157,3 +157,23 @@ export class SpotUpdateModel {
         public toRemoveImages: number[]
     ) {}
 }
+
+export class SpotCreateModel {
+    constructor(
+        public slug: string,
+        public officialNameBs: string,
+        public officialNameEn: string,
+        public smallDescriptionBs: string,
+        public smallDescriptionEn: string,
+        public fullDescriptionBs: string,
+        public fullDescriptionEn: string,
+        public latitude: number,
+        public longitude: number,
+        public address: string,
+        public categoryId: number,
+        public tagIds: number[],
+        public workHoursModel: SpotWorkHoursModel[],
+        public newThumbnailImage: MediaCreateModel | null,
+        public toAddImages: MediaCreateModel[]
+    ) {}
+}

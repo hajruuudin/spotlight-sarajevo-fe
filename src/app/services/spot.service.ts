@@ -6,6 +6,7 @@ import {
   SpotOverviewModel,
   SpotShorthandModel,
   SpotUpdateModel,
+  SpotCreateModel,
 } from '../shared/models/spot.model';
 import { PageResponseModel } from '../shared/models/shared.model';
 
@@ -168,6 +169,23 @@ export class SpotService {
     return this.http.put(
       this.apiUrl + `/spot`,
       spotUpdateModel,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to create a new spot with provided information.
+   * This is an admin-only operation.
+   * 
+   * @param spotCreateModel The SpotCreateModel containing all spot information for the new spot
+   * @returns An observable representing the result of the create operation
+   */
+  createSpot(spotCreateModel: SpotCreateModel) {
+    return this.http.post(
+      this.apiUrl + `/spot`,
+      spotCreateModel,
       {
         withCredentials: true,
       }

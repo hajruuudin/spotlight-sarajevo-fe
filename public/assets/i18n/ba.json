@@ -100,6 +100,14 @@
       "delete" : "Obriši Lokal",
       "deleteConfirm" : "Jeste li sigurni da želite obrisati ovaj lokal? Ova akcija se ne može poništiti."
     },
+    "addSpot" : {
+      "title" : "Kreiraj Novi Lokal",
+      "subtitle" : "Dodaj novi lokal u sistem"
+    },
+    "addEvent" : {
+      "title" : "Kreiraj Novi Događaj",
+      "subtitle" : "Dodaj novi događaj u sistem"
+    },
     "eventOverview" : {
       "title" : "Pregled Događaja",
       "subtitle" : "Događaji i sve njihove informacije",

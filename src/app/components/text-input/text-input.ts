@@ -25,6 +25,7 @@ export class TextInput implements ControlValueAccessor {
   @Input() public value: String = 'defautValue';
   @Input() public type: String = 'text';
   @Input() public classAddons: String = '';
+  @Input() public step: String | number = '';
 
   onChange = (value: string) => {};
   onTouched = () => {};

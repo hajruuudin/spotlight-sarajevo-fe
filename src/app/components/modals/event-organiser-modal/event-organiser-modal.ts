@@ -1,7 +1,11 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HotToastService } from '@ngxpert/hot-toast';
-import { EventOrganiserModel } from '../../../shared/models/event.model';
+import {
+  EventOrganiserCreateModel,
+  EventOrganiserModel,
+  EventOrganiserUpdateModel,
+} from '../../../shared/models/event.model';
 import { ButtonPrimary } from '../../button-primary/button-primary';
 import { ButtonSecondary } from '../../button-secondary/button-secondary';
 import { TextInput } from '../../text-input/text-input';
@@ -11,6 +15,7 @@ import { MediaCreateModel } from '../../../shared/models/shared.model';
 import { DecimalPipe } from '@angular/common';
 import { CategoryService } from '../../../services/category.service';
 import { EventCategoryModel } from '../../../shared/models/category.model';
+import { EventService } from '../../../services/event.service';
 
 @Component({
   selector: 'app-event-organiser-modal',
@@ -36,6 +41,7 @@ export class EventOrganiserModal implements OnInit {
     private toastr: HotToastService,
     private imageUploadService: ImageUploadService,
     private categoryService: CategoryService,
+    private eventService: EventService,
     private cdr: ChangeDetectorRef,
   ) {}
 
@@ -89,6 +95,86 @@ export class EventOrganiserModal implements OnInit {
     this.isSaving = true;
     const formVal = this.form.getRawValue();
 
+    // Check if this is a CREATE operation (organiserModel is null)
+    if (this.organiserModel === null) {
+      this.handleCreateOrganiser(formVal);
+    } else {
+      // This is an EDIT operation (organiserModel is provided)
+      this.handleEditOrganiser(formVal);
+    }
+  }
+
+  private handleCreateOrganiser(formVal: any): void {
+    if (this.newThumbnailFile) {
+      this.imageUploadService.uploadImage(this.newThumbnailFile).subscribe({
+        next: (response) => {
+          const newThumbnail: MediaCreateModel = new MediaCreateModel(
+            0,
+            'ORGANISER',
+            response.data.url,
+            response.data.delete_url,
+            true,
+          );
+
+          const createPayload = new EventOrganiserCreateModel(
+            formVal.organiserCategoryId,
+            formVal.organiserCreationDate,
+            formVal.organiserEmail,
+            formVal.organiserName,
+            formVal.organiserPhone,
+            formVal.organiserWebsite,
+            newThumbnail,
+          );
+
+          this.eventService.addNewOrganiser(createPayload).subscribe({
+            next: (createdOrganiser: EventOrganiserModel) => {
+              console.log('[EventOrganiserModal] Organiser created successfully:', createdOrganiser);
+              this.isSaving = false;
+              this.toastr.success('Organiser created successfully!');
+              this.close({ type: 'save', payload: createdOrganiser });
+            },
+            error: (err) => {
+              console.error('[EventOrganiserModal] Create failed:', err);
+              this.isSaving = false;
+              this.toastr.error('Failed to create organiser.');
+            },
+          });
+        },
+        error: (err) => {
+          console.error('[EventOrganiserModal] Thumbnail upload failed:', err);
+          this.isSaving = false;
+          this.toastr.error('Failed to upload thumbnail image.');
+        },
+      });
+    } else {
+      // Create without image
+      const createPayload = new EventOrganiserCreateModel(
+        formVal.organiserCategoryId,
+        formVal.organiserCreationDate,
+        formVal.organiserEmail,
+        formVal.organiserName,
+        formVal.organiserPhone,
+        formVal.organiserWebsite,
+        new MediaCreateModel(0, 'ORGANISER', '', '', true),
+      );
+
+      this.eventService.addNewOrganiser(createPayload).subscribe({
+        next: (createdOrganiser: EventOrganiserModel) => {
+          console.log('[EventOrganiserModal] Organiser created successfully:', createdOrganiser);
+          this.isSaving = false;
+          this.toastr.success('Organiser created successfully!');
+          this.close({ type: 'save', payload: createdOrganiser });
+        },
+        error: (err) => {
+          console.error('[EventOrganiserModal] Create failed:', err);
+          this.isSaving = false;
+          this.toastr.error('Failed to create organiser.');
+        },
+      });
+    }
+  }
+
+  private handleEditOrganiser(formVal: any): void {
     if (this.newThumbnailFile) {
       this.imageUploadService.uploadImage(this.newThumbnailFile).subscribe({
         next: (response) => {
@@ -99,15 +185,31 @@ export class EventOrganiserModal implements OnInit {
             response.data.delete_url,
             true,
           );
-          const payload = {
-            id: this.organiserModel!.id,
-            ...formVal,
-            existingThumbnailUrl: this.organiserModel?.thumbnailImage ?? null,
-            newThumbnailImage: newThumbnail,
-          };
-      
-          this.isSaving = false;
-          this.close({ type: 'save', payload });
+          const updatePayload = new EventOrganiserUpdateModel(
+            this.organiserModel!.id,
+            formVal.organiserCategoryId,
+            formVal.organiserCreationDate,
+            formVal.organiserEmail,
+            formVal.organiserName,
+            formVal.organiserPhone,
+            formVal.organiserWebsite,
+            this.organiserModel?.thumbnailImage ?? '',
+            newThumbnail,
+          );
+
+          this.eventService.updateEventOrganiser(updatePayload).subscribe({
+            next: (updatedOrganiser: EventOrganiserModel) => {
+              console.log('[EventOrganiserModal] Organiser updated successfully:', updatedOrganiser);
+              this.isSaving = false;
+              this.toastr.success('Organiser updated successfully!');
+              this.close({ type: 'save', payload: updatedOrganiser });
+            },
+            error: (err) => {
+              console.error('[EventOrganiserModal] Update failed:', err);
+              this.isSaving = false;
+              this.toastr.error('Failed to update organiser.');
+            },
+          });
         },
         error: (err) => {
           console.error('[EventOrganiserModal] Thumbnail upload failed:', err);
@@ -116,16 +218,37 @@ export class EventOrganiserModal implements OnInit {
         },
       });
     } else {
-      const payload = {
-        id: this.organiserModel!.id,
-        ...formVal,
-        existingThumbnailUrl: this.organiserModel?.thumbnailImage ?? null,
-        newThumbnailImage: null,
-      };
-      console.log('[EventOrganiserModal] Update payload:', payload);
-      this.isSaving = false;
-      this.toastr.success('Organiser ready to save (backend pending)');
-      this.close({ type: 'save', payload });
+      const updatePayload = new EventOrganiserUpdateModel(
+        this.organiserModel!.id,
+        formVal.organiserCategoryId,
+        formVal.organiserCreationDate,
+        formVal.organiserEmail,
+        formVal.organiserName,
+        formVal.organiserPhone,
+        formVal.organiserWebsite,
+        this.organiserModel?.thumbnailImage ?? '',
+        new MediaCreateModel(
+          this.organiserModel!.id,
+          'ORGANISER',
+          this.organiserModel?.thumbnailImage ?? '',
+          '',
+          true,
+        ),
+      );
+
+      this.eventService.updateEventOrganiser(updatePayload).subscribe({
+        next: (updatedOrganiser: EventOrganiserModel) => {
+          console.log('[EventOrganiserModal] Organiser updated successfully:', updatedOrganiser);
+          this.isSaving = false;
+          this.toastr.success('Organiser updated successfully!');
+          this.close({ type: 'save', payload: updatedOrganiser });
+        },
+        error: (err) => {
+          console.error('[EventOrganiserModal] Update failed:', err);
+          this.isSaving = false;
+          this.toastr.error('Failed to update organiser.');
+        },
+      });
     }
   }
 
