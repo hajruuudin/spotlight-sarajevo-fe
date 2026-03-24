@@ -126,6 +126,18 @@ export class EventOrganiserModel {
   ) {}
 }
 
+export class EventOrganiserCreateModel {
+  constructor(
+    public organiserCategoryId: number,
+    public organiserCreationDate: string,
+    public organiserEmail: string,
+    public organiserName: string,
+    public organiserPhone: string,
+    public organiserWebsite: string,
+    public newThumbnailImage: MediaCreateModel,
+  ) {}
+}
+
 export class EventOrganiserUpdateModel {
   constructor(
     public id: number,

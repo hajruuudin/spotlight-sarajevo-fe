@@ -5,6 +5,7 @@ import { PageResponseModel } from '../shared/models/shared.model';
 import {
   EventCreateModel,
   EventDateCheckModel,
+  EventOrganiserCreateModel,
   EventOrganiserModel,
   EventOrganiserUpdateModel,
   EventOverviewModel,
@@ -146,6 +147,35 @@ export class EventService {
     return this.http.get<EventShorthandModel[]>(this.apiUrl + `/event/events-on-day/${date}`, {
       withCredentials: true,
     });
+  }
+
+  /**
+   * Method to retrieve all event organisers.
+   * Used in Add Event and Edit Event functionality on the FE.
+   *
+   * @returns An array of all EventOrganiserModel objects
+   */
+  findEventOrganisers() {
+    return this.http.get<EventOrganiserModel[]>(this.apiUrl + `/event/organisers/all`, {
+      withCredentials: true,
+    });
+  }
+
+  /**
+   * Method to create a new event organiser.
+   * This is an admin-only operation.
+   *
+   * @param organiserCreateModel The EventOrganiserCreateModel containing organiser information
+   * @returns An observable containing the created EventOrganiserModel
+   */
+  addNewOrganiser(organiserCreateModel: EventOrganiserCreateModel) {
+    return this.http.post<EventOrganiserModel>(
+      this.apiUrl + `/event/organiser`,
+      organiserCreateModel,
+      {
+        withCredentials: true,
+      },
+    );
   }
 
   /**

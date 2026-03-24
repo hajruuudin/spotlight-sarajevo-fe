@@ -128,6 +128,15 @@ export class AdminAddEvents implements OnInit {
         this.tagOptions = this.transformTagsForOptions(tags);
       },
     });
+
+    this.eventService.findEventOrganisers().subscribe({
+      next: (organisers) => {
+        this.organiserOptions = organisers.map((organiser) => ({
+          label: organiser.organiserName,
+          value: organiser.id,
+        }));
+      },
+    });
   }
 
   private transformEventCategoriesForOptions(
