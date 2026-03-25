@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { PageHeader } from '../../../components/page-header/page-header';
-import { TranslocoPipe } from '@ngneat/transloco';
 import {
   TouristGuideModel,
   TouristGuideOverviewModel,
@@ -21,7 +20,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-guide-overview',
-  imports: [PageHeader, TranslocoPipe, GuideOverviewTable],
+  imports: [PageHeader, GuideOverviewTable],
   templateUrl: './admin-guide-overview.html',
   styleUrl: './admin-guide-overview.css',
 })

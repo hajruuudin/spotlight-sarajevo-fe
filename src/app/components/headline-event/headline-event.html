@@ -30,7 +30,7 @@
   <div
     class="w-1/2 md:w-2/3 lg:w-1/2 h-auto rounded-r-2xl relative z-10"
     [style.backgroundImage]="
-      this.event.thumbnailImage ? 'url(' + this.event.thumbnailImage + ')' : ''
+      this.event.thumbnailImage ? 'url(' + this.event.thumbnailImage.imageUrl + ')' : ''
     "
     style="background-size: cover; background-position: end; transform: scale(1)"
   >

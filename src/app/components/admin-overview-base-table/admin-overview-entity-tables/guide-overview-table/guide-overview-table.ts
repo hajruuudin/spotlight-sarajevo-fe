@@ -123,7 +123,7 @@ export class GuideOverviewTable extends AdminOverviewBaseTable implements OnChan
           }),
         );
         this.sectionIds.push(section.id);
-        this.sectionExistingThumbnailUrls.push(section.thumbnailImage ?? '');
+        this.sectionExistingThumbnailUrls.push(section.thumbnailImage ? section.thumbnailImage.imageUrl : '');
         this.sectionNewThumbnailFiles.push(null);
         this.sectionNewThumbnailPreviews.push(null);
       }
@@ -287,7 +287,7 @@ export class GuideOverviewTable extends AdminOverviewBaseTable implements OnChan
           this.basicInformationForm.value.guideFullDescriptionBs,
           this.basicInformationForm.value.guideFullDescriptionEn,
           this.basicInformationForm.value.categoryId,
-          this.itemOverview!.thumbnailImage,
+          this.itemOverview!.thumbnailImage ? this.itemOverview!.thumbnailImage.imageUrl : '',
           newThumbnailImage,
           toUpdateSections,
           toAddSections,

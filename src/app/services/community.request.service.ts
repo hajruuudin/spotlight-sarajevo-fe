@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
-import { CommunityRequestCreateModel, CommunityRequestModel, CommunityRequestOverviewModel } from "../shared/models/community.request.model";
+import { CommunityRequestCreateModel, CommunityRequestModel, CommunityRequestOverviewModel, CommunityRequestStatusUpdate } from "../shared/models/community.request.model";
 import { HttpClient } from "@angular/common/http";
 
 @Injectable({
@@ -50,6 +50,24 @@ export class CommunityRequestService {
   }
   
   /**
+   * Update the status of a community request. This endpoint is intended for admin use only.
+   * In case the request is successfully processed, the backend will return the updated CommunityRequestModel object.
+   * In case the request fails, an error will be thrown.
+   * 
+   * @param statusUpdate The CommunityRequestStatusUpdate object containing the request ID and new status
+   * @returns An observable containing the updated CommunityRequestModel object
+   */
+  updateCommunityRequestStatus(request: CommunityRequestStatusUpdate) {
+    return this.http.put<CommunityRequestModel>(
+      `${this.apiUrl}/admin/update-request-status`,
+      request,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
    * Fetch the full overview information for a specific community request. This endpoint is intended for admin use only.
    * In case the request is successfully processed, the backend will return a CommunityRequestOverviewModel object containing the full information about the request.
    * In case the request fails, an error will be thrown.
@@ -57,9 +75,12 @@ export class CommunityRequestService {
    * @param requestId The ID of the community request for which the overview information is requested
    * @returns An observable containing a CommunityRequestOverviewModel object with the full information about the request
    */
-  getRequestOverview(requestId: number){
-    return this.http.get<CommunityRequestOverviewModel>(`${this.apiUrl}/admin/get-request/${requestId}`, {
-      withCredentials: true
-    })
+  getRequestOverview(requestId: number) {
+    return this.http.get<CommunityRequestOverviewModel>(
+      `${this.apiUrl}/admin/get-request/${requestId}`,
+      {
+        withCredentials: true,
+      }
+    );
   }
 }

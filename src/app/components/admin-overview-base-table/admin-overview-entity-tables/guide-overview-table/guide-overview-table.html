@@ -45,9 +45,9 @@
             <span class="w-3/12 flex flex-col justify-center items-center text-sm px-1 opacity-70">{{ item.guideSmallDescriptionEn }}</span>
             <span class="w-2/12 flex flex-col justify-center items-center text-sm">{{ item.categoryNameEn }}</span>
             <span class="w-1/12 flex flex-col justify-center items-center">
-              @if (item.thumbnailImage) {
+              @if (item.thumbnailImage.imageUrl) {
                 <img
-                  [src]="item.thumbnailImage"
+                  [src]="item.thumbnailImage.imageUrl"
                   alt="Guide thumbnail"
                   class="w-8 h-8 object-cover rounded-lg border border-(--primary-600)"
                 />

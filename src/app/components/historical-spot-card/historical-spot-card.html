@@ -1,5 +1,5 @@
 <div
-  [style.backgroundImage]="this.spot.thumbnailImage ? 'url(' + this.spot.thumbnailImage + ')' : ''"
+  [style.backgroundImage]="this.spot.thumbnailImage ? 'url(' + this.spot.thumbnailImage.imageUrl + ')' : ''"
   style="background-position: center; background-size: cover"
   class="dark:bg-black text-white bg-(--primary-200) relative rounded-2xl outline-2 dark:outline-(--primary-200) outline-(--primary-700) hover:outline-2 hover:dark:outline-(--primary-500) hover:outline-(--primary-100) h-48 w-72 md:w-96 flex flex-row justify-between items-center group transition-all"
 >
