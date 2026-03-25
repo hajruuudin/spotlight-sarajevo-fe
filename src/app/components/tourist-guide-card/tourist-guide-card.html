@@ -3,7 +3,7 @@
 >
   <div
     class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-    [style.backgroundImage]="'url(' + guide.thumbnailImage + ')'"
+    [style.backgroundImage]="'url(' + (guide.thumbnailImage ? guide.thumbnailImage.imageUrl : '') + ')'"
     style="opacity: 0.5"
   ></div>
 

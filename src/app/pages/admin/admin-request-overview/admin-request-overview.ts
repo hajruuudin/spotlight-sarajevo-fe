@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PageHeader } from '../../../components/page-header/page-header';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { CommunityRequestModel, CommunityRequestOverviewModel } from '../../../shared/models/community.request.model';
+import { CommunityRequestModel, CommunityRequestOverviewModel, CommunityRequestStatusUpdate } from '../../../shared/models/community.request.model';
 import { SortOptions } from '../../../shared/constants/SortOptions';
 import { FilterOptions } from '../../../shared/constants/FilterOptions';
+import { RequestStatus } from '../../../shared/constants/ObjectTypes';
 import { EventService } from '../../../services/event.service';
 import { ReviewService } from '../../../services/review.service';
 import { SessionService } from '../../../core/services/session.service';
@@ -98,9 +99,57 @@ export class AdminRequestOverview implements OnInit{
     this.loadCommunityRequests();
   }
 
-  handleRequestApproval(requestId: number){}
+  handleRequestApproval(requestId: number): void {
+    const statusUpdate = new CommunityRequestStatusUpdate(
+      requestId,
+      RequestStatus.APPROVED
+    );
 
-  handleRequestRejection(requestId: number){}
+    this.spinnerService.showNavigateSpinner();
+
+    this.requestService.updateCommunityRequestStatus(statusUpdate).subscribe({
+      next: (updatedRequest: CommunityRequestModel) => {
+        console.log('Request approved successfully:', updatedRequest);
+        this.spinnerService.hideNavigateSpinner();
+        this.toastr.success('Community request approved successfully!');
+        
+        // Update UI immediately
+        this.loadCommunityRequests();
+        this.handleOverviewSelect(requestId);
+      },
+      error: (error) => {
+        console.error('Error approving community request:', error);
+        this.spinnerService.hideNavigateSpinner();
+        this.toastr.error('Failed to approve community request. Please try again.');
+      },
+    });
+  }
+
+  handleRequestRejection(requestId: number): void {
+    const statusUpdate = new CommunityRequestStatusUpdate(
+      requestId,
+      RequestStatus.REJECTED
+    );
+
+    this.spinnerService.showNavigateSpinner();
+
+    this.requestService.updateCommunityRequestStatus(statusUpdate).subscribe({
+      next: (updatedRequest: CommunityRequestModel) => {
+        console.log('Request rejected successfully:', updatedRequest);
+        this.spinnerService.hideNavigateSpinner();
+        this.toastr.success('Community request rejected successfully!');
+        
+        // Update UI immediately
+        this.loadCommunityRequests();
+        this.handleOverviewSelect(requestId);
+      },
+      error: (error) => {
+        console.error('Error rejecting community request:', error);
+        this.spinnerService.hideNavigateSpinner();
+        this.toastr.error('Failed to reject community request. Please try again.');
+      },
+    });
+  }
 
   handleRequestIntegration(integrationInfo: any){}
 

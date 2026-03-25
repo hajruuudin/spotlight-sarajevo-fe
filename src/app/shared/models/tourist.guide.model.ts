@@ -1,5 +1,5 @@
 import { GuideType } from "../constants/ObjectTypes";
-import { MediaCreateModel } from './shared.model';
+import { MediaCreateModel, MediaStoreModel } from './shared.model';
 
 export class TouristGuideModel {
   constructor(
@@ -25,7 +25,7 @@ export class TouristGuideShorthandModel {
     public guideTitleEn: string,
     public guideSmallDescriptionBs: string,
     public guideSmallDescriptionEn: string,
-    public thumbnailImage: string,
+    public thumbnailImage: MediaStoreModel,
     public categoryNameBs: string,
     public categoryNameEn: string
   ) {}
@@ -39,7 +39,7 @@ export class TouristGuideSectionModel {
     public sectionTitleEn: string,
     public sectionBodyBs: string,
     public sectionBodyEn: string,
-    public thumbnailImage: string
+    public thumbnailImage: MediaStoreModel
   ) {}
 }
 
@@ -58,7 +58,7 @@ export class TouristGuideOverviewModel {
     public sections: TouristGuideSectionModel[],
     public guideType: GuideType,
     public contactInfo: { [key: string]: string },
-    public thumbnailImage: string,
+    public thumbnailImage: MediaStoreModel,
     public categoryId: number
   ) {}
 }
@@ -117,7 +117,7 @@ export class TouristGuideCreateModel {
     public sections: TouristGuideSectionCreateModel[],
     public guideType: GuideType,
     public contactInfo: { [key: string]: string },
-    public thumbnailImage: string,
+    public newThumbnailImage: MediaCreateModel | null,
     public categoryId: number
   ) {}
 }

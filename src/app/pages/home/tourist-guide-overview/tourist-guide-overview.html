@@ -12,7 +12,7 @@
       class="hidden dark:absoulte inset-0 bg-gradient-to-r dark:from-black/100 from-white/100 via-transparent dark:to-black/100 to-white/100"
     ></div>
     <img
-      [src]="this.guideOverview.thumbnailImage"
+      [src]="this.guideOverview.thumbnailImage.imageUrl"
       [style]="
         this.session.theme() == 'dark'
           ? 'mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent)'
@@ -79,7 +79,7 @@
         @if (idx % 2 === 0) {
           <div class="relative w-full md:w-2/5 h-64 md:h-auto flex-shrink-0 order-1">
             <img
-              [src]="section.thumbnailImage"
+              [src]="section.thumbnailImage.imageUrl"
               [alt]="
                 this.session.language() == 'en' ? section.sectionTitleEn : section.sectionTitleBs
               "
@@ -123,7 +123,7 @@
 
           <div class="relative w-full md:w-2/5 h-64 md:h-auto flex-shrink-0 order-1 md:order-2">
             <img
-              [src]="section.thumbnailImage"
+              [src]="section.thumbnailImage.imageUrl"
               [alt]="
                 this.session.language() == 'en' ? section.sectionTitleEn : section.sectionTitleBs
               "

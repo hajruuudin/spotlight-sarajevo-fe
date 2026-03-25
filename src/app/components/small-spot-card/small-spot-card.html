@@ -6,7 +6,7 @@
     class="h-2/3 w-full flex flex-col justify-end items-center rounded-t-2xl"
     style="background-size: cover; transform: scale(1); box-shadow: 0px 0px 10px black inset"
     [style.backgroundImage]="
-      this.spot.thumbnailImage ? 'url(' + this.spot.thumbnailImage + ')' : ''
+      this.spot.thumbnailImage ? 'url(' + this.spot.thumbnailImage.imageUrl + ')' : ''
     "
   >
     <div

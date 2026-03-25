@@ -40,6 +40,13 @@
             <app-guides-icon classes="w-6"></app-guides-icon>
             <a class="block text-center py-1">{{ 'adminNavbar.guidesOverview' | transloco }}</a>
           </span>
+          <span
+            routerLink="/admin/requests-overview"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-add-icon classes="w-6"></app-add-icon>
+            <a class="block text-center py-1">Requests Overview</a>
+          </span>
         </div>
         
       </li>
@@ -84,6 +91,13 @@
           >
             <app-events-icon classes="w-6"></app-events-icon>
             <a class="block text-center py-1">{{ 'adminNavbar.addEvent' | transloco }}</a>
+          </span>
+          <span
+            routerLink="/admin/add-guide"
+            class="flex flex-row justify-left items-center rounded-xl w-full px-4 py-1 hover:bg-(--background-900) dark:hover:bg-(--background-100) space-x-2"
+          >
+            <app-guides-icon classes="w-6"></app-guides-icon>
+            <a class="block text-center py-1">{{ 'adminNavbar.addGuide' | transloco }}</a>
           </span>
         </div>
       </li>

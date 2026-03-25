@@ -114,10 +114,6 @@
       "delete" : "Delete Event",
       "deleteConfirm" : "Are you sure you want to delete this event? This action cannot be undone."
     },
-    "guideOverview" : {
-      "title" : "Overview of Tourist Guides",
-      "subtitle" : "Tourist Guides and all of their information"
-    },
     "transportOverview" : {
       "title" : "Overview of Public Transport",
       "subtitle" : "Public Transport Methods and all of their information"

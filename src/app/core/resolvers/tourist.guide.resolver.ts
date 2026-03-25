@@ -8,9 +8,9 @@ import { HotToastService } from '@ngxpert/hot-toast';
 
 export interface TouristGuidePageData {
   mainGuides: TouristGuideShorthandModel[];
-  newGuides: TouristGuideShorthandModel[];
-  touristRelatedGuides: TouristGuideShorthandModel[];
-  allGuides: TouristGuideShorthandModel[];
+  // newGuides: TouristGuideShorthandModel[];
+  // touristRelatedGuides: TouristGuideShorthandModel[];
+  // allGuides: TouristGuideShorthandModel[];
 }
 
 export const touristGuideResolver: ResolveFn<TouristGuidePageData> = (
@@ -22,23 +22,23 @@ export const touristGuideResolver: ResolveFn<TouristGuidePageData> = (
 
   return forkJoin({
     mainGuides: guideService.findAllGuides(),
-    newGuides: guideService.findAllGuides(),
-    touristRelatedGuides: guideService.findAllGuides(),
-    allGuides: guideService.findAllGuides(),
+    // newGuides: guideService.findAllGuides(),
+    // touristRelatedGuides: guideService.findAllGuides(),
+    // allGuides: guideService.findAllGuides(),
   }).pipe(
     map((result) => ({
       mainGuides: result.mainGuides,
-      newGuides: result.newGuides,
-      touristRelatedGuides: result.touristRelatedGuides,
-      allGuides: result.allGuides,
+      // newGuides: result.newGuides,
+      // touristRelatedGuides: result.touristRelatedGuides,
+      // allGuides: result.allGuides,
     })),
     catchError((error: HttpErrorResponse) => {
       toastr.error('Failed to load tourist guides');
       return of({
         mainGuides: [],
-        newGuides: [],
-        touristRelatedGuides: [],
-        allGuides: [],
+        // newGuides: [],
+        // touristRelatedGuides: [],
+        // allGuides: [],
       });
     })
   );

@@ -14,7 +14,7 @@ export class EventShorthandModel {
     public eventTags: TagModel[],
     public startDate: string,
     public endDate: string,
-    public thumbnailImage: string,
+    public thumbnailImage: MediaStoreModel,
   ) {}
 }
 
@@ -118,7 +118,7 @@ export class EventOrganiserModel {
     public organiserPhone: string,
     public organiserEmail: string,
     public organiserWebsite: string,
-    public thumbnailImage: string,
+    public thumbnailImage: MediaStoreModel,
     public overallAtmosphere: number,
     public overallQuality: number,
     public overallEnjoyability: number,

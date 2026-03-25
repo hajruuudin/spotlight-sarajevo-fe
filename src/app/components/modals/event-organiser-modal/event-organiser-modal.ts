@@ -193,7 +193,7 @@ export class EventOrganiserModal implements OnInit {
             formVal.organiserName,
             formVal.organiserPhone,
             formVal.organiserWebsite,
-            this.organiserModel?.thumbnailImage ?? '',
+            this.organiserModel?.thumbnailImage ? this.organiserModel.thumbnailImage.imageUrl : '',
             newThumbnail,
           );
 
@@ -226,11 +226,11 @@ export class EventOrganiserModal implements OnInit {
         formVal.organiserName,
         formVal.organiserPhone,
         formVal.organiserWebsite,
-        this.organiserModel?.thumbnailImage ?? '',
+        this.organiserModel?.thumbnailImage ? this.organiserModel.thumbnailImage.imageUrl : '',
         new MediaCreateModel(
           this.organiserModel!.id,
           'ORGANISER',
-          this.organiserModel?.thumbnailImage ?? '',
+          this.organiserModel?.thumbnailImage ? this.organiserModel.thumbnailImage.imageUrl : '',
           '',
           true,
         ),

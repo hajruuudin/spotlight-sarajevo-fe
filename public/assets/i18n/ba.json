@@ -108,15 +108,16 @@
       "title" : "Kreiraj Novi Događaj",
       "subtitle" : "Dodaj novi događaj u sistem"
     },
+    "addGuide" : {
+      "title" : "Kreiraj Novi Vodiči za Turiste",
+      "subtitle" : "Dodaj novi vodiči za turiste u sistem",
+      "createGuide" : "Kreiraj Vodiči"
+    },
     "eventOverview" : {
       "title" : "Pregled Događaja",
       "subtitle" : "Događaji i sve njihove informacije",
       "delete" : "Obriši Događaj",
       "deleteConfirm" : "Jeste li sigurni da želite obrisati ovaj događaj? Ova akcija se ne može poništiti."
-    },
-    "guideOverview" : {
-      "title" : "Pregled Vodića za Turiste",
-      "subtitle" : "Vodići za turiste i sve njihove informacije"
     },
     "transportOverview" : {
       "title" : "Pregled Javnog Prevoza",

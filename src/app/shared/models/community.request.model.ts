@@ -49,7 +49,7 @@ export class CommunityRequestOverviewModel {
 
 export class CommunityRequestStatusUpdate {
     constructor(
-        public id: number,
+        public requestId: number,
         public status: RequestStatus,
         public statusInfo?: string
     ) {}
