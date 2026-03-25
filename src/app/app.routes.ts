@@ -46,19 +46,23 @@ import { communityRequestResolver } from './core/resolvers/community.request.res
 import { spotMapResolver } from './core/resolvers/spot.map.resolver';
 import { eventCalendarResolver } from './core/resolvers/event.calendar.resolver';
 import { adminGuard } from './core/guards/admin.guard';
+import { adminRedirectGuard } from './core/guards/admin-redirect.guard';
 import { AdminDashboard } from './pages/admin/dashboard/dashboard';
+import { unauthGuard } from './core/guards/unauth.guard';
 
 export const routes: Routes = [
   {
     path: 'auth',
     component: Auth,
+    canActivate: [unauthGuard],
     children: [
-      { path: 'login', component: Login, title: 'Login - SpotlightSarajevo' },
-      { path: 'register', component: Signup, title: 'Login - SpotlightSarajevo' },
+      { path: 'login', canActivate: [unauthGuard], component: Login, title: 'Login - SpotlightSarajevo' },
+      { path: 'register', canActivate: [unauthGuard], component: Signup, title: 'Login - SpotlightSarajevo' },
     ],
   },
   {
     path: '',
+    canActivate: [adminRedirectGuard],
     component: User,
     children: [
       { path: '', redirectTo: 'homepage', pathMatch: 'full' },

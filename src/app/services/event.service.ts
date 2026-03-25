@@ -229,4 +229,35 @@ export class EventService {
       withCredentials: true,
     });
   }
+
+  /**
+   * Method to retrieve recently added events for admin dashboard.
+   * This is an admin-only operation.
+   * 
+   * @param limit The maximum number of recent events to retrieve (default: 5)
+   * @returns An observable containing an array of recently added EventShorthandModel objects
+   */
+  getRecentlyAddedEvents(limit: number = 5) {
+    return this.http.get<EventShorthandModel[]>(
+      this.apiUrl + `/event/admin/recently-added?limit=${limit}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to retrieve the total count of events in the system.
+   * This is an admin-only operation.
+   * 
+   * @returns An observable containing the total count of events
+   */
+  getEventsTotalCount() {
+    return this.http.get<number>(
+      this.apiUrl + `/event/admin/count`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }

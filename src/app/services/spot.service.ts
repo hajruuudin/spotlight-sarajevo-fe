@@ -207,4 +207,35 @@ export class SpotService {
       }
     );
   }
+
+  /**
+   * Method to retrieve recently added spots for admin dashboard.
+   * This is an admin-only operation.
+   * 
+   * @param limit The maximum number of recent spots to retrieve (default: 5)
+   * @returns An observable containing an array of recently added SpotShorthandModel objects
+   */
+  getRecentlyAddedSpots(limit: number = 5) {
+    return this.http.get<SpotShorthandModel[]>(
+      this.apiUrl + `/spot/admin/recently-added?limit=${limit}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  /**
+   * Method to retrieve the total count of spots in the system.
+   * This is an admin-only operation.
+   * 
+   * @returns An observable containing the total count of spots
+   */
+  getSpotsTotalCount() {
+    return this.http.get<number>(
+      this.apiUrl + `/spot/admin/count`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }
