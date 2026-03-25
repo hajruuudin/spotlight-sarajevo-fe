@@ -83,4 +83,21 @@ export class CommunityRequestService {
       }
     );
   }
+
+  /**
+   * Fetch recently added community requests for admin dashboard. This endpoint is intended for admin use only.
+   * In case the request is successfully processed, the backend will return an array of CommunityRequestModel objects.
+   * In case the request fails, an error will be thrown.
+   * 
+   * @param limit The maximum number of recent requests to retrieve (default: 10)
+   * @returns An observable containing an array of recently added CommunityRequestModel objects
+   */
+  getRecentlyAddedCommunityRequests(limit: number = 10) {
+    return this.http.get<CommunityRequestModel[]>(
+      `${this.apiUrl}/admin/get-recently-added?limit=${limit}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }
