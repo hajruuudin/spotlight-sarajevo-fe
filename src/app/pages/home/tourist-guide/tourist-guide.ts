@@ -36,9 +36,9 @@ export class TouristGuide implements OnInit {
     const resolvedData = this.route.snapshot.data['touristGuides'];
     
     this.mainGuides = resolvedData.mainGuides;
-    // this.newGuides = resolvedData.newGuides;
-    // this.touristRelatedGuides = resolvedData.touristRelatedGuides;
-    // this.allGuides = resolvedData.allGuides;
+    this.newGuides = resolvedData.newGuides;
+    this.touristRelatedGuides = resolvedData.touristRelatedGuides;
+    this.allGuides = resolvedData.allGuides;
   }
 
   navigateToGuide(slug: string): void {
