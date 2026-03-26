@@ -19,7 +19,7 @@ import { SpotCategoryModel, TagModel } from '../../../shared/models/category.mod
 import { ImageUploadService } from '../../../services/image-upload.service';
 import { MediaCreateModel } from '../../../shared/models/shared.model';
 import { forkJoin, of } from 'rxjs';
-import { FormArray, FormControl } from '@angular/forms';
+import { FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -239,7 +239,7 @@ export class AdminAddSpots implements OnInit {
         const imagesToBeUploaded: MediaCreateModel[] = results.newImages.map(
           (response) =>
             new MediaCreateModel(
-              0, // spotId will be set by backend
+              0,
               'SPOT',
               response.data.url,
               response.data.delete_url,
@@ -249,7 +249,7 @@ export class AdminAddSpots implements OnInit {
 
         const newThumbnailImage = results.thumbnail
           ? new MediaCreateModel(
-              0, // spotId will be set by backend
+              0,
               'SPOT',
               results.thumbnail.data.url,
               results.thumbnail.data.delete_url,
@@ -289,20 +289,17 @@ export class AdminAddSpots implements OnInit {
 
         this.spotService.createSpot(finalPayload).subscribe({
           next: (response: any) => {
-            console.log('Spot created successfully:', response);
             this.spinnerService.hideNavigateSpinner();
             this.toastService.success('Spot created successfully!');
             this.router.navigate(['/admin/spots-overview']);
           },
           error: (error) => {
-            console.error('Error creating spot:', error);
             this.spinnerService.hideNavigateSpinner();
             this.toastService.error('Failed to create spot. Please try again.');
           },
         });
       },
       error: (error) => {
-        console.error('Error during image upload process:', error);
         this.spinnerService.hideNavigateSpinner();
         this.toastService.error('Failed to upload images. Please try again.');
       },

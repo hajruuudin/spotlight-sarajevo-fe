@@ -87,7 +87,6 @@ export class AdminRequestOverview implements OnInit{
         this.cdr.markForCheck();
       },
       error: (error) => {
-        console.error('Error fetching community request overview:', error);
         this.toastr.error('Failed to load community request overview. Please try again later.');
       }
     })
@@ -95,7 +94,7 @@ export class AdminRequestOverview implements OnInit{
 
   handleFilterChange(filter: FilterOptions): void {
     this.currentFilter = filter;
-    this.currentPage = 0; // Reset to first page when filter changes
+    this.currentPage = 0;
     this.loadCommunityRequests();
   }
 
@@ -109,16 +108,12 @@ export class AdminRequestOverview implements OnInit{
 
     this.requestService.updateCommunityRequestStatus(statusUpdate).subscribe({
       next: (updatedRequest: CommunityRequestModel) => {
-        console.log('Request approved successfully:', updatedRequest);
         this.spinnerService.hideNavigateSpinner();
         this.toastr.success('Community request approved successfully!');
-        
-        // Update UI immediately
         this.loadCommunityRequests();
         this.handleOverviewSelect(requestId);
       },
       error: (error) => {
-        console.error('Error approving community request:', error);
         this.spinnerService.hideNavigateSpinner();
         this.toastr.error('Failed to approve community request. Please try again.');
       },
@@ -135,16 +130,12 @@ export class AdminRequestOverview implements OnInit{
 
     this.requestService.updateCommunityRequestStatus(statusUpdate).subscribe({
       next: (updatedRequest: CommunityRequestModel) => {
-        console.log('Request rejected successfully:', updatedRequest);
         this.spinnerService.hideNavigateSpinner();
         this.toastr.success('Community request rejected successfully!');
-        
-        // Update UI immediately
         this.loadCommunityRequests();
         this.handleOverviewSelect(requestId);
       },
       error: (error) => {
-        console.error('Error rejecting community request:', error);
         this.spinnerService.hideNavigateSpinner();
         this.toastr.error('Failed to reject community request. Please try again.');
       },
@@ -173,10 +164,8 @@ export class AdminRequestOverview implements OnInit{
         this.totalItems = requests.length;
         this.totalPages = Math.ceil(this.totalItems / this.pageSize);
         this.cdr.markForCheck();
-        console.log(this.tableShorthandData);
       },
       error: (error) => {
-        console.error('Error fetching community requests:', error);
         this.toastr.error('Failed to load community requests. Please try again later.');
       }
     });

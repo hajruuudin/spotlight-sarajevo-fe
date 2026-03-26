@@ -68,49 +68,10 @@ export class MapRegular implements OnInit {
 
   onMapReady(map: L.Map) {
     this.map = map;
-    console.log(this.objectLong, this.objectLat);
     this.addSpotMarker();
-    // this.locateUserAndDrawDistance();
   }
 
   addSpotMarker() {
     L.marker([this.objectLat, this.objectLong], { icon: this.customIcon }).addTo(this.map);
   }
-
-  // locateUserAndDrawDistance() {
-  //   const target = L.latLng(this.objectLat, this.objectLong);
-
-  //   this.map.locate({ setView: false });
-
-  //   this.map.on('locationfound', async (e: L.LocationEvent) => {
-  //     const userLatLng = e.latlng;
-
-  //     const htmlMarker = L.divIcon({
-  //       html: `<div class="user-marker"></div>`,
-  //       className: '',
-  //       iconSize: [30, 30],
-  //       iconAnchor: [15, 30],
-  //     });
-
-  //     L.marker(userLatLng, { icon: htmlMarker }).addTo(this.map);
-  //     L.marker(target, { icon: this.customIcon }).addTo(this.map);
-
-  //     const router = (L.Routing as any).osrmv1({});
-
-  //     router.route([userLatLng, target], (err: any, routes: any) => {
-  //       if (err || !routes || !routes[0]) return;
-
-  //       const routeLine = L.Routing.line(routes[0], {
-  //         styles: [{ color: 'blue', weight: 4, opacity: 0.7 }],
-  //         extendToWaypoints: false,
-  //         missingRouteTolerance: 10,
-  //       });
-
-  //       routeLine.addTo(this.map);
-
-  //       // Optional: zoom map to route
-  //       this.map.fitBounds(routeLine.getBounds());
-  //     });
-  //   });
-  // }
 }

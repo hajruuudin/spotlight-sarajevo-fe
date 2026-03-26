@@ -52,39 +52,33 @@ export class AdminDashboard implements OnInit {
   }
 
   private loadDashboardData(): void {
-    // Load all dashboard data in parallel
     forkJoin({
       recentSpots: this.spotService.getRecentlyAddedSpots(5).pipe(
         catchError((error) => {
-          console.error('Error loading recent spots:', error);
           this.spotsError = true;
           return of([]);
         })
       ),
       recentEvents: this.eventService.getRecentlyAddedEvents(5).pipe(
         catchError((error) => {
-          console.error('Error loading recent events:', error);
           this.eventsError = true;
           return of([]);
         })
       ),
       recentRequests: this.communityRequestService.getRecentlyAddedCommunityRequests(10).pipe(
         catchError((error) => {
-          console.error('Error loading recent community requests:', error);
           this.requestsError = true;
           return of([]);
         })
       ),
       spotCount: this.spotService.getSpotsTotalCount().pipe(
         catchError((error) => {
-          console.error('Error loading spots count:', error);
           this.countsError = true;
           return of(0);
         })
       ),
       eventCount: this.eventService.getEventsTotalCount().pipe(
         catchError((error) => {
-          console.error('Error loading events count:', error);
           this.countsError = true;
           return of(0);
         })
@@ -105,7 +99,6 @@ export class AdminDashboard implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        console.error('Error loading dashboard data:', error);
         this.isLoadingSpots = false;
         this.isLoadingEvents = false;
         this.isLoadingRequests = false;

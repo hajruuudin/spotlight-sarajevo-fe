@@ -189,7 +189,6 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
 
   override onSaveChangeSelected() {
     if (!this.itemOverview) {
-      console.error('No item overview available');
       return;
     }
 
@@ -271,7 +270,6 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
         this.resetImageState();
       },
       error: (error) => {
-        console.error('Error during image upload/delete process:', error);
         // Hide spinner and show error toast
         this.spinnerService.hideNavigateSpinner();
         this.toastService.error('Failed to upload images. Please try again.');
@@ -289,11 +287,8 @@ export class SpotOverviewTable extends AdminOverviewBaseTable implements OnInit,
 
   override onDeleteItemSelected() {
     if (this.selectedItemId == null) {
-      console.log('PLACEHOLDER_DELETE_SPOT_SKIPPED_NO_SELECTION');
       return;
     }
-
-    console.log('PLACEHOLDER_DELETE_SPOT_ID', this.selectedItemId);
     this.onDeleteItem.emit(this.selectedItemId);
   }
 

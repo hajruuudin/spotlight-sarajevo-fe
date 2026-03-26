@@ -105,7 +105,7 @@ export class AdminGuideOverview {
     }
   }
 
-  async handleDeleteItem(spotId: number): Promise<void> {
+  async handleDeleteItem(guideId: number): Promise<void> {
     const result = await this.modal.openAsync<{ confirmed: boolean }>(DeleteModal, {
       titleKey: 'Delete Tourist Guide',
       confirmMessageKey:
@@ -113,6 +113,21 @@ export class AdminGuideOverview {
     });
 
     if (!result.confirmed) return;
+
+    this.spinnerService.showSectionSpinner();
+    this.guideService.deleteGuide(guideId).subscribe({
+      next: (response) => {
+        this.spinnerService.hideSectionSpinner();
+        this.toastr.success('Guide deleted successfully!');
+        this.tableSelectedItem = null;
+        this.cdr.detectChanges();
+        this.loadGuides();
+      },
+      error: (error) => {
+        this.spinnerService.hideSectionSpinner();
+        this.toastr.error('Failed to delete guide. Please try again.');
+      },
+    });
   }
 
   handleNextPage(page: number): void {

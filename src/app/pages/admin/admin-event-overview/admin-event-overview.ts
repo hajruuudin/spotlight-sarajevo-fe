@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { TranslocoPipe } from '@ngneat/transloco';
 import { PageHeader } from '../../../components/page-header/page-header';
 import {
   EventOrganiserModel,
@@ -25,7 +24,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-event-overview',
-  imports: [TranslocoPipe, PageHeader, ReactiveFormsModule, SearchBar, EventOverviewTable],
+  imports: [PageHeader, ReactiveFormsModule, SearchBar, EventOverviewTable],
   templateUrl: './admin-event-overview.html',
   styleUrl: './admin-event-overview.css',
 })
@@ -79,8 +78,8 @@ export class AdminEventOverview implements OnInit {
       this.eventService.findEventOverview(event.slug).subscribe({
         next: (overview) => {
           this.tableSelectedItem = overview;
-          this.cdr.detectChanges();
           this.handleReviewLoad(overview.organiser.id, SortOptions.RATING);
+          this.cdr.detectChanges();
         },
       });
     }
@@ -95,7 +94,6 @@ export class AdminEventOverview implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        console.error('Error loading organiser reviews:', error);
         this.isLoadingReviews = false;
         this.cdr.detectChanges();
       },
@@ -110,7 +108,6 @@ export class AdminEventOverview implements OnInit {
         this.handleOverviewSelect(finalPayload.id);
       },
       error: (error) => {
-        console.error('Error updating event:', error);
         this.spinnerService.hideNavigateSpinner();
         this.toastr.error('Failed to update event. Please try again.');
       },
@@ -119,7 +116,6 @@ export class AdminEventOverview implements OnInit {
 
   handleOrganiserUpdateItem(finalPayload: EventOrganiserUpdateModel){
     this.spinnerService.showNavigateSpinner()
-    console.log(finalPayload)
     this.eventService.updateEventOrganiser(finalPayload).subscribe({
       next: (result : EventOrganiserModel) => {
         this.spinnerService.hideNavigateSpinner()
@@ -152,7 +148,6 @@ export class AdminEventOverview implements OnInit {
         this.loadEvents();
       },
       error: (error) => {
-        console.error('Error deleting event:', error);
         this.spinnerService.hideSectionSpinner();
         this.toastr.error('Failed to delete event. Please try again.');
       },
@@ -181,7 +176,6 @@ export class AdminEventOverview implements OnInit {
             this.cdr.detectChanges();
           },
           error: (error) => {
-            console.error('Error loading more reviews:', error);
             this.isLoadingReviews = false;
             this.toastr.error('Failed to load more reviews');
             this.cdr.detectChanges();
@@ -202,7 +196,6 @@ export class AdminEventOverview implements OnInit {
             this.cdr.detectChanges();
           },
           error: (error) => {
-            console.error('Error sorting reviews:', error);
             this.isLoadingReviews = false;
             this.toastr.error('Failed to sort reviews');
             this.cdr.detectChanges();

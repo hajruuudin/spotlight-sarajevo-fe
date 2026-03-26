@@ -96,15 +96,13 @@ export class AdminSpotOverview implements OnInit {
   }
 
   handleOverviewSelect(spotId: number): void {
-    console.log('Selected spot ID:', spotId);
     const spot = this.tableShorthandData.find((s) => s.id === spotId);
     if (spot?.slug) {
       this.spotService.findSpotOverview(spot.slug).subscribe({
         next: (overview) => {
           this.tableSelectedItem = overview;
-          this.cdr.detectChanges();
-
           this.handleReviewLoad(spotId, SortOptions.ALPHABETICAL);
+          this.cdr.detectChanges();
         },
       });
     }
@@ -119,7 +117,6 @@ export class AdminSpotOverview implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        console.error('Error loading reviews:', error);
         this.isLoadingReviews = false;
         this.cdr.detectChanges();
       },
@@ -127,18 +124,13 @@ export class AdminSpotOverview implements OnInit {
   }
 
   handleUpdateItem(finalPayload: SpotUpdateModel): void {
-    console.log('Update spot payload:', finalPayload);
     this.spotService.updateSpot(finalPayload).subscribe({
       next: (response) => {
-        console.log('Spot updated successfully:', response);
-
         this.spinnerService.hideNavigateSpinner();
         this.toastr.success('Spot updated successfully!');
-
         this.handleOverviewSelect(finalPayload.id);
       },
       error: (error) => {
-        console.error('Error updating spot:', error);
         this.spinnerService.hideNavigateSpinner();
         this.toastr.error('Failed to update spot. Please try again.');
       },
@@ -164,7 +156,6 @@ export class AdminSpotOverview implements OnInit {
         this.loadSpots();
       },
       error: (error) => {
-        console.error('Error deleting spot:', error);
         this.spinnerService.hideSectionSpinner();
         this.toastr.error('Failed to delete spot. Please try again.');
       },
@@ -193,7 +184,6 @@ export class AdminSpotOverview implements OnInit {
             this.cdr.detectChanges();
           },
           error: (error) => {
-            console.error('Error loading more reviews:', error);
             this.isLoadingReviews = false;
             this.toastr.error('Failed to load more reviews');
             this.cdr.detectChanges();
@@ -214,7 +204,6 @@ export class AdminSpotOverview implements OnInit {
             this.cdr.detectChanges();
           },
           error: (error) => {
-            console.error('Error sorting reviews:', error);
             this.isLoadingReviews = false;
             this.toastr.error('Failed to sort reviews');
             this.cdr.detectChanges();

@@ -272,7 +272,6 @@ export class EventOverviewTable extends AdminOverviewBaseTable implements OnInit
         this.resetImageState();
       },
       error: (error) => {
-        console.error('Error during image upload:', error);
         this.spinnerService.hideNavigateSpinner();
         this.toastService.error('Failed to upload images. Please try again.');
       },

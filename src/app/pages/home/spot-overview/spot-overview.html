@@ -171,7 +171,7 @@
           [sectionHead]="'spotOverview.imagesHead' | transloco"
           [sectionDescription]="'spotOverview.imagesTitle' | transloco"
         ></app-subheading>
-        <app-image-carousel class="my-2" [images]="this.images"></app-image-carousel>
+        <app-image-carousel class="my-2" [images]="this.images || null"></app-image-carousel>
       </div>
     </div>
   </div>
