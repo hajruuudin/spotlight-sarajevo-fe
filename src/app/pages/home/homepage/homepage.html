@@ -24,8 +24,10 @@
       }}</span>
       <app-headline-spot
         classAddons="w-full"
+        (click)="navigateToSpotOverview(this.headlineSpot!.slug)"
         [lang]="this.session.language()!"
         [spot]="this.headlineSpot!"
+        class="cursor-pointer"
       ></app-headline-spot>
     </div>
     <div class="w-full md:w-1/2 h-auto flex flex-col space-y-2 justify-start items-stretch">
@@ -34,8 +36,10 @@
       }}</span>
       <app-headline-event
         classAddons="w-full"
+        (click)="navigateToEventOverview(this.headlineEvent!.slug)"
         [lang]="this.session.language()!"
         [event]="this.headlineEvent!"
+        class="cursor-pointer"
       ></app-headline-event>
     </div>
   </div>
@@ -62,16 +66,18 @@
       <div class="scroll-container-slow flex flex-row justify-center items-center space-x-4">
         @for (spot of this.favouriteSpots; track spot.id) {
           <app-small-spot-card
+            (click)="navigateToSpotOverview(spot.slug)"
             [lang]="this.session.language()!"
             [spot]="spot"
-            classAddons=""
+            classAddons="cursor-pointer"
           ></app-small-spot-card>
         }
         @for (spot of this.favouriteSpots; track spot.id) {
           <app-small-spot-card
+            (click)="navigateToSpotOverview(spot.slug)"
             [lang]="this.session.language()!"
             [spot]="spot"
-            classAddons=""
+            classAddons="cursor-pointer"
           ></app-small-spot-card>
         }
       </div>
@@ -108,12 +114,16 @@
       class="w-full h-auto flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 space-x-4 my-2 items-stretch"
     >
       <app-search-spot-card
+        (click)="navigateToSpotOverview(this.popularSpots[0].slug)"
         [lang]="this.session.language()!"
         [spot]="this.popularSpots[0]"
+        class="cursor-pointer"
       ></app-search-spot-card>
       <app-search-spot-card
+        (click)="navigateToSpotOverview(this.popularSpots[1].slug)"
         [lang]="this.session.language()!"
         [spot]="this.popularSpots[1]"
+        class="cursor-pointer"
       ></app-search-spot-card>
     </div>
 
@@ -121,12 +131,16 @@
       class="w-full h-auto flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 space-x-4 my-2 items-stretch"
     >
       <app-search-spot-card
+        (click)="navigateToSpotOverview(this.popularSpots[3].slug)"
         [lang]="this.session.language()!"
         [spot]="this.popularSpots[3]"
+        class="cursor-pointer"
       ></app-search-spot-card>
       <app-search-spot-card
+        (click)="navigateToSpotOverview(this.popularSpots[4].slug)"
         [lang]="this.session.language()!"
         [spot]="this.popularSpots[4]"
+        class="cursor-pointer"
       ></app-search-spot-card>
     </div>
   </div>
@@ -172,8 +186,10 @@
       } @else {
         @for (event of this.eventsForSelectedDate; track event.id) {
           <app-search-event-card
+            (click)="navigateToEventOverview(event.slug)"
             [lang]="this.session.language()!"
             [event]="event"
+            class="cursor-pointer"
           ></app-search-event-card>
         }
       }
@@ -215,8 +231,10 @@
     >
       @for (spot of this.landmarkSpots; track spot.id) {
         <app-historical-spot-card
+          (click)="navigateToSpotOverview(spot.slug)"
           [lang]="this.session.language()!"
           [spot]="spot"
+          class="cursor-pointer"
         ></app-historical-spot-card>
       }
     </div>

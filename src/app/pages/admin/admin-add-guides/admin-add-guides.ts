@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PageHeader } from '../../../components/page-header/page-header';
-import { TranslocoPipe } from '@ngneat/transloco';
 import { ButtonPrimary } from '../../../components/button-primary/button-primary';
 import { ButtonSecondary } from '../../../components/button-secondary/button-secondary';
 import { TextInput } from '../../../components/text-input/text-input';
@@ -44,7 +43,6 @@ export class AdminAddGuides implements OnInit {
     { label: 'External Guide', value: GuideType.EXTERNAL },
   ];
 
-  // Guide thumbnail
   protected newThumbnailFile: File | null = null;
   protected newThumbnailPreview: string | null = null;
 
@@ -91,7 +89,6 @@ export class AdminAddGuides implements OnInit {
       socialMedia: [''],
     });
 
-    // Add initial section
     this.addSection();
   }
 
@@ -214,9 +211,6 @@ export class AdminAddGuides implements OnInit {
   /* =================================================================================== */
 
   protected createGuide(): void {
-    console.log('Create Guide button pressed');
-
-    // Validation: Check section count (3-5)
     if (this.sectionsFormArray.length < 3) {
       this.toastr.error('Minimum 3 sections required');
       return;
@@ -234,7 +228,6 @@ export class AdminAddGuides implements OnInit {
 
     this.spinnerService.showNavigateSpinner();
 
-    // Prepare thumbnail uploads
     const guideThumbnail$ = this.newThumbnailFile
       ? this.imageUploadService.uploadImage(this.newThumbnailFile)
       : of(null);

@@ -28,7 +28,7 @@ import { SortOptions } from '../../../shared/constants/SortOptions';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { EventService } from '../../../services/event.service';
 import { SpinnerService } from '../../../core/services/spinner.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HomepagePageData } from '../../../core/resolvers/homepage.resolver';
 import { Subheading } from "../../../components/subheading/subheading";
 import { NotFoundComponent } from "../../../components/not-found-component/not-found-component";
@@ -74,6 +74,7 @@ export class Homepage implements OnInit {
     protected session: SessionService,
     protected cdr: ChangeDetectorRef,
     protected route: ActivatedRoute,
+    protected router: Router,
     protected categoryService: CategoryService,
     protected toastr: HotToastService,
     protected spinner: SpinnerService,
@@ -151,13 +152,25 @@ export class Homepage implements OnInit {
       next: (events) => {
         this.eventsForSelectedDate = events.slice(0, 2);
         this.isLoadingEventsForDate = false;
-        this.cdr.detectChanges();
+        this.cdr.markForCheck();
       },
       error: (err) => {
         this.eventsForSelectedDate = [];
         this.isLoadingEventsForDate = false;
-        this.cdr.detectChanges();
+        this.cdr.markForCheck();
       }
     });
+  }
+
+  navigateToSpotOverview(spotSlug: string): void {
+    this.spinner.showNavigateSpinner();
+    this.router.navigate(['/spots/' + spotSlug]);
+    this.spinner.hideNavigateSpinner();
+  }
+
+  navigateToEventOverview(eventSlug: string): void {
+    this.spinner.showNavigateSpinner();
+    this.router.navigate(['/events/' + eventSlug]);
+    this.spinner.hideNavigateSpinner();
   }
 }

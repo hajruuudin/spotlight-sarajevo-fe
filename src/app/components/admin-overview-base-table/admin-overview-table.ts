@@ -72,7 +72,6 @@ export abstract class AdminOverviewBaseTable {
   onSaveChangeSelected(){}
 
   onOverviewSelected(id: number){
-    console.log(id)
     if (this.selectedItemId === id) {
       this.selectedItemId = null
     } else {

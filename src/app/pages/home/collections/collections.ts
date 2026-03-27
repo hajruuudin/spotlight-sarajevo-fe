@@ -104,9 +104,11 @@ export class Collections implements OnInit {
           );
           response.collectionItems = uniqueItems;
           this.selectedCollection = { ...response };
+          this.cdr.markForCheck();
         },
         error: (error: HttpErrorResponse) => {
           this.toastr.error('SPOT COLLECTION ERROR');
+          this.cdr.markForCheck();
         },
       });
     } else {
@@ -117,9 +119,11 @@ export class Collections implements OnInit {
           );
           response.collectionItems = uniqueItems;
           this.selectedCollection = { ...response };
+          this.cdr.markForCheck();
         },
         error: (error: HttpErrorResponse) => {
           this.toastr.error('EVENT COLLECTION ERROR');
+          this.cdr.markForCheck();
         },
       });
     }
@@ -130,7 +134,7 @@ export class Collections implements OnInit {
       next: (response: CollectionItemsModel) => {
         this.selectedCollection = { ...response };
         console.log(this.selectedCollection);
-        this.cdr.detectChanges();
+        this.cdr.markForCheck();
       },
       error: (response: HttpErrorResponse) => {
         this.toastr.error(
@@ -138,6 +142,7 @@ export class Collections implements OnInit {
             ? 'Cannot load that collection! :('
             : 'Kolekcija se ne moze ucitati! :(',
         );
+        this.cdr.markForCheck();
       },
     });
   }
@@ -196,12 +201,13 @@ export class Collections implements OnInit {
       this.collectionService.deleteCollection(this.selectedCollection.collectionId).subscribe({
         next: (result: CollectionModel) => {
           this.toastr.success('Collection Deleted');
-          this.cdr.detectChanges();
           this.removeCollectionFrontend(result);
+          this.cdr.markForCheck();
           this.fetchSystemCollection(true);
         },
         error: (error: HttpErrorResponse) => {
           this.toastr.error('There was an error. Replace this later.');
+          this.cdr.markForCheck();
         },
       });
     }
@@ -218,12 +224,14 @@ export class Collections implements OnInit {
             : 'Nova kolekcija napravljena',
         );
         this.addCollectionFrontend(response);
+        this.cdr.markForCheck();
       },
       error: (response: HttpErrorResponse) => {
         this.spinner.hideNavigateSpinner();
         this.toastr.error(
           this.session.language() == 'en' ? 'Something went wrong!' : 'Nesto je krenulo po zlu',
         );
+        this.cdr.markForCheck();
       },
     });
   }
@@ -237,12 +245,14 @@ export class Collections implements OnInit {
           this.session.language() == 'en' ? 'Collection edited!' : 'Kolekcija izmjenjena',
         );
         this.updateCollectionFrontend(response);
+        this.cdr.markForCheck();
       },
       error: (response: HttpErrorResponse) => {
         this.spinner.hideNavigateSpinner();
         this.toastr.error(
           this.session.language() == 'en' ? 'Something went wrong!' : 'Nesto je krenulo po zlu',
         );
+        this.cdr.markForCheck();
       },
     });
   }

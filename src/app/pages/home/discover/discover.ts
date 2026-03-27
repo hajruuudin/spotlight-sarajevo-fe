@@ -11,9 +11,10 @@ import { SmallEventCard } from '../../../components/small-event-card/small-event
 import { SpotService } from '../../../services/spot.service';
 import { SessionService } from '../../../core/services/session.service';
 import { EventService } from '../../../services/event.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DiscoverPageData } from '../../../core/resolvers/discover.resolver';
 import { Subheading } from "../../../components/subheading/subheading";
+import { SpinnerService } from '../../../core/services/spinner.service';
 
 @Component({
   selector: 'app-discover',
@@ -43,9 +44,11 @@ export class Discover implements OnInit {
     protected spotService: SpotService,
     protected eventService: EventService,
     protected route: ActivatedRoute,
+    protected router: Router,
     protected session: SessionService,
     protected cdr: ChangeDetectorRef,
     protected toastr: HotToastService,
+    protected spinnerService: SpinnerService,
   ) {}
 
   ngOnInit(): void {
@@ -56,5 +59,17 @@ export class Discover implements OnInit {
     this.upcomingEvents = data.upcomingEvents;
     this.favouriteSpots = data.favouriteSpots;
     this.popularSpots = data.popularSpots;
+  }
+
+  navigateToSpotOverview(spotSlug: string): void {
+    this.spinnerService.showNavigateSpinner();
+    this.router.navigate(['/spots/' + spotSlug]);
+    this.spinnerService.hideNavigateSpinner();
+  }
+
+  navigateToEventOverview(eventSlug: string): void {
+    this.spinnerService.showNavigateSpinner();
+    this.router.navigate(['/events/' + eventSlug]);
+    this.spinnerService.hideNavigateSpinner();
   }
 }

@@ -194,20 +194,18 @@ export class AdminAddEvents implements OnInit {
 
   async openOrganiserModal(): Promise<void> {
     const result = await this.modal.openAsync<any>(EventOrganiserModal, {
-      organiserModel: null, // null = creating new organiser
+      organiserModel: null,
     });
 
     if (result?.type === 'save') {
       const newOrganiser = result.payload as EventOrganiserUpdateModel;
       this.newOrganisers.push(newOrganiser);
       
-      // Add to organiser options immediately (frontend-only)
       this.organiserOptions.push({
         label: newOrganiser.organiserName,
         value: newOrganiser.id,
       });
       
-      // Auto-select the newly created organiser
       this.selectedOrganiserId = newOrganiser.id;
       this.selectedOrganiserName = newOrganiser.organiserName;
       
@@ -220,7 +218,6 @@ export class AdminAddEvents implements OnInit {
     const organiserId = event;
     this.selectedOrganiserId = organiserId;
     
-    // Find organiser name from options
     const selected = this.organiserOptions.find(opt => opt.value === organiserId);
     this.selectedOrganiserName = selected?.label || '';
   }
@@ -259,7 +256,7 @@ export class AdminAddEvents implements OnInit {
         const imagesToBeUploaded: MediaCreateModel[] = results.newImages.map(
           (response) =>
             new MediaCreateModel(
-              0, // eventId will be set by backend
+              0,
               'EVENT',
               response.data.url,
               response.data.delete_url,
@@ -269,7 +266,7 @@ export class AdminAddEvents implements OnInit {
 
         const newThumbnailImage = results.thumbnail
           ? new MediaCreateModel(
-              0, // eventId will be set by backend
+              0,
               'EVENT',
               results.thumbnail.data.url,
               results.thumbnail.data.delete_url,
@@ -305,20 +302,17 @@ export class AdminAddEvents implements OnInit {
 
         this.eventService.createEvent(finalPayload).subscribe({
           next: (response: any) => {
-            console.log('Event created successfully:', response);
             this.spinnerService.hideNavigateSpinner();
             this.toastService.success('Event created successfully!');
             this.router.navigate(['/admin/events-overview']);
           },
           error: (error) => {
-            console.error('Error creating event:', error);
             this.spinnerService.hideNavigateSpinner();
             this.toastService.error('Failed to create event. Please try again.');
           },
         });
       },
       error: (error) => {
-        console.error('Error during image upload process:', error);
         this.spinnerService.hideNavigateSpinner();
         this.toastService.error('Failed to upload images. Please try again.');
       },

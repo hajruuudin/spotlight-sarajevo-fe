@@ -86,7 +86,7 @@ export class TouristGuideService {
     * @param guideId The ID of the guide to delete
     */
    deleteGuide(guideId: number): Observable<void> {
-    return this.http.delete<void>(`${this.API_URL}/delete/${guideId}`, {
+    return this.http.delete<void>(`${this.API_URL}/${guideId}`, {
       withCredentials: true
     });
    }

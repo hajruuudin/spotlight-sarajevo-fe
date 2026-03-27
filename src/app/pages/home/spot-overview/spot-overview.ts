@@ -170,9 +170,11 @@ export class SpotOverview implements OnInit {
       this.reviewService.findUserSpotReview(spotId).subscribe({
         next: (response: SpotReviewModel) => {
           this.userReview = response;
+          this.cdr.markForCheck();
         },
         error: (response: HttpErrorResponse) => {
           // do something
+          this.cdr.markForCheck();
         },
       });
     }
@@ -187,9 +189,11 @@ export class SpotOverview implements OnInit {
             (review) => review.userId != this.session.getUserId(),
           );
           this.spotReviews = filteredResult;
+          this.cdr.markForCheck();
         },
         error: (error: HttpErrorResponse) => {
           // do something
+          this.cdr.markForCheck();
         },
       });
   }
@@ -324,8 +328,9 @@ export class SpotOverview implements OnInit {
       },
     });
   }
-  // TODO: Make this into a utils function
+  
   transformImageObjectToUrl(){
+    if(this.spotOverview.images == null || this.spotOverview.images.length == 0) return;
     for(let image of this.spotOverview.images){
       this.images.push(image.imageUrl)
     }
@@ -432,8 +437,14 @@ export class SpotOverview implements OnInit {
 
   checkIfPresentInSystemCollection() {
     this.collectionService.checkIfPresentInCollection(this.spotOverview.id, 'SPOT').subscribe({
-      next: (present) => (this.isSaved = present),
-      error: (err) => console.error('Error checking saved status', err),
+      next: (present) => {
+        this.isSaved = present;
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error('Error checking saved status', err);
+        this.cdr.markForCheck();
+      },
     });
   }
 

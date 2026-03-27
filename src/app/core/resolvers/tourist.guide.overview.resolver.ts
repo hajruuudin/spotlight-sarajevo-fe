@@ -11,7 +11,6 @@ export const touristGuideOverviewResolver: ResolveFn<TouristGuideOverviewModel> 
   state: RouterStateSnapshot
 ) => {
   const guideService = inject(TouristGuideService);
-  console.log("Slug is:", route.paramMap.get('slug'));
   const slug = route.paramMap.get('slug')!;
   return guideService.findGuideOverview(slug);
 };

@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { ButtonPrimary } from "../button-primary/button-primary";
+import { NotFoundComponent } from "../not-found-component/not-found-component";
 
 @Component({
   selector: 'app-image-carousel',
-  imports: [ButtonPrimary],
+  imports: [ButtonPrimary, NotFoundComponent],
   templateUrl: './image-carousel.html',
   styleUrl: './image-carousel.css'
 })

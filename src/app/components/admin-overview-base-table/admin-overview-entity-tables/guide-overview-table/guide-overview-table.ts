@@ -84,7 +84,6 @@ export class GuideOverviewTable extends AdminOverviewBaseTable implements OnChan
           label: c.categoryNameEn,
           value: c.id,
         }));
-        console.log(this.categoryOptions)
       },
     });
   }

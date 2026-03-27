@@ -1,3 +1,4 @@
+@if (this.images && this.images.length > 0) {
 <div
   class="w-full h-48 md:h-64 p-2 rounded-2xl dark:bg-(--background-100) bg-(--background-800) flex flex-row justify-start items-center gap-2 overflow-x-scroll"
 >
@@ -9,6 +10,9 @@
   />
   }
 </div>
+} @else {
+<app-not-found-component [headerMessage]="'No Images Found'" [messageDescription]="''"></app-not-found-component>
+}
 
 @if (fullscreenIndex !== null) {
 <div
