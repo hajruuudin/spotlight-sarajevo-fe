@@ -1,4 +1,3 @@
-# Spotlight Sarajevo
 ![Screenshot](/public/assets/images/SS_THUMB.png)
 
 > _Current version: 1.0_ \
