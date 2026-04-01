@@ -2,7 +2,7 @@
 ![Screenshot](/public/assets/images/SS_THUMB.png)
 
 > _Current version: 1.0_ \
-> A modern tourism and local discovery platform for Sarajevo, built with Angular and designed for seamless exploration of the city's attractions, events, and local experiences.
+> A miminalistic, modern tourism and local discovery platform for Sarajevo, built with Angular and designed for seamless exploration of the city's attractions, events, and local experiences.
 
 **Live Demo:** Currently Unavailable | **Backend Repository:** [spotlight-sarajevo-be](https://github.com/username/spotlight-sarajevo-be) | **Design:** [Figma Prototype](https://figma.com/file/your-project)
 
