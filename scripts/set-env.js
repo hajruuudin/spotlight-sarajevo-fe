@@ -8,7 +8,7 @@ const envConfigFile = `export const environment = {
     production: true,
     IMAGE_BB_API: "${process.env.IMAGE_BB_KEY}",
     API_URL: "https://spotlight-sarajevo-be-1-0-0.onrender.com",
-    GOOGLE_CLIENT_ID: "${process.env.GOOGLE_CLIENT_ID}
+    GOOGLE_CLIENT_ID: "${process.env.GOOGLE_CLIENT_ID}"
 };`
 
 fs.writeFileSync(targetPath, envConfigFile, { encoding: 'utf8'});
